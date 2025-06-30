@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Regular.ttf">
+            <string>NunitoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DelegatesVC" customModule="AviationConnect" customModuleProvider="target">
+            <connections>
+                <outlet property="delegateListTable" destination="eZb-f9-qMc" id="5y1-l8-UnL"/>
+                <outlet property="searchICImgView" destination="w5P-fM-s32" id="Cr5-vr-EhL"/>
+                <outlet property="searchTextField" destination="eDH-CE-LR8" id="2ch-R3-viw"/>
+                <outlet property="searchUiView" destination="1Zm-i6-zdG" id="kHS-vU-yu1"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="xC9-Sv-tmu"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QpX-7b-QBD" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Zm-i6-zdG" userLabel="Top View">
+                            <rect key="frame" x="20" y="10" width="353" height="40"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_searchTheme" translatesAutoresizingMaskIntoConstraints="NO" id="w5P-fM-s32">
+                                    <rect key="frame" x="15.000000000000002" y="11" width="18.666666666666671" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18.199999999999999" id="0YJ-fF-Lwe"/>
+                                        <constraint firstAttribute="width" constant="18.699999999999999" id="cr2-Ha-2ot"/>
+                                    </constraints>
+                                </imageView>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" placeholder="Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eDH-CE-LR8">
+                                    <rect key="frame" x="43.666666666666657" y="3" width="304.33333333333337" height="34"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="34" id="Hbf-IE-ja0"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="w5P-fM-s32" firstAttribute="centerY" secondItem="1Zm-i6-zdG" secondAttribute="centerY" id="6BQ-jY-8Eu"/>
+                                <constraint firstItem="eDH-CE-LR8" firstAttribute="top" secondItem="1Zm-i6-zdG" secondAttribute="top" constant="3" id="Doe-fU-N8I"/>
+                                <constraint firstAttribute="height" constant="40" id="fdb-SJ-eOE"/>
+                                <constraint firstItem="w5P-fM-s32" firstAttribute="leading" secondItem="1Zm-i6-zdG" secondAttribute="leading" constant="15" id="sFd-Xo-9sT"/>
+                                <constraint firstItem="eDH-CE-LR8" firstAttribute="leading" secondItem="w5P-fM-s32" secondAttribute="trailing" constant="10" id="sfs-Ei-qoO"/>
+                                <constraint firstAttribute="bottom" secondItem="eDH-CE-LR8" secondAttribute="bottom" constant="3" id="w0C-de-CWw"/>
+                                <constraint firstAttribute="trailing" secondItem="eDH-CE-LR8" secondAttribute="trailing" constant="5" id="yPJ-Gk-2Ew"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.51372549020000002" green="0.47843137250000001" blue="0.53333333329999999" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eZb-f9-qMc">
+                            <rect key="frame" x="20" y="70" width="353" height="752"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="752" id="8Q1-vF-AAh"/>
+                            </constraints>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="eZb-f9-qMc" firstAttribute="top" secondItem="1Zm-i6-zdG" secondAttribute="bottom" constant="20" id="2be-Dy-AKX"/>
+                        <constraint firstItem="eZb-f9-qMc" firstAttribute="leading" secondItem="QpX-7b-QBD" secondAttribute="leading" constant="20" id="CQb-6j-XbB"/>
+                        <constraint firstAttribute="trailing" secondItem="eZb-f9-qMc" secondAttribute="trailing" constant="20" id="CR7-iR-ugr"/>
+                        <constraint firstItem="1Zm-i6-zdG" firstAttribute="leading" secondItem="QpX-7b-QBD" secondAttribute="leading" constant="20" id="cUO-4F-1ai"/>
+                        <constraint firstAttribute="trailing" secondItem="1Zm-i6-zdG" secondAttribute="trailing" constant="20" id="j6e-UR-Vf3"/>
+                        <constraint firstAttribute="bottom" secondItem="eZb-f9-qMc" secondAttribute="bottom" constant="20" id="lHX-US-Fuc"/>
+                        <constraint firstItem="1Zm-i6-zdG" firstAttribute="top" secondItem="QpX-7b-QBD" secondAttribute="top" constant="10" id="pCS-og-iLX"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="yqJ-ak-Gws"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="QpX-7b-QBD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6bU-e7-7bZ"/>
+                <constraint firstItem="QpX-7b-QBD" firstAttribute="leading" secondItem="yqJ-ak-Gws" secondAttribute="leading" id="BRt-5m-Qgk"/>
+                <constraint firstItem="QpX-7b-QBD" firstAttribute="trailing" secondItem="yqJ-ak-Gws" secondAttribute="trailing" id="Nge-6V-Pgp"/>
+                <constraint firstAttribute="bottom" secondItem="QpX-7b-QBD" secondAttribute="bottom" id="xmr-z6-FOk"/>
+            </constraints>
+            <point key="canvasLocation" x="59" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_searchTheme" width="18.5" height="18.5"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttachmentPopupVC" customModule="AviationConnect" customModuleProvider="target">
+            <connections>
+                <outlet property="audioBtn" destination="M5d-3s-hok" id="rjs-h1-mMj"/>
+                <outlet property="audioLbl" destination="R0x-be-ZKM" id="VWW-vE-n18"/>
+                <outlet property="cameraBtn" destination="SPw-2E-9cA" id="Frg-zv-dNP"/>
+                <outlet property="cameraLbl" destination="aWn-Md-qec" id="SS9-Y6-VQg"/>
+                <outlet property="docBtn" destination="CWJ-Ij-zHK" id="MWz-lU-QcT"/>
+                <outlet property="docLbl" destination="a0o-QV-Tk9" id="TWH-I6-n7k"/>
+                <outlet property="galleryBtn" destination="fpf-2a-car" id="MwG-YR-mDK"/>
+                <outlet property="galleryLbl" destination="yZ1-4q-onD" id="qtf-TB-uWw"/>
+                <outlet property="mainView" destination="q8N-KL-nBb" id="PEa-sk-vTx"/>
+                <outlet property="slideView" destination="zYz-hi-QWO" id="Vpg-Vp-Dt1"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8N-KL-nBb">
+                    <rect key="frame" x="0.0" y="647.66666666666663" width="393" height="204.33333333333337"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zYz-hi-QWO">
+                            <rect key="frame" x="171" y="23" width="51" height="4"/>
+                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="51" id="bWx-e2-hf6"/>
+                                <constraint firstAttribute="height" constant="4" id="dCE-AC-x1N"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="gUd-09-TAU">
+                            <rect key="frame" x="36" y="56.999999999999993" width="321" height="93.333333333333314"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3jD-pT-i67">
+                                    <rect key="frame" x="0.0" y="0.0" width="69" height="93.333333333333329"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPw-2E-9cA">
+                                            <rect key="frame" x="0.6666666666666643" y="0.0" width="68" height="69"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="BS_Camera"/>
+                                            <connections>
+                                                <action selector="cameraTapped:" destination="-1" eventType="touchUpInside" id="IUW-7N-5Ke"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWn-Md-qec">
+                                            <rect key="frame" x="12" y="79" width="45" height="14.333333333333329"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UPC-3P-TPn">
+                                    <rect key="frame" x="84" y="0.0" width="69" height="93.333333333333329"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpf-2a-car">
+                                            <rect key="frame" x="0.6666666666666714" y="0.0" width="68" height="69"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="BS_Gallery"/>
+                                            <connections>
+                                                <action selector="galleryTapped:" destination="-1" eventType="touchUpInside" id="at8-Ae-o68"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gallery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZ1-4q-onD">
+                                            <rect key="frame" x="14" y="79" width="41" height="14.333333333333329"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sbF-er-3r7">
+                                    <rect key="frame" x="168" y="0.0" width="69" height="93.333333333333329"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWJ-Ij-zHK">
+                                            <rect key="frame" x="0.66666666666665719" y="0.0" width="68" height="69"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="BS_Document"/>
+                                            <connections>
+                                                <action selector="docTapped:" destination="-1" eventType="touchUpInside" id="Hgs-TB-avT"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Document" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0o-QV-Tk9">
+                                            <rect key="frame" x="4.6666666666666536" y="79" width="59.666666666666657" height="14.333333333333329"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dWX-yE-PwZ">
+                                    <rect key="frame" x="252" y="0.0" width="69" height="93.333333333333329"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5d-3s-hok">
+                                            <rect key="frame" x="0.66666666666668561" y="0.0" width="68" height="68"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="BS_Audio"/>
+                                            <connections>
+                                                <action selector="audioTapped:" destination="-1" eventType="touchUpInside" id="04p-dD-g1j"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0x-be-ZKM">
+                                            <rect key="frame" x="18.000000000000004" y="79" width="33.333333333333343" height="14.333333333333329"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="gUd-09-TAU" secondAttribute="trailing" constant="36" id="Ajp-q4-pML"/>
+                        <constraint firstItem="gUd-09-TAU" firstAttribute="leading" secondItem="q8N-KL-nBb" secondAttribute="leading" constant="36" id="BWB-NY-Stx"/>
+                        <constraint firstItem="zYz-hi-QWO" firstAttribute="top" secondItem="q8N-KL-nBb" secondAttribute="top" constant="23" id="CCw-qi-uXb"/>
+                        <constraint firstItem="zYz-hi-QWO" firstAttribute="centerX" secondItem="q8N-KL-nBb" secondAttribute="centerX" id="FZo-gj-yrV"/>
+                        <constraint firstItem="gUd-09-TAU" firstAttribute="top" secondItem="zYz-hi-QWO" secondAttribute="bottom" constant="30" id="OaM-av-9QK"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="gUd-09-TAU" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-20" id="F9Y-7z-8x5"/>
+                <constraint firstItem="q8N-KL-nBb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Fgh-L6-Nny"/>
+                <constraint firstAttribute="bottom" secondItem="q8N-KL-nBb" secondAttribute="bottom" id="N6g-2y-ZCp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="q8N-KL-nBb" secondAttribute="trailing" id="eOK-n0-AvV"/>
+            </constraints>
+            <point key="canvasLocation" x="57.251908396946561" y="20.422535211267608"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="BS_Audio" width="68" height="68"/>
+        <image name="BS_Camera" width="68" height="69"/>
+        <image name="BS_Document" width="68" height="69"/>
+        <image name="BS_Gallery" width="68" height="69"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

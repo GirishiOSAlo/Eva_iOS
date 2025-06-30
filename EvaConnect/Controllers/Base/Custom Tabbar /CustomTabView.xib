@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundImageView" destination="uxa-GH-nER" id="8Qa-82-IjQ"/>
+                <outlet property="imageView" destination="BRI-go-g72" id="198-bs-ERg"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="74" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uxa-GH-nER">
+                    <rect key="frame" x="0.0" y="0.0" width="74" height="75"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTab" translatesAutoresizingMaskIntoConstraints="NO" id="BRI-go-g72">
+                    <rect key="frame" x="27" y="27.5" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="0Dv-P9-FHI"/>
+                        <constraint firstAttribute="height" constant="20" id="6ZY-4w-oUu"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="uxa-GH-nER" secondAttribute="trailing" id="6ys-YG-ny9"/>
+                <constraint firstItem="uxa-GH-nER" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="H2s-lR-hEx"/>
+                <constraint firstItem="uxa-GH-nER" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ofu-b0-6tn"/>
+                <constraint firstItem="BRI-go-g72" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="TKa-Vd-3k1"/>
+                <constraint firstItem="BRI-go-g72" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nj8-6a-CWt"/>
+                <constraint firstAttribute="bottom" secondItem="uxa-GH-nER" secondAttribute="bottom" id="xNq-VY-uvS"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-97.101449275362327" y="368.63839285714283"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="homeTab" width="16.5" height="18.5"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

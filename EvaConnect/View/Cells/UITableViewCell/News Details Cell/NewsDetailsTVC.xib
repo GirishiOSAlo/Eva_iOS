@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Bold.otf">
+            <string>SFProText-Bold</string>
+        </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsDetailsTVC" rowHeight="291" id="KGk-i7-Jjw" customClass="NewsDetailsTVC" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="432" height="177"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="432" height="177"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SdI-Ij-Unp">
+                        <rect key="frame" x="0.0" y="15" width="432" height="111"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qOm-16-mLk">
+                                <rect key="frame" x="20" y="20" width="72" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="Gcf-xH-8VL"/>
+                                    <constraint firstAttribute="width" constant="72" id="cIl-aj-CNN"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OMu-xq-iHS">
+                                <rect key="frame" x="106" y="20" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="imm-O9-oG4"/>
+                                    <constraint firstAttribute="width" constant="25" id="p7O-ZS-ZLd"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Air Cargo Week" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zu0-Q1-bs0">
+                                <rect key="frame" x="139" y="25.666666666666664" width="199.66666666666663" height="14"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="3 hrs ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zma-Ch-brK">
+                                <rect key="frame" x="348.66666666666669" y="25.666666666666664" width="53.333333333333314" height="14"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pilot hurt in Gloucestershire Airport heliMenzies wins major contract with Avianca...copter crash" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2p-ze-xAa">
+                                <rect key="frame" x="106" y="52.999999999999993" width="228" height="28.666666666666664"/>
+                                <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="12"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EsT-Yn-1M3">
+                                <rect key="frame" x="344" y="53.666666666666671" width="68" height="32"/>
+                                <color key="backgroundColor" red="0.34509803919999998" green="0.58039215690000001" blue="0.86666666670000003" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="Vv3-Rh-yR3"/>
+                                    <constraint firstAttribute="height" constant="32" id="jhe-u0-dmB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Visit">
+                                    <color key="titleColor" red="0.27058823529999998" green="0.35686274509999999" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="visitNewsTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="y4S-6x-fnd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pi-go-cJ2">
+                                <rect key="frame" x="377" y="-15" width="40" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="CgA-r3-mGU"/>
+                                    <constraint firstAttribute="width" constant="40" id="ZVx-Jz-TZO"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="save"/>
+                                <connections>
+                                    <action selector="saveBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lCb-zb-tcL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="EsT-Yn-1M3" firstAttribute="leading" secondItem="V2p-ze-xAa" secondAttribute="trailing" constant="10" id="3dE-AJ-pvE"/>
+                            <constraint firstItem="V2p-ze-xAa" firstAttribute="top" secondItem="OMu-xq-iHS" secondAttribute="bottom" constant="8" id="7dS-qu-lOV"/>
+                            <constraint firstItem="OMu-xq-iHS" firstAttribute="top" secondItem="qOm-16-mLk" secondAttribute="top" id="MUw-wB-D6t"/>
+                            <constraint firstItem="zu0-Q1-bs0" firstAttribute="leading" secondItem="OMu-xq-iHS" secondAttribute="trailing" constant="8" id="Ng7-cJ-Bfk"/>
+                            <constraint firstAttribute="trailing" secondItem="EsT-Yn-1M3" secondAttribute="trailing" constant="20" id="OOC-YH-twy"/>
+                            <constraint firstAttribute="bottom" secondItem="qOm-16-mLk" secondAttribute="bottom" constant="20" id="PM7-EC-rZJ"/>
+                            <constraint firstItem="zma-Ch-brK" firstAttribute="leading" secondItem="zu0-Q1-bs0" secondAttribute="trailing" constant="10" id="Xg3-eb-tCT"/>
+                            <constraint firstItem="7pi-go-cJ2" firstAttribute="top" secondItem="SdI-Ij-Unp" secondAttribute="top" constant="-15" id="Y1X-YQ-dAQ"/>
+                            <constraint firstItem="zu0-Q1-bs0" firstAttribute="centerY" secondItem="OMu-xq-iHS" secondAttribute="centerY" id="Y6u-yV-iYu"/>
+                            <constraint firstAttribute="trailing" secondItem="zma-Ch-brK" secondAttribute="trailing" constant="30" id="hqb-in-ANs"/>
+                            <constraint firstItem="qOm-16-mLk" firstAttribute="top" secondItem="SdI-Ij-Unp" secondAttribute="top" constant="20" id="n0L-gU-ZJF"/>
+                            <constraint firstItem="V2p-ze-xAa" firstAttribute="leading" secondItem="OMu-xq-iHS" secondAttribute="leading" id="nhj-dF-P2z"/>
+                            <constraint firstAttribute="trailing" secondItem="7pi-go-cJ2" secondAttribute="trailing" constant="15" id="tQ2-kk-JWX"/>
+                            <constraint firstAttribute="bottom" secondItem="EsT-Yn-1M3" secondAttribute="bottom" constant="25.333333333333343" id="tVw-aK-ebD"/>
+                            <constraint firstItem="OMu-xq-iHS" firstAttribute="leading" secondItem="qOm-16-mLk" secondAttribute="trailing" constant="14" id="uJr-xz-9Rf"/>
+                            <constraint firstItem="EsT-Yn-1M3" firstAttribute="top" secondItem="zma-Ch-brK" secondAttribute="bottom" constant="14" id="vZZ-Im-ig6"/>
+                            <constraint firstItem="qOm-16-mLk" firstAttribute="leading" secondItem="SdI-Ij-Unp" secondAttribute="leading" constant="20" id="wRN-Og-KxE"/>
+                            <constraint firstItem="zma-Ch-brK" firstAttribute="centerY" secondItem="zu0-Q1-bs0" secondAttribute="centerY" id="zx4-0y-4mQ"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="SdI-Ij-Unp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1zT-Hh-RJB"/>
+                    <constraint firstAttribute="bottom" secondItem="SdI-Ij-Unp" secondAttribute="bottom" constant="20" id="GoQ-Nu-X2v"/>
+                    <constraint firstAttribute="trailing" secondItem="SdI-Ij-Unp" secondAttribute="trailing" id="IVV-eF-qf4"/>
+                    <constraint firstItem="SdI-Ij-Unp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="c78-So-diX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="BGView" destination="SdI-Ij-Unp" id="p0j-U6-neb"/>
+                <outlet property="newsImageView" destination="qOm-16-mLk" id="N0O-78-WHU"/>
+                <outlet property="newsSourceImgView" destination="OMu-xq-iHS" id="1jo-6S-lrJ"/>
+                <outlet property="newsSourceTitle" destination="zu0-Q1-bs0" id="x8t-K0-L58"/>
+                <outlet property="newsTimeLbl" destination="zma-Ch-brK" id="BrO-Gy-Rhk"/>
+                <outlet property="newsTitleLbl" destination="V2p-ze-xAa" id="5Mu-zh-GTg"/>
+                <outlet property="saveBtn" destination="7pi-go-cJ2" id="iWY-C1-TQP"/>
+                <outlet property="visitNewsBtn" destination="EsT-Yn-1M3" id="8zi-Sq-UA7"/>
+            </connections>
+            <point key="canvasLocation" x="35.114503816793892" y="106.69014084507043"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="save" width="20" height="24.333333969116211"/>
+    </resources>
+</document>

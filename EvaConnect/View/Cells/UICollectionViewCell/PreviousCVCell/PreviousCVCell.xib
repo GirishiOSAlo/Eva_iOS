@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PreviousCVCell" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="347" height="81"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="347" height="81"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOy-AO-26c" userLabel="outer view">
+                        <rect key="frame" x="0.0" y="5" width="347" height="71"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8rc-Dn-dmQ" userLabel="Inner view">
+                                <rect key="frame" x="0.0" y="0.0" width="347" height="71"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hhj-jd-BbL">
+                                        <rect key="frame" x="11.666666666666664" y="11.666666666666671" width="48" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Hhj-jd-BbL" secondAttribute="height" multiplier="1:1" id="KHb-LR-Qta"/>
+                                            <constraint firstAttribute="width" constant="48" id="vaR-l0-KjI"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="job_doc_ic"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FileName01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Um6-zf-wB7">
+                                        <rect key="frame" x="71.666666666666671" y="16" width="169.33333333333331" height="14"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FileName01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClU-ri-XH0">
+                                        <rect key="frame" x="71.666666666666671" y="34" width="169.33333333333331" height="11.666666666666664"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                        <color key="textColor" red="0.51764705879999995" green="0.51372549020000002" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3z3-48-xcb">
+                                        <rect key="frame" x="251" y="15.666666666666671" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="Fdg-b6-qPq"/>
+                                            <constraint firstAttribute="width" secondItem="3z3-48-xcb" secondAttribute="height" multiplier="1:1" id="Mtf-3q-D8r"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="job_download_ic"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zV9-Hx-NLJ">
+                                        <rect key="frame" x="299" y="15.666666666666671" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="fEE-L7-lcf"/>
+                                            <constraint firstAttribute="width" secondItem="zV9-Hx-NLJ" secondAttribute="height" multiplier="1:1" id="nHX-U1-YeH"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="job_delete_ic"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Um6-zf-wB7" firstAttribute="leading" secondItem="Hhj-jd-BbL" secondAttribute="trailing" constant="12" id="6mF-St-l3Q"/>
+                                    <constraint firstItem="Hhj-jd-BbL" firstAttribute="leading" secondItem="8rc-Dn-dmQ" secondAttribute="leading" constant="11.5" id="Ajf-2R-1Dc"/>
+                                    <constraint firstItem="3z3-48-xcb" firstAttribute="leading" secondItem="Um6-zf-wB7" secondAttribute="trailing" constant="10" id="I9W-8b-rGo"/>
+                                    <constraint firstItem="Um6-zf-wB7" firstAttribute="top" secondItem="8rc-Dn-dmQ" secondAttribute="top" constant="16" id="KL9-zN-wtZ"/>
+                                    <constraint firstItem="ClU-ri-XH0" firstAttribute="top" secondItem="Um6-zf-wB7" secondAttribute="bottom" constant="4" id="MQz-rD-4db"/>
+                                    <constraint firstItem="Hhj-jd-BbL" firstAttribute="centerY" secondItem="8rc-Dn-dmQ" secondAttribute="centerY" id="OVP-hY-cyf"/>
+                                    <constraint firstItem="3z3-48-xcb" firstAttribute="centerY" secondItem="8rc-Dn-dmQ" secondAttribute="centerY" id="Th8-tc-ClP"/>
+                                    <constraint firstItem="zV9-Hx-NLJ" firstAttribute="centerY" secondItem="8rc-Dn-dmQ" secondAttribute="centerY" id="c1t-O6-Fbz"/>
+                                    <constraint firstItem="ClU-ri-XH0" firstAttribute="leading" secondItem="Hhj-jd-BbL" secondAttribute="trailing" constant="12" id="ckO-pb-AHk"/>
+                                    <constraint firstItem="3z3-48-xcb" firstAttribute="leading" secondItem="ClU-ri-XH0" secondAttribute="trailing" constant="10" id="iEW-C6-2O0"/>
+                                    <constraint firstItem="zV9-Hx-NLJ" firstAttribute="leading" secondItem="3z3-48-xcb" secondAttribute="trailing" constant="8" id="rFi-rM-A9z"/>
+                                    <constraint firstAttribute="trailing" secondItem="zV9-Hx-NLJ" secondAttribute="trailing" constant="8" id="sSE-LF-zCc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="8rc-Dn-dmQ" firstAttribute="leading" secondItem="gOy-AO-26c" secondAttribute="leading" id="7HY-Jv-k4j"/>
+                            <constraint firstAttribute="bottom" secondItem="8rc-Dn-dmQ" secondAttribute="bottom" id="8Ib-9r-SWz"/>
+                            <constraint firstAttribute="trailing" secondItem="8rc-Dn-dmQ" secondAttribute="trailing" id="VFQ-03-igt"/>
+                            <constraint firstItem="8rc-Dn-dmQ" firstAttribute="top" secondItem="gOy-AO-26c" secondAttribute="top" id="w1N-Qg-XE3"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="gOy-AO-26c" secondAttribute="trailing" id="QKn-7H-zZo"/>
+                <constraint firstItem="gOy-AO-26c" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="dwi-Od-Stv"/>
+                <constraint firstAttribute="bottom" secondItem="gOy-AO-26c" secondAttribute="bottom" constant="5" id="mQe-Fx-bHx"/>
+                <constraint firstItem="gOy-AO-26c" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ohs-P0-Bu1"/>
+            </constraints>
+            <size key="customSize" width="347" height="79"/>
+            <connections>
+                <outlet property="dateTimeLbl" destination="ClU-ri-XH0" id="AAW-5V-wJD"/>
+                <outlet property="deleteCVBtn" destination="zV9-Hx-NLJ" id="HzA-sV-OYd"/>
+                <outlet property="downloadCVBtn" destination="3z3-48-xcb" id="ePz-xQ-O4y"/>
+                <outlet property="fileNameLbl" destination="Um6-zf-wB7" id="q46-sM-8ON"/>
+                <outlet property="innerView" destination="8rc-Dn-dmQ" id="EkZ-cv-Llh"/>
+                <outlet property="outerView" destination="gOy-AO-26c" id="OVy-GS-ZMB"/>
+                <outlet property="viewCVBtn" destination="Hhj-jd-BbL" id="sDg-lm-fr7"/>
+            </connections>
+            <point key="canvasLocation" x="191.6030534351145" y="29.929577464788736"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="job_delete_ic" width="20" height="20"/>
+        <image name="job_doc_ic" width="48" height="48"/>
+        <image name="job_download_ic" width="40" height="40"/>
+    </resources>
+</document>

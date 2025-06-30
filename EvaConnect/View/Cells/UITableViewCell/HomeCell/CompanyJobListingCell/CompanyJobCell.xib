@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Regular.ttf">
+            <string>NunitoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompanyJobCell" rowHeight="120" id="sAe-Qh-a5a" customClass="CompanyJobCell" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="491" height="150"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sAe-Qh-a5a" id="APP-JB-8aW">
+                <rect key="frame" x="0.0" y="0.0" width="491" height="150"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dk-Yk-ZEk" customClass="ConnectButton" customModule="AviationConnect" customModuleProvider="target">
+                        <rect key="frame" x="371" y="20.5" width="100" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="5s4-ke-3hS"/>
+                            <constraint firstAttribute="height" constant="29" id="XpQ-el-BNN"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="12"/>
+                        <state key="normal" title="Edit"/>
+                        <connections>
+                            <action selector="editBtnTapped:" destination="sAe-Qh-a5a" eventType="touchUpInside" id="lIM-oF-min"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TaP-TP-Iqt">
+                        <rect key="frame" x="0.0" y="58" width="491" height="91"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alskjhdlkajskdljasjdklasjdklasjk" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKF-7g-gSM" customClass="HeadingTwoLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <rect key="frame" x="30" y="68" width="436" height="39"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TaQ-7w-mL6">
+                        <rect key="frame" x="406" y="192" width="60" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal">
+                            <attributedString key="attributedTitle">
+                                <fragment content="See More">
+                                    <attributes>
+                                        <color key="NSColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <font key="NSFont" metaFont="miniSystem"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                        </state>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_job_applicant" translatesAutoresizingMaskIntoConstraints="NO" id="bCa-vc-yrg">
+                        <rect key="frame" x="27" y="113" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="Jnf-x5-Ruv"/>
+                            <constraint firstAttribute="height" constant="15" id="hZA-mY-7qJ"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URw-7W-vAe" userLabel="applicantCount" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <rect key="frame" x="53" y="113" width="89" height="17"/>
+                        <attributedString key="attributedText">
+                            <fragment content="26 Applicants">
+                                <attributes>
+                                    <font key="NSFont" metaFont="menu" size="14"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="JobClock" translatesAutoresizingMaskIntoConstraints="NO" id="xYz-M1-72V">
+                        <rect key="frame" x="336.5" y="113" width="15" height="15"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCY-8u-oH6" userLabel="lastActive" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <rect key="frame" x="361.5" y="107" width="104.5" height="27"/>
+                        <attributedString key="attributedText">
+                            <fragment content="Active for 12 hrs">
+                                <attributes>
+                                    <font key="NSFont" metaFont="menu" size="14"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dr6-mW-WNc">
+                        <rect key="frame" x="0.0" y="149" width="491" height="1"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="7b0-yV-0xH"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="XP0-Gv-vn4">
+                        <rect key="frame" x="20" y="10" width="50" height="50"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="Wud-wj-ZEa">
+                                <rect key="frame" x="4" y="4" width="42" height="42"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Wud-wj-ZEa" firstAttribute="top" secondItem="XP0-Gv-vn4" secondAttribute="top" constant="4" id="Dlt-Hu-6vY"/>
+                            <constraint firstAttribute="trailing" secondItem="Wud-wj-ZEa" secondAttribute="trailing" constant="4" id="Otw-jH-yG3"/>
+                            <constraint firstAttribute="width" constant="50" id="Rca-IA-SpG"/>
+                            <constraint firstItem="Wud-wj-ZEa" firstAttribute="leading" secondItem="XP0-Gv-vn4" secondAttribute="leading" constant="4" id="Rd4-aj-wfC"/>
+                            <constraint firstAttribute="height" constant="50" id="Xow-t2-7GA"/>
+                            <constraint firstAttribute="bottom" secondItem="Wud-wj-ZEa" secondAttribute="bottom" constant="4" id="a1e-JI-ENn"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" name="BorderColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="25"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Thq-jZ-FGj" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <rect key="frame" x="78" y="18" width="285" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="92,312" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odE-it-Jhj" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <rect key="frame" x="78" y="39" width="285" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hxe-Wd-Jv0">
+                        <rect key="frame" x="0.0" y="139" width="491" height="10"/>
+                        <color key="backgroundColor" red="0.96470588239999999" green="0.96078431369999995" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="dcS-Uh-Y8e"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="TKF-7g-gSM" firstAttribute="leading" secondItem="APP-JB-8aW" secondAttribute="leadingMargin" constant="10" id="44c-mq-vTM"/>
+                    <constraint firstItem="odE-it-Jhj" firstAttribute="trailing" secondItem="Thq-jZ-FGj" secondAttribute="trailing" id="4E6-IM-HDY"/>
+                    <constraint firstItem="xYz-M1-72V" firstAttribute="centerY" secondItem="BCY-8u-oH6" secondAttribute="centerY" id="6Ld-ka-wyO"/>
+                    <constraint firstAttribute="trailing" secondItem="Dr6-mW-WNc" secondAttribute="trailing" id="6aO-X8-ysw"/>
+                    <constraint firstAttribute="trailing" secondItem="BCY-8u-oH6" secondAttribute="trailing" constant="25" id="7Kr-16-uNc"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="top" secondItem="bCa-vc-yrg" secondAttribute="bottom" constant="21" id="9D6-v1-suB"/>
+                    <constraint firstItem="TaP-TP-Iqt" firstAttribute="leading" secondItem="APP-JB-8aW" secondAttribute="leading" id="B0W-ZJ-kr3"/>
+                    <constraint firstAttribute="trailing" secondItem="1dk-Yk-ZEk" secondAttribute="trailing" constant="20" symbolic="YES" id="CHS-Eu-GkE"/>
+                    <constraint firstItem="Thq-jZ-FGj" firstAttribute="leading" secondItem="XP0-Gv-vn4" secondAttribute="trailing" constant="8" symbolic="YES" id="DgM-js-gzv"/>
+                    <constraint firstItem="Thq-jZ-FGj" firstAttribute="top" secondItem="XP0-Gv-vn4" secondAttribute="top" constant="8" id="EeM-wB-sgi"/>
+                    <constraint firstAttribute="bottom" secondItem="Dr6-mW-WNc" secondAttribute="bottom" id="IoM-zw-pDp"/>
+                    <constraint firstAttribute="trailing" secondItem="Hxe-Wd-Jv0" secondAttribute="trailing" id="ItA-2E-h4R"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="top" secondItem="xYz-M1-72V" secondAttribute="bottom" constant="21" id="JQn-Bz-Xmi"/>
+                    <constraint firstItem="odE-it-Jhj" firstAttribute="bottom" secondItem="Thq-jZ-FGj" secondAttribute="bottom" constant="15" id="Jqb-E1-f1r"/>
+                    <constraint firstItem="Hxe-Wd-Jv0" firstAttribute="leading" secondItem="APP-JB-8aW" secondAttribute="leading" id="Kdd-Qg-7Uv"/>
+                    <constraint firstAttribute="trailing" secondItem="TaP-TP-Iqt" secondAttribute="trailing" id="MPl-jh-HLe"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="top" secondItem="URw-7W-vAe" secondAttribute="bottom" constant="19" id="PxP-BY-Xq6"/>
+                    <constraint firstItem="BCY-8u-oH6" firstAttribute="leading" secondItem="xYz-M1-72V" secondAttribute="trailing" constant="10" id="TOw-AE-f2a"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="top" secondItem="TaP-TP-Iqt" secondAttribute="bottom" id="ViS-a1-drw"/>
+                    <constraint firstItem="1dk-Yk-ZEk" firstAttribute="centerY" secondItem="XP0-Gv-vn4" secondAttribute="centerY" id="ZuT-nX-j9s"/>
+                    <constraint firstItem="bCa-vc-yrg" firstAttribute="leading" secondItem="APP-JB-8aW" secondAttribute="leading" constant="27" id="aab-cP-kKa"/>
+                    <constraint firstItem="XP0-Gv-vn4" firstAttribute="top" secondItem="APP-JB-8aW" secondAttribute="top" constant="10" id="dIO-ns-2kX"/>
+                    <constraint firstItem="BCY-8u-oH6" firstAttribute="top" secondItem="TKF-7g-gSM" secondAttribute="bottom" id="dPJ-0B-xeP"/>
+                    <constraint firstItem="odE-it-Jhj" firstAttribute="leading" secondItem="Thq-jZ-FGj" secondAttribute="leading" id="eUf-Bw-eHp"/>
+                    <constraint firstItem="XP0-Gv-vn4" firstAttribute="leading" secondItem="APP-JB-8aW" secondAttribute="leading" constant="20" symbolic="YES" id="faD-Hj-KjT"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="TKF-7g-gSM" secondAttribute="trailing" constant="5" id="i4w-gf-06C"/>
+                    <constraint firstItem="TaP-TP-Iqt" firstAttribute="top" secondItem="1dk-Yk-ZEk" secondAttribute="bottom" constant="8.5" id="laA-Qf-77N"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="top" secondItem="BCY-8u-oH6" secondAttribute="bottom" constant="15" id="prT-ik-VJc"/>
+                    <constraint firstItem="TKF-7g-gSM" firstAttribute="top" secondItem="XP0-Gv-vn4" secondAttribute="bottom" constant="8" symbolic="YES" id="qav-No-uLh"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="top" secondItem="Hxe-Wd-Jv0" secondAttribute="bottom" id="t3b-Le-oL4"/>
+                    <constraint firstItem="1dk-Yk-ZEk" firstAttribute="leading" secondItem="Thq-jZ-FGj" secondAttribute="trailing" constant="8" symbolic="YES" id="urB-IF-8dy"/>
+                    <constraint firstItem="Dr6-mW-WNc" firstAttribute="leading" secondItem="APP-JB-8aW" secondAttribute="leading" id="uxT-Wn-ch0"/>
+                    <constraint firstItem="URw-7W-vAe" firstAttribute="leading" secondItem="bCa-vc-yrg" secondAttribute="trailing" constant="11" id="ykt-Gh-okh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="gPq-5d-8Ep"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="applicantsCount" destination="URw-7W-vAe" id="JEo-ys-mYH"/>
+                <outlet property="companyName" destination="Thq-jZ-FGj" id="DZh-fc-OsX"/>
+                <outlet property="designation" destination="odE-it-Jhj" id="70I-k3-lV2"/>
+                <outlet property="editButton" destination="1dk-Yk-ZEk" id="qIF-hB-dPc"/>
+                <outlet property="imageContainerView" destination="XP0-Gv-vn4" id="18G-6a-pS7"/>
+                <outlet property="jobContent" destination="TKF-7g-gSM" id="RyD-Ji-Qap"/>
+                <outlet property="lastActive" destination="BCY-8u-oH6" id="H4w-8s-sHr"/>
+                <outlet property="openJobDetailBtn" destination="TaP-TP-Iqt" id="wKW-4m-cMh"/>
+                <outlet property="profileImg" destination="Wud-wj-ZEa" id="Riq-Om-EE2"/>
+                <outlet property="shadowView" destination="Dr6-mW-WNc" id="DOZ-M6-0Lh"/>
+            </connections>
+            <point key="canvasLocation" x="187.68115942028987" y="273.88392857142856"/>
+        </tableViewCell>
+    </objects>
+    <designables>
+        <designable name="1dk-Yk-ZEk">
+            <size key="intrinsicContentSize" width="30" height="26"/>
+        </designable>
+        <designable name="BCY-8u-oH6">
+            <size key="intrinsicContentSize" width="104.5" height="17"/>
+        </designable>
+        <designable name="TKF-7g-gSM">
+            <size key="intrinsicContentSize" width="197" height="17"/>
+        </designable>
+        <designable name="Thq-jZ-FGj">
+            <size key="intrinsicContentSize" width="45" height="20.5"/>
+        </designable>
+        <designable name="URw-7W-vAe">
+            <size key="intrinsicContentSize" width="89" height="17"/>
+        </designable>
+        <designable name="odE-it-Jhj">
+            <size key="intrinsicContentSize" width="38.5" height="14.5"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="JobClock" width="15" height="15"/>
+        <image name="ic_job_applicant" width="23" height="23"/>
+        <image name="profile" width="111" height="111"/>
+        <namedColor name="BorderColor">
+            <color red="0.3449999988079071" green="0.57999998331069946" blue="0.86699998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

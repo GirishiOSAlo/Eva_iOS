@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1005117578208-qg8ohsutbqrrqbaul5ujbhmp3s2ucat9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1005117578208-qg8ohsutbqrrqbaul5ujbhmp3s2ucat9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAfnFWn2trPO_v2-xdlYNnZ72A_Ipkn5qQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1005117578208</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hypernym.EvaConnect</string>
+	<key>PROJECT_ID</key>
+	<string>evaconnect-staging</string>
+	<key>STORAGE_BUCKET</key>
+	<string>evaconnect-staging.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1005117578208:ios:035cef65dfd5b984146985</string>
+	<key>DATABASE_URL</key>
+	<string>https://evaconnect-staging.firebaseio.com</string>
+</dict>
+</plist>

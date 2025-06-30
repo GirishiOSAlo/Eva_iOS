@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NewPostImages" id="gTV-IL-0wX" customClass="NewPostImages" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noImage" translatesAutoresizingMaskIntoConstraints="NO" id="A6u-iS-Ulh">
+                        <rect key="frame" x="5" y="5" width="115" height="115"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="115" id="GfP-Nb-Ezq"/>
+                            <constraint firstAttribute="width" constant="115" id="xlh-KP-YDT"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbA-5T-Jae">
+                        <rect key="frame" x="95" y="10" width="20" height="20"/>
+                        <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="COA-E2-i2I"/>
+                            <constraint firstAttribute="height" constant="20" id="wH9-BS-M1T"/>
+                        </constraints>
+                        <state key="normal" image="binWhite">
+                            <color key="titleColor" systemColor="darkTextColor"/>
+                        </state>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="VbA-5T-Jae" firstAttribute="trailing" secondItem="A6u-iS-Ulh" secondAttribute="trailing" constant="-5" id="0hT-jd-NA1"/>
+                <constraint firstAttribute="bottom" secondItem="A6u-iS-Ulh" secondAttribute="bottom" constant="5" id="Nrb-PX-pBv"/>
+                <constraint firstItem="A6u-iS-Ulh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="gZN-Er-c0d"/>
+                <constraint firstAttribute="trailing" secondItem="A6u-iS-Ulh" secondAttribute="trailing" constant="5" id="q6g-7H-mgD"/>
+                <constraint firstItem="VbA-5T-Jae" firstAttribute="top" secondItem="A6u-iS-Ulh" secondAttribute="top" constant="5" id="qMh-ry-jKH"/>
+                <constraint firstItem="A6u-iS-Ulh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="yMx-4x-GA3"/>
+            </constraints>
+            <size key="customSize" width="64" height="58"/>
+            <connections>
+                <outlet property="cellImage" destination="A6u-iS-Ulh" id="gQg-rz-p2d"/>
+                <outlet property="removeBtn" destination="VbA-5T-Jae" id="UcP-Cs-jOg"/>
+            </connections>
+            <point key="canvasLocation" x="127.53623188405798" y="108.48214285714285"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="binWhite" width="14.5" height="15"/>
+        <image name="noImage" width="220" height="145"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Bold.otf">
+            <string>SFProText-Bold</string>
+        </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeclinePopupVC" customModule="AviationConnect" customModuleProvider="target">
+            <connections>
+                <outlet property="declineMsg" destination="fxk-bR-0R6" id="dKm-eW-x7C"/>
+                <outlet property="mainUIView" destination="Srp-Wg-zh4" id="dTO-Up-rUa"/>
+                <outlet property="otherReason" destination="w4Z-DT-WzN" id="exG-E1-ZCL"/>
+                <outlet property="otherView" destination="Ad4-Zo-z1H" id="eQb-kr-ZCk"/>
+                <outlet property="placeholderLbl" destination="dur-lW-h1I" id="yu9-1l-uVS"/>
+                <outlet property="reason1Btn" destination="PyP-Hh-x0Q" id="Obu-6d-UaZ"/>
+                <outlet property="reason2Btn" destination="S1P-KE-jQa" id="b4w-ao-58E"/>
+                <outlet property="reason3Btn" destination="KCy-9K-gBO" id="yIo-IY-0N9"/>
+                <outlet property="reasonForDecline" destination="HAt-Jo-vaW" id="Qeh-bU-0ws"/>
+                <outlet property="reasonsView" destination="9fi-Fh-9KL" id="HhW-aY-GEF"/>
+                <outlet property="textView" destination="zGz-AA-Hbl" id="1Eu-6k-nGD"/>
+                <outlet property="textViewUIView" destination="Ad4-Zo-z1H" id="ONf-Or-cI0"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Srp-Wg-zh4">
+                    <rect key="frame" x="0.0" y="502" width="393" height="350"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9l-5M-nNg">
+                            <rect key="frame" x="171" y="19.333333333333371" width="51" height="1"/>
+                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="4nA-ov-H1v"/>
+                                <constraint firstAttribute="width" constant="51" id="MfA-w0-k2M"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason for Declining" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAt-Jo-vaW">
+                            <rect key="frame" x="36" y="56.333333333333364" width="321" height="21.666666666666664"/>
+                            <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bgq-4j-3yC" userLabel="Bottom Btn View">
+                            <rect key="frame" x="0.0" y="230" width="393" height="120"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fxk-bR-0R6">
+                                    <rect key="frame" x="37" y="0.0" width="319" height="55"/>
+                                    <color key="backgroundColor" red="0.97254901960784312" green="0.039215686274509803" blue="0.047058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="55" id="7NZ-GS-5vE"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="18"/>
+                                    <state key="normal" title="Decline Meeting">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="24"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="declineMeetingTapped:" destination="-1" eventType="touchUpInside" id="osy-qq-bSH"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="fxk-bR-0R6" secondAttribute="trailing" constant="37" id="9Sj-sS-XlC"/>
+                                <constraint firstItem="fxk-bR-0R6" firstAttribute="leading" secondItem="bgq-4j-3yC" secondAttribute="leading" constant="37" id="Nxk-Zo-kVS"/>
+                                <constraint firstItem="fxk-bR-0R6" firstAttribute="top" secondItem="bgq-4j-3yC" secondAttribute="top" id="Zdk-lf-VWx"/>
+                                <constraint firstAttribute="height" constant="120" id="iiE-zX-Fru"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ady-Yq-2PR">
+                            <rect key="frame" x="36" y="98" width="337" height="112"/>
+                            <subviews>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fi-Fh-9KL">
+                                    <rect key="frame" x="0.0" y="0.0" width="337" height="164"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p4H-4o-5bO">
+                                            <rect key="frame" x="0.0" y="0.0" width="337" height="164"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PyP-Hh-x0Q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="337" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="maH-Dz-eky"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Sorry, unfortunately I am busy" image="emptyRadioBtn">
+                                                        <color key="titleColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="reason1Tapped:" destination="-1" eventType="touchUpInside" id="6kV-gt-DHl"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S1P-KE-jQa">
+                                                    <rect key="frame" x="0.0" y="43" width="337" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="1Ma-v5-e9p"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="This is not my field of expertise" image="emptyRadioBtn">
+                                                        <color key="titleColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="reason2Tapped:" destination="-1" eventType="touchUpInside" id="a5J-TM-a4g"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KCy-9K-gBO">
+                                                    <rect key="frame" x="0.0" y="86" width="337" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="XH0-Em-y1S"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Sorry, this time isn’t convenient" image="emptyRadioBtn">
+                                                        <color key="titleColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="reason3Tapped:" destination="-1" eventType="touchUpInside" id="j5v-cP-Avf"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4Z-DT-WzN">
+                                                    <rect key="frame" x="0.0" y="129" width="337" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="Dse-TI-zDw"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Other" image="emptyRadioBtn">
+                                                        <color key="titleColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="reasonOtherTapped:" destination="-1" eventType="touchUpInside" id="NL9-E1-eqn"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="p4H-4o-5bO" firstAttribute="leading" secondItem="9fi-Fh-9KL" secondAttribute="leading" id="QMk-I1-4oB"/>
+                                        <constraint firstAttribute="bottom" secondItem="p4H-4o-5bO" secondAttribute="bottom" id="R9f-y4-TLv"/>
+                                        <constraint firstItem="p4H-4o-5bO" firstAttribute="top" secondItem="9fi-Fh-9KL" secondAttribute="top" id="Zyh-j0-TBY"/>
+                                        <constraint firstAttribute="trailing" secondItem="p4H-4o-5bO" secondAttribute="trailing" id="i4N-tx-eeR"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ad4-Zo-z1H">
+                                    <rect key="frame" x="0.0" y="0.0" width="337" height="112"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zGz-AA-Hbl">
+                                            <rect key="frame" x="0.0" y="0.0" width="337" height="112"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="112" id="pr4-la-Fgg"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason for Declining" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dur-lW-h1I">
+                                            <rect key="frame" x="6" y="7" width="136" height="17"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                            <color key="textColor" red="0.51372549020000002" green="0.47843137250000001" blue="0.53333333329999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="dur-lW-h1I" firstAttribute="top" secondItem="zGz-AA-Hbl" secondAttribute="top" constant="7" id="1om-Sz-2xB"/>
+                                        <constraint firstItem="dur-lW-h1I" firstAttribute="leading" secondItem="zGz-AA-Hbl" secondAttribute="leading" constant="6" id="FAi-hW-49h"/>
+                                        <constraint firstAttribute="bottom" secondItem="zGz-AA-Hbl" secondAttribute="bottom" id="Toa-BI-ZvT"/>
+                                        <constraint firstItem="zGz-AA-Hbl" firstAttribute="leading" secondItem="Ad4-Zo-z1H" secondAttribute="leading" id="l2h-zs-Kfs"/>
+                                        <constraint firstItem="zGz-AA-Hbl" firstAttribute="top" secondItem="Ad4-Zo-z1H" secondAttribute="top" id="nOQ-lU-w7U"/>
+                                        <constraint firstAttribute="trailing" secondItem="zGz-AA-Hbl" secondAttribute="trailing" id="qb9-Fs-Lr2"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="13"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="HAt-Jo-vaW" firstAttribute="leading" secondItem="Srp-Wg-zh4" secondAttribute="leading" constant="36" id="9U6-DX-qyL"/>
+                        <constraint firstAttribute="trailing" secondItem="ady-Yq-2PR" secondAttribute="trailing" constant="20" id="agz-w9-Di3"/>
+                        <constraint firstAttribute="bottom" secondItem="bgq-4j-3yC" secondAttribute="bottom" id="cZp-pB-qqH"/>
+                        <constraint firstItem="bgq-4j-3yC" firstAttribute="leading" secondItem="Srp-Wg-zh4" secondAttribute="leading" id="gQc-y3-BOW"/>
+                        <constraint firstAttribute="trailing" secondItem="HAt-Jo-vaW" secondAttribute="trailing" constant="36" id="hi6-4M-2Lg"/>
+                        <constraint firstItem="ady-Yq-2PR" firstAttribute="top" secondItem="HAt-Jo-vaW" secondAttribute="bottom" constant="20" id="k6b-tQ-ek6"/>
+                        <constraint firstItem="bgq-4j-3yC" firstAttribute="top" secondItem="ady-Yq-2PR" secondAttribute="bottom" constant="20" id="ozK-sL-Svq"/>
+                        <constraint firstItem="d9l-5M-nNg" firstAttribute="top" secondItem="Srp-Wg-zh4" secondAttribute="top" constant="19.5" id="rmE-NL-Zvr"/>
+                        <constraint firstItem="HAt-Jo-vaW" firstAttribute="top" secondItem="d9l-5M-nNg" secondAttribute="bottom" constant="36" id="tkE-Zb-kXw"/>
+                        <constraint firstAttribute="trailing" secondItem="bgq-4j-3yC" secondAttribute="trailing" id="uUU-Wl-vOf"/>
+                        <constraint firstItem="ady-Yq-2PR" firstAttribute="leading" secondItem="Srp-Wg-zh4" secondAttribute="leading" constant="36" id="w6F-aN-oAl"/>
+                        <constraint firstItem="d9l-5M-nNg" firstAttribute="centerX" secondItem="Srp-Wg-zh4" secondAttribute="centerX" id="wvN-Mw-i6y"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Srp-Wg-zh4" secondAttribute="bottom" id="OoF-wG-kC4"/>
+                <constraint firstItem="Srp-Wg-zh4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="QjS-eI-l3g"/>
+                <constraint firstItem="Srp-Wg-zh4" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="pYz-Kx-0mK"/>
+            </constraints>
+            <point key="canvasLocation" x="6.8702290076335872" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="emptyRadioBtn" width="20" height="20"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

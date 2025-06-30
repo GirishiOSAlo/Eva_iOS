@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Regular.ttf">
+            <string>NunitoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="220" id="KGk-i7-Jjw" customClass="PostDocumentCell" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mxp-U1-pDA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="170" id="H0g-tC-QRl"/>
+                        </constraints>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jiE-9u-K4M">
+                        <rect key="frame" x="274" y="20" width="30" height="30"/>
+                        <color key="backgroundColor" name="BorderColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="dNi-fR-STS"/>
+                            <constraint firstAttribute="width" constant="30" id="elP-D8-DdD"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="ic_close_post_img"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="removeBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="t7Z-bD-j8b"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDA-P5-af8">
+                        <rect key="frame" x="16" y="178" width="72" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="T6C-Bh-VoZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="documents" translatesAutoresizingMaskIntoConstraints="NO" id="Z0P-Qx-chh">
+                        <rect key="frame" x="279" y="181" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="6XK-Rh-1R8"/>
+                            <constraint firstAttribute="height" constant="25" id="EWg-Rb-UFf"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="mxp-U1-pDA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="43p-33-62K"/>
+                    <constraint firstAttribute="trailing" secondItem="jiE-9u-K4M" secondAttribute="trailing" constant="16" id="Fli-xv-udK"/>
+                    <constraint firstItem="mxp-U1-pDA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="PLf-TV-Er5"/>
+                    <constraint firstItem="FDA-P5-af8" firstAttribute="top" secondItem="mxp-U1-pDA" secondAttribute="bottom" constant="8" symbolic="YES" id="cwa-Ib-pcU"/>
+                    <constraint firstItem="jiE-9u-K4M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" symbolic="YES" id="fBs-oy-o8a"/>
+                    <constraint firstAttribute="trailing" secondItem="mxp-U1-pDA" secondAttribute="trailing" id="fFD-39-ueS"/>
+                    <constraint firstItem="FDA-P5-af8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="hlp-GY-xYQ"/>
+                    <constraint firstItem="Z0P-Qx-chh" firstAttribute="top" secondItem="mxp-U1-pDA" secondAttribute="bottom" constant="11" id="n0P-Zo-qrF"/>
+                    <constraint firstItem="Z0P-Qx-chh" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="oln-fH-R4f"/>
+                </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                        <color key="value" white="0.66666666666666663" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </userDefinedRuntimeAttribute>
+                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                        <real key="value" value="6"/>
+                    </userDefinedRuntimeAttribute>
+                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                        <real key="value" value="2"/>
+                    </userDefinedRuntimeAttribute>
+                </userDefinedRuntimeAttributes>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="documentNameLbl" destination="FDA-P5-af8" id="UZ1-kG-v3W"/>
+                <outlet property="removeBtn" destination="jiE-9u-K4M" id="tND-Ok-gjZ"/>
+                <outlet property="webView" destination="mxp-U1-pDA" id="bCB-No-ao1"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="168.75"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="documents" width="17" height="19"/>
+        <image name="ic_close_post_img" width="14.5" height="14.5"/>
+        <namedColor name="BorderColor">
+            <color red="0.3449999988079071" green="0.57999998331069946" blue="0.86699998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
