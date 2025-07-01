@@ -133,6 +133,7 @@ enum EndPoints {
     static let createReport = baseURL + "post/create-report" //"create_complain"
     
     //MARK: Job
+    static let getJobList = baseURL + "job/list" //New
     static let getMyJobListing = baseURL + "job/show/"
     static let companyJobs = baseURL + "job/filter"
     static let postJobAd = baseURL + "job"

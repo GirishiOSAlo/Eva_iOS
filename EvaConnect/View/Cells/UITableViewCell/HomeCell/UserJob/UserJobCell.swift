@@ -54,6 +54,24 @@ class UserJobCell: UITableViewCell {
         }
     }
     
+    func setData(data: DashboardJob) {
+        positionNameLbl.text = data.jobTitle ?? ""
+        companyNameLbl.text = data.position ?? ""
+        jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
+        salaryLbl.text = "£\(data.salary ?? 0)"
+        locationLbl.text = data.location ?? ""
+        contractLbl.text = data.jobtype ?? ""
+        data.saved == 1 ? saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal) : saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
+        grayDotView.isHidden = false
+        if !isIndivisualUser {
+            grayDotView.isHidden = true
+            jobActiveTimeLbl.text = data.createdDatetime
+            applicantBtn.setTitle("\(data.applicantCount ?? 0) Applicants", for: .normal)
+            industryJobDescLbl.text = data.content
+            jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         baseMainView.dropShadow()

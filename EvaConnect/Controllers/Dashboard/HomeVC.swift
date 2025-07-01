@@ -57,6 +57,11 @@ class HomeVC: BaseVC {
             self.tableView.reloadData()
         }
     }
+    var jobList: [DashboardJob] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     var currentEventList: [DashboardItem] = [] {
         didSet {
@@ -156,10 +161,13 @@ class HomeVC: BaseVC {
         
         self.currentEventLblHeight.constant = 0
         self.allEventLblHeight.constant = 0
-        
+        self.currentEventListHeight.constant = 0
+
         if selectedTab == .jobs {
             homeTabFilter = HomeTabFilter.job
+            height = 32
             searchHeight = 40
+            self.fetchJobListData()
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
@@ -227,6 +235,33 @@ class HomeVC: BaseVC {
             } catch {
                 self.offsetCount -= 1
                 print("Error:: ", error)
+            }
+        }
+    }
+    
+    func fetchJobListData() {
+        showActivity()
+        let params = [
+            "filter": "all" // applied,all,saved,industry,my_jobs'
+        ]
+        let url = "\(EndPoints.getJobList)?limit=10&offset=1"
+        var urlComponents = URLComponents(string: url)!
+        urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+
+        let finalURL = urlComponents.url!.absoluteString
+        print(finalURL)
+
+        NetworkManagerr.request(finalURL, method: .get) { (response) in
+            self.hideActivity()
+            if response.result.isSuccess {
+                let jsonDecoder = JSONDecoder()
+                let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
+                if !(jobListData.error ?? false) {
+                    self.jobList = jobListData.data?.jobs ?? []
+                } else {
+                    self.presentAlert("Error", nil, response.error)
+                }
+                
             }
         }
     }
@@ -552,7 +587,11 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //        case self.currentEventListTableVw:
 //            return self.currentEventList.count
         case self.tableView:
-            return posts.count
+            if selectedTab == .jobs {
+                return self.jobList.count
+            } else {
+                return posts.count
+            }
         default:
             return 0
         }
@@ -803,7 +842,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.indivisualViewStack.isHidden = false
                 cell.industryView.isHidden = true
                 cell.saveJobBtn.isHidden = false
-                cell.job = posts[indexPath.row]
+//                cell.job = self.jobList[indexPath.row]
+                cell.setData(data: self.jobList[indexPath.row])
                 cell.viewDetailsBtn.tag = indexPath.row
                 cell.saveJobBtn.tag = indexPath.row
                 cell.editBtn.tag = indexPath.row
@@ -968,6 +1008,8 @@ private extension HomeVC {
             tabCollectionViewHeight.constant = 0
             indicatorView.stopAnimating()
             return
+        } else {
+            tabCollectionViewHeight.constant = 50.0
         }
         
         selectedTab = Constants.getEnumFromUserDefaults() ?? .news
@@ -1590,11 +1632,11 @@ extension HomeVC {
     }
     
     @objc func tabDidChange(_ sender: UIButton) {
-        
         if tableView.refreshControl?.isRefreshing ?? false || indicatorView.isAnimating || selectedTab.selectedIndex == sender.tag { return }
         
         homeTabFilter.removeAll()
         posts.removeAll()
+        jobList.removeAll()
 //        tableView.reloadData()
         
         self.currentEventLblHeight.constant = 0
@@ -1605,6 +1647,7 @@ extension HomeVC {
         
         switch sender.tag {
         case 0:
+            print("News Tab Select")
 //            if isIndivisualUser {
                 selectedTab = .news
                 Constants.saveEnumToUserDefaults(.news)
@@ -1622,6 +1665,7 @@ extension HomeVC {
             if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
             reloadData()
         case 1:
+            print("Event Tab Select")
 //            if isIndivisualUser {
                 selectedTab = .events
                 Constants.saveEnumToUserDefaults(.events)
@@ -1646,6 +1690,7 @@ extension HomeVC {
             if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
             reloadData()
         case 2:
+            print("Job Tab Select")
 //            if isIndivisualUser {
                 selectedTab = .jobs
                 Constants.saveEnumToUserDefaults(.jobs)
@@ -1665,10 +1710,11 @@ extension HomeVC {
 //                reloadData()
 //                
 //            }
-            
+            self.fetchJobListData()
             if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
-            reloadData()
+//            reloadData()
         case 3:
+            print("Post Tab Select")
             selectedTab = .posts
             Constants.saveEnumToUserDefaults(.posts)
             selectedHomeFilter = .none
