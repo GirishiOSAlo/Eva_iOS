@@ -167,7 +167,8 @@ class HomeVC: BaseVC {
             homeTabFilter = HomeTabFilter.job
             height = 32
             searchHeight = 40
-            self.fetchJobListData()
+            selectedHomeFilter = .all
+            self.fetchJobListData(with: self.selectedHomeFilter.rawValue)
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
@@ -222,6 +223,7 @@ class HomeVC: BaseVC {
             do {
                 let jsonDecoder = JSONDecoder()
                 let currentEventRoot = try jsonDecoder.decode(DashboardItemRoot.self, from: response.data!)
+                self.filterCollectionView.isUserInteractionEnabled = true
                 if !(currentEventRoot.error) {
                     if (currentEventRoot.data.count) > 0 {
                         self.currentEventList = currentEventRoot.data
@@ -239,10 +241,10 @@ class HomeVC: BaseVC {
         }
     }
     
-    func fetchJobListData() {
+    func fetchJobListData(with: String) {
         showActivity()
         let params = [
-            "filter": "all" // applied,all,saved,industry,my_jobs'
+            "filter": with // applied,all,saved,industry,my_jobs'
         ]
         let url = "\(EndPoints.getJobList)?limit=10&offset=1"
         var urlComponents = URLComponents(string: url)!
@@ -253,15 +255,20 @@ class HomeVC: BaseVC {
 
         NetworkManagerr.request(finalURL, method: .get) { (response) in
             self.hideActivity()
-            if response.result.isSuccess {
-                let jsonDecoder = JSONDecoder()
-                let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
-                if !(jobListData.error ?? false) {
+            self.filterCollectionView.isUserInteractionEnabled = true
+            let jsonDecoder = JSONDecoder()
+            
+            let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data ?? Data())
+            if !(jobListData.error ?? false) {
+                if (jobListData.data?.jobs?.count ?? 0) > 0 {
+                    self.emptyListMessageLbl.text = ""
                     self.jobList = jobListData.data?.jobs ?? []
                 } else {
-                    self.presentAlert("Error", nil, response.error)
+                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Default Error")"
+                    print("Job list is empty.")
                 }
-                
+            } else {
+                self.presentAlert("Failure", jobListData.message, nil)
             }
         }
     }
@@ -450,6 +457,12 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
                 self.allEventLblHeight.constant = 0
                 self.currentEventListHeight.constant = 0
             }
+        } else if selectedTab == .jobs {
+            print(selectedHomeFilter)
+            self.fetchJobListData(with: self.selectedHomeFilter.rawValue)
+        }
+        else {
+            refreshingContent()
         }
         filterCollectionView.isUserInteractionEnabled = false
         filterCollectionView.performBatchUpdates { [weak self] in
@@ -458,7 +471,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             self.selectedTabFilter = indexPath.item
             self.filterCollectionView.reloadItems(at: [indexPath])
         }
-        refreshingContent()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
@@ -1710,7 +1723,7 @@ extension HomeVC {
 //                reloadData()
 //                
 //            }
-            self.fetchJobListData()
+            self.fetchJobListData(with: self.selectedHomeFilter.rawValue)
             if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
 //            reloadData()
         case 3:
