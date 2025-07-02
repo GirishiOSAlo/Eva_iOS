@@ -36,7 +36,7 @@ class HomeVC: BaseVC {
     
     @IBOutlet weak var searchUIView: UIView!
     @IBOutlet weak var searchImageView: UIImageView!
-    @IBOutlet weak var searchTxt: UITextField!
+    @IBOutlet weak var searchTxtField: UITextField!
     @IBOutlet weak var searchHeightConst: NSLayoutConstraint!
     
     
@@ -107,6 +107,8 @@ class HomeVC: BaseVC {
     var expandedCells: Set<Int> = []
     var specificUserPost: Int? = nil
     var searchEnabled = false
+    var currentPage = 1
+    var lastPage = 1
     
     var searchFilterKey: (key: String, query: String)? = nil {
         didSet {
@@ -168,7 +170,7 @@ class HomeVC: BaseVC {
             height = 32
             searchHeight = 40
             selectedHomeFilter = .all
-            self.fetchJobListData(with: self.selectedHomeFilter.rawValue)
+            self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
@@ -241,12 +243,13 @@ class HomeVC: BaseVC {
         }
     }
     
-    func fetchJobListData(with: String) {
+    func fetchJobListData(filter: String, currentPage: Int, searchStr: String) {
         showActivity()
         let params = [
-            "filter": with // applied,all,saved,industry,my_jobs'
+            "filter": filter, // applied,all,saved,industry,my_jobs'
+            "search": searchStr
         ]
-        let url = "\(EndPoints.getJobList)?limit=10&offset=1"
+        let url = "\(EndPoints.getJobList)?limit=10&offset=\(currentPage)"
         var urlComponents = URLComponents(string: url)!
         urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
 
@@ -261,6 +264,7 @@ class HomeVC: BaseVC {
             let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
             if !(jobListData.error ?? false) {
                 self.jobList = jobListData.data?.jobs ?? []
+                self.lastPage = jobListData.data?.lastPage ?? 1
 //                if (jobListData.data?.jobs?.count ?? 0) > 0 {
 //                    self.emptyListMessageLbl.text = ""
 //                } else {
@@ -458,7 +462,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             }
         } else if selectedTab == .jobs {
             print(selectedHomeFilter)
-            self.fetchJobListData(with: self.selectedHomeFilter.rawValue)
+            self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         }
         else {
             refreshingContent()
@@ -968,6 +972,24 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if selectedTab == .jobs {
+            if self.jobList.count > 0 {
+                if indexPath.row == self.jobList.count - 1 {
+                    print("👉 Last tableview cell is visible")
+                    // Load next page if not already fetching and not at the last page
+                    if currentPage < lastPage {
+                        currentPage += 1
+                        self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                    } else {
+                        print("Page completed. No Api call")
+                    }
+                }
+            } else {
+                print("Job list is empty.")
+            }
+        }
+    }
 }
 
 //MARK: Scroll View Delegate...
@@ -1455,6 +1477,9 @@ extension HomeVC {
         collectionView.delegate = self
         collectionView.layer.cornerRadius = 7.0
 //        collectionView.backgroundColor = AppColors.lightGrayBG
+        
+        self.searchTxtField.delegate = self
+        self.searchTxtField.addTarget(self, action: #selector(self.searchTextFieldDidChange(_:)), for: .editingChanged)
 
         filterCollectionView.dataSource = self
         filterCollectionView.delegate = self
@@ -1483,6 +1508,20 @@ extension HomeVC {
         reloadData()
     }
     
+}
+
+//MARK: Text Field Delegate...
+extension HomeVC: UITextFieldDelegate {
+    @objc func searchTextFieldDidChange(_ textField: UITextField) {
+        let searchStr = self.searchTxtField.text ?? ""
+        print("Search Text :: \(searchStr)")
+        if selectedTab == .jobs {
+            self.jobList = []
+            DispatchQueue.main.async {
+                self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+            }
+        }
+    }
 }
 
 //MARK: CUSTOM FUNCTION
@@ -1722,7 +1761,7 @@ extension HomeVC {
 //                reloadData()
 //                
 //            }
-            self.fetchJobListData(with: self.selectedHomeFilter.rawValue)
+            self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
             if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
 //            reloadData()
         case 3:
