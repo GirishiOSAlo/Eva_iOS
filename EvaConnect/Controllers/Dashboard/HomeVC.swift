@@ -260,12 +260,12 @@ class HomeVC: BaseVC {
             
             let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
             if !(jobListData.error ?? false) {
-                if (jobListData.data?.jobs?.count ?? 0) > 0 {
-                    self.emptyListMessageLbl.text = ""
-                    self.jobList = jobListData.data?.jobs ?? []
-                } else {
-                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
-                }
+                self.jobList = jobListData.data?.jobs ?? []
+//                if (jobListData.data?.jobs?.count ?? 0) > 0 {
+//                    self.emptyListMessageLbl.text = ""
+//                } else {
+//                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
+//                }
             } else {
                 self.presentAlert("Failure", jobListData.message, nil)
             }
