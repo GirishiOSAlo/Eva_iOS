@@ -258,14 +258,13 @@ class HomeVC: BaseVC {
             self.filterCollectionView.isUserInteractionEnabled = true
             let jsonDecoder = JSONDecoder()
             
-            let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data ?? Data())
+            let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
             if !(jobListData.error ?? false) {
                 if (jobListData.data?.jobs?.count ?? 0) > 0 {
                     self.emptyListMessageLbl.text = ""
                     self.jobList = jobListData.data?.jobs ?? []
                 } else {
-                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Default Error")"
-                    print("Job list is empty.")
+                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
                 }
             } else {
                 self.presentAlert("Failure", jobListData.message, nil)
