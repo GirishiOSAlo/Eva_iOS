@@ -263,8 +263,9 @@ class HomeVC: BaseVC {
             
             let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
             if !(jobListData.error ?? false) {
-                self.jobList = jobListData.data?.jobs ?? []
                 self.lastPage = jobListData.data?.lastPage ?? 1
+                let list = jobListData.data?.jobs ?? []
+                self.jobList.append(contentsOf: list)
 //                if (jobListData.data?.jobs?.count ?? 0) > 0 {
 //                    self.emptyListMessageLbl.text = ""
 //                } else {
@@ -1684,7 +1685,7 @@ extension HomeVC {
     
     @objc func tabDidChange(_ sender: UIButton) {
         if tableView.refreshControl?.isRefreshing ?? false || indicatorView.isAnimating || selectedTab.selectedIndex == sender.tag { return }
-        
+        self.searchTxtField.text = ""
         homeTabFilter.removeAll()
         posts.removeAll()
         jobList.removeAll()
