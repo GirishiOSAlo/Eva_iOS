@@ -145,7 +145,7 @@ enum EndPoints {
     static let getApplicantDetail = baseURL + "job/application/details/"
     static let postJobComment = baseURL + "job/comment/"
     static let getJobComment = baseURL + "job/comment/filter/"
-    static let jobFavourite = baseURL + "job/save"
+    static let jobSave = baseURL + "job/save"
     static let shareJob = baseURL + "job/share"
     
     //MARK: Event

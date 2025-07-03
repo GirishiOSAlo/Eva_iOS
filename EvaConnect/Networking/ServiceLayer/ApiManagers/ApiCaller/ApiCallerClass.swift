@@ -521,7 +521,7 @@ class ApiCallerClass: NSObject {
             "Authorization":"Bearer \(usertoken)",
             "OS" : ApiCallerClass.OS
         ]
-        let request =  ApiManagerClass.sharedManager.request(EndPoints.jobFavourite, method: .post, parameters: para, encoding:JSONEncoding.default, headers: header).responseJSON {
+        let request =  ApiManagerClass.sharedManager.request(EndPoints.jobSave, method: .post, parameters: para, encoding:JSONEncoding.default, headers: header).responseJSON {
             (response) in
             if  response.result.isSuccess {
                 if response.response?.statusCode == 200 || response.response?.statusCode == 201 {

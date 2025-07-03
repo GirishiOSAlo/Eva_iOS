@@ -265,7 +265,15 @@ class HomeVC: BaseVC {
             if !(jobListData.error ?? false) {
                 self.lastPage = jobListData.data?.lastPage ?? 1
                 let list = jobListData.data?.jobs ?? []
-                self.jobList.append(contentsOf: list)
+                
+                if currentPage == 0 || currentPage == 1 {
+                    // new search — clear first
+                    self.jobList = []
+                    self.jobList = list
+                } else {
+                    // pagination — append
+                    self.jobList.append(contentsOf: list)
+                }
 //                if (jobListData.data?.jobs?.count ?? 0) > 0 {
 //                    self.emptyListMessageLbl.text = ""
 //                } else {
@@ -1436,19 +1444,20 @@ private extension HomeVC {
     }
     
     
-    private func saveJob(postId: Int, at: Int) {
+    private func saveJob(jobId: Int, at: Int) {
         
-        let param: AFParameters = [ "job_id": postId]
+        let param: AFParameters = [ "job_id": jobId]
         
         view.isUserInteractionEnabled = false
         
-        ApiCallerClass.saveJobServiceFunc(usertoken: LoggedUserDetails.shared.token!,para: param, success: { (dataRespose) in
+        ApiCallerClass.saveJobServiceFunc(usertoken: myUserDefaults.token,para: param, success: { (dataRespose) in
             let data = dataRespose as? NSDictionary
             let error = data?["error"] as? Int
             self.hideActivity()
             if error == 0 {
                 print("Job saved!!")
-                self.getPosts(offSet: 1, inserted: false)
+                //self.getPosts(offSet: 1, inserted: false)
+                self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
 //                let indexPath = IndexPath(item: at, section: 0)
 //                UIView.performWithoutAnimation { self.tableView.reloadRows(at: [indexPath], with: .none) }
                 self.view.isUserInteractionEnabled = true
@@ -1747,6 +1756,7 @@ extension HomeVC {
                 selectedTab = .jobs
                 Constants.saveEnumToUserDefaults(.jobs)
                 selectedHomeFilter = .all
+                jobList = []
 //            if jobListingBtn.isHidden {
                 homeTabFilter = HomeTabFilter.job
                 height = 32
@@ -2018,8 +2028,9 @@ extension HomeVC {
     
     @objc func saveJobTapped(sender: UIButton) {
         showActivity()
-        let post = posts[sender.tag]
-        saveJob(postId: post.id, at: sender.tag)
+//        let post = posts[sender.tag]
+        let job = jobList[sender.tag]
+        saveJob(jobId: job.id ?? 0, at: sender.tag)
     }
     
     @objc func urlVCPost(sender: UIButton) {

@@ -91,10 +91,6 @@ class UserJobCell: UITableViewCell {
         if let goToAd = goToAd { goToAd(job) }
     }
     
-    @IBAction func saveJobTapped(_ sender: UIButton) {
-        
-    }
-    
     @IBAction func editTapped(_ sender: UIButton) {
         
     }
