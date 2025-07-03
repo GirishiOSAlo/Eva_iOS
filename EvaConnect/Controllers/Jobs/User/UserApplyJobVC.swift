@@ -13,13 +13,18 @@ import Alamofire
 import SafariServices
 import Lottie
 
+protocol SelectedResumePassingDelegate: AnyObject {
+    func didPassData(_ data: ResumeData)
+}
+
 class UserApplyJobVC: BaseVC {
     
 //    @IBOutlet weak var uploadWidthConst: NSLayoutConstraint!
-    @IBOutlet weak var uploadCVBtn: UIButton!
+//    @IBOutlet weak var uploadCVBtn: UIButton!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var fileNameLbl: UILabel!
     @IBOutlet weak var successLbl: UILabel!
+    @IBOutlet weak var cancelBtn: UIButton!
     
     @IBOutlet weak var pdfImgView: UIImageView!
     @IBOutlet weak var pdfImgWidthConst: NSLayoutConstraint!
@@ -37,7 +42,9 @@ class UserApplyJobVC: BaseVC {
     
     @IBOutlet weak var profileMainView: UIView!
     @IBOutlet weak var coverLaterBaseVw: UIView!
-    @IBOutlet weak var uploadBtnBaseVw: UIView!
+    
+    @IBOutlet weak var successResumeBaseVw: UIView!
+    @IBOutlet weak var uploadResumeBaseVw: UIView!
     
     @IBOutlet weak var applyJobSuccessPopupVw: UIView!
     @IBOutlet weak var subPopupView: UIView!
@@ -47,14 +54,16 @@ class UserApplyJobVC: BaseVC {
     
     var animationView: LottieAnimationView!
     private var cvDocumentURL: URL? = nil
-    var job: DashboardItem?
+//    var job: DashboardItem?
     var dashboardJob: DashboardJob?
+    var job: JobDetailsData?
     private var jobSuccessAlert: JobApplicationAlert!
     
     var jobApplicantDetail: JobApplicant?
     var jobDetail: JobDetail?
     var jobId: Int?
     var isCVUploaded = false
+    var selectedResume: ResumeData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,17 +78,26 @@ class UserApplyJobVC: BaseVC {
 
         self.profileMainView.layer.cornerRadius = 13
         self.coverLaterBaseVw.layer.cornerRadius = 13
-        self.uploadBtnBaseVw.layer.cornerRadius = 13
+        self.uploadResumeBaseVw.layer.cornerRadius = 13
+        self.successResumeBaseVw.layer.cornerRadius = 13
+        
+        coverLetterTxt.delegate = self
+        coverLetterTxt.textColor = .lightGray
+        self.coverLetterTxt.font = UIFont(name: Myfonts.regular, size: 14.0)
         
         self.applyJobSuccessPopupVw.isHidden = true
         self.subPopupView.layer.cornerRadius = 13
         self.okButton.layer.cornerRadius = self.okButton.frame.size.height/2
         
-        uploadCVBtn.setTitle("", for: .normal)
-        uploadCVBtn.setImage(UIImage(named: "addInvite"), for: .normal)
+        self.successResumeBaseVw.isHidden = true
+        self.uploadResumeBaseVw.isHidden = false
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-        pdfImgView.addGestureRecognizer(tapGesture)
+        
+//        uploadCVBtn.setTitle("", for: .normal)
+//        uploadCVBtn.setImage(UIImage(named: "addInvite"), for: .normal)
+        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+//        pdfImgView.addGestureRecognizer(tapGesture)
     }
     
     @objc func imageTapped() {
@@ -102,28 +120,69 @@ class UserApplyJobVC: BaseVC {
         animationView.play()
     }
     
-    @IBAction func submitBtnTapped(_ sender: Any) {
-//        if cvDocumentURL == nil {
-//            ErrorView(contentView: navigationController?.view ?? view).show(message: "Please attach cv")
-//        } else if coverLetterTxt.textColor == .lightGray {
-//            ErrorView(contentView: navigationController?.view ?? view).show(message: "Please enter someting in cover letter")
-//        } else {
-//            submitBtn.isUserInteractionEnabled.toggle()
-        
-//            applyForJob()
-        
-        let vc = UIStoryboard(storyboard: .jobs).instantiateViewController(withIdentifier: "UploadCVVC") as! UploadCVVC
-        navigationController?.pushViewController(vc, animated: true)
-        
-//        }
-    }
-    
     @IBAction func backBtnTapped(_ sender: Any) { goBack() }
     
-    @IBAction func onBtnTapped(_ sender: UIButton) {
+    @IBAction func submitBtnTapped(_ sender: Any) {
+        //if cvDocumentURL == nil {
+        if selectedResume == nil {
+            ErrorView(contentView: navigationController?.view ?? view).show(message: "Please attach cv")
+        } else if coverLetterTxt.textColor == .lightGray {
+            ErrorView(contentView: navigationController?.view ?? view).show(message: "Please enter someting in cover letter")
+        } else {
+            submitBtn.isUserInteractionEnabled.toggle()
+            applyJob()
+            //applyForJob()
+        }
+    }
+    
+    
+    @IBAction func onCancelBtnTap(_ sender: UIButton) {
+        print("Cancel uploaded resume....")
+        self.successResumeBaseVw.isHidden = true
+        self.uploadResumeBaseVw.isHidden = false
+        
+        self.selectedResume = nil
+        self.fileNameLbl.text = "--"
+    }
+    
+    @IBAction func onOkBtnTapped(_ sender: UIButton) {
         self.applyJobSuccessPopupVw.isHidden = true
         self.animationView.stop()
         self.navigationController?.popToViewController(ofClass: DashboardTabbarVC.self)
+    }
+    
+    @IBAction func uploadCVBtnTapped(_ sender: Any) {
+        let vc = UIStoryboard(storyboard: .jobs).instantiateViewController(withIdentifier: "UploadCVVC") as! UploadCVVC
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
+////        if uploadWidthConst.constant == 130 {
+////            if let url = URL(string: jobApplicantDetail?.applicationAttachment ?? "") {
+////                present(SFSafariViewController(url: url), animated: true, completion: nil)
+////            }
+////        } else {
+//        if !isCVUploaded{
+//            openFile()
+//        } else {
+//            cvDocumentURL = nil
+//            fileNameLbl.text = "Upload Resume*"
+//            fileNameLbl.isHidden = false
+//            successLbl.isHidden = true
+//            pdfImgWidthConst.constant = 0
+//            uploadCVBtn.setTitle("", for: .normal)
+//            uploadCVBtn.setImage(UIImage(named: "addInvite"), for: .normal)
+//            isCVUploaded = false
+//        }
+////        }
+    }
+}
+
+extension UserApplyJobVC: SelectedResumePassingDelegate {
+    func didPassData(_ data: ResumeData) {
+        self.successResumeBaseVw.isHidden = false
+        self.uploadResumeBaseVw.isHidden = true
+        
+        self.selectedResume = data
+        self.fileNameLbl.text = data.title ?? "--"
     }
 }
 
@@ -136,10 +195,8 @@ extension UserApplyJobVC {
             positionNameLbl.text = job.position ?? ""
             salaryLbl.text = "£\(job.salary ?? 0)"
             locationLbl.text = job.location ?? ""
-            jobTimeLbl.text = job.jobtype?.rawValue ?? ""
+            jobTimeLbl.text = job.jobtype ?? ""
             jobImageView.sd_setImage(with: URL(string: job.user?.userImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-            coverLetterTxt.delegate = self
-            coverLetterTxt.textColor = .lightGray
             jobSuccessAlert = JobApplicationAlert(type: .application)
         }
         else if let job = dashboardJob {
@@ -149,8 +206,6 @@ extension UserApplyJobVC {
             salaryLbl.text = "£\(job.salary ?? 0)"
             jobTimeLbl.text = job.jobtype ?? ""
             jobImageView.sd_setImage(with: URL(string: job.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-            coverLetterTxt.delegate = self
-            coverLetterTxt.textColor = .lightGray
             jobSuccessAlert = JobApplicationAlert(type: .application)
         }
 //        else if let applicant = jobApplicantDetail, let job = jobDetail {
@@ -207,28 +262,6 @@ extension UserApplyJobVC: UITextViewDelegate {
 }
 
 extension UserApplyJobVC: UIDocumentPickerDelegate {
-    
-    @IBAction func uploadCVBtnTapped(_ sender: Any) {
-//        if uploadWidthConst.constant == 130 {
-//            if let url = URL(string: jobApplicantDetail?.applicationAttachment ?? "") {
-//                present(SFSafariViewController(url: url), animated: true, completion: nil)
-//            }
-//        } else {
-        if !isCVUploaded{
-            openFile()
-        } else {
-            cvDocumentURL = nil
-            fileNameLbl.text = "Upload Resume*"
-            fileNameLbl.isHidden = false
-            successLbl.isHidden = true
-            pdfImgWidthConst.constant = 0
-            uploadCVBtn.setTitle("", for: .normal)
-            uploadCVBtn.setImage(UIImage(named: "addInvite"), for: .normal)
-            isCVUploaded = false
-        }
-//        }
-    }
-    
     private func openFile() {
         let types = [kUTTypePDF, kUTTypeText, kUTTypeRTF, kUTTypeSpreadsheet, kUTTypeCompositeContent]
         let documentPicker = UIDocumentPickerViewController(documentTypes: types as [String], in: .import)
@@ -242,15 +275,41 @@ extension UserApplyJobVC: UIDocumentPickerDelegate {
         fileNameLbl.isHidden = false
         successLbl.isHidden = false
         pdfImgWidthConst.constant = 40
-        uploadCVBtn.setTitle("Cancel", for: .normal)
-        uploadCVBtn.setImage(nil, for: .normal)
+//        uploadCVBtn.setTitle("Cancel", for: .normal)
+//        uploadCVBtn.setImage(nil, for: .normal)
         isCVUploaded = true
     }
     
 }
 
 extension UserApplyJobVC {
-
+    
+    func applyJob() {
+        let parameters = [ "created_by_id" : myUserDefaults.userId,
+                           "status": 2,
+                           "job_id": jobId ?? 0,
+                           "resume_id": "\(self.selectedResume?.id ?? 0)",
+                           "platform": "iOS",
+                           "content": coverLetterTxt.text ?? ""] as [String: Any]
+        print(parameters)
+        showActivity()
+        NetworkManagerr.request(EndPoints.applyForJob, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let applyJobRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(applyJobRoot.error) {
+                    print("Success :: \(applyJobRoot.message)")
+                    self.addAnimation()
+                } else {
+                    print("Error :: \(applyJobRoot.message)")
+                }
+            } catch {
+                print("\(String(describing: response.result.error?.localizedDescription))")
+            }
+        }
+    }
+    
     private func applyForJob(){
         
         guard coverLetterTxt.text != "" else {

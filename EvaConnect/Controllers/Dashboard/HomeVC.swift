@@ -447,7 +447,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     
     @objc func openCurrentEventDetail(sender: UIButton) {
         let vc = EventMainVC.instantiate()
-        vc.eventId = currentEventList[sender.tag].id
+        vc.eventId = currentEventList[sender.tag].id //4
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -936,10 +936,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
     }
     
     @objc func tapJobApply(sender: UIButton){
-        let obj = posts[sender.tag]
+        let obj = jobList[sender.tag]
         if obj.isApplied == 0 {
             let vc = StoryboardRouter.userApplyJob()
-            vc.job = obj
+            vc.dashboardJob = obj
             vc.jobId = obj.id
             navigationController?.pushViewController(vc, animated: true)
         } else {

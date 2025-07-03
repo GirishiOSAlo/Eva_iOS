@@ -50,14 +50,14 @@ class UserJobListingVC: BaseVC {
     }
     
     @IBAction func applyBtnTapped(_ sender: Any) {
-//        if job?.isApplied == 0 {
-//            let vc = StoryboardRouter.userApplyJob()
-//            vc.job = job
-//            vc.jobId = job?.id
-//            navigationController?.pushViewController(vc, animated: true)
-//        } else {
-//            showToastWithLogo(message: "You have already applied for this job.")
-//        }
+        if jobDetails?.isApplied == 0 {
+            let vc = StoryboardRouter.userApplyJob()
+            vc.job = jobDetails
+            vc.jobId = self.jobId
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            showToastWithLogo(message: "You have already applied for this job.")
+        }
     }
     
     @IBAction func starBtnTapped(_ sender: Any) {

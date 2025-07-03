@@ -140,7 +140,7 @@ enum EndPoints {
     static let showJobDetailById = baseURL + "job/show/details/"
     static let jobDetails = baseURL + "job/details/"
     static let getAllJobApplicant = baseURL + "job/application/filter" //Using
-    static let applyForJob = baseURL + "job/application"
+    static let applyForJob = baseURL + "job/application" //Using
     static let declineApplicant = baseURL + "job/application/details/"
     static let getApplicantDetail = baseURL + "job/application/details/"
     static let postJobComment = baseURL + "job/comment/"

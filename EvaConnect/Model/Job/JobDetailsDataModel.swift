@@ -35,7 +35,7 @@ struct JobDetailsData: Codable {
     let attendees, commentCount, applicantCount, isJobLike: Int?
     let isApplied, likeCount, createdByID: Int?
     let createdDatetime: String?
-    let modifiedByID: String?
+    let modifiedByID: Int?
     let modifiedDatetime, type, os, status: String?
     let isURL: Bool?
     let postVideo, isConnected: String?

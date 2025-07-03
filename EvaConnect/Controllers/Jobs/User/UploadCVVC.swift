@@ -11,6 +11,8 @@ import MobileCoreServices
 
 class UploadCVVC: UIViewController {
 
+    weak var delegate: SelectedResumePassingDelegate?
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeadingLable: UILabel!
@@ -61,7 +63,8 @@ class UploadCVVC: UIViewController {
     
     @IBAction func selectBtnTapped(_ sender: UIButton) {
         let selectedResume = self.resumeList[self.selectedIndex]
-        print(selectedResume.resumeFile ?? "")
+        delegate?.didPassData(selectedResume)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func deleteResume(sender: UIButton) {

@@ -3017,7 +3017,7 @@
                                 <rect key="frame" x="0.0" y="112" width="393" height="610"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZG-K3-jS9">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="484"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="555"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zWU-JF-zlh">
                                                 <rect key="frame" x="20" y="33" width="353" height="170"/>
@@ -3296,7 +3296,7 @@
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bzp-mR-1RW">
                                                         <rect key="frame" x="20" y="60.333333333333321" width="353" height="80.666666666666686"/>
                                                         <subviews>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Enter something" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TeM-Qm-Pwl">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Enter something" translatesAutoresizingMaskIntoConstraints="NO" id="TeM-Qm-Pwl">
                                                                 <rect key="frame" x="16" y="19.999999999999996" width="321" height="40.666666666666657"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3324,9 +3324,9 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oWj-Uy-mug">
-                                                <rect key="frame" x="20" y="358" width="353" height="76"/>
+                                                <rect key="frame" x="20" y="358" width="353" height="147"/>
                                                 <subviews>
-                                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHE-2s-5G3">
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHE-2s-5G3">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="71"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIi-42-T8o">
@@ -3353,13 +3353,13 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Resume*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-rY-SnZ">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-rY-SnZ">
                                                                 <rect key="frame" x="82" y="15.999999999999998" width="179" height="19.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65n-o9-TUs">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65n-o9-TUs">
                                                                 <rect key="frame" x="82" y="39.333333333333314" width="185" height="19.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                                                                 <color key="textColor" red="0.031372549019607843" green="0.74509803921568629" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
@@ -3377,7 +3377,7 @@
                                                                     <color key="titleColor" name="BorderColor"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="uploadCVBtnTapped:" destination="HEm-va-zd7" eventType="touchUpInside" id="uit-oc-iwE"/>
+                                                                    <action selector="onCancelBtnTap:" destination="HEm-va-zd7" eventType="touchUpInside" id="heR-q4-706"/>
                                                                 </connections>
                                                             </button>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pdf_ic" translatesAutoresizingMaskIntoConstraints="NO" id="jla-ea-hga">
@@ -3412,7 +3412,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EbI-kX-lSm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="76"/>
+                                                        <rect key="frame" x="0.0" y="71" width="353" height="76"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Resume*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Osv-xl-Gbc">
                                                                 <rect key="frame" x="94.000000000000014" y="19" width="133.33333333333337" height="19.333333333333329"/>
@@ -3537,7 +3537,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="onBtnTapped:" destination="HEm-va-zd7" eventType="touchUpInside" id="c3O-f6-sO1"/>
+                                                    <action selector="onOkBtnTapped:" destination="HEm-va-zd7" eventType="touchUpInside" id="BBh-Hl-ocC"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Your Application has been sent to the company. Please check your notifications for their reply." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MZx-q3-G4x">
@@ -3604,15 +3604,11 @@
                             <constraint firstItem="Ky9-yA-teY" firstAttribute="leading" secondItem="KYH-md-hn6" secondAttribute="leading" id="r4G-uS-zes"/>
                             <constraint firstAttribute="bottom" secondItem="lbt-Yh-tzM" secondAttribute="bottom" id="ri6-AA-ykm"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="lbt-Yh-tzM"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="animationContainerView" destination="SWX-sX-tYC" id="OYD-Fk-sJ8"/>
                         <outlet property="applyJobSuccessPopupVw" destination="lbt-Yh-tzM" id="h8u-pI-NO4"/>
+                        <outlet property="cancelBtn" destination="Rxw-GH-jA2" id="yvg-gH-XS3"/>
                         <outlet property="coverLaterBaseVw" destination="Bzp-mR-1RW" id="EN3-PH-6FJ"/>
                         <outlet property="coverLetterTxt" destination="TeM-Qm-Pwl" id="pOR-PG-gIO"/>
                         <outlet property="fileNameLbl" destination="hs6-rY-SnZ" id="Reg-tJ-54X"/>
@@ -3630,8 +3626,8 @@
                         <outlet property="subPopupView" destination="LWr-yx-ZnZ" id="djQ-gk-6iq"/>
                         <outlet property="submitBtn" destination="pCa-Ks-STh" id="yMP-WH-3Zq"/>
                         <outlet property="successLbl" destination="65n-o9-TUs" id="yrK-Nf-nsB"/>
-                        <outlet property="uploadBtnBaseVw" destination="BHE-2s-5G3" id="yno-yd-zJF"/>
-                        <outlet property="uploadCVBtn" destination="Rxw-GH-jA2" id="fRA-sC-PpU"/>
+                        <outlet property="successResumeBaseVw" destination="BHE-2s-5G3" id="aP4-eT-zFY"/>
+                        <outlet property="uploadResumeBaseVw" destination="EbI-kX-lSm" id="Kts-Rg-kRE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDm-VM-rrp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
