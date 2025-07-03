@@ -312,7 +312,7 @@ struct List: Codable {
     let country: String?
     let url, jobTitle: String?
     let companyName: String?
-    let telephoneNumber, companyID: Int?
+    let telephoneNumber, companyID: String?
     let speakerLinkedin, sponsorGraphic: String?
     let sponsorName: String?
     let linkedin: String?
@@ -479,17 +479,17 @@ struct EvaEventsAttendeeUser: Codable {
     let dateOfBirth, userImage: String?
     let gender, delegatePaEmail, countryCode: String?
     let description, sponsorTypeID, sponsorURL, postcode: String?
-    let address, os: String?
-    let type, phoneNumber: Int?
+    let address, os, phoneNumber: String?
+    let type: Int?
     let resetPasswordTokenGenerateDay, resetPasswordTokenExpiryDay: String?
     let isStaff, isActive, isDefaultMenu: Bool?
     let lastLogin, dateJoined: String?
     let modifiedDatetime, sort: String?
     let status, verificationPin: Int?
     let createdByID, modifiedByID: String?
-    let bioData: String?
-    let companyName, categoryID, logo: String?
-    let companyURL: String?
+    let bioData, companyName: String?
+    let categoryID: Int?
+    let logo, companyURL: String?
     let designation: String?
     let field: String?
     let sectorID, companyID: Int?
