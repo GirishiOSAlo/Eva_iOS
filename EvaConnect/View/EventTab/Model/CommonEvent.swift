@@ -68,7 +68,8 @@ struct CommonEventMetaData: Codable {
     let status, verificationPin: Int?
     let createdByID, modifiedByID: Int?
     let bioData, companyName: String?
-    let companyID, categoryID, logo, companyURL: String?
+    let companyID, categoryID: Int?
+    let logo, companyURL: String?
     let designation, field: String?
     let sectorID: Int?
     let otherSector: String?
