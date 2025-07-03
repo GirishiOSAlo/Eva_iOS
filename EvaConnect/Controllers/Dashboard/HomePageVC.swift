@@ -30,6 +30,7 @@ class HomePageVC: UIViewController {
     
     @IBOutlet weak var jobBaseVw: UIView!
     @IBOutlet weak var jobCollectionVw: UICollectionView!
+    @IBOutlet weak var jobCollectionVwHeight: NSLayoutConstraint!
     
     var dashboardBannerList: [DashboardBannerData] = [] {
         didSet {
@@ -84,6 +85,7 @@ class HomePageVC: UIViewController {
     
     func setupUI() {
         self.registerCell()
+        self.jobCollectionVwHeight.constant = 0.0
         if isIndivisualUser {
             Constants.saveEnumToUserDefaults(.news)
         } else {
@@ -383,6 +385,12 @@ extension HomePageVC {
                 let jobRoot = try jsonDecoder.decode(DashboardJobDataModel.self, from: response.data!)
                 if !(jobRoot.error ?? false) {
                     self.jobList = jobRoot.data?.jobs ?? []
+                    //Set collection height as per data....
+                    var height = 0.0
+                    for job in self.jobList {
+                        height = height + 290.0
+                    }
+                    self.jobCollectionVwHeight.constant = height
                 } else {
                     print("Error :: \(jobRoot.message ?? "")")
                 }
