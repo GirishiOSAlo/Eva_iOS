@@ -596,7 +596,10 @@ extension HomePageVC {
         }
     }
     @objc func detailJobTapped(sender: UIButton) {
-        let job = jobList[sender.tag]
+        let jobID = jobList[sender.tag].id ?? 0
+        let jobListing = StoryboardRouter.userJobListing()
+        jobListing.jobId = jobID
+        navigationController?.pushViewController(jobListing, animated: true)
     }
 }
 
