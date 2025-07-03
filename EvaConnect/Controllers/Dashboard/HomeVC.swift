@@ -917,8 +917,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
     @objc func tapJobDetail(sender: UIButton){
         
         let jobListing = StoryboardRouter.userJobListing()
-        jobListing.jobId = posts[sender.tag].id
-        jobListing.job = posts[sender.tag]
+        jobListing.jobId = jobList[sender.tag].id ?? 0
+//        jobListing.job = jobList[sender.tag]
         navigationController?.pushViewController(jobListing, animated: true)
     }
     
@@ -1644,7 +1644,7 @@ extension HomeVC {
         
     private func navigateToJobListing(job: DashboardItem) {
         let jobListing = StoryboardRouter.userJobListing()
-        jobListing.job = job
+        //jobListing.job = job
         navigationController?.pushViewController(jobListing, animated: true)
     }
     

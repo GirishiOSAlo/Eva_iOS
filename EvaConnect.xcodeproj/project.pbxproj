@@ -583,6 +583,7 @@
 		A6F1CD242D78292600131C05 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD232D78292600131C05 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		A6F1CD262D78292600131C05 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD252D78292600131C05 /* FirebaseAppCheck */; };
 		A6F3C8492AAF34280082E6AE /* EventDetailTabsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F3C8482AAF34280082E6AE /* EventDetailTabsCell.swift */; };
+		A6FF4F362E165237007D4A34 /* JobDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FF4F352E165237007D4A34 /* JobDetailsDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1168,6 +1169,7 @@
 		A6E754332DD2FF560057B781 /* CommentCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCVC.xib; sourceTree = "<group>"; };
 		A6E8DA7E2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpJobDescriptionVC.swift; sourceTree = "<group>"; };
 		A6F3C8482AAF34280082E6AE /* EventDetailTabsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailTabsCell.swift; sourceTree = "<group>"; };
+		A6FF4F352E165237007D4A34 /* JobDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailsDataModel.swift; sourceTree = "<group>"; };
 		E6F534D2498CAEF45A6A7693 /* Pods-EvaConnect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaConnect.release.xcconfig"; path = "Target Support Files/Pods-EvaConnect/Pods-EvaConnect.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2144,6 +2146,7 @@
 			children = (
 				25D40B4427C3BB1C00EEF2AA /* JobFavourite.swift */,
 				48B997FC2B4FBFD8002BF408 /* ApplicantsList.swift */,
+				A6FF4F352E165237007D4A34 /* JobDetailsDataModel.swift */,
 			);
 			path = Job;
 			sourceTree = "<group>";
@@ -4097,6 +4100,7 @@
 				5051764B244502A100544956 /* LoggedUserDetails.swift in Sources */,
 				18FBEA9C2547F2BA00FEDF68 /* NetworkConnection.swift in Sources */,
 				257226942775D8C200FC1A10 /* NewSlideMenuCell.swift in Sources */,
+				A6FF4F362E165237007D4A34 /* JobDetailsDataModel.swift in Sources */,
 				48BD86302B1EF5040026C0B2 /* UIScreen+Frame.swift in Sources */,
 				18770958244337490046AA56 /* LoginByLinkedin.swift in Sources */,
 				A6CDBDEA2DD21070009B65CD /* CommentVC.swift in Sources */,

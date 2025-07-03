@@ -299,7 +299,7 @@ extension DashboardTabbarVC {
                 if let endpoint2 = notification.userInfo?["param2"] as? String {
                     print(endpoint2)
                     let jobListing = StoryboardRouter.userJobListing()
-                    jobListing.jobId = Int(endpoint2)
+                    jobListing.jobId = Int(endpoint2) ?? 0
                     navigationController?.pushViewController(jobListing, animated: true)
                     break
                 }
@@ -307,7 +307,7 @@ extension DashboardTabbarVC {
                 if let endpoint2 = notification.userInfo?["param2"] as? String {
                     print(endpoint2)
                     let jobListing = StoryboardRouter.userJobListing()
-                    jobListing.jobId = Int(endpoint2)
+                    jobListing.jobId = Int(endpoint2) ?? 0
                     navigationController?.pushViewController(jobListing, animated: true)
                     break
                 }
