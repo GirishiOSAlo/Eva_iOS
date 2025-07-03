@@ -589,7 +589,14 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 return 440//398
             case .jobs:
                 //            return userType.company.rawValue == user?.type ? UITableView.automaticDimension : 110
-                return 284
+                
+                //if job applied == 284 - 50 (apply btn hide) else height = 284
+                if selectedHomeFilter == .applied {
+                    return 234
+                } else {
+                    return 284
+                }
+                
             case .news:
                 return UITableView.automaticDimension
             case .industryEvents:
@@ -875,6 +882,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.applicantBtn.tag = indexPath.row
                 cell.applyNowBtn.tag = indexPath.row
                 //                cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
+                
+                if selectedHomeFilter == .applied {
+                    cell.applyNowBtnHeight.constant = 0
+                } else {
+                    cell.applyNowBtnHeight.constant = 50.0
+                }
                 
                 cell.viewDetailsBtn.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
                 cell.applyNowBtn.addTarget(self, action: #selector(tapJobApply(sender:)), for: .touchUpInside)

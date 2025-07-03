@@ -274,7 +274,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Gc-dx-cyE" userLabel="Indivisual View">
                                         <rect key="frame" x="17" y="0.0" width="321" height="142"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OS2-Og-p2a">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OS2-Og-p2a">
                                                 <rect key="frame" x="20" y="10" width="280" height="50"/>
                                                 <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -367,6 +367,7 @@
             <connections>
                 <outlet property="applicantBtn" destination="5cb-ae-UB4" id="ep5-jm-Je3"/>
                 <outlet property="applyNowBtn" destination="OS2-Og-p2a" id="pUh-2e-NFM"/>
+                <outlet property="applyNowBtnHeight" destination="YDA-jE-ICp" id="B7p-Ej-BMJ"/>
                 <outlet property="baseMainView" destination="U7B-c0-u6b" id="NEG-Dn-BrG"/>
                 <outlet property="companyNameLbl" destination="RMD-Gu-Efo" id="8N0-HD-vdD"/>
                 <outlet property="contractLbl" destination="Uio-PY-7ua" id="n8q-5P-3hF"/>

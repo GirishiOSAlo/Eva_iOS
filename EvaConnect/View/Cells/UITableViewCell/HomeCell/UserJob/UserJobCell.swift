@@ -31,6 +31,7 @@ class UserJobCell: UITableViewCell {
     @IBOutlet weak var baseMainView: UIView!
     @IBOutlet weak var viewDetailsBtn: UIButton!
     @IBOutlet weak var applyNowBtn: UIButton!
+    @IBOutlet weak var applyNowBtnHeight: NSLayoutConstraint!
     
     var goToAd: ((DashboardItem) -> Void)? = nil
     
