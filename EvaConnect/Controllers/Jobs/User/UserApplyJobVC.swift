@@ -125,7 +125,7 @@ class UserApplyJobVC: BaseVC {
     @IBAction func submitBtnTapped(_ sender: Any) {
         //if cvDocumentURL == nil {
         if selectedResume == nil {
-            ErrorView(contentView: navigationController?.view ?? view).show(message: "Please attach cv")
+            ErrorView(contentView: navigationController?.view ?? view).show(message: "Please attach resume")
         } else if coverLetterTxt.textColor == .lightGray {
             ErrorView(contentView: navigationController?.view ?? view).show(message: "Please enter someting in cover letter")
         } else {
