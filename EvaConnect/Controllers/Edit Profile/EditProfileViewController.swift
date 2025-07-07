@@ -179,7 +179,7 @@ class EditProfileViewController: UIViewController, XIBed {
         
         let descLblHeight = self.heightForView(text: self.descriptionTxtVw.text, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 100.0)
         self.descTxtVwHeight.constant = descLblHeight + 30.0
-        self.companyId = Int(user.companyID ?? "0") ?? 0
+        self.companyId = Int(user.companyID ?? 0)
         self.categoryId = user.categoryID ?? 0
         self.businessSectorId = user.sectorID ?? 0
         

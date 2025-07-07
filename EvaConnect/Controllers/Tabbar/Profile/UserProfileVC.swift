@@ -527,6 +527,7 @@ extension UserProfileVC {
 
             do {
                 let response = try JSONDecoder().decode(UserDetailsDataModel.self, from: data)
+                print(response)
                 if let user = response.data?.first {
                     self.userDetails = user
                     if let user = self.userDetails {
@@ -536,6 +537,7 @@ extension UserProfileVC {
                     self.presentAlert("Error", nil, response.message as? Error)
                 }
             } catch {
+                print(error)
                 self.presentAlert("Error", nil, error.localizedDescription as? Error)
             }
         }
@@ -569,7 +571,7 @@ extension UserProfileVC {
         self.bioViewHeight.constant = lblHeight + 64.0
         
         self.connectionCountLbl.text = "\(user.connectionCount ?? 0)"
-        self.companyId = Int(user.companyID ?? "0") ?? 0
+        self.companyId = Int(user.companyID ?? 0)
         
         self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
         self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"

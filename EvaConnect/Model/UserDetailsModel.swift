@@ -38,7 +38,7 @@ struct UserDetailsData: Codable {
     let delegatePaName, delegatePaEmail: String?
     let isPublic, categoryID: Int?
     let designation: String?
-    let companyID: String?
+    let companyID: Int?
     let categoryName: String?
     let sectorID: Int?
     let sectorName: String?
