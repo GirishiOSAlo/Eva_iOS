@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class UserSettingsVC: BaseVC {
 
@@ -29,9 +30,16 @@ class UserSettingsVC: BaseVC {
     @IBOutlet var responsibilityTitlerlabelCollection: [UILabel]!
     @IBOutlet var labelCollection: [UILabel]!
     
+    @IBOutlet weak var successPopupVw: UIView!
+    @IBOutlet weak var successSubPopupVw: UIView!
+    @IBOutlet weak var animationContainerView: UIView!
+    @IBOutlet weak var titlePopupLbl: UILabel!
+    @IBOutlet weak var okPopupBtn: UIButton!
+    var animationView: LottieAnimationView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.successPopupVw.isHidden = true
 //        if LoggedUserDetails.shared.user?.isCompany ?? false { settings = settings.filter({ $0 != .rss }) }
         if !isIndivisualUser {
             settings = settings.filter({$0 != .rss })
@@ -56,6 +64,11 @@ class UserSettingsVC: BaseVC {
         otherNotificationBaseVw.layer.cornerRadius = 20.0
         conferanceGoalsBaseVw.layer.cornerRadius = 20.0
         responsibilitiesBaseVw.layer.cornerRadius = 20.0
+        
+        self.successSubPopupVw.cornerRadius = 20.0
+        self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 20)
+        self.okPopupBtn.cornerRadius = 14.0
+        self.okPopupBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
         
         if myUserDefaults.isPrivate {
             self.privateAccountBtn.isSelected = true
@@ -251,6 +264,21 @@ class UserSettingsVC: BaseVC {
             sender.isSelected.toggle()
         }
     }
+    
+    @IBAction func onSuccessOkBtn(_ sender: UIButton) {
+        self.successPopupVw.isHidden = true
+        self.animationView.stop()
+    }
+    
+    func addAnimation(){
+        animationView = LottieAnimationView(name: "successLottie.json")
+        animationView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+//        animationView.center = animationContainerView.center
+        animationView.loopMode = .loop
+        animationView.contentMode = .scaleAspectFit
+        animationContainerView.addSubview(animationView)
+        animationView.play()
+    }
 }
 
 extension UserSettingsVC {
@@ -265,7 +293,10 @@ extension UserSettingsVC {
                 let jsonDecoder = JSONDecoder()
                 let privacyRoot = try jsonDecoder.decode(PrivacyResponse.self, from: response.data!)
                 if !(privacyRoot.error ?? false) {
-                    self.presentAlert(privacyRoot.data ?? "--")
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                    self.titlePopupLbl.text = privacyRoot.data ?? "--"
+                    //Set Private & Public value...
                     if isPrivate == 0 {
                         myUserDefaults.isPrivate = true
                     } else {

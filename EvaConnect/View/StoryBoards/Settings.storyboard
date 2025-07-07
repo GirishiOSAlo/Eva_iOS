@@ -1967,6 +1967,63 @@ rescheduled</string>
                                     <constraint firstAttribute="trailing" secondItem="aMk-ec-XOb" secondAttribute="trailing" id="fD2-u6-3SJ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLf-sk-jhJ" userLabel="Success popup View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-l9-Nrw">
+                                        <rect key="frame" x="20" y="189" width="335" height="289"/>
+                                        <subviews>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tu7-fU-srv">
+                                                <rect key="frame" x="116.5" y="16" width="102" height="102"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="102" id="5ww-l0-ZgK"/>
+                                                    <constraint firstAttribute="height" constant="102" id="gg2-1Q-fdJ"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your have joined the Meeting Successfully" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OU4-i2-L2T">
+                                                <rect key="frame" x="36" y="142" width="263" height="53"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHf-gZ-Fqc">
+                                                <rect key="frame" x="16" y="219" width="303" height="50"/>
+                                                <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Shg-qJ-6Ov"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="OK">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onSuccessOkBtn:" destination="8us-2M-oZs" eventType="touchUpInside" id="Yrk-ct-WAm"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Tu7-fU-srv" firstAttribute="centerX" secondItem="fXb-l9-Nrw" secondAttribute="centerX" id="092-FL-7ta"/>
+                                            <constraint firstItem="KHf-gZ-Fqc" firstAttribute="top" secondItem="OU4-i2-L2T" secondAttribute="bottom" constant="24" id="3Nb-Nt-Yk5"/>
+                                            <constraint firstItem="OU4-i2-L2T" firstAttribute="top" secondItem="Tu7-fU-srv" secondAttribute="bottom" constant="24" id="CTS-U7-Med"/>
+                                            <constraint firstAttribute="trailing" secondItem="OU4-i2-L2T" secondAttribute="trailing" constant="36" id="gS9-JG-ynG"/>
+                                            <constraint firstItem="KHf-gZ-Fqc" firstAttribute="leading" secondItem="fXb-l9-Nrw" secondAttribute="leading" constant="16" id="kj1-TE-HTX"/>
+                                            <constraint firstItem="Tu7-fU-srv" firstAttribute="top" secondItem="fXb-l9-Nrw" secondAttribute="top" constant="16" id="lgC-7b-FiT"/>
+                                            <constraint firstItem="OU4-i2-L2T" firstAttribute="leading" secondItem="fXb-l9-Nrw" secondAttribute="leading" constant="36" id="nVY-3f-Fbu"/>
+                                            <constraint firstAttribute="trailing" secondItem="KHf-gZ-Fqc" secondAttribute="trailing" constant="16" id="vkY-LG-6ft"/>
+                                            <constraint firstAttribute="bottom" secondItem="KHf-gZ-Fqc" secondAttribute="bottom" constant="20" id="xJW-VG-1zQ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="0.35999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="fXb-l9-Nrw" firstAttribute="leading" secondItem="aLf-sk-jhJ" secondAttribute="leading" constant="20" id="3ez-Ur-l5T"/>
+                                    <constraint firstItem="fXb-l9-Nrw" firstAttribute="centerY" secondItem="aLf-sk-jhJ" secondAttribute="centerY" id="Y1C-qA-UBz"/>
+                                    <constraint firstAttribute="trailing" secondItem="fXb-l9-Nrw" secondAttribute="trailing" constant="20" id="zVY-cg-5m1"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Njq-1d-rer">
                                 <rect key="frame" x="0.0" y="93" width="375" height="474"/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
@@ -2088,9 +2145,13 @@ rescheduled</string>
                             <constraint firstItem="Njq-1d-rer" firstAttribute="trailing" secondItem="gqA-To-3zM" secondAttribute="trailing" id="ebM-kU-njI"/>
                             <constraint firstItem="gqA-To-3zM" firstAttribute="bottom" secondItem="D3r-b2-Emu" secondAttribute="bottom" id="frK-FB-LlD"/>
                             <constraint firstItem="vsT-dM-Kz6" firstAttribute="leading" secondItem="gqA-To-3zM" secondAttribute="leading" constant="36" id="gHy-S2-6ti"/>
+                            <constraint firstAttribute="trailing" secondItem="aLf-sk-jhJ" secondAttribute="trailing" id="gam-jG-r1L"/>
                             <constraint firstItem="gqA-To-3zM" firstAttribute="top" secondItem="TCY-Jc-otL" secondAttribute="top" constant="-15" id="h6v-Zp-TNn"/>
+                            <constraint firstItem="aLf-sk-jhJ" firstAttribute="leading" secondItem="kIY-s2-hPh" secondAttribute="leading" id="hle-vD-jhq"/>
                             <constraint firstItem="D3r-b2-Emu" firstAttribute="leading" secondItem="gqA-To-3zM" secondAttribute="leading" id="jSf-4z-zX4"/>
                             <constraint firstItem="Njq-1d-rer" firstAttribute="top" secondItem="ofG-DI-Uyj" secondAttribute="bottom" constant="8" symbolic="YES" id="pQZ-Bb-7RD"/>
+                            <constraint firstAttribute="bottom" secondItem="aLf-sk-jhJ" secondAttribute="bottom" id="qE3-Rd-6aw"/>
+                            <constraint firstItem="aLf-sk-jhJ" firstAttribute="top" secondItem="kIY-s2-hPh" secondAttribute="top" id="skC-up-amg"/>
                             <constraint firstItem="gqA-To-3zM" firstAttribute="bottom" secondItem="vsT-dM-Kz6" secondAttribute="bottom" constant="30" id="zTr-3s-gxk"/>
                         </constraints>
                         <variation key="default">
@@ -2101,15 +2162,20 @@ rescheduled</string>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="animationContainerView" destination="Tu7-fU-srv" id="hB1-s8-CH8"/>
                         <outlet property="conferanceGoalsBaseVw" destination="Kbx-2U-v9d" id="fse-oT-0so"/>
                         <outlet property="headerLbl" destination="AGM-pU-GJY" id="9Aw-4l-UGH"/>
+                        <outlet property="okPopupBtn" destination="KHf-gZ-Fqc" id="QJk-nF-YeS"/>
                         <outlet property="otherNotificationBaseVw" destination="5S7-Ob-PBv" id="nQM-sA-Y3O"/>
                         <outlet property="privateAccountBtn" destination="oW6-tO-rAC" id="KgN-YJ-jL6"/>
                         <outlet property="privateDescLbl" destination="g9Y-FP-PT5" id="Ptu-Af-ARF"/>
                         <outlet property="privateTitleLbl" destination="vcI-ih-UKw" id="phb-bE-qDp"/>
                         <outlet property="responsibilitiesBaseVw" destination="Ykn-mB-dqQ" id="xnb-6z-3ci"/>
                         <outlet property="scheduleNotificationBaseVw" destination="KHq-Az-Igm" id="cYU-4c-gcX"/>
+                        <outlet property="successPopupVw" destination="aLf-sk-jhJ" id="yYM-e1-3QS"/>
+                        <outlet property="successSubPopupVw" destination="fXb-l9-Nrw" id="uKz-RO-SiO"/>
                         <outlet property="tableView" destination="Njq-1d-rer" id="PZe-Tq-bFu"/>
+                        <outlet property="titlePopupLbl" destination="OU4-i2-L2T" id="apH-fc-hpn"/>
                         <outletCollection property="labelCollection" destination="Sqh-Mr-3e2" collectionClass="NSMutableArray" id="BzT-aN-kPC"/>
                         <outletCollection property="labelCollection" destination="btS-LG-Qfj" collectionClass="NSMutableArray" id="2Ca-MN-ddB"/>
                         <outletCollection property="labelCollection" destination="wyl-iG-PKt" collectionClass="NSMutableArray" id="fDs-7R-2Pj"/>
@@ -2769,7 +2835,7 @@ rescheduled</string>
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

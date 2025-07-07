@@ -1412,7 +1412,7 @@ extension UserProfileVC {
     func blockConnection(id: Int) {
         
         let parameters: AFParameters = [ "receiver_id": id,
-                                         "sender_id" : LoggedUserDetails.shared.user?.id,
+                                         "sender_id" : myUserDefaults.userId,
                                          "status": "deleted" ]
         
         showActivity()
