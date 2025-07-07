@@ -488,6 +488,7 @@
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
 		A63779482DE6F4DE0072055F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63779462DE6F4DE0072055F /* AlertView.swift */; };
 		A63779492DE6F4DE0072055F /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63779472DE6F4DE0072055F /* AlertView.xib */; };
+		A64C49802E1BD24000F9D3F9 /* HelpDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */; };
 		A66145362B43E310009221B5 /* EventDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145352B43E310009221B5 /* EventDelegateList.swift */; };
 		A66145382B4416CD009221B5 /* EventDelegateProfileDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */; };
 		A661453A2B4448B5009221B5 /* EventDelegateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145392B4448B5009221B5 /* EventDelegateFilter.swift */; };
@@ -1085,6 +1086,7 @@
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		A63779462DE6F4DE0072055F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A63779472DE6F4DE0072055F /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
+		A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDataModel.swift; sourceTree = "<group>"; };
 		A66145352B43E310009221B5 /* EventDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateList.swift; sourceTree = "<group>"; };
 		A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateProfileDelegateList.swift; sourceTree = "<group>"; };
 		A66145392B4448B5009221B5 /* EventDelegateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateFilter.swift; sourceTree = "<group>"; };
@@ -1689,6 +1691,7 @@
 				70D4A1C727FACD520098685A /* CitiesResponse.swift */,
 				48FC83752C23185D00DB9009 /* Settings Options.swift */,
 				A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */,
+				A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4108,6 +4111,7 @@
 				A66F13FE2DBF968F009D5A13 /* HomePageVC.swift in Sources */,
 				48FC83762C23185D00DB9009 /* Settings Options.swift in Sources */,
 				485FC1AC2DDDB33D00AA05A4 /* NetworkingEventsVC.swift in Sources */,
+				A64C49802E1BD24000F9D3F9 /* HelpDataModel.swift in Sources */,
 				5025695D24927C6200D66137 /* UIImageView.swift in Sources */,
 				5042EF32244E0EDD00616F7E /* ChatVC.swift in Sources */,
 				50FD7CC1244FE4B500EB22B8 /* Optional.swift in Sources */,

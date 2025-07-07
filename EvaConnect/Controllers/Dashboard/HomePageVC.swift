@@ -69,7 +69,7 @@ class HomePageVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.fetchUserDetailsData()
+        self.fetchBannerData()
         self.fetchDashboardPostData()
         self.fetchDashboardNews()
         self.fetchDashboardEvent()
@@ -267,7 +267,7 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
 
 //MARK: Api Call
 extension HomePageVC {
-    func fetchUserDetailsData() {
+    func fetchBannerData() {
         showActivity()
         let url = "\(EndPoints.dashboardBanner)"
         NetworkManagerr.request(url, method: .get) { (response) in
@@ -616,7 +616,7 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case self.bannerCollectionVw:
-            return self.eventList.count
+            return self.dashboardBannerList.count
             
         case self.eventCollectionVw:
             return self.eventList.count

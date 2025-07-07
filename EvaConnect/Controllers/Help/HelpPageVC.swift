@@ -62,9 +62,43 @@ class HelpPageVC: UIViewController, XIBed {
     @objc func labelTapped() {
         print("Link was tapped!")
     }
+    
+    @IBAction func onSubmitBtnTap(_ sender: UIButton) {
+        print("Submit Btn Tap")
+        let desc = self.textView.text ?? ""
+        if desc.elementsEqual("") {
+            print("TextView Text empty...")
+        } else {
+            self.helpSubmit(with: self.textView.text)
+        }
+    }
 }
 
-extension HelpPageVC : UITextViewDelegate {
+extension HelpPageVC {
+    func helpSubmit(with: String) {
+        let url = EndPoints.help
+        let parameters = ["descriptions": with] as [String: Any]
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let helpRoot = try jsonDecoder.decode(HelpDataModel.self, from: response.data!)
+                if !(helpRoot.error ?? false) {
+                    self.textView.text = ""
+                    self.textView.resignFirstResponder()
+                    self.presentAlert("Help Submit Successfully")
+                } else {
+                    print("Error :: \(helpRoot.message ?? "")")
+                }
+            } catch {
+                print("\(String(describing: response.result.error?.localizedDescription))")
+            }
+        }
+    }
+}
+
+extension HelpPageVC: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel?.isHidden = !textView.text.isEmpty
     }

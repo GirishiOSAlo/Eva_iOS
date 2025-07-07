@@ -219,6 +219,10 @@ enum EndPoints {
     static let EmpList = baseURL + "employeeslist"
     
     
+    // MARK: Help
+    static let help = baseURL + "user/helpcreate"
+    
+    
     // MARK: Notifications
     static let notifications = baseURL + "user/notifications/filter"
     static let userActivity = baseURL + "user/activity/"
