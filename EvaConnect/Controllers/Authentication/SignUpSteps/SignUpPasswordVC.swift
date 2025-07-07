@@ -270,6 +270,7 @@ extension SignUpPasswordVC {
                         myUserDefaults.companyName = response?.companyName ?? ""
                         myUserDefaults.userImage = response?.userImage ?? ""
                         myUserDefaults.token = response?.token ?? ""
+                        myUserDefaults.isPrivate = false
                         userDefaults.setValue(response?.token, forKeyPath: "UserToken")
                         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: NewsSourceVC.storyboardIdentifier) else { return }
                         self.navigationController?.pushViewController(vc, animated: true)

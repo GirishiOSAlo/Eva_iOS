@@ -545,6 +545,12 @@ extension UserProfileVC {
 
 
     func setData(user: UserDetailsData) {
+        if user.isPublic == 0 {
+            myUserDefaults.isPrivate = true
+        } else {
+            myUserDefaults.isPrivate = false
+        }
+        
         if let imageUrl = user.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
