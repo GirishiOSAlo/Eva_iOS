@@ -572,7 +572,6 @@ extension UserProfileVC {
         
         self.connectionCountLbl.text = "\(user.connectionCount ?? 0)"
         self.companyId = Int(user.companyID ?? 0)
-        
         self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
         self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
     }

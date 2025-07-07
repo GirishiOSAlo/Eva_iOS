@@ -222,6 +222,9 @@ enum EndPoints {
     // MARK: Help
     static let help = baseURL + "user/helpcreate"
     
+    // MARK: Account Public or Private
+    static let privacyMode = baseURL + "user/details/switchPrivacyMode"
+    
     
     // MARK: Notifications
     static let notifications = baseURL + "user/notifications/filter"

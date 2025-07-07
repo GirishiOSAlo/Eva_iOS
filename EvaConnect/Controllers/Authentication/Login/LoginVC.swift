@@ -274,6 +274,13 @@ extension LoginVC {
                     myUserDefaults.companyName = user.companyName ?? ""
                     myUserDefaults.userImage = user.userImage ?? ""
                     myUserDefaults.token = user.token ?? ""
+                    
+                    if user.isPublic == 0 {
+                        myUserDefaults.isPrivate = true
+                    } else {
+                        myUserDefaults.isPrivate = false
+                    }
+                    
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
                     self.gotoDashboard()
                 }

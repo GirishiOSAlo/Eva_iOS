@@ -56,6 +56,12 @@ class UserSettingsVC: BaseVC {
         otherNotificationBaseVw.layer.cornerRadius = 20.0
         conferanceGoalsBaseVw.layer.cornerRadius = 20.0
         responsibilitiesBaseVw.layer.cornerRadius = 20.0
+        
+        if myUserDefaults.isPrivate {
+            self.privateAccountBtn.isSelected = true
+        } else {
+            self.privateAccountBtn.isSelected = false
+        }
     }
     
     func setLabelUI() {
@@ -83,8 +89,10 @@ class UserSettingsVC: BaseVC {
     @IBAction func onPrivateAccountBtn(_ sender: UIButton) {
         if self.privateAccountBtn.isSelected {
             self.privateAccountBtn.isSelected = false
+            self.isAccountPrivacyMode(isPrivate: 1) //make Public...
         } else {
             self.privateAccountBtn.isSelected = true
+            self.isAccountPrivacyMode(isPrivate: 0) //make Private...
         }
     }
     
@@ -241,6 +249,34 @@ class UserSettingsVC: BaseVC {
         }
         else if sender.tag == 603 {
             sender.isSelected.toggle()
+        }
+    }
+}
+
+extension UserSettingsVC {
+    
+    func isAccountPrivacyMode(isPrivate: Int) {
+        let url = EndPoints.privacyMode
+        let parameters = ["is_public": isPrivate] as [String: Any]
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let privacyRoot = try jsonDecoder.decode(PrivacyResponse.self, from: response.data!)
+                if !(privacyRoot.error ?? false) {
+                    self.presentAlert(privacyRoot.data ?? "--")
+                    if isPrivate == 0 {
+                        myUserDefaults.isPrivate = true
+                    } else {
+                        myUserDefaults.isPrivate = false
+                    }
+                } else {
+                    print("Error :: \(privacyRoot.message ?? "Default Message")")
+                }
+            } catch {
+                print("\(String(describing: response.result.error?.localizedDescription))")
+            }
         }
     }
 }
