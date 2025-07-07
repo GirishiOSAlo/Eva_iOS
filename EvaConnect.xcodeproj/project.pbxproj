@@ -489,6 +489,8 @@
 		A63779482DE6F4DE0072055F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63779462DE6F4DE0072055F /* AlertView.swift */; };
 		A63779492DE6F4DE0072055F /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63779472DE6F4DE0072055F /* AlertView.xib */; };
 		A64C49802E1BD24000F9D3F9 /* HelpDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */; };
+		A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */; };
+		A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */; };
 		A66145362B43E310009221B5 /* EventDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145352B43E310009221B5 /* EventDelegateList.swift */; };
 		A66145382B4416CD009221B5 /* EventDelegateProfileDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */; };
 		A661453A2B4448B5009221B5 /* EventDelegateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145392B4448B5009221B5 /* EventDelegateFilter.swift */; };
@@ -1087,6 +1089,8 @@
 		A63779462DE6F4DE0072055F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A63779472DE6F4DE0072055F /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDataModel.swift; sourceTree = "<group>"; };
+		A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
+		A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionViewController.xib; sourceTree = "<group>"; };
 		A66145352B43E310009221B5 /* EventDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateList.swift; sourceTree = "<group>"; };
 		A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateProfileDelegateList.swift; sourceTree = "<group>"; };
 		A66145392B4448B5009221B5 /* EventDelegateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateFilter.swift; sourceTree = "<group>"; };
@@ -2605,6 +2609,7 @@
 		500A54342473F72A00095324 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A64C49812E1BFA7900F9D3F9 /* Connections */,
 				A62AB11A2DD4A8FF006C7A21 /* Edit Profile */,
 				A6CDBDE72DD21047009B65CD /* New Comment  */,
 				A6CDBDDE2DD1E0CF009B65CD /* Help */,
@@ -3337,6 +3342,15 @@
 			path = "Custom Alert";
 			sourceTree = "<group>";
 		};
+		A64C49812E1BFA7900F9D3F9 /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */,
+				A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */,
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
 		A661E0CA2DCE1080000D2119 /* FAQs */ = {
 			isa = PBXGroup;
 			children = (
@@ -3689,6 +3703,7 @@
 				505176542445077600544956 /* Chat.storyboard in Resources */,
 				A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */,
 				259495F827884A6500C5579B /* UserJobCell.xib in Resources */,
+				A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */,
 				50436BD824917EC3009B18D2 /* NotificationCell.xib in Resources */,
 				1866059B23FE5FED0016317C /* SideMenuCell.xib in Resources */,
 				25C4C5B72784302500DC30EC /* PostImageViewCell.xib in Resources */,
@@ -3982,6 +3997,7 @@
 				5042EF34244E0EF900616F7E /* UITableView.swift in Sources */,
 				25D40B4227C3B1A100EEF2AA /* EventFavourite.swift in Sources */,
 				50CCA377245CBFA7001D2761 /* MediaPickerCell.swift in Sources */,
+				A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */,
 				485FC1952DD4CE6600AA05A4 /* ConferrenceAgendaCell.swift in Sources */,
 				A6C5F57C2B3019C00077B6BD /* InviteTVC.swift in Sources */,
 				A661453A2B4448B5009221B5 /* EventDelegateFilter.swift in Sources */,

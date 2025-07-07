@@ -235,9 +235,30 @@ class UserProfileVC: BaseVC {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    
+    @IBAction func onFollowersBtnTap(_ sender: UIButton) {
+        //connectionTapped()
+        let vc = ConnectionViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc func connectionTapped() {
         let vc = StoryboardRouter.connectionVC()
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func onFollowingBtnTap(_ sender: UIButton) {
+        TapOnView()
+    }
+    
+    @objc func TapOnView() {
+        if isIndivisualUser {
+            
+        } else {
+            let vc = StoryboardRouter.interestedList()
+            vc.companyId = self.companyId
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc func goToProfileTapped(_ sender: UIButton) {
@@ -271,7 +292,7 @@ extension UserProfileVC {
     func setLayout() {
         isSeparatorHidden = true
         self.noRecordLbl.isHidden = true
-        setupTapGestures()
+        //setupTapGestures()
         self.profileMainVw.layer.cornerRadius = 19.0
         self.bioMainView.layer.cornerRadius = 19.0
         
@@ -353,15 +374,7 @@ extension UserProfileVC {
         tableViewTopConst.constant = -50
     }
     
-    @objc func TapOnView() {
-        if isIndivisualUser {
-            
-        } else {
-            let vc = StoryboardRouter.interestedList()
-            vc.companyId = self.companyId
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
+    
 }
 
 extension UserProfileVC {
@@ -578,8 +591,10 @@ extension UserProfileVC {
         
         self.connectionCountLbl.text = "\(user.connectionCount ?? 0)"
         self.companyId = Int(user.companyID ?? 0)
-        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
-        self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
+//        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
+//        self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
+        self.connectionLbl.text = "Followers"
+        self.pendingReqLabel.text = "Following"
     }
     
     func fetchUserDetail() {

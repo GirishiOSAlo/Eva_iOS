@@ -577,7 +577,7 @@ private extension ConnectionVC {
     func getAllConnection(offSet: Int) {
         showActivity()
         self.noRecordLbl.isHidden = true
-        let endPoint = String(format: "?limit=%d&offset=%d", pageSize, offSet)
+        let endPoint = String(format: "?limit=%d&offset=\(offSet)", pageSize, offSet)
         getConnections(pagination: endPoint) { (userConnections, error) in
             self.hideActivity()
             if let connections = userConnections {

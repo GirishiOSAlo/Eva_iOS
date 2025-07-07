@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zzd-hg-pY4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zzd-hg-pY4">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -179,26 +179,40 @@
                                                                         <rect key="frame" x="12" y="0.0" width="146.66666666666666" height="38"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="vkK-HA-xEj">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="38"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="70" height="38"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="70" id="sjK-RM-BDz"/>
+                                                                                </constraints>
                                                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="20"/>
                                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="P9v-6c-Eql">
-                                                                                <rect key="frame" x="73.333333333333343" y="0.0" width="73.333333333333343" height="38"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" lineBreakMode="tailTruncation" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="P9v-6c-Eql">
+                                                                                <rect key="frame" x="70" y="0.0" width="76.666666666666686" height="38"/>
                                                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
+                                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urz-kC-Wvj">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="170.66666666666666" height="38"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <connections>
+                                                                            <action selector="onFollowersBtnTap:" destination="gVm-UI-Zei" eventType="touchUpInside" id="WaN-ph-ttX"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="bottom" secondItem="DeH-iu-tkr" secondAttribute="bottom" id="47b-xW-Bf2"/>
                                                                     <constraint firstAttribute="trailing" secondItem="DeH-iu-tkr" secondAttribute="trailing" constant="12" id="Sf0-EQ-z60"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="urz-kC-Wvj" secondAttribute="trailing" id="aCd-XZ-O6S"/>
+                                                                    <constraint firstItem="urz-kC-Wvj" firstAttribute="leading" secondItem="9gY-sS-4fO" secondAttribute="leading" id="dMW-ff-jWM"/>
                                                                     <constraint firstItem="DeH-iu-tkr" firstAttribute="top" secondItem="9gY-sS-4fO" secondAttribute="top" id="evV-He-gNt"/>
                                                                     <constraint firstItem="DeH-iu-tkr" firstAttribute="leading" secondItem="9gY-sS-4fO" secondAttribute="leading" constant="12" id="gmX-9r-BGZ"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="urz-kC-Wvj" secondAttribute="bottom" id="iUa-LQ-ifB"/>
+                                                                    <constraint firstItem="urz-kC-Wvj" firstAttribute="top" secondItem="9gY-sS-4fO" secondAttribute="top" id="mZK-fV-JKf"/>
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Xa-mJ-eXv">
@@ -208,26 +222,40 @@
                                                                         <rect key="frame" x="12" y="0.0" width="146.33333333333334" height="38"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Re-rO-5id">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="73" height="38"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="70" height="38"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="70" id="j6W-js-LAP"/>
+                                                                                </constraints>
                                                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="20"/>
                                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="ld8-Y2-Yl2">
-                                                                                <rect key="frame" x="73.000000000000028" y="0.0" width="73.333333333333343" height="38"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="ld8-Y2-Yl2">
+                                                                                <rect key="frame" x="70.000000000000028" y="0.0" width="76.333333333333343" height="38"/>
                                                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
+                                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZ5-Fu-MoL">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="170.33333333333334" height="38"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <connections>
+                                                                            <action selector="onFollowingBtnTap:" destination="gVm-UI-Zei" eventType="touchUpInside" id="YZb-uz-ko4"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstItem="ALK-RZ-8Sb" firstAttribute="leading" secondItem="3Xa-mJ-eXv" secondAttribute="leading" constant="12" id="1rq-e6-Me2"/>
+                                                                    <constraint firstItem="TZ5-Fu-MoL" firstAttribute="top" secondItem="3Xa-mJ-eXv" secondAttribute="top" id="3pC-Um-3ds"/>
                                                                     <constraint firstAttribute="bottom" secondItem="ALK-RZ-8Sb" secondAttribute="bottom" id="BMd-Of-uAV"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="TZ5-Fu-MoL" secondAttribute="bottom" id="C9b-cr-R9H"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="TZ5-Fu-MoL" secondAttribute="trailing" id="F8l-va-nmz"/>
                                                                     <constraint firstAttribute="trailing" secondItem="ALK-RZ-8Sb" secondAttribute="trailing" constant="12" id="MJP-JN-kye"/>
                                                                     <constraint firstItem="ALK-RZ-8Sb" firstAttribute="top" secondItem="3Xa-mJ-eXv" secondAttribute="top" id="OxU-mJ-Rfw"/>
+                                                                    <constraint firstItem="TZ5-Fu-MoL" firstAttribute="leading" secondItem="3Xa-mJ-eXv" secondAttribute="leading" id="ha1-Dk-L22"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
@@ -3352,7 +3380,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
