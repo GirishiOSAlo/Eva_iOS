@@ -239,6 +239,7 @@ class UserProfileVC: BaseVC {
     @IBAction func onFollowersBtnTap(_ sender: UIButton) {
         //connectionTapped()
         let vc = ConnectionViewController.instantiate()
+        vc.type = .Followers
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -248,7 +249,10 @@ class UserProfileVC: BaseVC {
     }
     
     @IBAction func onFollowingBtnTap(_ sender: UIButton) {
-        TapOnView()
+        //TapOnView()
+        let vc = ConnectionViewController.instantiate()
+        vc.type = .Following
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func TapOnView() {
