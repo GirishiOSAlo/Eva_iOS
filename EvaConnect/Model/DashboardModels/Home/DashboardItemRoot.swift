@@ -78,7 +78,7 @@ struct DashboardItem: Codable {
     let interestedUsersCount: String?
     let interestedUsers: [UserConnection]?
     let savedEventPassed: Bool?
-    let eventAttendeesStatus: EventAttendeeStatus?
+    let eventAttendeesStatus: String?
     
 
     enum CodingKeys: String, CodingKey {

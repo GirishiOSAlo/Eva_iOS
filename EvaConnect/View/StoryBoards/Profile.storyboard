@@ -52,7 +52,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXL-sl-qBG">
-                                <rect key="frame" x="0.0" y="102" width="414" height="1038"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="1090"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRd-FE-Crp">
@@ -95,7 +95,7 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="vRb-lt-J6p">
-                                <rect key="frame" x="0.0" y="102" width="414" height="1038"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="1090"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="58b-9Q-aqr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1080"/>
@@ -706,13 +706,13 @@
                             <constraint firstItem="aRd-FE-Crp" firstAttribute="leading" secondItem="NCg-PG-OEy" secondAttribute="leading" id="6J5-ck-gOa"/>
                             <constraint firstItem="aRd-FE-Crp" firstAttribute="trailing" secondItem="NCg-PG-OEy" secondAttribute="trailing" id="74w-Ka-Lyg"/>
                             <constraint firstItem="vRb-lt-J6p" firstAttribute="leading" secondItem="NCg-PG-OEy" secondAttribute="leading" id="FWs-ss-tAz"/>
-                            <constraint firstItem="vRb-lt-J6p" firstAttribute="top" secondItem="aRd-FE-Crp" secondAttribute="bottom" id="MgI-e1-rRA"/>
                             <constraint firstItem="oXL-sl-qBG" firstAttribute="leading" secondItem="vRb-lt-J6p" secondAttribute="leading" id="aXO-JG-fm5"/>
                             <constraint firstItem="NCg-PG-OEy" firstAttribute="top" secondItem="xfe-YJ-KI0" secondAttribute="top" constant="-15" id="cve-8f-uIu"/>
                             <constraint firstItem="aRd-FE-Crp" firstAttribute="top" secondItem="z5C-PV-pHJ" secondAttribute="top" id="dQf-dK-VqJ"/>
                             <constraint firstItem="oXL-sl-qBG" firstAttribute="bottom" secondItem="vRb-lt-J6p" secondAttribute="bottom" id="jf1-d8-Zzb"/>
                             <constraint firstItem="oXL-sl-qBG" firstAttribute="top" secondItem="vRb-lt-J6p" secondAttribute="top" id="mgr-DH-Eb4"/>
                             <constraint firstItem="oXL-sl-qBG" firstAttribute="trailing" secondItem="vRb-lt-J6p" secondAttribute="trailing" id="o6Y-QZ-q87"/>
+                            <constraint firstItem="vRb-lt-J6p" firstAttribute="top" secondItem="NCg-PG-OEy" secondAttribute="top" id="uhv-Ao-hGO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VRv-Ho-1Kh"/>
@@ -744,7 +744,6 @@
                         <outlet property="reactionButton" destination="vwL-GB-w8v" id="90Z-5v-yoC"/>
                         <outlet property="reactionTblViewHeight" destination="ViB-Se-oHC" id="RFx-yt-RaM"/>
                         <outlet property="reactionTblVw" destination="O4e-Tx-nbx" id="uHY-nh-4Da"/>
-                        <outlet property="scrollViewTopConst" destination="MgI-e1-rRA" id="BVf-3m-14J"/>
                         <outlet property="tableView" destination="ST0-jt-BeR" id="r8g-XK-9eF"/>
                         <outlet property="tableViewTopConst" destination="LKV-63-7Ym" id="81r-uA-ROv"/>
                         <outlet property="viewAllButton" destination="Mqz-HD-8QX" id="Le7-Ty-kQk"/>

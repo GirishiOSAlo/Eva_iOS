@@ -40,6 +40,8 @@ class EventMainVC: UIViewController, XIBed {
     var eventId = 0
     var eventDetail: NewEventDetailsData?
     var conferenceAgendaList: [ConferenceAgenda] = []
+    var networkingEventList: [EventNetworking] = []
+    var delegateMeetingsList: [Delegatemeeting] = []
     var exhibitorsList: [List] = []
     var speakersLists: [List] = []
     var sponsorsList: [List] = []
@@ -73,11 +75,13 @@ class EventMainVC: UIViewController, XIBed {
     
     lazy var networkingEventsVC: NetworkingEventsVC = {
         let vc = NetworkingEventsVC.instantiate()
+        vc.networkingEventList = self.networkingEventList
         return vc
     }()
     
     lazy var meetingListVC: MeetingListVC = {
         let vc = MeetingListVC.instantiate()
+        vc.delegateMeetingsList = self.delegateMeetingsList
         return vc
     }()
     
@@ -172,6 +176,8 @@ extension EventMainVC  {
                     if !(eventDetail.error ?? false), ((eventDetail.data?.count ?? 0) > 0) {
                         self.eventDetail = eventDetail.data?[0]
                         self.conferenceAgendaList = self.eventDetail?.conferenceagenda ?? []
+                        self.networkingEventList = self.eventDetail?.eventNetworking ?? []
+                        self.delegateMeetingsList = self.eventDetail?.delegatemeetings ?? []
                         self.exhibitorsList = self.eventDetail?.exhibitorslists ?? []
                         self.speakersLists = self.eventDetail?.speakerslists ?? []
                         self.sponsorsList = self.eventDetail?.sponsorslists ?? []

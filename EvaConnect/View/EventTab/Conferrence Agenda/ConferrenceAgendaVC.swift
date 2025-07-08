@@ -15,6 +15,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         vc.eventId = eventId
         return vc
     }
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var agendaListTable: UITableView!
     @IBOutlet weak var tableBgVw: UIView!

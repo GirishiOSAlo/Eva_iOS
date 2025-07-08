@@ -369,16 +369,29 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
                 cell.privateBtn.isHidden = true
             }
             
-            switch event.eventAttendeesStatus {
-            case .none:
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            case .requestToJoin:
-                cell.requestJoinBtn.setTitle("Requested", for: .normal)
-            case .accepted:
+            let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+            if eventAttendeesStatus == "accepted" {
                 cell.requestJoinBtn.setTitle("View details", for: .normal)
-            case .decline:
+            }
+            else if eventAttendeesStatus == "Request_To_Join" {
+                cell.requestJoinBtn.setTitle("Requested", for: .normal)
+            }
+            else if eventAttendeesStatus == "decline" {
                 cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
             }
+            else {
+                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+            }
+//            switch event.eventAttendeesStatus {
+//            case .none:
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            case .requestToJoin:
+//                cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//            case .accepted:
+//                cell.requestJoinBtn.setTitle("View details", for: .normal)
+//            case .decline:
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            }
             
             cell.saveBtn.tag = indexPath.row
             cell.saveBtn.addTarget(self, action: #selector(saveCurrentEventTapped(sender:)), for: .touchUpInside)

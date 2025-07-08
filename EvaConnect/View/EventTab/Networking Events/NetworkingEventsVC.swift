@@ -16,6 +16,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     @IBOutlet weak var infoUiView: UIView!
     @IBOutlet weak var infoLabel: UILabel!
     
+    var networkingEventList: [EventNetworking] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

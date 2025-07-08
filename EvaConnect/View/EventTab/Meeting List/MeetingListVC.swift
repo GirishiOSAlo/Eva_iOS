@@ -24,6 +24,8 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
     var fromDate: Date?
     var toDate: Date?
     
+    var delegateMeetingsList: [Delegatemeeting] = []
+    
     struct Event {
         let eventName: String
         let eventDesc: String
