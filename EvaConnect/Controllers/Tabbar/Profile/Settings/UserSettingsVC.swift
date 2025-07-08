@@ -291,7 +291,7 @@ extension UserSettingsVC {
             self.hideActivity()
             do {
                 let jsonDecoder = JSONDecoder()
-                let privacyRoot = try jsonDecoder.decode(PrivacyResponse.self, from: response.data!)
+                let privacyRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
                 if !(privacyRoot.error ?? false) {
                     self.successPopupVw.isHidden = false
                     self.addAnimation()

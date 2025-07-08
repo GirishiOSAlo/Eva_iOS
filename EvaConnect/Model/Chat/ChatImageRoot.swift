@@ -25,7 +25,7 @@ struct GenericResponse: Codable {
     let message: String
 }
 
-struct PrivacyResponse: Codable {
+struct DataStringResponse: Codable {
     let error: Bool?
     let message: String?
     let data: String?

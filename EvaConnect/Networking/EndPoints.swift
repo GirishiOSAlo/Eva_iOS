@@ -119,6 +119,10 @@ enum EndPoints {
     static let getSuggestedConnections = baseURL + "user/friendsuggestions"
     static let cancelRequest = baseURL + "user/network/connection/cancelrequest"
     
+    static let followersData = baseURL + "user/connection/followers" //New
+    static let userFollowUnfollow = baseURL + "user/connection/followunfollowuser" //New
+    static let userAcceptReject = baseURL + "user/connection/acceptreject" //New
+    
     
     //MARK: News
     static let newsCommentLike = baseURL + "news/comment/like" //using

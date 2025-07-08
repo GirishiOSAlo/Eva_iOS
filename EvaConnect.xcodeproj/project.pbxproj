@@ -488,6 +488,10 @@
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
 		A63779482DE6F4DE0072055F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63779462DE6F4DE0072055F /* AlertView.swift */; };
 		A63779492DE6F4DE0072055F /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63779472DE6F4DE0072055F /* AlertView.xib */; };
+		A64394CB2E1CE357006EE7F4 /* FollowersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */; };
+		A64394CF2E1CF421006EE7F4 /* FollowersCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394CD2E1CF421006EE7F4 /* FollowersCVC.swift */; };
+		A64394D02E1CF421006EE7F4 /* FollowersCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64394CE2E1CF421006EE7F4 /* FollowersCVC.xib */; };
+		A64394D22E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394D12E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift */; };
 		A64C49802E1BD24000F9D3F9 /* HelpDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */; };
 		A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */; };
 		A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */; };
@@ -1088,6 +1092,10 @@
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		A63779462DE6F4DE0072055F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A63779472DE6F4DE0072055F /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
+		A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersDataModel.swift; sourceTree = "<group>"; };
+		A64394CD2E1CF421006EE7F4 /* FollowersCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCVC.swift; sourceTree = "<group>"; };
+		A64394CE2E1CF421006EE7F4 /* FollowersCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowersCVC.xib; sourceTree = "<group>"; };
+		A64394D12E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptRejectDataModel.swift; sourceTree = "<group>"; };
 		A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDataModel.swift; sourceTree = "<group>"; };
 		A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionViewController.xib; sourceTree = "<group>"; };
@@ -1696,6 +1704,7 @@
 				48FC83752C23185D00DB9009 /* Settings Options.swift */,
 				A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */,
 				A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */,
+				A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2781,6 +2790,7 @@
 				A6782F672DDC890A0029443B /* SpeakersCVC */,
 				A6A125932DDDB09B00979389 /* SponsorCVC */,
 				A6B7ADB62E096913009172CD /* Conference Agenda CVC */,
+				A64394CC2E1CF3FD006EE7F4 /* FollowersCVC */,
 			);
 			path = UICollectionViewCell;
 			sourceTree = "<group>";
@@ -3342,10 +3352,20 @@
 			path = "Custom Alert";
 			sourceTree = "<group>";
 		};
+		A64394CC2E1CF3FD006EE7F4 /* FollowersCVC */ = {
+			isa = PBXGroup;
+			children = (
+				A64394CD2E1CF421006EE7F4 /* FollowersCVC.swift */,
+				A64394CE2E1CF421006EE7F4 /* FollowersCVC.xib */,
+			);
+			path = FollowersCVC;
+			sourceTree = "<group>";
+		};
 		A64C49812E1BFA7900F9D3F9 /* Connections */ = {
 			isa = PBXGroup;
 			children = (
 				A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */,
+				A64394D12E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift */,
 				A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */,
 			);
 			path = Connections;
@@ -3784,6 +3804,7 @@
 				A69A1D222AB32F72006BF71E /* TextMsgTVCell.xib in Resources */,
 				50A1817124E407F70063F3A7 /* Jobs.storyboard in Resources */,
 				18665CDE23C596D00089EF69 /* LaunchScreen.storyboard in Resources */,
+				A64394D02E1CF421006EE7F4 /* FollowersCVC.xib in Resources */,
 				50CCA378245CBFA7001D2761 /* MediaPickerCell.xib in Resources */,
 				A6782F6A2DDC893E0029443B /* SpeakersCVC.xib in Resources */,
 				A67BD99F2DC9F415005283DF /* TrendingNewsDetailsCVC.xib in Resources */,
@@ -4036,6 +4057,7 @@
 				50EE237E24EA6D9500D98E17 /* ConnectionUpdatable.swift in Sources */,
 				50B929A22448D97F00299CC0 /* Array.swift in Sources */,
 				25D40B4527C3BB1C00EEF2AA /* JobFavourite.swift in Sources */,
+				A64394CF2E1CF421006EE7F4 /* FollowersCVC.swift in Sources */,
 				50B929A02448D97600299CC0 /* UIActivityIndicatorView.swift in Sources */,
 				182AD1F724B453B600BC3889 /* NewPostImages.swift in Sources */,
 				70A6421027E07D5200770B6D /* PushNotificationSettings.swift in Sources */,
@@ -4159,6 +4181,7 @@
 				5073A86824840783008F2E7D /* UIAlertController.swift in Sources */,
 				48703A962B29B525008B2409 /* NewsDetailVC.swift in Sources */,
 				186DFB282411202600F610FE /* JobApplicantModel.swift in Sources */,
+				A64394D22E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift in Sources */,
 				A6D9F6672AAF4C6D00F604BF /* EventDelegatesTblCell.swift in Sources */,
 				5073A82224757D89008F2E7D /* UIViewController.swift in Sources */,
 				5015784024855B9A000B83A2 /* TableViewBase.swift in Sources */,
@@ -4197,6 +4220,7 @@
 				25765C55278ED898008A59C7 /* HomeTabFilter.swift in Sources */,
 				186605A723FFFEB70016317C /* PostDetailRoot.swift in Sources */,
 				48B997FF2B516146002BF408 /* SuggestedConnectionModel.swift in Sources */,
+				A64394CB2E1CE357006EE7F4 /* FollowersDataModel.swift in Sources */,
 				5042EF29244E0AE400616F7E /* ReceiverCell.swift in Sources */,
 				48BD862A2B1EF5040026C0B2 /* FTConfiguration.swift in Sources */,
 				A6B037062DFAA357000B4E2E /* DashboardPostDataModel.swift in Sources */,
