@@ -75,25 +75,21 @@ class EventDetailsVC: UIViewController, XIBed {
         noOfJoinedPeopleLabel.font = UIFont(name: Myfonts.medium, size: 10)
         noOfJoinedPeopleLabel.textColor = UIColor(hex: "#848397")
         
-        eventTypeHeadingLabel.text = "Event Type"
         eventTypeHeadingLabel.font = UIFont(name: Myfonts.regular, size: 14)
         eventTypeHeadingLabel.textColor = UIColor(hex: "#707070")
         
         eventTypeLabel.font = UIFont(name: Myfonts.semiBold, size: 14)
         eventTypeLabel.textColor = UIColor(hex: "#030229")
         
-        eventNameHeadingLabel.text = "Event Name"
         eventNameHeadingLabel.font = UIFont(name: Myfonts.regular, size: 14)
         eventNameHeadingLabel.textColor = UIColor(hex: "#707070")
         
         eventNameLabel.font = UIFont(name: Myfonts.semiBold, size: 14)
         eventNameLabel.textColor = UIColor(hex: "#030229")
         
-        eventWebsiteHeadingLabel.text = "Event Website URL"
         eventWebsiteHeadingLabel.font = UIFont(name: Myfonts.regular, size: 14)
         eventWebsiteHeadingLabel.textColor = UIColor(hex: "#707070")
         
-        eventWebsiteLabel.text = "www.evaaviation.com"
         eventWebsiteLabel.font = UIFont(name: Myfonts.semiBold, size: 14)
         eventWebsiteLabel.textColor = UIColor(hex: "#030229")
         
@@ -154,18 +150,7 @@ class EventDetailsVC: UIViewController, XIBed {
         eventWebsiteLabel.text = "\(eventDetail.registrationLink ?? "")"
         
         eventDateLabel.text = "\(eventDetail.startDate ?? "")"
-        
-        if let convertedStartTime = convertToAMPM(from: (eventDetail.startTime ?? "")) {
-            print("Start:",convertedStartTime)
-            if let convertedEndTime = convertToAMPM(from: (eventDetail.endTime ?? "")) {
-                print("End:",convertedEndTime)
-                eventTimingsLabel.text = "\(convertedStartTime) - \(convertedEndTime)"
-            } else {
-                print("endTime missing")
-            }
-        } else {
-            print("startTime missing")
-        }
+        eventTimingsLabel.text = "\(eventDetail.startTime ?? "") - \(eventDetail.endTime ?? "")"
         
         switch eventDetail.eventAttendeesStatus {
         case .none:
@@ -179,7 +164,7 @@ class EventDetailsVC: UIViewController, XIBed {
             requstToJoinBtn.setTitle("Request To Join", for: .normal)
         }
         
-        eventLocationLabel.text = "\(eventDetail.city ?? ""), \(eventDetail.city ?? "")"
+        eventLocationLabel.text = "\(eventDetail.address ?? ""), \(eventDetail.city ?? ""), \(eventDetail.country ?? "")"
         
         descriptionLabel.text = "\(eventDetail.content ?? "")"
     }
