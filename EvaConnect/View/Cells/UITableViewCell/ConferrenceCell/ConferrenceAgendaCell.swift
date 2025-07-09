@@ -11,7 +11,6 @@ import UIKit
 class ConferrenceAgendaCell: UITableViewCell {
 
     @IBOutlet weak var DateLabel: UILabel!
-    @IBOutlet weak var conferenceDetailsTimeLabel: UILabel!
     
     @IBOutlet weak var timeLabel: UILabel!
     
@@ -49,7 +48,7 @@ class ConferrenceAgendaCell: UITableViewCell {
         DateLabel.text = data.date ?? "--"
         timeLabel.text = "\(data.timeFrom ?? "--" ) - \(data.timeTo ?? "--" )"
         sessionNameLabel.text = data.name ?? "--"
-        sponsersNameLabel.text = data.sponsor ?? "--"
+        sponsersNameLabel.text = data.sponsorname ?? "--"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

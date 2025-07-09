@@ -64,15 +64,42 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     }
     
     func updateTableHeigth() {
-        if selectedIndex == nil {
-            let height = conferenceAgendaList.count * 101
-            self.agendaTableHeight.constant = CGFloat(height)
-        } else {
-            let collapseCellHeight = (conferenceAgendaList.count - 1) * 101
-            let expandCellHeight = 157
-            let height = Int(collapseCellHeight + expandCellHeight)
-            self.agendaTableHeight.constant = CGFloat(height)
+        var finalHeight = 0.0
+        
+        for (i,agenda) in self.conferenceAgendaList.enumerated() {
+            let sessionLblHeight = self.heightForView(text: agenda.name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+            let sponsersNameHeight = self.heightForView(text: agenda.sponsorname ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+            
+            let totalHeight = sessionLblHeight + sponsersNameHeight + 115.0 //Full Cell Height...
+            let collapseHeight = totalHeight - sponsersNameHeight - 35.0 //Collapse Cell Height...
+            
+            if i == selectedIndex {
+                finalHeight = finalHeight + totalHeight
+            } else {
+                finalHeight = finalHeight + collapseHeight
+            }
         }
+        self.agendaTableHeight.constant = finalHeight
+//        if selectedIndex == nil {
+//            let height = conferenceAgendaList.count * 101
+//            self.agendaTableHeight.constant = CGFloat(height)
+//        } else {
+//            let collapseCellHeight = (conferenceAgendaList.count - 1) * 101
+//            let expandCellHeight = 157
+//            let height = Int(collapseCellHeight + expandCellHeight)
+//            self.agendaTableHeight.constant = CGFloat(height)
+//        }
+    }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
     }
     
     @objc func viewAllTapped() {
@@ -100,15 +127,10 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = agendaListTable.dequeueReusableCell(withIdentifier: ConferrenceAgendaCell.id(), for: indexPath) as! ConferrenceAgendaCell
         
-//        let agenda = self.conferenceAgendaList[indexPath.row]
-//        cell.setUpData(data: agenda)
-        cell.DateLabel.text = "14-10-2023"
-        cell.timeLabel.text = "9:00 AM - 10:00 AM"
-        cell.sessionNameLabel.text = "Next-Gen Aerospace Technologies"
-        cell.sponsersNameLabel.text = "Aroora Gaur"
+        let agenda = self.conferenceAgendaList[indexPath.row]
+        cell.setUpData(data: agenda)
         
         cell.isExpanded = (indexPath.row == selectedIndex)
-        cell.conferenceDetailsTimeLabel.isHidden = true
         cell.drpDwnButton.tag = indexPath.row
         cell.drpDwnButton.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
         cell.selectionStyle = .none
@@ -117,10 +139,20 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let agenda = self.conferenceAgendaList[indexPath.row]
+        let sessionLblHeight = self.heightForView(text: agenda.name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+        let sponsersNameHeight = self.heightForView(text: agenda.sponsorname ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+        
+        let totalHeight = sessionLblHeight + sponsersNameHeight + 115.0
+        
         if indexPath.row == selectedIndex {
-            return 157
+            return totalHeight //157
         } else {
-            return 101
+            //return 101
+            let sponserheight = sponsersNameHeight + 35.0
+            let collapseHeight = totalHeight - sponserheight
+            return collapseHeight
         }
     }
     

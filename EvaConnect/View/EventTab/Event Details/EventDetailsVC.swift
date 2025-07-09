@@ -152,17 +152,31 @@ class EventDetailsVC: UIViewController, XIBed {
         eventDateLabel.text = "\(eventDetail.startDate ?? "")"
         eventTimingsLabel.text = "\(eventDetail.startTime ?? "") - \(eventDetail.endTime ?? "")"
         
-        switch eventDetail.eventAttendeesStatus {
-        case .none:
-            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-        case .requestToJoin:
-            requstToJoinBtn.setTitle("Requested", for: .normal)
-        case .accepted:
+        let eventAttendeesStatus = eventDetail.eventAttendeesStatus ?? ""
+        if eventAttendeesStatus == "accepted" {
             requstToJoinBtn.setTitle("View details", for: .normal)
-            requstToJoinBtn.isHidden = true
-        case .decline:
+        }
+        else if eventAttendeesStatus == "Request_To_Join" {
+            requstToJoinBtn.setTitle("Requested", for: .normal)
+        }
+        else if eventAttendeesStatus == "decline" {
             requstToJoinBtn.setTitle("Request To Join", for: .normal)
         }
+        else {
+            requstToJoinBtn.setTitle("Request To Join", for: .normal)
+        }
+        
+//        switch eventDetail.eventAttendeesStatus {
+//        case .none:
+//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
+//        case .requestToJoin:
+//            requstToJoinBtn.setTitle("Requested", for: .normal)
+//        case .accepted:
+//            requstToJoinBtn.setTitle("View details", for: .normal)
+//            requstToJoinBtn.isHidden = true
+//        case .decline:
+//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
+//        }
         
         eventLocationLabel.text = "\(eventDetail.address ?? ""), \(eventDetail.city ?? ""), \(eventDetail.country ?? "")"
         

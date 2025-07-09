@@ -252,8 +252,8 @@ struct NewEventDetailsData: Codable {
     let invitedByYou: [String]?
     let interestedUsersCount: String?
     let interestedUsers: [NewEventInterestedUser]?
-    let eventAttendeesStatus: EventAttendeeStatus?
-    
+//    let eventAttendeesStatus: EventAttendeeStatus?
+    let eventAttendeesStatus: String?
 
     enum CodingKeys: String, CodingKey {
         case id, content
@@ -495,13 +495,13 @@ struct NewEventDetailsInterestedUser: Codable {
 struct ConferenceAgenda: Codable {
     let id: Int?
     let name, date, timeFrom, timeTo: String?
-    let sponsor: String?
+    let sponsorname: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name, date
         case timeFrom = "time_from"
         case timeTo = "time_to"
-        case sponsor
+        case sponsorname
     }
 }
 
