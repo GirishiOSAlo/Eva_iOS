@@ -12,7 +12,7 @@ class EventMainVC: UIViewController, XIBed {
 
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var headingLabel: HeadingLabel!
+    @IBOutlet weak var headingLabel: UILabel!
     
     @IBOutlet weak var drpDwnUIView: UIView!
     @IBOutlet weak var drpDwnNameLable: UILabel!

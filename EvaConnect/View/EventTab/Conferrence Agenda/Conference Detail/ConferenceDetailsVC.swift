@@ -18,7 +18,7 @@ class ConferenceDetailsVC: UIViewController, XIBed {
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var headingLabel: HeadingLabel!
+    @IBOutlet weak var headingLabel: UILabel!
     
     @IBOutlet weak var agendaCollectionVw: UICollectionView!
     

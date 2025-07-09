@@ -26,7 +26,7 @@
                 <outlet property="eventDetailsView" destination="gux-2y-jlY" id="S5g-db-gVP"/>
                 <outlet property="eventListTable" destination="nCg-6C-hgd" id="HCw-NZ-3PJ"/>
                 <outlet property="exhibitorsView" destination="Nbb-48-CKd" id="rMh-Hl-jwl"/>
-                <outlet property="headingLabel" destination="VL9-hN-br1" id="02a-4e-kzY"/>
+                <outlet property="headingLabel" destination="VL9-hN-br1" id="pIo-tM-gKk"/>
                 <outlet property="hotelsView" destination="vvm-c7-4QV" id="GBN-ra-1MX"/>
                 <outlet property="meetingsView" destination="vBd-g8-SIf" id="9CT-tL-Tnx"/>
                 <outlet property="networkingEventView" destination="cQK-XW-dKD" id="irI-rp-zyy"/>
@@ -57,7 +57,7 @@
                                 <action selector="backBtnTapped:" destination="-1" eventType="touchUpInside" id="Sg6-YP-eHl"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meeting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-hN-br1" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meeting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-hN-br1">
                             <rect key="frame" x="60" y="84.333333333333329" width="313" height="19.333333333333329"/>
                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                             <nil key="textColor"/>

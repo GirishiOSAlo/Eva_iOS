@@ -18,7 +18,7 @@
             <connections>
                 <outlet property="agendaCollectionVw" destination="M9l-7c-Wnq" id="Rvr-xR-WHf"/>
                 <outlet property="backBtn" destination="jmL-Di-HSK" id="Jsf-T8-Ios"/>
-                <outlet property="headingLabel" destination="ylN-Jc-cjk" id="aHH-U6-ab7"/>
+                <outlet property="headingLabel" destination="ylN-Jc-cjk" id="JJn-Fa-lpb"/>
                 <outlet property="topView" destination="mgy-52-ylQ" id="wok-qE-iNA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -43,7 +43,7 @@
                                 <action selector="backBtnTapped:" destination="-1" eventType="touchUpInside" id="sMR-UQ-luK"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conference Agenda" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylN-Jc-cjk" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conference Agenda" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylN-Jc-cjk">
                             <rect key="frame" x="60" y="84.666666666666671" width="313" height="18.666666666666671"/>
                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                             <nil key="textColor"/>
