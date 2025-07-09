@@ -90,6 +90,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     @objc func viewAllTapped() {
         print("View All tapped")
         let vc = NetworkingEventsListVC.instantiate()
+        vc.networkingEventList = self.networkingEventList
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
