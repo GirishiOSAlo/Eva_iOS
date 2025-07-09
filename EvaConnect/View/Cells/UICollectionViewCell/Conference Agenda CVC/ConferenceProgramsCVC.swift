@@ -42,7 +42,7 @@ class ConferenceProgramsCVC: UICollectionViewCell {
     func setData(data: ConferenceProgram?) {
         self.timeLbl.text = "\(data?.timeFrom ?? "") - \(data?.timeTo ?? "")"
         self.sessionLbl.text = data?.name ?? ""
-        self.sponsorsLbl.text = "--"
+        self.sponsorsLbl.text = data?.sponsorname ?? ""
     }
     
 }

@@ -38,6 +38,7 @@ struct ConferenceProgram: Codable {
     let createdAt, updatedAt: String?
     let deletedAt: String?
     let sponsorlists: [AgendaSponsorlist]?
+    let sponsorname: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name, description
@@ -52,6 +53,7 @@ struct ConferenceProgram: Codable {
         case updatedAt = "updated_at"
         case deletedAt = "deleted_at"
         case sponsorlists
+        case sponsorname
     }
 }
 
