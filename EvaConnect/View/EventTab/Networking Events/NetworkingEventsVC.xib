@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +13,9 @@
                 <outlet property="infoLabel" destination="jew-Fg-Iic" id="Kfj-A4-YE4"/>
                 <outlet property="infoUiView" destination="3Fr-Qc-kA4" id="75W-hb-9zd"/>
                 <outlet property="networkinEventListTable" destination="9ja-Hg-Lhp" id="0VH-6A-WyE"/>
+                <outlet property="networkinEventTableHeight" destination="ffW-ud-0aN" id="OXT-QY-Tee"/>
                 <outlet property="scrollView" destination="iAG-WB-OE1" id="lWj-T9-S0i"/>
+                <outlet property="tableBgVw" destination="dbA-dc-E3x" id="8aa-cf-XR1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewAllLabel" destination="VLW-th-Fty" id="djs-62-szZ"/>
             </connections>
@@ -30,15 +31,19 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cc-OD-avS">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9ja-Hg-Lhp">
-                                    <rect key="frame" x="20" y="0.0" width="353" height="458"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbA-dc-E3x">
+                                    <rect key="frame" x="22" y="2" width="349" height="478"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9ja-Hg-Lhp">
+                                    <rect key="frame" x="32" y="12" width="329" height="458"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="458" id="ffW-ud-0aN"/>
                                     </constraints>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLW-th-Fty">
-                                    <rect key="frame" x="20" y="478" width="353" height="173"/>
+                                    <rect key="frame" x="20" y="510" width="353" height="131"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -85,20 +90,24 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="wJC-ED-xkA" firstAttribute="top" secondItem="VLW-th-Fty" secondAttribute="bottom" constant="20" id="3sF-Hn-sex"/>
+                                <constraint firstItem="wJC-ED-xkA" firstAttribute="top" secondItem="VLW-th-Fty" secondAttribute="bottom" constant="30" id="3sF-Hn-sex"/>
+                                <constraint firstItem="dbA-dc-E3x" firstAttribute="trailing" secondItem="9ja-Hg-Lhp" secondAttribute="trailing" constant="10" id="9Uy-4C-fw7"/>
                                 <constraint firstItem="wJC-ED-xkA" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="A3D-c5-1n5"/>
                                 <constraint firstItem="wJC-ED-xkA" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="BWY-3H-zfV"/>
-                                <constraint firstItem="9ja-Hg-Lhp" firstAttribute="top" secondItem="9cc-OD-avS" secondAttribute="top" id="Co6-m5-Lpn"/>
-                                <constraint firstItem="9ja-Hg-Lhp" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="Idl-q1-FA4"/>
+                                <constraint firstItem="9ja-Hg-Lhp" firstAttribute="top" secondItem="9cc-OD-avS" secondAttribute="top" constant="12" id="Co6-m5-Lpn"/>
+                                <constraint firstItem="9ja-Hg-Lhp" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="32" id="Idl-q1-FA4"/>
+                                <constraint firstItem="dbA-dc-E3x" firstAttribute="bottom" secondItem="9ja-Hg-Lhp" secondAttribute="bottom" constant="10" id="J5t-6d-WYC"/>
                                 <constraint firstAttribute="trailing" secondItem="VLW-th-Fty" secondAttribute="trailing" constant="20" id="N08-6h-P3v"/>
                                 <constraint firstItem="3Fr-Qc-kA4" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="Oo5-Qy-D1T"/>
                                 <constraint firstAttribute="trailing" secondItem="wJC-ED-xkA" secondAttribute="trailing" constant="20" id="QIw-C0-Fk0"/>
                                 <constraint firstItem="3Fr-Qc-kA4" firstAttribute="top" secondItem="wJC-ED-xkA" secondAttribute="bottom" constant="20" id="Zvw-b5-Tn1"/>
-                                <constraint firstItem="VLW-th-Fty" firstAttribute="top" secondItem="9ja-Hg-Lhp" secondAttribute="bottom" constant="20" id="dyt-xP-gAh"/>
+                                <constraint firstItem="dbA-dc-E3x" firstAttribute="leading" secondItem="9ja-Hg-Lhp" secondAttribute="leading" constant="-10" id="aGr-dk-HkR"/>
+                                <constraint firstItem="VLW-th-Fty" firstAttribute="top" secondItem="9ja-Hg-Lhp" secondAttribute="bottom" constant="40" id="dyt-xP-gAh"/>
                                 <constraint firstAttribute="trailing" secondItem="3Fr-Qc-kA4" secondAttribute="trailing" constant="20" id="nyS-HP-vTE"/>
-                                <constraint firstAttribute="trailing" secondItem="9ja-Hg-Lhp" secondAttribute="trailing" constant="20" id="oxM-wd-WbW"/>
+                                <constraint firstAttribute="trailing" secondItem="9ja-Hg-Lhp" secondAttribute="trailing" constant="32" id="oxM-wd-WbW"/>
+                                <constraint firstItem="dbA-dc-E3x" firstAttribute="top" secondItem="9ja-Hg-Lhp" secondAttribute="top" constant="-10" id="pIL-BU-ECg"/>
                                 <constraint firstItem="VLW-th-Fty" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="sYZ-Ib-KiB"/>
                                 <constraint firstAttribute="trailing" secondItem="wJC-ED-xkA" secondAttribute="trailing" constant="20" id="x2w-vS-6Sp"/>
                                 <constraint firstAttribute="bottom" secondItem="3Fr-Qc-kA4" secondAttribute="bottom" constant="20" id="xJm-6s-Ljx"/>
@@ -118,7 +127,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="iAG-WB-OE1" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="C5Q-l0-EjF"/>
                 <constraint firstItem="iAG-WB-OE1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ws0-c8-Ztd"/>
@@ -130,8 +139,5 @@
     </objects>
     <resources>
         <image name="ic_info" width="20" height="20"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

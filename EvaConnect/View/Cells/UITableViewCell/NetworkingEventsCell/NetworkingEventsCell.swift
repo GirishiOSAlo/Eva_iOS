@@ -23,8 +23,12 @@ class NetworkingEventsCell: UITableViewCell {
     @IBOutlet weak var drpDwnBtn: UIButton!
     @IBOutlet weak var joinBtn: UIButton!
     
-    
-    
+    var isExpanded: Bool = false {
+        didSet {
+            let imageName = isExpanded ? "ic_fillDropUp" : "ic_fillDropDown"
+            drpDwnBtn.setImage(UIImage(named: imageName), for: .normal)
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,18 +38,28 @@ class NetworkingEventsCell: UITableViewCell {
     func setupUI() {
         eventNameHeadingLabel.font = UIFont(name: Myfonts.medium, size: 14)
         eventNameLabel.font = UIFont(name: Myfonts.medium, size: 14)
-        eventDescLable.font = UIFont(name: Myfonts.medium, size: 14)
+        eventDescLable.font = UIFont(name: Myfonts.regular, size: 14)
+        dateLabel.font = UIFont(name: Myfonts.medium, size: 14)
+        timeLabel.font = UIFont(name: Myfonts.medium, size: 14)
+        
         sponsorsHeadingLabel.font = UIFont(name: Myfonts.medium, size: 14)
         sponsorsLabel.font = UIFont(name: Myfonts.medium, size: 14)
         locationHeadingLable.font = UIFont(name: Myfonts.medium, size: 14)
         locationLabel.font = UIFont(name: Myfonts.medium, size: 14)
         
-        dateLabel.font = UIFont(name: Myfonts.medium, size: 14)
-        timeLabel.font = UIFont(name: Myfonts.medium, size: 14)
         
         drpDwnBtn.layer.cornerRadius = drpDwnBtn.layer.frame.height/2
         joinBtn.layer.cornerRadius = 10
         
+    }
+    
+    func setData(obj: EventNetworking) {
+        self.eventNameLabel.text = obj.networkingeventName ?? ""
+        self.eventDescLable.text = obj.description ?? ""
+        self.dateLabel.text = "--"
+        self.timeLabel.text = "--"
+        self.sponsorsLabel.text = "--"
+        self.locationLabel.text = "--"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
