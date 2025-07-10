@@ -62,7 +62,12 @@ class UserJobCell: UITableViewCell {
         salaryLbl.text = "£\(data.salary ?? 0)"
         locationLbl.text = data.location ?? ""
         contractLbl.text = data.jobtype ?? ""
-        data.saved == 1 ? saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal) : saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
+        if data.saved == 1 {
+            saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal)
+        } else {
+            saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
+        }
+//        data.saved == 1 ? saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal) : saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
         grayDotView.isHidden = false
         if !isIndivisualUser {
             grayDotView.isHidden = true

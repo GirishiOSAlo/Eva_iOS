@@ -121,35 +121,7 @@ class HomePageVC: UIViewController {
         }
         return nil
     }
-    
-    func convertDate(from isoString: String) -> String? {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-
-        if let date = inputFormatter.date(from: isoString) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "dd-MM-yyyy"
-            return outputFormatter.string(from: date)
-        } else {
-            return nil
-        }
-    }
-    
-    func convertTime(from isoString: String) -> String? {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-
-        if let date = inputFormatter.date(from: isoString) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "dd-MM-yyyy"
-            return outputFormatter.string(from: date)
-        } else {
-            return nil
-        }
-    }
-    
+        
     @IBAction func onEventViewAllBtnTap(_ sender: UIButton) {
         Constants.saveEnumToUserDefaults(.events)
         let vc = DashboardTabbarVC.instantiate()
@@ -543,8 +515,19 @@ extension HomePageVC {
     }
     
     @objc func bannerReqToJoin(sender: UIButton) {
-        let bannerID = self.dashboardBannerList[sender.tag].id ?? 0
-        reqToJoin(eventtId: bannerID, type: 1)
+        let banner = self.dashboardBannerList[sender.tag]
+        let bannerID = banner.id ?? 0
+        let attendeesStatus = banner.eventAttendeesStatus ?? ""
+        
+        if attendeesStatus == "" {
+            if banner.isinvited == 0 {
+                self.reqToJoin(eventtId: bannerID, type: 1)
+            } else {
+                self.reqToJoin(eventtId: bannerID, type: 2)
+            }
+        } else {
+            print("Button Not Clickable")
+        }
     }
     
     @objc func showVideoView(sender: UIButton) {
@@ -647,41 +630,41 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             cell.titleLbl.text = banner.name ?? ""
             cell.subtitleLbl.text = banner.content ?? ""
             cell.locationLbl.text = "\(banner.city ?? ""),\(banner.country ?? "")"
+            cell.dateLbl.text = "\(banner.startDate ?? "") - \(banner.endDate ?? "")"
+            cell.timeLbl.text = "\(banner.startTime ?? "") - \(banner.endTime ?? "")"
             
-            var startDate = ""
-            var endDate = ""
-            if let convertStartDate = convertDate(from: banner.startDate ?? "") {
-                startDate = convertStartDate
-            }
-            if let convertEndDate = convertDate(from: banner.endDate ?? "") {
-                endDate = convertEndDate
-            }
-            cell.dateLbl.text = "\(startDate) - \(endDate)"
+            let eventAttendeesStatus = banner.eventAttendeesStatus ?? ""
             
-            var startTime = ""
-            var endTime = ""
-            if let convertStartTime = convertTime(from: banner.startTime ?? "") {
-                startTime = convertStartTime
+            //            isinvite = 1 --> accept --> type = 2
+            //            isinvite = 0 --> request to join --> type = 1
+            //            eventAttendeesStatus = "" --> button click else button not click { check isinvite }
+            
+            if eventAttendeesStatus == "" {
+                if banner.isinvited == 0 {
+                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+                } else {
+                    cell.requestJoinBtn.setTitle("Accepted", for: .normal)
+                }
             }
-            if let convertEndTime = convertTime(from: banner.endTime ?? "") {
-                endTime = convertEndTime
+            else {
+                cell.requestJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
             }
 
-            switch banner.eventAttendeesStatus {
-            case .none:
-                cell.requestJoinBtn.isHidden = false
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            case .requestToJoin:
-                cell.requestJoinBtn.isHidden = false
-                cell.requestJoinBtn.setTitle("Requested", for: .normal)
-            case .accepted:
-                cell.requestJoinBtn.isHidden = true
-                cell.requestJoinBtn.setTitle("View details", for: .normal)
-            case .decline:
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            }
+//            switch banner.eventAttendeesStatus {
+//            case .none:
+//                cell.requestJoinBtn.isHidden = false
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            case .requestToJoin:
+//                cell.requestJoinBtn.isHidden = false
+//                cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//            case .accepted:
+//                cell.requestJoinBtn.isHidden = true
+//                cell.requestJoinBtn.setTitle("View details", for: .normal)
+//            case .decline:
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            }
             
-            cell.timeLbl.text = "\(startTime) - \(endTime)"
+            
             cell.viewDetailsBtn.tag = indexPath.row
             cell.viewDetailsBtn.addTarget(self, action: #selector(viewDetailsTapped(sender:)), for: .touchUpInside)
             cell.requestJoinBtn.tag = indexPath.row

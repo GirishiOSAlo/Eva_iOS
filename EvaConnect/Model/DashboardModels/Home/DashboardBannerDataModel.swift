@@ -25,8 +25,9 @@ struct DashboardBannerData: Codable {
     let eventStartDatetime, eventEndDatetime: String?
     let isPrivate: Int?
     let featuredImage: String?
-    let isJoined: Int?
-    let eventAttendeesStatus: EventAttendeeStatus?
+    let isJoined, isinvited: Int?
+//    let eventAttendeesStatus: EventAttendeeStatus?
+    let eventAttendeesStatus: String?
     
     enum CodingKeys: String, CodingKey {
         case id, name, status, content, city, country
@@ -39,6 +40,7 @@ struct DashboardBannerData: Codable {
         case isPrivate = "is_private"
         case featuredImage = "featured_image"
         case isJoined = "is_joined"
+        case isinvited = "Isinvited"
         case eventAttendeesStatus = "attendeesstatus"
     }
 }

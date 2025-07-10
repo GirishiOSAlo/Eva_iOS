@@ -274,11 +274,15 @@ class HomeVC: BaseVC {
                     // pagination — append
                     self.jobList.append(contentsOf: list)
                 }
-//                if (jobListData.data?.jobs?.count ?? 0) > 0 {
-//                    self.emptyListMessageLbl.text = ""
-//                } else {
-//                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
-//                }
+                for job in self.jobList {
+                    print("===> ",job.saved)
+                }
+                
+                if (jobListData.data?.jobs?.count ?? 0) > 0 {
+                    self.emptyListMessageLbl.text = ""
+                } else {
+                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
+                }
             } else {
                 self.presentAlert("Failure", jobListData.message, nil)
             }
