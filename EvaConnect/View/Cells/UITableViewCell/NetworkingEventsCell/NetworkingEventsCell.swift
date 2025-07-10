@@ -56,10 +56,10 @@ class NetworkingEventsCell: UITableViewCell {
     func setData(obj: EventNetworking) {
         self.eventNameLabel.text = obj.networkingeventName ?? ""
         self.eventDescLable.text = obj.description ?? ""
-        self.dateLabel.text = "--"
-        self.timeLabel.text = "--"
+        self.dateLabel.text = obj.date ?? ""
+        self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
         self.sponsorsLabel.text = "--"
-        self.locationLabel.text = "--"
+        self.locationLabel.text = obj.location ?? ""
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

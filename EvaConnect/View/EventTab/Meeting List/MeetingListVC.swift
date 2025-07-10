@@ -227,8 +227,12 @@ extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.isExpanded = (indexPath == expandedIndexPath)
         
         let event = delegateMeetingsList[indexPath.row]
-        cell.eventNameLbl.text = event.meetingNotes
-        
+        cell.eventNameLbl.text = event.meetingNotes ?? "--"
+        cell.dateLbl.text = event.startDay ?? "--"
+        cell.timeLbl.text = "\(event.startTime ?? "--") - \(event.endTime ?? "--")"
+        cell.meetingWithLbl.text = "--"
+        cell.colleaguesLbl.text = "--"
+        cell.locationLbl.text = event.location ?? "--"
         return cell
     }
     
