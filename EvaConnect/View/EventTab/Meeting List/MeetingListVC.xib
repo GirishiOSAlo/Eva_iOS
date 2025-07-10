@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,10 +37,10 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="798"/>
                             <subviews>
                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3a-ll-iIz" userLabel="Content View">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="384"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="364"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fE-ft-wqO" userLabel="SearchView">
-                                            <rect key="frame" x="20" y="20" width="353" height="40"/>
+                                            <rect key="frame" x="20" y="0.0" width="353" height="40"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_searchTheme" translatesAutoresizingMaskIntoConstraints="NO" id="gBj-RY-eVS">
                                                     <rect key="frame" x="16" y="12" width="16" height="16"/>
@@ -68,7 +68,7 @@
                                             </constraints>
                                         </view>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y2Q-U1-U9J" userLabel="DateView">
-                                            <rect key="frame" x="20" y="80" width="353" height="40"/>
+                                            <rect key="frame" x="20" y="60" width="353" height="40"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giC-6C-wlp" userLabel="FromDateView">
                                                     <rect key="frame" x="0.0" y="0.0" width="176" height="40"/>
@@ -157,7 +157,7 @@
                                             </constraints>
                                         </view>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hPK-02-tvo">
-                                            <rect key="frame" x="20" y="152" width="353" height="200"/>
+                                            <rect key="frame" x="20" y="132" width="353" height="200"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="200" id="eTT-jJ-s3M"/>
@@ -179,7 +179,7 @@
                                         <constraint firstItem="y2Q-U1-U9J" firstAttribute="leading" secondItem="z3a-ll-iIz" secondAttribute="leading" constant="20" id="Ycy-zq-eDA"/>
                                         <constraint firstItem="y2Q-U1-U9J" firstAttribute="top" secondItem="8fE-ft-wqO" secondAttribute="bottom" constant="20" id="eL1-Rg-Nw3"/>
                                         <constraint firstAttribute="trailing" secondItem="y2Q-U1-U9J" secondAttribute="trailing" constant="20" id="g1I-eF-CEX"/>
-                                        <constraint firstItem="8fE-ft-wqO" firstAttribute="top" secondItem="z3a-ll-iIz" secondAttribute="top" constant="20" id="gT3-rH-y9E"/>
+                                        <constraint firstItem="8fE-ft-wqO" firstAttribute="top" secondItem="z3a-ll-iIz" secondAttribute="top" id="gT3-rH-y9E"/>
                                         <constraint firstItem="hPK-02-tvo" firstAttribute="top" secondItem="y2Q-U1-U9J" secondAttribute="bottom" constant="32" id="oZz-pI-ppJ"/>
                                         <constraint firstItem="hPK-02-tvo" firstAttribute="leading" secondItem="z3a-ll-iIz" secondAttribute="leading" constant="20" id="qKf-sy-Xlw"/>
                                     </constraints>
@@ -200,8 +200,8 @@
                         <constraint firstAttribute="height" constant="798" id="9OX-rt-5TK"/>
                         <constraint firstAttribute="bottom" secondItem="9dv-lL-ywk" secondAttribute="bottom" id="LB8-Rf-b8P"/>
                         <constraint firstItem="9dv-lL-ywk" firstAttribute="leading" secondItem="nZV-I1-6um" secondAttribute="leading" id="POE-EL-HuA"/>
+                        <constraint firstItem="9dv-lL-ywk" firstAttribute="top" secondItem="nZV-I1-6um" secondAttribute="top" id="bBI-FX-ovQ"/>
                         <constraint firstAttribute="trailing" secondItem="9dv-lL-ywk" secondAttribute="trailing" id="dyb-g6-fYV"/>
-                        <constraint firstItem="9dv-lL-ywk" firstAttribute="top" secondItem="nZV-I1-6um" secondAttribute="top" id="jtz-dh-usR"/>
                     </constraints>
                 </view>
             </subviews>

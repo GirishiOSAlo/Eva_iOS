@@ -20,7 +20,6 @@ class MeetingListCVC: UICollectionViewCell {
     @IBOutlet weak var dropBtn: UIButton!
     
     @IBOutlet weak var eventNameLbl: UILabel!
-    @IBOutlet weak var eventSubLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var stackVw: UIStackView!
@@ -59,7 +58,6 @@ class MeetingListCVC: UICollectionViewCell {
     
     func initUi() {
         eventNameLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
-        eventSubLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         dateLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         timeLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         

@@ -26,11 +26,6 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
     
     var delegateMeetingsList: [Delegatemeeting] = []
     
-    struct Event {
-        let eventName: String
-        let eventDesc: String
-    }
-    var eventData: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,14 +46,6 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
         self.fromLbl.font = UIFont(name: Myfonts.medium, size: 12.0)
         self.toLbl.font = UIFont(name: Myfonts.medium, size: 12.0)
         self.registerCell()
-        
-        
-        eventData = [
-            Event(eventName: "Event Name 1", eventDesc: "AIN's Corporate Aviation Leadership Summit (CALS)"),
-            Event(eventName: "Event Name 2", eventDesc: "AIN's Corporate Aviation Leadership Summit (CALS)"),
-            Event(eventName: "Event Name 3", eventDesc: "AIN's Corporate Aviation Leadership Summit (CALS)"),
-            Event(eventName: "Event Name 4", eventDesc: "AIN's Corporate Aviation Leadership Summit (CALS)")
-        ]
         self.setupCollectionHeight()
     }
     
@@ -91,12 +78,11 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
     func setupCollectionHeight() {
         self.listCollectionVwHeight.constant = 0.0
         var totalCellHeight = 0.0
-        for (index, event) in eventData.enumerated() {
-            let nameLblHeight = self.heightForView(text: event.eventName, font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
-            let descLblHeight = self.heightForView(text: event.eventDesc, font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
+        for (index, event) in delegateMeetingsList.enumerated() {
+            let nameLblHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
             
             // Default collapsed cell height
-            let cellHeight = nameLblHeight + descLblHeight + 68.0
+            let cellHeight = nameLblHeight + 85.0
             
             // Check if this is the expanded cell
             if let expanded = expandedIndexPath, expanded.row == index {
@@ -197,8 +183,8 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
     
     func didTapDetailsButton(in cell: MeetingListCVC) {
         guard let indexPath = listCollectionVw.indexPath(for: cell) else { return }
-        let event = eventData[indexPath.row]
-        print("Details button tapped for event: \(event.eventName)")
+        let event = delegateMeetingsList[indexPath.row]
+        print("Details button tapped for event: \(event.meetingNotes ?? "")")
         
         let vc = MeetingListDetailsVC.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -208,7 +194,7 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
 //MARK: UICollection Delegate & DataSource....
 extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.eventData.count
+        return self.delegateMeetingsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -240,22 +226,20 @@ extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.delegate = self
         cell.isExpanded = (indexPath == expandedIndexPath)
         
-        let event = eventData[indexPath.row]
-        cell.eventNameLbl.text = event.eventName
-        cell.eventSubLbl.text = event.eventDesc
+        let event = delegateMeetingsList[indexPath.row]
+        cell.eventNameLbl.text = event.meetingNotes
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let event = eventData[indexPath.row]
-        let nameLblHeight = self.heightForView(text: event.eventName, font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
-        let descLblHeight = self.heightForView(text: event.eventDesc, font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
-        let height = nameLblHeight + descLblHeight + 68.0
+        let event = delegateMeetingsList[indexPath.row]
+        let nameLblHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
+        let height = nameLblHeight + 85.0
         
         if indexPath == expandedIndexPath {  //--> Expanded height...
-            let cellHeight = height + 241.0
+            let cellHeight = height + 241.0 //258.0
             return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
         } else {  //--> Normal height...
             let cellHeight = height
