@@ -16,6 +16,7 @@ class ExhibitorsVC: UIViewController, XIBed {
         return vc
     }
     
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var exhibitorsTableView: UITableView!
     var exhibitorsList: [CommonEventMetaData] = []
     var eventId = 0
@@ -45,6 +46,19 @@ class ExhibitorsVC: UIViewController, XIBed {
             selectedIndex = sender.tag
         }
         exhibitorsTableView.reloadData()
+        updateTableHeigth()
+    }
+    
+    func updateTableHeigth() {
+        var finalHeight = 0.0
+        for (i,exhibitor) in self.exhibitorsList.enumerated() {
+            if i == selectedIndex {
+                finalHeight = finalHeight + 201.0
+            } else {
+                finalHeight = finalHeight + 142.0
+            }
+        }
+        self.viewHeight.constant = finalHeight + 20.0
     }
 }
 
@@ -67,6 +81,7 @@ extension ExhibitorsVC {
                         self.exhibitorsList = exhibitorsDetail.data?.data ?? []
                         self.exhibitorsTableView.reloadData()
                         self.lastPage = exhibitorsDetail.data?.lastPage ?? 1
+                        self.updateTableHeigth()
                     } else {
                         self.presentAlert("Error","\(exhibitorsDetail.message ?? "")")
                     }
@@ -96,9 +111,9 @@ extension ExhibitorsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == selectedIndex {
-           return 194
+           return 201
         } else {
-            return 135
+            return 142
         }
     }
     
