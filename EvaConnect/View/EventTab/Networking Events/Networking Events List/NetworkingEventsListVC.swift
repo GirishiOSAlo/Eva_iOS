@@ -10,10 +10,11 @@ import UIKit
 
 class NetworkingEventsListVC: UIViewController,XIBed {
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var pageTitleLabel: UILabel!
     @IBOutlet weak var networkingEventListTable: UITableView!
-    @IBOutlet weak var contentUIView: UIView!
+    @IBOutlet weak var networkinEventTableHeight: NSLayoutConstraint!
     @IBOutlet weak var EventListTitleLabel: UILabel!
     @IBOutlet weak var tableBgVw: UIView!
     
@@ -30,11 +31,10 @@ class NetworkingEventsListVC: UIViewController,XIBed {
         self.navigationController?.isNavigationBarHidden = true
         tableBgVw.layer.cornerRadius = 20.0
         registerCell()
-        contentUIView.layer.cornerRadius = 20
-        contentUIView.clipsToBounds = true
         pageTitleLabel.font = UIFont(name: Myfonts.medium, size: 14)
         EventListTitleLabel.font = UIFont(name: Myfonts.medium, size: 14)
         EventListTitleLabel.text = "Event List"
+        self.updateTableHeigth()
     }
     
     func registerCell() {
@@ -58,6 +58,29 @@ class NetworkingEventsListVC: UIViewController,XIBed {
         self.navigationController?.popViewController(animated: false)
     }
     
+    func updateTableHeigth() {
+        var finalHeight = 0.0
+        
+        for (i,network) in self.networkingEventList.enumerated() {
+            let networkEvent = self.networkingEventList[i]
+            let eventNameLblHeight = self.heightForView(text: networkEvent.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let descLblHeight = self.heightForView(text: networkEvent.description ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let locationLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            
+            let totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
+            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
+            let collapseHeight = totalHeight - sponserheight
+            
+            if i == selectedIndex {
+                finalHeight = finalHeight + totalHeight
+            } else {
+                finalHeight = finalHeight + collapseHeight
+            }
+        }
+        self.networkinEventTableHeight.constant = finalHeight
+    }
+    
     @objc func drpDwnBtnTapped(sender: UIButton) {
         if selectedIndex == sender.tag {
             selectedIndex = nil
@@ -65,6 +88,7 @@ class NetworkingEventsListVC: UIViewController,XIBed {
             selectedIndex = sender.tag
         }
         networkingEventListTable.reloadData()
+        self.updateTableHeigth()
     }
 }
 
