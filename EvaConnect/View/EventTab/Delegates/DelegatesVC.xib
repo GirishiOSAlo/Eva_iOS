@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,11 +12,15 @@
         <array key="NunitoSans-Regular.ttf">
             <string>NunitoSans-Regular</string>
         </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DelegatesVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
                 <outlet property="delegateListTable" destination="eZb-f9-qMc" id="5y1-l8-UnL"/>
+                <outlet property="noRecordLbl" destination="bae-eM-O3U" id="vwv-HF-vvE"/>
                 <outlet property="searchICImgView" destination="w5P-fM-s32" id="Cr5-vr-EhL"/>
                 <outlet property="searchTextField" destination="eDH-CE-LR8" id="2ch-R3-viw"/>
                 <outlet property="searchUiView" destination="1Zm-i6-zdG" id="kHS-vU-yu1"/>
@@ -91,12 +95,20 @@
                         <constraint firstItem="1Zm-i6-zdG" firstAttribute="top" secondItem="QpX-7b-QBD" secondAttribute="top" constant="10" id="pCS-og-iLX"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="No records found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bae-eM-O3U">
+                    <rect key="frame" x="131" y="416" width="131.33333333333337" height="19.333333333333314"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="yqJ-ak-Gws"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="QpX-7b-QBD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6bU-e7-7bZ"/>
+                <constraint firstItem="bae-eM-O3U" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="7or-Bm-bEj"/>
                 <constraint firstItem="QpX-7b-QBD" firstAttribute="leading" secondItem="yqJ-ak-Gws" secondAttribute="leading" id="BRt-5m-Qgk"/>
+                <constraint firstItem="bae-eM-O3U" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Eu3-Lo-itk"/>
                 <constraint firstItem="QpX-7b-QBD" firstAttribute="trailing" secondItem="yqJ-ak-Gws" secondAttribute="trailing" id="Nge-6V-Pgp"/>
                 <constraint firstAttribute="bottom" secondItem="QpX-7b-QBD" secondAttribute="bottom" id="xmr-z6-FOk"/>
             </constraints>

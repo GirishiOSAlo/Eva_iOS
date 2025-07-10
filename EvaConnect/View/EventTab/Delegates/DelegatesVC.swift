@@ -20,23 +20,35 @@ class DelegatesVC: UIViewController, XIBed {
     @IBOutlet weak var searchICImgView: UIImageView!
     @IBOutlet weak var delegateListTable: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var noRecordLbl: UILabel!
     
     var delegateData: [CommonEventMetaData] = []
     var eventId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
     }
     
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
+        self.noRecordLbl.isHidden = true
         searchUiView.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
         delegateListTable.delegate = self
         delegateListTable.dataSource = self
         delegateListTable.registerCell(withType: DelegatesTableCell.self)
         fetchDelegateList()
+    }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
     }
 }
 
@@ -58,20 +70,11 @@ extension DelegatesVC {
                     if !(DelegateDetail.error ?? false) {
                         self.delegateData = DelegateDetail.data?.data ?? []
                         self.delegateListTable.reloadData()
-//                        self.eventDetail = eventDetail.data?[0]
-//                        self.exhibitorsList = self.eventDetail?.exhibitorslists ?? []
-//                        self.speakersLists = self.eventDetail?.speakerslists ?? []
-//                        self.sponsorsList = self.eventDetail?.sponsorslists ?? []
-//                        self.HotelList = self.eventDetail?.eventHotels ?? []
-//                        self.VenueList = self.eventDetail?.eventVenu ?? []
-//                        self.delegatelists = self.eventDetail?.delegatelists ?? []
-//                        if self.isFromSidemenu {
-//                            self.addModule(self.meetingListVC, to: self.meetingsView)
-//                            self.drpDwnNameLable.text = "Meetings"
-//                        } else {
-//                            self.addModule(self.eventDetailsVC, to: self.eventDetailsView)
-//                            self.drpDwnNameLable.text = "Event Details"
-//                        }
+                        if self.delegateData.count > 0 {
+                            self.noRecordLbl.isHidden = true
+                        } else {
+                            self.noRecordLbl.isHidden = false
+                        }
                     } else {
                         self.presentAlert("Error","\(DelegateDetail.message ?? "")")
                     }
@@ -98,23 +101,22 @@ extension DelegatesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = delegateListTable.dequeueReusableCell(withIdentifier: DelegatesTableCell.id(), for: indexPath) as! DelegatesTableCell
         let delegate = delegateData[indexPath.row]
-        cell.nameLabel.text = delegate.firstName
-        cell.companyLabel.text = delegate.companyName
-        cell.designationLabel.text = delegate.designation
+        cell.setData(obj: delegate)
+        
         cell.viewProfileBtn.tag = indexPath.row
         cell.viewProfileBtn.addTarget(self, action: #selector(self.viewProfileTapped(sender:)), for: .touchUpInside)
-        if delegate.logo != nil {
-            cell.profileImgView.sd_setImage(with: URL(string: delegate.logo ?? ""), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
-        }
-        else {
-            cell.profileImgView.image = #imageLiteral(resourceName: "profile")
-        }
-        cell.selectionStyle = .none
         
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        //return 120
+        let obj = self.delegateData[indexPath.row]
+        let width = self.view.frame.width - 252.0
+        let nameLblHeight = self.heightForView(text: obj.firstName ?? "", font: UIFont(name: Myfonts.bold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: width)
+        let designationLblHeight = self.heightForView(text: obj.designation ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: width)
+        let companyLblHeight = self.heightForView(text: obj.companyName ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: width)
+        let totalHeight = nameLblHeight + designationLblHeight + companyLblHeight + 58.0
+        return totalHeight
     }
 }
