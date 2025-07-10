@@ -68,9 +68,9 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
            UIApplication.shared.canOpenURL(url) {
-            cell.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "noImage"))
+            cell.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
         } else {
-            cell.profileImgVw.image = UIImage(named: "noImage")
+            cell.profileImgVw.image = UIImage(named: "eventPlaceholder")
         }
         cell.nameLbl.text = hotel.hotelname
         cell.subLbl.text = hotel.description

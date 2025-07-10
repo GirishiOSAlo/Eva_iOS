@@ -10,8 +10,9 @@ import UIKit
 
 class VenueMapVC: UIViewController, XIBed {
 
-    @IBOutlet weak var venueMapTableView: UITableView!
-    var VenueList: [EventVenu] = []
+    @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
+    @IBOutlet weak var listCollectionVw: UICollectionView!
+    var venueList: [EventVenu] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,49 +20,44 @@ class VenueMapVC: UIViewController, XIBed {
     }
     
     func setupUI() {
-        self.navigationController?.isNavigationBarHidden = true
-        venueMapTableView.dataSource = self
-        venueMapTableView.delegate = self
-        venueMapTableView.registerCell(withType: VenueMapCell.self)
+        self.registerCell()
+        updateCollectionHeigth()
+    }
+    
+    func registerCell() {
+        listCollectionVw.registerNib(cellNib: VenueCVC.self)
+        listCollectionVw.delegate = self
+        listCollectionVw.dataSource = self
+    }
+    
+    func updateCollectionHeigth() {
+        self.collectionVwHeight.constant = CGFloat(self.venueList.count) * 250.0
     }
 }
 
-extension VenueMapVC: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return VenueList.count
+//MARK: UICollection Delegate & DataSource....
+extension VenueMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.venueList.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = venueMapTableView.dequeueReusableCell(withIdentifier: VenueMapCell.id(), for: indexPath) as! VenueMapCell
-        let venueObj = VenueList[indexPath.row]
-        if venueObj.floorplanImage != nil {
-            cell.venueMapImgView.sd_setImage(with: URL(string: venueObj.floorplanImage ?? ""), placeholderImage: #imageLiteral(resourceName: "eventPlaceholder"), options: .progressiveLoad, completed: .none)
-        }
-        else {
-            cell.venueMapImgView.image = #imageLiteral(resourceName: "eventPlaceholder")
-        }
-        cell.selectionStyle = .none
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.listCollectionVw.dequeueReusableCell(withReuseIdentifier: VenueCVC.ReuseId, for: indexPath) as! VenueCVC
         
+        let venue = self.venueList[indexPath.row]
+
+        if let imageUrl = venue.floorplanImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            cell.venueImgVw.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
+        } else {
+            cell.venueImgVw.image = UIImage(named: "eventPlaceholder")
+        }
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let image = imgArray[indexPath]
-//        if image != nil {
-//            let imgString = image!
-//            let vc = DownloadChatImgVC.instantiate(imageString: imgString)
-//            vc.modalPresentationStyle = .fullScreen
-//            vc.isFromHomeVc = true
-//            vc.completion = {
-//                
-//            }
-//            self.navigationController?.present(vc, animated: true)
-//            print("Selected:", imgString)
-//        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.listCollectionVw.frame.size.width, height: 250.0)
     }
 }

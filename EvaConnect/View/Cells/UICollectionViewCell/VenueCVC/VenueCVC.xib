@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="VenueCVC" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="338" height="144"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="338" height="144"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3o-Gl-pfq">
+                        <rect key="frame" x="10" y="10" width="318" height="124"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eventPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="KD2-az-Hfu">
+                                <rect key="frame" x="0.0" y="0.0" width="318" height="124"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KD2-az-Hfu" secondAttribute="trailing" id="E61-DH-IBU"/>
+                            <constraint firstItem="KD2-az-Hfu" firstAttribute="top" secondItem="G3o-Gl-pfq" secondAttribute="top" id="VXS-0x-4BL"/>
+                            <constraint firstItem="KD2-az-Hfu" firstAttribute="leading" secondItem="G3o-Gl-pfq" secondAttribute="leading" id="pZc-z1-fg4"/>
+                            <constraint firstAttribute="bottom" secondItem="KD2-az-Hfu" secondAttribute="bottom" id="w5u-in-eTe"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="G3o-Gl-pfq" secondAttribute="trailing" constant="10" id="HH6-yR-vCZ"/>
+                <constraint firstItem="G3o-Gl-pfq" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Ruj-SB-Mhq"/>
+                <constraint firstItem="G3o-Gl-pfq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="WeL-7g-WOt"/>
+                <constraint firstAttribute="bottom" secondItem="G3o-Gl-pfq" secondAttribute="bottom" constant="10" id="btM-U0-87f"/>
+            </constraints>
+            <size key="customSize" width="338" height="144"/>
+            <connections>
+                <outlet property="baseView" destination="G3o-Gl-pfq" id="tW3-2W-XPt"/>
+                <outlet property="venueImgVw" destination="KD2-az-Hfu" id="9GL-Yo-Flj"/>
+            </connections>
+            <point key="canvasLocation" x="271.75572519083971" y="31.690140845070424"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="eventPlaceholder" width="111.66666412353516" height="58.666667938232422"/>
+    </resources>
+</document>

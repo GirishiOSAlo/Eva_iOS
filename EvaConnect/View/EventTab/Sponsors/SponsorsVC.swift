@@ -108,10 +108,13 @@ extension SponsorsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.profileImgHeight.constant = 120.0
         cell.nameLbl.text = sponsor.firstName ?? ""
         cell.subLbl.text = sponsor.companyName ?? ""
-        if  sponsor.logo != nil {
-            cell.profileImgVw.sd_setImage(with: URL(string: (sponsor.logo)!), placeholderImage: #imageLiteral(resourceName: "eventPlaceholder"), options: .progressiveLoad, completed: .none)
+        if let imageUrl = sponsor.logo,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            cell.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
         } else {
-            cell.profileImgVw.image = #imageLiteral(resourceName: "eventPlaceholder")
+            cell.profileImgVw.image = UIImage(named: "eventPlaceholder")
         }
         return cell
     }

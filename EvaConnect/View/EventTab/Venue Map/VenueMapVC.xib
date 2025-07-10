@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VenueMapVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
-                <outlet property="venueMapTableView" destination="doK-FE-hJo" id="V3g-1S-pPz"/>
+                <outlet property="collectionVwHeight" destination="UEq-v8-DTP" id="VKd-qa-CXV"/>
+                <outlet property="listCollectionVw" destination="GZJ-Vl-CLc" id="exC-f1-GYI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,23 +20,29 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="doK-FE-hJo">
-                    <rect key="frame" x="20" y="59" width="353" height="759"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GZJ-Vl-CLc">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="759" id="pT6-1I-oNW"/>
+                        <constraint firstAttribute="height" constant="759" id="UEq-v8-DTP"/>
                     </constraints>
-                </tableView>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nnS-fB-Ri9">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="doK-FE-hJo" secondAttribute="bottom" id="DgM-GF-fBw"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="doK-FE-hJo" secondAttribute="trailing" constant="20" id="G14-ik-jZj"/>
-                <constraint firstItem="doK-FE-hJo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Ki0-Qw-GXb"/>
-                <constraint firstItem="doK-FE-hJo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="bel-qq-hXU"/>
+                <constraint firstItem="GZJ-Vl-CLc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="78R-AP-0Ea"/>
+                <constraint firstItem="GZJ-Vl-CLc" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="UgR-AD-ZjS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="GZJ-Vl-CLc" secondAttribute="bottom" id="hYd-9D-50x"/>
+                <constraint firstItem="GZJ-Vl-CLc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kjo-px-qt8"/>
             </constraints>
-            <point key="canvasLocation" x="-86" y="20"/>
+            <point key="canvasLocation" x="-86.25954198473282" y="19.718309859154932"/>
         </view>
     </objects>
 </document>

@@ -98,8 +98,8 @@ class EventMainVC: UIViewController, XIBed {
     }()
     
     lazy var sponsorsVC: SponsorsVC = {
-        let vc = SponsorsVC.instantiate()
-        vc.sponsorsData = sponsorsList
+        let vc = SponsorsVC.instantiate(eventId: self.eventId)
+//        vc.sponsorsData = sponsorsList
         return vc
     }()
     
@@ -111,7 +111,7 @@ class EventMainVC: UIViewController, XIBed {
     
     lazy var venueVC: VenueMapVC = {
         let vc = VenueMapVC.instantiate()
-        vc.VenueList = VenueList
+        vc.venueList = VenueList
         return vc
     }()
     
@@ -137,7 +137,8 @@ class EventMainVC: UIViewController, XIBed {
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
-        if self.eventDetail?.eventAttendeesStatus == .accepted {
+//        if self.eventDetail?.eventAttendeesStatus == .accepted {
+        if self.eventDetail?.eventAttendeesStatus == "accepted" {
             isSelected.toggle()
             if isSelected {
                 drpDwnICImgVw.image = UIImage(named: "ic_dropdown_up")
