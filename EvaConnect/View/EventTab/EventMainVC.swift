@@ -137,8 +137,8 @@ class EventMainVC: UIViewController, XIBed {
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
-////        if self.eventDetail?.eventAttendeesStatus == .accepted {
-//        if self.eventDetail?.eventAttendeesStatus == "accepted" {
+//        if self.eventDetail?.eventAttendeesStatus == .accepted {
+        if self.eventDetail?.eventAttendeesStatus == "accepted" {
             isSelected.toggle()
             if isSelected {
                 drpDwnICImgVw.image = UIImage(named: "ic_dropdown_up")
@@ -147,9 +147,9 @@ class EventMainVC: UIViewController, XIBed {
                 drpDwnICImgVw.image = UIImage(named: "ic_dropdown_down")
                 eventListTable.isHidden = true
             }
-//        } else {
-//            print("user did not requested for event")
-//        }  
+        } else {
+            print("user did not requested for event")
+        }  
     }
     
     @IBAction func mainBtnBelowTapped(_ sender: UIButton) {
