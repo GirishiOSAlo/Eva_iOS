@@ -20,16 +20,16 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3o-Gl-pfq">
                         <rect key="frame" x="10" y="10" width="318" height="124"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eventPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="KD2-az-Hfu">
-                                <rect key="frame" x="0.0" y="0.0" width="318" height="124"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eventPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="KD2-az-Hfu">
+                                <rect key="frame" x="5" y="5" width="308" height="114"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="KD2-az-Hfu" secondAttribute="trailing" id="E61-DH-IBU"/>
-                            <constraint firstItem="KD2-az-Hfu" firstAttribute="top" secondItem="G3o-Gl-pfq" secondAttribute="top" id="VXS-0x-4BL"/>
-                            <constraint firstItem="KD2-az-Hfu" firstAttribute="leading" secondItem="G3o-Gl-pfq" secondAttribute="leading" id="pZc-z1-fg4"/>
-                            <constraint firstAttribute="bottom" secondItem="KD2-az-Hfu" secondAttribute="bottom" id="w5u-in-eTe"/>
+                            <constraint firstAttribute="trailing" secondItem="KD2-az-Hfu" secondAttribute="trailing" constant="5" id="E61-DH-IBU"/>
+                            <constraint firstItem="KD2-az-Hfu" firstAttribute="top" secondItem="G3o-Gl-pfq" secondAttribute="top" constant="5" id="VXS-0x-4BL"/>
+                            <constraint firstItem="KD2-az-Hfu" firstAttribute="leading" secondItem="G3o-Gl-pfq" secondAttribute="leading" constant="5" id="pZc-z1-fg4"/>
+                            <constraint firstAttribute="bottom" secondItem="KD2-az-Hfu" secondAttribute="bottom" constant="5" id="w5u-in-eTe"/>
                         </constraints>
                     </view>
                 </subviews>
