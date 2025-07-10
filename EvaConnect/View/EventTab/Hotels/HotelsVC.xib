@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HotelsVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
+                <outlet property="collectionVwHeight" destination="gJc-85-YqH" id="THo-il-jbP"/>
                 <outlet property="listCollectionVw" destination="4w3-qr-rSV" id="8dl-gZ-phV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

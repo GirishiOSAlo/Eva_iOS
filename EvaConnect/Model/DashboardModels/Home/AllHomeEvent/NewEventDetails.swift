@@ -357,9 +357,11 @@ struct List: Codable {
 
 // MARK: - EventHotel
 struct EventHotel: Codable {
+    let hotel: Int?
     let hotelname, country, city, address: String?
     let website: String?
     let description: String?
+    let imageURL: String?
 }
 
 // MARK: - EventNetworking
