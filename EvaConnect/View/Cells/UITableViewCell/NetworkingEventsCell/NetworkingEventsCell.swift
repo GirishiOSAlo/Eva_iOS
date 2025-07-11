@@ -62,6 +62,15 @@ class NetworkingEventsCell: UITableViewCell {
         self.locationLabel.text = obj.location ?? ""
     }
 
+    func setListData(obj: NetworkEventList) {
+        self.eventNameLabel.text = obj.networkingeventName ?? ""
+        self.eventDescLable.text = obj.description ?? ""
+        self.dateLabel.text = obj.date ?? ""
+        self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
+        self.sponsorsLabel.text = "--"
+        self.locationLabel.text = obj.location ?? ""
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

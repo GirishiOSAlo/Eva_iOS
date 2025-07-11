@@ -10,6 +10,12 @@ import UIKit
 
 class NetworkingEventsVC: UIViewController, XIBed {
     
+    static func instantiate(eventId: Int) -> Self {
+        let vc = Self.instantiate()
+        vc.eventId = eventId
+        return vc
+    }
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var networkinEventListTable: UITableView!
     @IBOutlet weak var networkinEventTableHeight: NSLayoutConstraint!
@@ -20,6 +26,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     
     var networkingEventList: [EventNetworking] = []
     var selectedIndex: Int?
+    var eventId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,8 +95,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     
     @objc func viewAllTapped() {
         print("View All tapped")
-        let vc = NetworkingEventsListVC.instantiate()
-        vc.networkingEventList = self.networkingEventList
+        let vc = NetworkingEventsListVC.instantiate(eventId: self.eventId)
         self.navigationController?.pushViewController(vc, animated: false)
     }
     

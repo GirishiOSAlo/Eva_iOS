@@ -484,6 +484,7 @@
 		A62A49C62AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */; };
 		A62AB11D2DD4A9CE006C7A21 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */; };
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
+		A63714412E20C44E00C6B3E8 /* NetworkEventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */; };
 		A63779482DE6F4DE0072055F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63779462DE6F4DE0072055F /* AlertView.swift */; };
 		A63779492DE6F4DE0072055F /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63779472DE6F4DE0072055F /* AlertView.xib */; };
 		A64394CB2E1CE357006EE7F4 /* FollowersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */; };
@@ -1086,6 +1087,7 @@
 		A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAgendaTimeTblCell.swift; sourceTree = "<group>"; };
 		A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
+		A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEventListDataModel.swift; sourceTree = "<group>"; };
 		A63779462DE6F4DE0072055F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A63779472DE6F4DE0072055F /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersDataModel.swift; sourceTree = "<group>"; };
@@ -2543,6 +2545,7 @@
 			isa = PBXGroup;
 			children = (
 				48ECB2BC2E03F585006AFC55 /* CommonEvent.swift */,
+				A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4197,6 +4200,7 @@
 				18B7450B2451C9BB004E86A7 /* SignUpJobSectorVC.swift in Sources */,
 				2533EB3F27B1080500FCD066 /* ProfileManager.swift in Sources */,
 				186B4AA524374D6D0001B935 /* OneSignalUtility.swift in Sources */,
+				A63714412E20C44E00C6B3E8 /* NetworkEventListDataModel.swift in Sources */,
 				2551C17D27BA7706006FE284 /* JobApplicationAlert.swift in Sources */,
 				5073A82424757F14008F2E7D /* UIWindow.swift in Sources */,
 				A6ADF5962AB077E200423428 /* EventAgendaSheduleTblCell.swift in Sources */,

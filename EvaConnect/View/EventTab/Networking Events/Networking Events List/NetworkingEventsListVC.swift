@@ -10,6 +10,12 @@ import UIKit
 
 class NetworkingEventsListVC: UIViewController,XIBed {
     
+    static func instantiate(eventId: Int) -> Self {
+        let vc = Self.instantiate()
+        vc.eventId = eventId
+        return vc
+    }
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var pageTitleLabel: UILabel!
@@ -18,9 +24,11 @@ class NetworkingEventsListVC: UIViewController,XIBed {
     @IBOutlet weak var EventListTitleLabel: UILabel!
     @IBOutlet weak var tableBgVw: UIView!
     
-    var networkingEventList: [EventNetworking] = []
+    var networkingEventList: [NetworkEventList] = []
     var selectedIndex: Int?
-
+    var eventId = 0
+    var currentPage = 1
+    var lastPage = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +42,7 @@ class NetworkingEventsListVC: UIViewController,XIBed {
         pageTitleLabel.font = UIFont(name: Myfonts.medium, size: 14)
         EventListTitleLabel.font = UIFont(name: Myfonts.medium, size: 14)
         EventListTitleLabel.text = "Event List"
-        self.updateTableHeigth()
+        self.fetchNetworkEventListData(page: currentPage)
     }
     
     func registerCell() {
@@ -92,6 +100,39 @@ class NetworkingEventsListVC: UIViewController,XIBed {
     }
 }
 
+extension NetworkingEventsListVC {
+    func fetchNetworkEventListData(page: Int) {
+        let url = EndPoints.eventNetworkList
+        let parameters = [
+            "eventid": self.eventId,
+            "page": page ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(NetworkEventListDataModel.self, from: response.data!)
+                
+                if !(networkEventRoot.error!) {
+                    let list = networkEventRoot.data?.networkingList?.data ?? []
+                    if list.count > 0 {
+                        self.networkingEventList = list
+                        self.networkingEventListTable.reloadData()
+                        self.lastPage = networkEventRoot.data?.networkingList?.lastPage ?? 1
+                        self.updateTableHeigth()
+                    }
+                } else {
+                    print("Error :: \(networkEventRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+}
+
+
 extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.networkingEventList.count
@@ -101,7 +142,7 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         let cell = networkingEventListTable.dequeueReusableCell(withIdentifier: NetworkingEventsCell.id(), for: indexPath) as! NetworkingEventsCell
         
         let networkEvent = self.networkingEventList[indexPath.row]
-        cell.setData(obj: networkEvent)
+        cell.setListData(obj: networkEvent)
         
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnBtn.tag = indexPath.row
@@ -138,6 +179,16 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
             // Other cells: reset to default
             cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         }
+        
+        if indexPath.row == networkingEventList.count - 1 {
+            print("👉 Last tableview cell is visible")
+            // Load next page if not already fetching and not at the last page
+            if currentPage < lastPage {
+                currentPage += 1
+                fetchNetworkEventListData(page: currentPage)
+            } else {
+                print("Page completed. No Api call")
+            }
+        }
     }
-    
 }
