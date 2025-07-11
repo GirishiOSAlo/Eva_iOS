@@ -12,6 +12,9 @@
         <array key="SF-Pro-Text-Bold.otf">
             <string>SFProText-Bold</string>
         </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MeetingListDetailsVC" customModule="AviationConnect" customModuleProvider="target">
@@ -20,6 +23,7 @@
                 <outlet property="categoryCollectionVw" destination="4Mg-gk-xHa" id="arM-6u-k1p"/>
                 <outlet property="headingLbl" destination="5gW-Ae-NyH" id="FWs-0U-goj"/>
                 <outlet property="listCollectionVw" destination="que-wf-wij" id="wnp-x0-7Nx"/>
+                <outlet property="noRecordLbl" destination="JiG-Vi-H4N" id="69q-w1-LS5"/>
                 <outlet property="okPopupBtn" destination="hbp-Ei-W8z" id="wsM-Hd-EBN"/>
                 <outlet property="successPopupVw" destination="W8L-jf-nRn" id="Kq4-bY-AHo"/>
                 <outlet property="successSubPopupVw" destination="F3C-4N-HYr" id="Msf-fu-E7V"/>
@@ -109,6 +113,12 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No records found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JiG-Vi-H4N">
+                    <rect key="frame" x="131" y="416.33333333333331" width="131.33333333333337" height="19.333333333333314"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8L-jf-nRn" userLabel="Success popup View">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <subviews>
@@ -176,6 +186,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="que-wf-wij" secondAttribute="bottom" constant="32" id="InU-gN-wet"/>
                 <constraint firstItem="que-wf-wij" firstAttribute="top" secondItem="TFj-2f-RdZ" secondAttribute="bottom" constant="32" id="KUA-3K-Xdx"/>
                 <constraint firstItem="rVu-ue-7af" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="Q93-Ji-p6C"/>
+                <constraint firstItem="JiG-Vi-H4N" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="TGM-z3-PYS"/>
                 <constraint firstItem="GO7-p1-g1Y" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ZpN-Oo-M7h"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TFj-2f-RdZ" secondAttribute="trailing" id="gTo-zj-d4l"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="que-wf-wij" secondAttribute="trailing" constant="20" id="h5K-qK-Wo9"/>
@@ -184,6 +195,7 @@
                 <constraint firstItem="W8L-jf-nRn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="p0x-NV-U2A"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="GO7-p1-g1Y" secondAttribute="trailing" id="vmt-h1-ZUd"/>
                 <constraint firstItem="que-wf-wij" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="w5z-c6-PGI"/>
+                <constraint firstItem="JiG-Vi-H4N" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="wgN-fH-BnK"/>
                 <constraint firstItem="W8L-jf-nRn" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="z6b-WN-apN"/>
             </constraints>
             <point key="canvasLocation" x="116.79389312977099" y="-1.4084507042253522"/>

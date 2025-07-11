@@ -75,4 +75,12 @@ class MeetingDetailsCVC: UICollectionViewCell {
         cancelMeetingBtn.cornerRadius = 12.0
         joinMeetingBtn.cornerRadius = 12.0
     }
+    
+    func setData(obj: EventMeeting) {
+        self.dateLbl.text = obj.startDay ?? "--"
+        self.timeLbl.text = "\(obj.startTime ?? "--") - \(obj.endTime ?? "--")"
+        self.meetingWithLbl.text = obj.meetingWith ?? "--"
+        self.colleaguesLbl.text = obj.withColleagues ?? "--"
+        self.locationLbl.text = obj.locationName ?? "--"
+    }
 }

@@ -74,13 +74,13 @@ class EventMainVC: UIViewController, XIBed {
     }()
     
     lazy var networkingEventsVC: NetworkingEventsVC = {
-        let vc = NetworkingEventsVC.instantiate()
+        let vc = NetworkingEventsVC.instantiate(eventId: self.eventId)
         vc.networkingEventList = self.networkingEventList
         return vc
     }()
     
     lazy var meetingListVC: MeetingListVC = {
-        let vc = MeetingListVC.instantiate()
+        let vc = MeetingListVC.instantiate(eventId: self.eventId)
         vc.delegateMeetingsList = self.delegateMeetingsList
         return vc
     }()

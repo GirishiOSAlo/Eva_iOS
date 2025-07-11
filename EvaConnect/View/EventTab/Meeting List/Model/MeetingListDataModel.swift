@@ -19,20 +19,20 @@ struct MeetingListDataModel: Codable {
 
 // MARK: - DataClass
 struct MeetingListData: Codable {
-    let pendingMeetings: [String]?
-    let acceptedMeetings: [AcceptedMeeting]?
-    let cancelledMeetings, rescheduledMeetings: [String]?
+    let pendingMeetings, acceptedMeetings, cancelledMeetings, rescheduledMeetings: [EventMeeting]?
 }
 
 // MARK: - AcceptedMeeting
-struct AcceptedMeeting: Codable {
+struct EventMeeting: Codable {
     let id, userid: Int?
-    let startDay, startTime, endTime, location: String?
-    let meetingNotes, locationName: String?
+    let startDay, startTime, endTime: String?
+    let location: String?
+    let meetingNotes: String?
+    let locationName: String?
     let rescheduleReason: String?
     let meetingDetails, meetingWith, withColleagues: String?
     let requestedByID, requestedToID: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, userid
         case startDay = "start_day"

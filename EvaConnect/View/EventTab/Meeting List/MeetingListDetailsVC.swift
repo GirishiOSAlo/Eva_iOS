@@ -15,19 +15,32 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     @IBOutlet weak var categoryCollectionVw: UICollectionView!
     var categorySelectedIndex = 0
 //    var categoryList = ["Requested by You","Requested by Other","With Colleagues","Pending Meetings","Cancelled Meetings","Rescheduled Meetings"]
-    var categoryList = [" ? ","Pending Meetings","Cancelled Meetings","Rescheduled Meetings"]
+    var categoryList = ["Approved Meetings","Pending Meetings","Cancelled Meetings","Rescheduled Meetings"]
     
     @IBOutlet weak var listCollectionVw: UICollectionView!
     var expandedIndexPath: IndexPath?
     var animationView: LottieAnimationView!
-    
+    @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var successPopupVw: UIView!
     @IBOutlet weak var successSubPopupVw: UIView!
     @IBOutlet weak var animationContainerView: UIView!
     @IBOutlet weak var titlePopupLbl: UILabel!
     @IBOutlet weak var okPopupBtn: UIButton!
     
-    var acceptedMeetingsList: [AcceptedMeeting] = []
+    var acceptedMeetingsList: [EventMeeting] = []
+    var pendingMeetingsList: [EventMeeting] = []
+    var cancelledMeetingsList: [EventMeeting] = []
+    var rescheduledMeetingsList: [EventMeeting] = []
+    
+    var list: [EventMeeting] = [] {
+        didSet {
+            if list.count > 0 {
+                self.noRecordLbl.isHidden = true
+            } else {
+                self.noRecordLbl.isHidden = false
+            }
+        }
+    }
     var eventId = 0
     
     override func viewDidLoad() {
@@ -41,6 +54,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     }
     
     func setupUI() {
+        self.noRecordLbl.isHidden = true
         self.successPopupVw.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.semiBold, size: 14.0)
         self.fetchMeetingData()
@@ -119,6 +133,11 @@ extension MeetingListDetailsVC {
                 let meetingsRoot = try jsonDecoder.decode(MeetingListDataModel.self, from: response.data!)
                 if !(meetingsRoot.error!) {
                     self.acceptedMeetingsList = meetingsRoot.data?.acceptedMeetings ?? []
+                    self.pendingMeetingsList = meetingsRoot.data?.pendingMeetings ?? []
+                    self.cancelledMeetingsList = meetingsRoot.data?.cancelledMeetings ?? []
+                    self.rescheduledMeetingsList = meetingsRoot.data?.rescheduledMeetings ?? []
+                    
+                    self.list = self.acceptedMeetingsList
                     self.listCollectionVw.reloadData()
                 } else {
                     print("Error :: \(meetingsRoot.message ?? "")")
@@ -139,7 +158,7 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             return self.categoryList.count
             
         case self.listCollectionVw:
-            return 5
+            return self.list.count
             
         default:
             return 0
@@ -160,7 +179,7 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
                 cell.titleLbl.textColor = selectedColor
             }
             else {
-                var unselectColor = UIColor(hex: "#707070", alpha: 0.5)
+                let unselectColor = UIColor(hex: "#707070", alpha: 0.5)
                 cell.baseView.applyBorderWithRadius(color: unselectColor, value: 1.0, radius: 12.0)
                 cell.baseView.backgroundColor = UIColor.clear
                 cell.titleLbl.textColor = unselectColor
@@ -195,6 +214,8 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             
             cell.delegate = self
             cell.isExpanded = (indexPath == expandedIndexPath)
+            let obj = self.list[indexPath.row]
+            cell.setData(obj: obj)
             
             if self.categorySelectedIndex % 2 == 0 { //Even Number...
                 cell.joinMeetingBtn.isHidden = false
@@ -247,19 +268,19 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             self.categorySelectedIndex = indexPath.row
             self.categoryCollectionVw.reloadData()
             
-            if (indexPath.row == 0) { //Requested by You...
+            self.list = []
+            if (indexPath.row == 0) { //Approved Meetings...
+                self.list = self.acceptedMeetingsList
             }
-            else if (indexPath.row == 1) { //Requested by Other...
+            else if (indexPath.row == 1) { //Pending Meetings...
+                self.list = self.pendingMeetingsList
             }
-            else if (indexPath.row == 2) { //With Colleagues...
+            else if (indexPath.row == 2) { //Cancelled Meetings...
+                self.list = self.cancelledMeetingsList
             }
-            else if (indexPath.row == 3) { //Pending Meetings...
+            else if (indexPath.row == 3) { //Rescheduled Meetings
+                self.list = self.rescheduledMeetingsList
             }
-            else if (indexPath.row == 4) { //Cancelled Meetings...
-            }
-            else if (indexPath.row == 5) { //Rescheduled Meetings
-            }
-            
             self.listCollectionVw.reloadData()
             
         default: break
