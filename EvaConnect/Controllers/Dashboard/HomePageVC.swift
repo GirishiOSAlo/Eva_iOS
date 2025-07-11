@@ -291,6 +291,8 @@ extension HomePageVC {
                                 self.postTableVwHeight.constant = height
                             }
                         }
+                    } else {
+                        self.postTableVwHeight.constant = 0.0
                     }
                 } else {
                     print("Error :: \(postRoot.message ?? "")")

@@ -176,6 +176,7 @@ enum EndPoints {
     static let eventFilter = baseURL + "delegates/delegatesfilter"
     static let eventConferenceAgenda = baseURL + "event/confrenceagendalists"
     static let eventNetworkList = baseURL + "event/networkingeventlist"
+    static let eventMeetingList = baseURL + "event/eventmeetinglists"
     
     //MARK: Notes
     static let createNote = baseURL + "user/notes"

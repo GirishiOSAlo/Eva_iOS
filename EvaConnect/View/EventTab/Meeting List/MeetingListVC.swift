@@ -10,11 +10,19 @@ import UIKit
 
 class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
 
+    static func instantiate(eventId: Int) -> Self {
+        let vc = Self.instantiate()
+        vc.eventId = eventId
+        return vc
+    }
+    
     @IBOutlet weak var listCollectionVw: UICollectionView!
     @IBOutlet weak var listCollectionVwHeight: NSLayoutConstraint!
     @IBOutlet weak var viewAllLabel: UILabel!
     var expandedIndexPath: IndexPath?
     var delegateMeetingsList: [Delegatemeeting] = []
+    
+    var eventId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +57,7 @@ class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
     @objc func viewAllTapped() {
         print("View All tapped")
         let vc = MeetingListDetailsVC.instantiate()
+        vc.eventId = self.eventId
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

@@ -14,7 +14,8 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     @IBOutlet weak var headingLbl: UILabel!
     @IBOutlet weak var categoryCollectionVw: UICollectionView!
     var categorySelectedIndex = 0
-    var categoryList = ["Requested by You","Requested by Other","With Colleagues","Pending Meetings","Cancelled Meetings","Rescheduled Meetings"]
+//    var categoryList = ["Requested by You","Requested by Other","With Colleagues","Pending Meetings","Cancelled Meetings","Rescheduled Meetings"]
+    var categoryList = [" ? ","Pending Meetings","Cancelled Meetings","Rescheduled Meetings"]
     
     @IBOutlet weak var listCollectionVw: UICollectionView!
     var expandedIndexPath: IndexPath?
@@ -25,6 +26,9 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     @IBOutlet weak var animationContainerView: UIView!
     @IBOutlet weak var titlePopupLbl: UILabel!
     @IBOutlet weak var okPopupBtn: UIButton!
+    
+    var acceptedMeetingsList: [AcceptedMeeting] = []
+    var eventId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +43,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     func setupUI() {
         self.successPopupVw.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.semiBold, size: 14.0)
+        self.fetchMeetingData()
         self.registerCell()
         self.setupSuccessPopup()
     }
@@ -98,6 +103,30 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         animationView.contentMode = .scaleAspectFit
         animationContainerView.addSubview(animationView)
         animationView.play()
+    }
+}
+
+extension MeetingListDetailsVC {
+    func fetchMeetingData() {
+        let url = EndPoints.eventMeetingList
+        let parameters = [ "eventid" : self.eventId ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let meetingsRoot = try jsonDecoder.decode(MeetingListDataModel.self, from: response.data!)
+                if !(meetingsRoot.error!) {
+                    self.acceptedMeetingsList = meetingsRoot.data?.acceptedMeetings ?? []
+                    self.listCollectionVw.reloadData()
+                } else {
+                    print("Error :: \(meetingsRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
 }
 

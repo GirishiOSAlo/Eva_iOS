@@ -487,6 +487,7 @@
 		A63714412E20C44E00C6B3E8 /* NetworkEventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */; };
 		A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */; };
 		A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */; };
+		A63714482E212BA100C6B3E8 /* MeetingListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714472E212BA100C6B3E8 /* MeetingListDataModel.swift */; };
 		A63779482DE6F4DE0072055F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63779462DE6F4DE0072055F /* AlertView.swift */; };
 		A63779492DE6F4DE0072055F /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63779472DE6F4DE0072055F /* AlertView.xib */; };
 		A64394CB2E1CE357006EE7F4 /* FollowersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */; };
@@ -1092,6 +1093,7 @@
 		A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEventListDataModel.swift; sourceTree = "<group>"; };
 		A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMeetingCVC.swift; sourceTree = "<group>"; };
 		A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventMeetingCVC.xib; sourceTree = "<group>"; };
+		A63714472E212BA100C6B3E8 /* MeetingListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListDataModel.swift; sourceTree = "<group>"; };
 		A63779462DE6F4DE0072055F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A63779472DE6F4DE0072055F /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersDataModel.swift; sourceTree = "<group>"; };
@@ -3336,6 +3338,14 @@
 			path = "Edit Profile";
 			sourceTree = "<group>";
 		};
+		A63714462E212B8400C6B3E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A63714472E212BA100C6B3E8 /* MeetingListDataModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A63779412DE6F12B0072055F /* Custom Alert */ = {
 			isa = PBXGroup;
 			children = (
@@ -3451,6 +3461,7 @@
 				A689509A2DD7499300ACC16F /* MeetingListVC.xib */,
 				A66F16B92DDB0612000A4F5F /* MeetingListDetailsVC.swift */,
 				A66F16BA2DDB0612000A4F5F /* MeetingListDetailsVC.xib */,
+				A63714462E212B8400C6B3E8 /* Model */,
 			);
 			path = "Meeting List";
 			sourceTree = "<group>";
@@ -4043,6 +4054,7 @@
 				A6A125922DDDB01600979389 /* SponsorsVC.swift in Sources */,
 				48BC63F52DCB74AC002BA644 /* CollectionViewCell.swift in Sources */,
 				50E2298324AC6E3C0041F472 /* URL.swift in Sources */,
+				A63714482E212BA100C6B3E8 /* MeetingListDataModel.swift in Sources */,
 				25147C3827857C5E00FCBC67 /* PostContent.swift in Sources */,
 				48BD862B2B1EF5040026C0B2 /* FTConstants.swift in Sources */,
 				489CB3C72DCBA2A500A0C77B /* UploadCVVC.swift in Sources */,
@@ -4515,7 +4527,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6.0;
+				CURRENT_PROJECT_VERSION = 6.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
@@ -4577,7 +4589,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6.0;
+				CURRENT_PROJECT_VERSION = 6.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
