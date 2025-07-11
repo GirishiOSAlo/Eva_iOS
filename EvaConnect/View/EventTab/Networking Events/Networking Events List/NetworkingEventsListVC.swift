@@ -172,14 +172,6 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            // Last cell: hide separator
-            cell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0)
-        } else {
-            // Other cells: reset to default
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        }
-        
         if indexPath.row == networkingEventList.count - 1 {
             print("👉 Last tableview cell is visible")
             // Load next page if not already fetching and not at the last page
