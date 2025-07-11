@@ -257,13 +257,13 @@
                             <constraint firstItem="zSm-7k-GFt" firstAttribute="top" secondItem="UO9-g1-kEb" secondAttribute="bottom" id="8oR-gO-9kx"/>
                             <constraint firstItem="byF-2T-gOC" firstAttribute="top" secondItem="4Fu-bh-7Cn" secondAttribute="top" constant="16" id="KvH-k4-og5"/>
                             <constraint firstAttribute="trailing" secondItem="Med-86-PSu" secondAttribute="trailing" id="O1R-jb-VTo"/>
+                            <constraint firstItem="9hF-pY-D5A" firstAttribute="top" secondItem="zSm-7k-GFt" secondAttribute="bottom" constant="18" id="Oav-ue-0cK"/>
                             <constraint firstAttribute="trailing" secondItem="zSm-7k-GFt" secondAttribute="trailing" id="VRk-b7-TLx"/>
                             <constraint firstItem="byF-2T-gOC" firstAttribute="leading" secondItem="4Fu-bh-7Cn" secondAttribute="leading" constant="16" id="WYq-tc-tLp"/>
                             <constraint firstItem="UO9-g1-kEb" firstAttribute="leading" secondItem="byF-2T-gOC" secondAttribute="leading" id="ZYZ-U5-WhO"/>
                             <constraint firstItem="cZ7-yn-6P7" firstAttribute="top" secondItem="byF-2T-gOC" secondAttribute="top" id="c6h-FG-B15"/>
                             <constraint firstItem="UO9-g1-kEb" firstAttribute="top" secondItem="byF-2T-gOC" secondAttribute="bottom" constant="6" id="eFe-ou-m0p"/>
                             <constraint firstAttribute="trailing" secondItem="9hF-pY-D5A" secondAttribute="trailing" constant="16" id="fON-rn-xgs"/>
-                            <constraint firstAttribute="bottom" secondItem="9hF-pY-D5A" secondAttribute="bottom" constant="16" id="jz8-C1-vAg"/>
                             <constraint firstItem="cZ7-yn-6P7" firstAttribute="trailing" secondItem="byF-2T-gOC" secondAttribute="trailing" id="phX-KH-KU4"/>
                             <constraint firstItem="cZ7-yn-6P7" firstAttribute="leading" secondItem="byF-2T-gOC" secondAttribute="leading" id="rS9-AI-ZXJ"/>
                             <constraint firstAttribute="trailing" secondItem="IdE-VQ-Cse" secondAttribute="trailing" constant="12" id="sec-dw-eGs"/>
@@ -285,6 +285,8 @@
             <size key="customSize" width="420" height="361"/>
             <connections>
                 <outlet property="baseView" destination="4Fu-bh-7Cn" id="BAi-xt-L18"/>
+                <outlet property="btnVw_1" destination="e3K-ec-YZ3" id="FHL-oj-Rds"/>
+                <outlet property="btnVw_2" destination="E86-Xa-fhu" id="EOB-tO-Atf"/>
                 <outlet property="cancelMeetingBtn" destination="Cgv-dg-U5I" id="8p3-eG-NjM"/>
                 <outlet property="colleaguesLbl" destination="zVg-ls-pnY" id="BIm-rr-tSe"/>
                 <outlet property="dateLbl" destination="wx7-xn-Cvb" id="EBN-gx-Uxb"/>

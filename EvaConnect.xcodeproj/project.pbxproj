@@ -485,6 +485,8 @@
 		A62AB11D2DD4A9CE006C7A21 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */; };
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
 		A63714412E20C44E00C6B3E8 /* NetworkEventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */; };
+		A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */; };
+		A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */; };
 		A63779482DE6F4DE0072055F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63779462DE6F4DE0072055F /* AlertView.swift */; };
 		A63779492DE6F4DE0072055F /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63779472DE6F4DE0072055F /* AlertView.xib */; };
 		A64394CB2E1CE357006EE7F4 /* FollowersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */; };
@@ -1088,6 +1090,8 @@
 		A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEventListDataModel.swift; sourceTree = "<group>"; };
+		A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMeetingCVC.swift; sourceTree = "<group>"; };
+		A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventMeetingCVC.xib; sourceTree = "<group>"; };
 		A63779462DE6F4DE0072055F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A63779472DE6F4DE0072055F /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersDataModel.swift; sourceTree = "<group>"; };
@@ -3454,6 +3458,8 @@
 		A689509D2DD758D400ACC16F /* MeetingListCVC */ = {
 			isa = PBXGroup;
 			children = (
+				A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */,
+				A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */,
 				A689509E2DD758F400ACC16F /* MeetingListCVC.swift */,
 				A689509F2DD758F400ACC16F /* MeetingListCVC.xib */,
 				A6782F5A2DDC4A2B0029443B /* MeetingDetailsCategoryCVC.swift */,
@@ -3755,6 +3761,7 @@
 				48BC64202DCB7901002BA644 /* NunitoSans-Bold.ttf in Resources */,
 				48BC64212DCB7901002BA644 /* NunitoSans-LightItalic.ttf in Resources */,
 				48BC64222DCB7901002BA644 /* NunitoSans-Black.ttf in Resources */,
+				A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */,
 				48BC64232DCB7901002BA644 /* NunitoSans-ExtraBold.ttf in Resources */,
 				A6A125962DDDB0B800979389 /* SponsorsCVC.xib in Resources */,
 				48BC64242DCB7901002BA644 /* NunitoSans-Regular.ttf in Resources */,
@@ -4163,6 +4170,7 @@
 				505176432445026700544956 /* ConversationsDataHandler.swift in Sources */,
 				500A54422473FEDC00095324 /* StoryboardRouter.swift in Sources */,
 				25D84AB0277B1BEB00831F55 /* EditUserProfileVC.swift in Sources */,
+				A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */,
 				A6782F6B2DDC893E0029443B /* SpeakersCVC.swift in Sources */,
 				A6B7ADBA2E0971FA009172CD /* ConferenceProgramsCVC.swift in Sources */,
 				18791B8624164D5A00BFF055 /* ApplicantDetailVC.swift in Sources */,

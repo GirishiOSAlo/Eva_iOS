@@ -8,24 +8,13 @@
 
 import UIKit
 
-class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
+class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
 
-    @IBOutlet weak var searchMainView: UIView!
-    @IBOutlet weak var searchField: UITextField!
-
-    @IBOutlet weak var dateMainView: UIView!
-    @IBOutlet weak var fromLbl: UILabel!
-    @IBOutlet weak var toLbl: UILabel!
-    
     @IBOutlet weak var listCollectionVw: UICollectionView!
     @IBOutlet weak var listCollectionVwHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewAllLabel: UILabel!
     var expandedIndexPath: IndexPath?
-    var isFromDate:Bool = false
-    var fromDate: Date?
-    var toDate: Date?
-    
     var delegateMeetingsList: [Delegatemeeting] = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,36 +23,35 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
     }
 
     func setupUI() {
-        self.isFromDate = false
-        self.fromLbl.text = "From"
-        self.toLbl.text = "To"
-        
-        self.searchMainView.layer.cornerRadius = 8.0
-        self.searchMainView.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8.0)
-        searchField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
-        self.dateMainView.cornerRadius = 8.0
-        self.fromLbl.font = UIFont(name: Myfonts.medium, size: 12.0)
-        self.toLbl.font = UIFont(name: Myfonts.medium, size: 12.0)
         self.registerCell()
         self.setupCollectionHeight()
+        
+        let text = "View all"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(hex: "#4D76CD", alpha: 1.0),
+            .font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0),
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        viewAllLabel.attributedText = attributedString
+        
+        viewAllLabel.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewAllTapped))
+        viewAllLabel.addGestureRecognizer(tapGesture)
     }
     
     func registerCell() {
-        listCollectionVw.registerNib(cellNib: MeetingListCVC.self)
+        listCollectionVw.registerNib(cellNib: EventMeetingCVC.self)
         listCollectionVw.delegate = self
         listCollectionVw.dataSource = self
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("viewWillAppear")
+        
+    @objc func viewAllTapped() {
+        print("View All tapped")
+        let vc = MeetingListDetailsVC.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    @objc func textFieldDidChange(_ textfield: UITextField) {
-        print(self.searchField.text ?? "")
-    }
-    
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
@@ -79,22 +67,26 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
         self.listCollectionVwHeight.constant = 0.0
         var totalCellHeight = 0.0
         for (index, event) in delegateMeetingsList.enumerated() {
-            let nameLblHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
-            
-            // Default collapsed cell height
-            let cellHeight = nameLblHeight + 85.0
+            let nameHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
+            let meetingWithHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+            let colleaguesHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+            let locationHeight = self.heightForView(text: event.location ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+
+            let cellHeight = nameHeight + meetingWithHeight + colleaguesHeight + locationHeight + 206.0
             
             // Check if this is the expanded cell
             if let expanded = expandedIndexPath, expanded.row == index {
-                totalCellHeight = totalCellHeight + cellHeight + 241.0
-            } else {
                 totalCellHeight = totalCellHeight + cellHeight
+            } else {
+                let collapseHeight = meetingWithHeight + colleaguesHeight + locationHeight + 106.0
+                let finalHeight = cellHeight - collapseHeight
+                totalCellHeight = totalCellHeight + finalHeight
             }
         }
         self.listCollectionVwHeight.constant = totalCellHeight
     }
     
-    func didTapDropdownButton(in cell: MeetingListCVC) {
+    func didTapDropdownButton(in cell: EventMeetingCVC) {
         guard let indexPath = listCollectionVw.indexPath(for: cell) else { return }
         
         var indexPathsToReload: [IndexPath] = [indexPath]
@@ -119,76 +111,6 @@ class MeetingListVC: UIViewController, XIBed, MeetingListCellDelegate {
             }
         }
     }
-    
-    @IBAction func onFromDateBtnTap(_ sender: UIButton) {
-        self.isFromDate = true
-        self.openDatePicker()
-    }
-    
-    @IBAction func onToDateBtnTap(_ sender: UIButton) {
-        guard fromDate != nil else {
-            showAlert(message: "Please select a From Date first.")
-            return
-        }
-        self.isFromDate = false
-        self.openDatePicker()
-    }
-    
-    func openDatePicker() {
-        let pickerVC = DatePickerSheetViewController()
-        pickerVC.modalPresentationStyle = .pageSheet
-        pickerVC.pickerMode = .date
-
-        // Restrict "To Date" to only after "From Date"
-        if !isFromDate, let from = fromDate {
-            pickerVC.minimumDate = from
-        }
-
-        if #available(iOS 15.0, *) {
-            if let sheet = pickerVC.sheetPresentationController {
-                sheet.detents = [.medium()]
-            }
-        } else {
-            pickerVC.modalPresentationStyle = .formSheet
-        }
-
-        pickerVC.onDateSelected = { [weak self] date in
-            guard let self = self else { return }
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-
-            if self.isFromDate {
-                self.fromDate = date
-                self.fromLbl.text = formatter.string(from: date)
-
-                // Reset toDate if it's before new fromDate
-                if let to = self.toDate, to < date {
-                    self.toDate = nil
-                    self.toLbl.text = ""
-                }
-            } else {
-                self.toDate = date
-                self.toLbl.text = formatter.string(from: date)
-            }
-        }
-
-        present(pickerVC, animated: true)
-    }
-    
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Invalid Action", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
-    
-    func didTapDetailsButton(in cell: MeetingListCVC) {
-        guard let indexPath = listCollectionVw.indexPath(for: cell) else { return }
-        let event = delegateMeetingsList[indexPath.row]
-        print("Details button tapped for event: \(event.meetingNotes ?? "")")
-        
-        let vc = MeetingListDetailsVC.instantiate()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
 }
 
 //MARK: UICollection Delegate & DataSource....
@@ -198,7 +120,7 @@ extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.listCollectionVw.dequeueReusableCell(withReuseIdentifier: MeetingListCVC.ReuseId, for: indexPath) as! MeetingListCVC
+        let cell = self.listCollectionVw.dequeueReusableCell(withReuseIdentifier: EventMeetingCVC.ReuseId, for: indexPath) as! EventMeetingCVC
                 
         cell.baseView.layer.cornerRadius = 0
         cell.baseView.layer.maskedCorners = []
@@ -222,9 +144,8 @@ extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.baseView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell.underlineVw.isHidden = true
         }
-        
-        cell.delegate = self
         cell.isExpanded = (indexPath == expandedIndexPath)
+        cell.delegate = self
         
         let event = delegateMeetingsList[indexPath.row]
         cell.eventNameLbl.text = event.meetingNotes ?? "--"
@@ -239,14 +160,19 @@ extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let event = delegateMeetingsList[indexPath.row]
-        let nameLblHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
-        let height = nameLblHeight + 85.0
+        let nameHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
+        let meetingWithHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+        let colleaguesHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+        let locationHeight = self.heightForView(text: event.location ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+
+        let finalHeight = nameHeight + meetingWithHeight + colleaguesHeight + locationHeight + 206.0
         
         if indexPath == expandedIndexPath {  //--> Expanded height...
-            let cellHeight = height + 241.0 //258.0
+            let cellHeight = finalHeight
             return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
         } else {  //--> Normal height...
-            let cellHeight = height
+            let collapseHeight = meetingWithHeight + colleaguesHeight + locationHeight + 106.0
+            let cellHeight = finalHeight - collapseHeight
             return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
         }
     }
