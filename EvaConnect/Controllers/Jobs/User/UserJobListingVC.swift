@@ -133,6 +133,11 @@ extension UserJobListingVC {
         self.jobContent.text = data?.content ?? "--"
         
         saveImgVw.image = data?.saved == 1 ? UIImage(named: "save_selected") : UIImage(named: "save")
+        if jobDetails?.isApplied == 0 {
+            self.applyBtn.isHidden = false
+        } else {
+            self.applyBtn.isHidden = true
+        }
     }
 }
 

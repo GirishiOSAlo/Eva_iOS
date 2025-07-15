@@ -153,18 +153,19 @@ class EventDetailsVC: UIViewController, XIBed {
         eventTimingsLabel.text = "\(eventDetail.startTime ?? "") - \(eventDetail.endTime ?? "")"
         
         let eventAttendeesStatus = eventDetail.eventAttendeesStatus ?? ""
-        if eventAttendeesStatus == "accepted" {
-            requstToJoinBtn.setTitle("View details", for: .normal)
-        }
-        else if eventAttendeesStatus == "Request_To_Join" {
-            requstToJoinBtn.setTitle("Requested", for: .normal)
-        }
-        else if eventAttendeesStatus == "decline" {
-            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-        }
-        else {
-            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-        }
+        requstToJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
+//        if eventAttendeesStatus == "accepted" {
+//            requstToJoinBtn.setTitle("View details", for: .normal)
+//        }
+//        else if eventAttendeesStatus == "Request_To_Join" {
+//            requstToJoinBtn.setTitle("Requested", for: .normal)
+//        }
+//        else if eventAttendeesStatus == "decline" {
+//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
+//        }
+//        else {
+//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
+//        }
         
 //        switch eventDetail.eventAttendeesStatus {
 //        case .none:
@@ -222,7 +223,8 @@ extension EventDetailsVC {
 //                        self.agenda = eventDetail.data[0].agenda == 1 ? true : false
                         
 //                        self.fetchInvitedPeople()
-                        
+                        let eventAttendeesStatus = self.eventDetail?.eventAttendeesStatus ?? ""
+                        self.requstToJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
                     }
                 } catch {
                     print(error)

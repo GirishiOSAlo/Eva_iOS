@@ -484,6 +484,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             }
         } else if selectedTab == .jobs {
             print(selectedHomeFilter)
+            self.currentPage = 1
             self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         }
         else {
@@ -1567,6 +1568,7 @@ extension HomeVC: UITextFieldDelegate {
         if selectedTab == .jobs {
             self.jobList = []
             DispatchQueue.main.async {
+                self.currentPage = 1
                 self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
             }
         }
