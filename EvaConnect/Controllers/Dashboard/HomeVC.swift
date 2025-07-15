@@ -1012,24 +1012,24 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if selectedTab == .jobs {
-            if self.jobList.count > 0 {
-                if indexPath.row == self.jobList.count - 1 {
-                    print("👉 Last tableview cell is visible")
-                    // Load next page if not already fetching and not at the last page
-                    if currentPage < lastPage {
-                        currentPage += 1
-                        self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-                    } else {
-                        print("Page completed. No Api call")
-                    }
-                }
-            } else {
-                print("Job list is empty.")
-            }
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if selectedTab == .jobs {
+//            if self.jobList.count > 0 {
+//                if indexPath.row == self.jobList.count - 1 {
+//                    print("👉 Last tableview cell is visible")
+//                    // Load next page if not already fetching and not at the last page
+//                    if currentPage < lastPage {
+//                        currentPage += 1
+//                        self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+//                    } else {
+//                        print("Page completed. No Api call")
+//                    }
+//                }
+//            } else {
+//                print("Job list is empty.")
+//            }
+//        }
+//    }
 }
 
 //MARK: Scroll View Delegate...
@@ -1037,9 +1037,19 @@ extension HomeVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
         if bottomEdge >= scrollView.contentSize.height {
-            if paginatedPosts.count > 9 {
-                offsetCount += 1
-                getPosts(offSet: offsetCount, inserted: true)
+            print("👉 Last ScrollView is visible")
+            if selectedTab == .jobs {
+                if currentPage < lastPage {
+                    currentPage += 1
+                    self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                } else {
+                    print("Page completed. No Api call")
+                }
+            } else {
+                if paginatedPosts.count > 9 {
+                    offsetCount += 1
+                    getPosts(offSet: offsetCount, inserted: true)
+                }
             }
         }
     }
@@ -1190,6 +1200,8 @@ private extension HomeVC {
                 case .failure(let failure):
                     self.hideActivity()
                     self.presentAlert("Error", nil, failure)
+                default:
+                    break
                 }
             }
         }
@@ -1661,7 +1673,6 @@ extension HomeVC {
         if !(refreshControl.isRefreshing) { indicatorView.startAnimating() }
         emptyListMessageLbl.isHidden = true
         emptyListMessageLbl.text = ""
-//        getPosts(offSet: 0, inserted: inserted)
         getPosts(offSet: 1, inserted: inserted)
     }
     
@@ -2214,6 +2225,8 @@ extension HomeVC: HomeEventDelegate {
                 }
             case .failure(let error):
                 self.presentAlert("Error", nil, error)
+            default:
+                break
             }
         }
     }
@@ -2237,6 +2250,8 @@ extension HomeVC {
                 }
             case .failure(let error):
                 print("error", error)
+            default:
+                break
             }
         }
     }
