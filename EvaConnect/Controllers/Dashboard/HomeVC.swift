@@ -197,6 +197,7 @@ class HomeVC: BaseVC {
         else {
             height = 32
             searchHeight = 0
+            posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         }
         
         animateTopView()
@@ -208,7 +209,7 @@ class HomeVC: BaseVC {
         if posts.isEmpty {
             UIView.transition(with: collectionView, duration: 0.9, options: .transitionCrossDissolve) { [weak self] in self?.collectionView.reloadData() }
         }
-        posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
+//        posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
