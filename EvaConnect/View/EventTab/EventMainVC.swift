@@ -137,19 +137,38 @@ class EventMainVC: UIViewController, XIBed {
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
-//        if self.eventDetail?.eventAttendeesStatus == .accepted {
-        if self.eventDetail?.eventAttendeesStatus == "accepted" {
-            isSelected.toggle()
-            if isSelected {
-                drpDwnICImgVw.image = UIImage(named: "ic_dropdown_up")
-                eventListTable.isHidden = false
+        if self.eventDetail?.isPrivate == 0 { //Public...
+            self.openDropDown()
+        } else { //Private...
+            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+                self.openDropDown()
             } else {
-                drpDwnICImgVw.image = UIImage(named: "ic_dropdown_down")
-                eventListTable.isHidden = true
+                print("user did not requested for event")
             }
+        }
+//        if self.eventDetail?.eventAttendeesStatus == "accepted" {
+//            isSelected.toggle()
+//            if isSelected {
+//                drpDwnICImgVw.image = UIImage(named: "ic_dropdown_up")
+//                eventListTable.isHidden = false
+//            } else {
+//                drpDwnICImgVw.image = UIImage(named: "ic_dropdown_down")
+//                eventListTable.isHidden = true
+//            }
+//        } else {
+//            print("user did not requested for event")
+//        }
+    }
+    
+    func openDropDown() {
+        isSelected.toggle()
+        if isSelected {
+            drpDwnICImgVw.image = UIImage(named: "ic_dropdown_up")
+            eventListTable.isHidden = false
         } else {
-            print("user did not requested for event")
-        }  
+            drpDwnICImgVw.image = UIImage(named: "ic_dropdown_down")
+            eventListTable.isHidden = true
+        }
     }
     
     @IBAction func mainBtnBelowTapped(_ sender: UIButton) {
