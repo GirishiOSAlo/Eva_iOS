@@ -9,6 +9,13 @@
 import UIKit
 import Lottie
 
+enum MeetingDetailBtnEnum: String {
+    case approved
+    case cancelled
+    case rescheduled
+    case pending
+}
+
 class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate {
 
     @IBOutlet weak var headingLbl: UILabel!
@@ -26,6 +33,8 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     @IBOutlet weak var animationContainerView: UIView!
     @IBOutlet weak var titlePopupLbl: UILabel!
     @IBOutlet weak var okPopupBtn: UIButton!
+    
+    var type: MeetingDetailBtnEnum = .approved
     
     var acceptedMeetingsList: [EventMeeting] = []
     var pendingMeetingsList: [EventMeeting] = []
@@ -57,6 +66,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         self.noRecordLbl.isHidden = true
         self.successPopupVw.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.semiBold, size: 14.0)
+        self.type = .approved
         self.fetchMeetingData()
         self.registerCell()
         self.setupSuccessPopup()
@@ -123,7 +133,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
 extension MeetingListDetailsVC {
     func fetchMeetingData() {
         let url = EndPoints.eventMeetingList
-        let parameters = [ "eventid" : self.eventId ] as [String: Any]
+        let parameters = [ "eventid" : 11 ] as [String: Any]
         
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
@@ -217,10 +227,28 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             let obj = self.list[indexPath.row]
             cell.setData(obj: obj)
             
-            if self.categorySelectedIndex % 2 == 0 { //Even Number...
-                cell.joinMeetingBtn.isHidden = false
-            } else { //Odd Number...
+//            if self.categorySelectedIndex % 2 == 0 { //Even Number...
+//                cell.joinMeetingBtn.isHidden = false
+//            } else { //Odd Number...
+//                cell.joinMeetingBtn.isHidden = true
+//            }
+
+            cell.joinMeetingBtn.isHidden = false
+            cell.cancelMeetingBtn.isHidden = false
+            cell.rescheduleBtn.isHidden = false
+            cell.messageBtn.isHidden = false
+            if self.type == .approved {
                 cell.joinMeetingBtn.isHidden = true
+            }
+            else if self.type == .cancelled {
+                cell.joinMeetingBtn.isHidden = true
+                cell.cancelMeetingBtn.isHidden = true
+            }
+            else if self.type == .rescheduled {
+                // all button show...
+            }
+            else if self.type == .pending {
+                // all button show...
             }
             
             cell.rescheduleBtn.tag = indexPath.row
@@ -229,6 +257,8 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             cell.joinMeetingBtn.addTarget(self, action: #selector(joinMeeting(sender:)), for: .touchUpInside)
             cell.cancelMeetingBtn.tag = indexPath.row
             cell.cancelMeetingBtn.addTarget(self, action: #selector(cancelMeeting(sender:)), for: .touchUpInside)
+            cell.messageBtn.tag = indexPath.row
+            cell.messageBtn.addTarget(self, action: #selector(message(sender:)), for: .touchUpInside)
 
             return cell
                         
@@ -249,7 +279,12 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             
         case self.listCollectionVw:
             if indexPath == expandedIndexPath {  //--> Expanded height...
-                let cellHeight = 307.0 //(6*45 + 32 top & bottom)
+                var cellHeight = 0.0
+                if self.type == .cancelled {
+                    cellHeight = 262.0 //(-45 button view hidden)
+                } else {
+                    cellHeight = 307.0 //(6*45 + 32 top & bottom)
+                }
                 return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
             } else {  //--> Normal height...
                 let cellHeight = 167.0 //(3*45 + 32 top & bottom)
@@ -270,15 +305,19 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             
             self.list = []
             if (indexPath.row == 0) { //Approved Meetings...
+                self.type = .approved
                 self.list = self.acceptedMeetingsList
             }
             else if (indexPath.row == 1) { //Pending Meetings...
+                self.type = .pending
                 self.list = self.pendingMeetingsList
             }
             else if (indexPath.row == 2) { //Cancelled Meetings...
+                self.type = .cancelled
                 self.list = self.cancelledMeetingsList
             }
             else if (indexPath.row == 3) { //Rescheduled Meetings
+                self.type = .rescheduled
                 self.list = self.rescheduledMeetingsList
             }
             self.listCollectionVw.reloadData()
@@ -303,5 +342,9 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             print("Confirmed")
             // Add your action logic here
         }
+    }
+    
+    @objc func message(sender: UIButton) {
+        //
     }
 }
