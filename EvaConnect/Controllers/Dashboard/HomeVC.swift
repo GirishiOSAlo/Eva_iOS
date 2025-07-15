@@ -135,6 +135,8 @@ class HomeVC: BaseVC {
         addObservers()
         if selectedTab == .events {
             self.selectedHomeFilter = .new
+        } else if selectedTab == .jobs {
+            selectedHomeFilter = .all
         }
         //getPosts(offSet: 0)
     }
@@ -164,12 +166,12 @@ class HomeVC: BaseVC {
         self.currentEventLblHeight.constant = 0
         self.allEventLblHeight.constant = 0
         self.currentEventListHeight.constant = 0
-
+        self.emptyListMessageLbl.text = ""
         if selectedTab == .jobs {
             homeTabFilter = HomeTabFilter.job
             height = 32
             searchHeight = 40
-            selectedHomeFilter = .all
+            //selectedHomeFilter = .all
             self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         } else if selectedTab == .posts {
             height = 0
