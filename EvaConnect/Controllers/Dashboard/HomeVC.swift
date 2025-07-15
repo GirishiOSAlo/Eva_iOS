@@ -274,10 +274,6 @@ class HomeVC: BaseVC {
                     // pagination — append
                     self.jobList.append(contentsOf: list)
                 }
-                for job in self.jobList {
-                    print("===> ",job.saved)
-                }
-                
                 if (jobListData.data?.jobs?.count ?? 0) > 0 {
                     self.emptyListMessageLbl.text = ""
                 } else {
