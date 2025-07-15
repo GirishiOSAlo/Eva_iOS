@@ -892,7 +892,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.industryView.isHidden = true
                 cell.saveJobBtn.isHidden = false
 //                cell.job = self.jobList[indexPath.row]
-                cell.setData(data: self.jobList[indexPath.row])
+                let job = self.jobList[indexPath.row]
+                cell.setData(data: job)
                 cell.viewDetailsBtn.tag = indexPath.row
                 cell.saveJobBtn.tag = indexPath.row
                 cell.editBtn.tag = indexPath.row

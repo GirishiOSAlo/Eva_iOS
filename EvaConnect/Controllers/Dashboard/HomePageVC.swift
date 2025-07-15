@@ -741,6 +741,13 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             cell.salaryLbl.text = "£\(job.salary ?? 0)"
             cell.jobTimeLbl.text = job.jobtype ?? ""
             
+            let jobSaved = job.saved ?? 0
+            if jobSaved == 0 {
+                cell.saveImgVw.image = UIImage(named: "save")
+            } else {
+                cell.saveImgVw.image = UIImage(named: "save_selected")
+            }
+            
             cell.saveBtn.tag = indexPath.row
             cell.saveBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
             cell.applyNowBtn.tag = indexPath.row
