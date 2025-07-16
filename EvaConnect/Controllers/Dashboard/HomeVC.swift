@@ -63,7 +63,7 @@ class HomeVC: BaseVC {
         }
     }
     
-    var currentEventList: [DashboardItem] = [] {
+    var currentEventList: [EventListData] = [] {
         didSet {
             self.currentEventCollectionVw.reloadData()
         }
@@ -227,11 +227,11 @@ class HomeVC: BaseVC {
             self.hideActivity()
             do {
                 let jsonDecoder = JSONDecoder()
-                let currentEventRoot = try jsonDecoder.decode(DashboardItemRoot.self, from: response.data!)
+                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
                 self.filterCollectionView.isUserInteractionEnabled = true
-                if !(currentEventRoot.error) {
-                    if (currentEventRoot.data.count) > 0 {
-                        self.currentEventList = currentEventRoot.data
+                if !(currentEventRoot.error ?? false) {
+                    if (currentEventRoot.data?.count ?? 0) > 0 {
+                        self.currentEventList = currentEventRoot.data ?? []
                         self.currentEventListHeight.constant = CGFloat(self.currentEventList.count * 440)
                     } else {
                         self.currentEventListHeight.constant = 0
@@ -334,7 +334,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             let cell = self.currentEventCollectionVw.dequeueReusableCell(withReuseIdentifier: HomeEventCVC.ReuseId, for: indexPath) as! HomeEventCVC
             
             let event = self.currentEventList[indexPath.row]
-            self.objectId = event.id
+            self.objectId = event.id ?? 0
             self.type = .event
             
             if let imageUrl = event.tempImage,
@@ -346,18 +346,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
                 cell.imgVW.image = UIImage(named: "eventPlaceholder")
             }
             
-            cell.titleLbl.text = event.eventName ?? ""
-            cell.dateLbl.text = "\(event.eventStartDate ?? "") - \(event.eventEndDate ?? "")"
-            cell.locationLbl.text = "\(event.eventCity ?? ""), \(event.eventCountry ?? "")"
+            cell.titleLbl.text = event.name ?? ""
+            cell.dateLbl.text = "\(event.startDate ?? "") - \(event.endDate ?? "")"
+            cell.locationLbl.text = "\(event.address ?? ""), \(event.city ?? ""), \(event.country ?? "")"
             
-//            var startTime = ""
-//            var endTime = ""
-//            if let startTime12 = convertTo12HourFormat(from: "\(event.startTime ?? "")") {
-//                startTime = startTime12
-//            }
-//            if let endTime12 = convertTo12HourFormat(from: "\(event.endTime ?? "")") {
-//                endTime = endTime12
-//            }
             cell.timeLbl.text = "\(event.startTime ?? "") - \(event.endTime ?? "")"
             
             if event.isNewsSave == 1 {
@@ -453,7 +445,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     
     @objc func openCurrentEventDetail(sender: UIButton) {
         let vc = EventMainVC.instantiate()
-        vc.eventId = currentEventList[sender.tag].id //4
+        vc.eventId = currentEventList[sender.tag].id ?? 0 //4
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -2103,7 +2095,7 @@ extension HomeVC {
         print("View Details Event")
         let obj = self.currentEventList[sender.tag]
         let vc = EventMainVC.instantiate()
-        vc.eventId = obj.id
+        vc.eventId = obj.id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -2111,7 +2103,7 @@ extension HomeVC {
         print("saved Event")
         showActivity()
         let post = self.currentEventList[sender.tag]
-        saveEvent(postId: post.id, at: sender.tag)
+        saveEvent(postId: post.id ?? 0, at: sender.tag)
     }
     
     @objc func saveJobTapped(sender: UIButton) {

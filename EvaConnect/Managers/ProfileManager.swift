@@ -312,9 +312,11 @@ extension ProfileManager {
         NetworkManagerr.request(url, method: .post, parameters: param) { (result: Result<DashboardItemRoot>) in
             switch result {
             case .success(let value):
-                completion(value.error ? [] : value.data, value.error ? value.message : nil)
+                completion((value.error ? [] : value.data) ?? [], value.error ? value.message : nil)
             case .failure(let error):
                 completion([], error.localizedDescription)
+            default:
+                break
             }
         }
     }

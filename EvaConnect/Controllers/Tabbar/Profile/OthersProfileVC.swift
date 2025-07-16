@@ -540,6 +540,8 @@ extension OthersProfileVC {
                     
             case .failure(let failure):
                 self.presentAlert("Error", nil, failure)
+            default:
+                break
             }
         }
     }

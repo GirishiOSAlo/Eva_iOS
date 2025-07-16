@@ -481,6 +481,7 @@
 		A611A4452DF6F313006011AD /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A611A4442DF6F313006011AD /* UserDetailsModel.swift */; };
 		A6158D812E0177F500E43AA1 /* ResumeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */; };
 		A621889D2DEF204E006513D3 /* NewsTrendingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */; };
+		A6285E942E27DD0C004A77DC /* EventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6285E932E27DD0C004A77DC /* EventListDataModel.swift */; };
 		A62A49C62AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */; };
 		A62AB11D2DD4A9CE006C7A21 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */; };
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
@@ -1087,6 +1088,7 @@
 		A611A4442DF6F313006011AD /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeDataModel.swift; sourceTree = "<group>"; };
 		A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTrendingModel.swift; sourceTree = "<group>"; };
+		A6285E932E27DD0C004A77DC /* EventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListDataModel.swift; sourceTree = "<group>"; };
 		A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAgendaTimeTblCell.swift; sourceTree = "<group>"; };
 		A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
@@ -1594,6 +1596,7 @@
 				186605A523FFFE890016317C /* PostDetailModel */,
 				1853109C23D6D57800C55FCB /* HomeAllPost.swift */,
 				184165F8241D29E500E9E31D /* DashboardItemRoot.swift */,
+				A6285E932E27DD0C004A77DC /* EventListDataModel.swift */,
 				A6B037072DFAF8A0000B4E2E /* DashboardJobDataModel.swift */,
 				A6B7ADAE2E090EE5009172CD /* DashboardBannerDataModel.swift */,
 			);
@@ -4354,6 +4357,7 @@
 				5073A8662483F9DF008F2E7D /* LoginManager.swift in Sources */,
 				18E7E23B24891ECF00384C96 /* EventCell.swift in Sources */,
 				2586A8B9277C790E000350DE /* EditJobTitleVC.swift in Sources */,
+				A6285E942E27DD0C004A77DC /* EventListDataModel.swift in Sources */,
 				50F80CF1249CD43F002ED7BF /* NavigationManager.swift in Sources */,
 				50C5F38924A62E6B00905C90 /* PostManager.swift in Sources */,
 				5086BDBF246CA96E006DA502 /* Deprecated.swift in Sources */,
