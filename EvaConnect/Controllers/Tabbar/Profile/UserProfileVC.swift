@@ -431,7 +431,13 @@ extension UserProfileVC {
         
         nameLbl.text = user.fullName
         professionLbl.text = user.isCompany ? user.workAviation ?? "" : "\(user.companyName ?? "") | \(user.designation ?? "No Designation")"
-        aboutLbl.text = user.bioData ?? ""
+        
+        
+        //aboutLbl.text = user.bioData ?? ""
+        let content = user.bioData ?? ""
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), color: UIColor(hex: "#030229")) {
+            aboutLbl.attributedText = attributed
+        }
         
         //Set bio view Height.....
         let lblHeight = self.heightForView(text: self.aboutLbl.text ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: self.view.frame.width - 72.0)
@@ -588,7 +594,12 @@ extension UserProfileVC {
             self.pendingCountLbl.text = "--"
         }
 
-        aboutLbl.text = user.bioData ?? ""
+        //aboutLbl.text = user.bioData ?? ""
+        let content = user.bioData ?? ""
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), color: UIColor(hex: "#030229")) {
+            aboutLbl.attributedText = attributed
+        }
+        
         //Set bio view Height.....
         let lblHeight = self.heightForView(text: self.aboutLbl.text ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: self.view.frame.width - 72.0)
         self.bioViewHeight.constant = lblHeight + 64.0

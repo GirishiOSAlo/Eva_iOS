@@ -133,7 +133,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
 extension MeetingListDetailsVC {
     func fetchMeetingData() {
         let url = EndPoints.eventMeetingList
-        let parameters = [ "eventid" : 11 ] as [String: Any]
+        let parameters = [ "eventid" : self.eventId ] as [String: Any]
         
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
