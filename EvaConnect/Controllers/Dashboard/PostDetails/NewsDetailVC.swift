@@ -580,11 +580,21 @@ extension NewsDetailVC: UITableViewDataSource, UITableViewDelegate {
         let obj = newsList[indexPath.row]
         
         let newsSource = obj.newsSource
-        cell.profileImage.kf.setImage(with: URL(string: newsSource?.image ?? ""))
-        cell.newzName.text = newsSource?.name ?? ""
-        cell.timeWhenPost.text = obj.createdDatetime ?? ""
+        //cell.profileImage.kf.setImage(with: URL(string: newsSource?.image ?? ""))
+        if newsSource?.image != nil {
+            cell.profileImage.sd_setImage(with: URL(string: newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
+        } else {
+            cell.profileImage.image = UIImage(named: "noPhoto")
+        }
+        cell.newzName.text = newsSource?.name ?? "--"
+        cell.timeWhenPost.text = obj.createdDatetime ?? "--"
         
-        cell.urlImage.kf.setImage(with: URL(string: obj.image ?? ""))
+//        cell.urlImage.kf.setImage(with: URL(string: obj.image ?? ""))
+        if obj.image != nil {
+            cell.urlImage.sd_setImage(with: URL(string: obj.image ?? ""), placeholderImage: UIImage(named: "eventPlaceholder"), options: .progressiveLoad, completed: .none)
+        } else {
+            cell.urlImage.image = UIImage(named: "eventPlaceholder")
+        }
         cell.newzShortDetail.text = obj.title ?? ""
         
         cell.likeCountLbl.text = "\(obj.likeCount ?? 0)"

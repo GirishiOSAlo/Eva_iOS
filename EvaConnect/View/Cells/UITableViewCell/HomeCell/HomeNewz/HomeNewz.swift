@@ -69,17 +69,14 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
     }
     
     func uiData(dataMaper: DashboardItem) {
-        
         timeWhenPost.text = dataMaper.createdDatetime
         newzTitle.text = dataMaper.newsSource?.name
         newzName.text = dataMaper.newsSource?.name
         
-//        timeLbl.text = dataMaper.createdDatetime!.timeOnly()
-//        dateLbl.text = "\(dataMaper.createdDatetime!.dateOnly()) at"
         likeCountLbl.text = "\(dataMaper.likeCount ?? 0)"
         commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
         shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
-//        shareCountBtn.setTitle("Comments \(dataMaper.shareCount ?? 0) Share", for: .normal)
+
         if dataMaper.isNewsLike == 1 {
             likeImage.image = #imageLiteral(resourceName: "like_selected")
         } else {
@@ -94,19 +91,18 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         
         let htmlString = dataMaper.content
         let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
-        
         newzShortDetail.text = cleanString
-        guard let newImage = dataMaper.newsSource?.image else {
-            profileImage.image = #imageLiteral(resourceName: "profile")
-            return
-        }
-        profileImage.kf.setImage(with: URL(string: newImage))
-        if !dataMaper.image.isNil{
-            urlImage.kf.setImage(with: URL(string: dataMaper.image!))
-//            newsImageHeightConstant.constant = dataMaper.image!.contains("no_image.png") ? 0 : 220
+        
+        if dataMaper.newsSource?.image != nil {
+            profileImage.sd_setImage(with: URL(string: dataMaper.newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
         } else {
-            urlImage.image = #imageLiteral(resourceName: "galleryOpen")
-//            newsImageHeightConstant.constant = 0
+            profileImage.image = UIImage(named: "noPhoto")
+        }
+
+        if dataMaper.image != nil {
+            urlImage.sd_setImage(with: URL(string: dataMaper.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
+        } else {
+            urlImage.image = UIImage(named: "noPhoto")
         }
         
     }
