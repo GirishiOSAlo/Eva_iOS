@@ -78,7 +78,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" title="Request To Join">
+                                <state key="normal" title="View Details">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -190,11 +190,11 @@
                 <outlet property="imgVW" destination="omt-Wi-88L" id="Hj1-5j-UHO"/>
                 <outlet property="locationLbl" destination="Fad-C0-LRw" id="mOA-pr-Mu4"/>
                 <outlet property="privateBtn" destination="pLm-7k-rpf" id="MNS-qE-qcC"/>
-                <outlet property="requestJoinBtn" destination="EHa-Ly-OD8" id="gr1-xG-whP"/>
                 <outlet property="saveBtn" destination="lHI-bA-NfU" id="yzs-Je-Ro3"/>
                 <outlet property="saveImgVw" destination="R4k-TG-RwT" id="6Ys-NM-sua"/>
                 <outlet property="timeLbl" destination="Rlb-qb-bVv" id="ynz-o8-GEa"/>
                 <outlet property="titleLbl" destination="M4o-Ss-18A" id="V6R-SH-Nsl"/>
+                <outlet property="viewDetailsBtn" destination="EHa-Ly-OD8" id="gzG-au-BOg"/>
             </connections>
             <point key="canvasLocation" x="-11.450381679389313" y="-1.4084507042253522"/>
         </collectionViewCell>

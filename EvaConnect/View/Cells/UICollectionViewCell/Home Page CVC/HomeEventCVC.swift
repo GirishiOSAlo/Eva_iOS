@@ -11,7 +11,7 @@ import UIKit
 class HomeEventCVC: UICollectionViewCell {
 
     @IBOutlet weak var baseView: UIView!
-    @IBOutlet weak var requestJoinBtn: UIButton!
+    @IBOutlet weak var viewDetailsBtn: UIButton!
     
     @IBOutlet weak var imgVW: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
@@ -31,7 +31,7 @@ class HomeEventCVC: UICollectionViewCell {
 
     func initUI() {
         self.baseView.layer.cornerRadius = 20.0
-        self.requestJoinBtn.layer.cornerRadius = 14.0
+        self.viewDetailsBtn.layer.cornerRadius = 14.0
         
         self.titleLbl.font = UIFont(name: Myfonts.semiBold, size: 14.0)
         self.dateLbl.font = UIFont(name: Myfonts.medium, size: 12.0)

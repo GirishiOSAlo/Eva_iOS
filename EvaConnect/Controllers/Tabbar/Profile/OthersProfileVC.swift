@@ -74,6 +74,7 @@ class OthersProfileVC: UIViewController {
     var status = ""
     var articleContent: String?
     var isChatEnable = true
+    var eventID = 0
     var userDetails: UserDetailsData?
     
     var posts: [DashboardItem] = [] {
@@ -280,6 +281,30 @@ class OthersProfileVC: UIViewController {
         
 //        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
 //        self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
+        
+        let connectionStatus = user.connectionStatus ?? ""
+        if connectionStatus == "Connected" && self.eventID != 0 {
+            //schedule meeting button tap...
+        }
+        else if connectionStatus == "Connected" && self.eventID == 0 {
+            //unfollow...
+        }
+        else if connectionStatus == "sent request" {
+            //Friend request send...
+        }
+        else if connectionStatus == "received request" {
+            //accept reject btn show...
+        }
+        else if connectionStatus == "Block" {
+            //unblock btn show...
+        }
+        else {
+            if user.isPublic == 0 {
+                //Send Request btn show...
+            } else {
+                //Follow btn show...
+            }
+        }
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{

@@ -372,27 +372,17 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
                 cell.privateBtn.isHidden = true
             }
             
-            let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-            if eventAttendeesStatus == "accepted" {
-                cell.requestJoinBtn.setTitle("View details", for: .normal)
-            }
-            else if eventAttendeesStatus == "Request_To_Join" {
-                cell.requestJoinBtn.setTitle("Requested", for: .normal)
-            }
-            else if eventAttendeesStatus == "decline" {
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            }
-            else {
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            }
-//            switch event.eventAttendeesStatus {
-//            case .none:
-//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//            case .requestToJoin:
-//                cell.requestJoinBtn.setTitle("Requested", for: .normal)
-//            case .accepted:
+//            let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+//            if eventAttendeesStatus == "accepted" {
 //                cell.requestJoinBtn.setTitle("View details", for: .normal)
-//            case .decline:
+//            }
+//            else if eventAttendeesStatus == "Request_To_Join" {
+//                cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//            }
+//            else if eventAttendeesStatus == "decline" {
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            }
+//            else {
 //                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
 //            }
             
@@ -400,8 +390,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             cell.saveBtn.addTarget(self, action: #selector(saveCurrentEventTapped(sender:)), for: .touchUpInside)
             cell.detailNavigateBtn.tag = indexPath.row
             cell.detailNavigateBtn.addTarget(self, action: #selector(openCurrentEventDetail(sender:)), for: .touchUpInside)
-            cell.requestJoinBtn.tag = indexPath.row
-            cell.requestJoinBtn.addTarget(self, action: #selector(reqToJoinTapped(sender:)), for: .touchUpInside)
+            cell.viewDetailsBtn.tag = indexPath.row
+            cell.viewDetailsBtn.addTarget(self, action: #selector(currentEventViewDetailsTapped(sender:)), for: .touchUpInside)
             
             return cell
         }
@@ -835,29 +825,29 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //                cell.sharedBtn.tag = indexPath.row
                 cell.navigateToDetail.tag = indexPath.row
                 cell.saveEventBtn.tag = indexPath.row
-                cell.requestJoinBtn.tag = indexPath.row
+                cell.viewDetailsBtn.tag = indexPath.row
                 self.objectId = event.id
                 self.type = .event
                 
                 
-                let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-                if eventAttendeesStatus == "accepted" {
-                    cell.requestJoinBtn.setTitle("View details", for: .normal)
-                }
-                else if eventAttendeesStatus == "Request_To_Join" {
-                    cell.requestJoinBtn.setTitle("Requested", for: .normal)
-                }
-                else if eventAttendeesStatus == "decline" {
-                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-                }
-                else {
-                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-                }
+//                let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+//                if eventAttendeesStatus == "accepted" {
+//                    cell.requestJoinBtn.setTitle("View details", for: .normal)
+//                }
+//                else if eventAttendeesStatus == "Request_To_Join" {
+//                    cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//                }
+//                else if eventAttendeesStatus == "decline" {
+//                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//                }
+//                else {
+//                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//                }
                 
 //                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
                 cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-                cell.requestJoinBtn.addTarget(self, action: #selector(reqToJoinTapped(sender:)), for: .touchUpInside)
+                cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
                 //            cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
                 
                 //            cell.intrestedTapped = { [weak self] dashboardItem in
@@ -2096,11 +2086,25 @@ extension HomeVC {
         saveEvent(postId: post.id, at: sender.tag)
     }
     
-    @objc func reqToJoinTapped(sender: UIButton) {
-        print("resquested Event")
-        showActivity()
-        let post = posts[sender.tag]
-        reqToJoin(postId: post.id, at: sender.tag)
+//    @objc func reqToJoinTapped(sender: UIButton) {
+//        print("resquested Event")
+//        showActivity()
+//        let post = posts[sender.tag]
+//        reqToJoin(postId: post.id, at: sender.tag)
+//    }
+    @objc func eventViewDetailsTapped(sender: UIButton) {
+        print("View Details Event")
+        let obj = self.posts[sender.tag]
+        let vc = EventMainVC.instantiate()
+        vc.eventId = obj.id
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func currentEventViewDetailsTapped(sender: UIButton) {
+        print("View Details Event")
+        let obj = self.currentEventList[sender.tag]
+        let vc = EventMainVC.instantiate()
+        vc.eventId = obj.id
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func saveCurrentEventTapped(sender: UIButton) {

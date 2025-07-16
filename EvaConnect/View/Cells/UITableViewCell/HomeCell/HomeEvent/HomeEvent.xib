@@ -78,7 +78,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" title="Request To Join">
+                                <state key="normal" title="View Details">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -190,12 +190,12 @@
                 <outlet property="locationLbl" destination="jr3-Dg-Y1T" id="sD5-kE-sMs"/>
                 <outlet property="navigateToDetail" destination="mRm-yC-F1I" id="b34-KG-vNZ"/>
                 <outlet property="privateBtn" destination="NNz-TW-1Wj" id="AZA-1g-obO"/>
-                <outlet property="requestJoinBtn" destination="bPx-Vm-JWz" id="cZz-xF-Zjg"/>
                 <outlet property="saveBtn" destination="J6x-vS-90K" id="6wv-9G-Eg7"/>
                 <outlet property="saveEventBtn" destination="J6x-vS-90K" id="Xv0-Id-9Dx"/>
                 <outlet property="saveImgVw" destination="l93-tV-fyB" id="y9l-Dy-5NZ"/>
                 <outlet property="timeLbl" destination="J96-8R-QF9" id="0lw-Cc-yve"/>
                 <outlet property="titleLbl" destination="MSm-zw-rCg" id="r62-ZP-DLp"/>
+                <outlet property="viewDetailsBtn" destination="bPx-Vm-JWz" id="HJ2-GD-Re0"/>
             </connections>
             <point key="canvasLocation" x="219.56521739130437" y="344.19642857142856"/>
         </tableViewCell>

@@ -819,6 +819,7 @@ Aviation</string>
                         <outlet property="postTableVw" destination="Yy3-Ru-KHR" id="XMf-hR-Wtk"/>
                         <outlet property="postTableVwHeight" destination="MVc-4Y-gdG" id="4Lr-qN-zbr"/>
                         <outlet property="scrollBaseView" destination="VOz-Un-4cE" id="LVi-KH-g0U"/>
+                        <outlet property="scrollView" destination="tdj-vb-K2H" id="Yha-5t-Y0i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBr-km-otE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

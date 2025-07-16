@@ -13,6 +13,7 @@ import SVProgressHUD
 class HomePageVC: UIViewController {
     
     @IBOutlet weak var scrollBaseView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var bannerBaseVw: UIView!
     @IBOutlet weak var bannerCollectionVw: UICollectionView!
@@ -60,6 +61,7 @@ class HomePageVC: UIViewController {
     let likeManager = LikeManager()
     var objectId = 0
     var type : TypePostEnum = .news
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +86,10 @@ class HomePageVC: UIViewController {
 //    }
     
     func setupUI() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        scrollView.addSubview(refreshControl) // not required when using UITableViewController
+
         self.registerCell()
         self.jobCollectionVwHeight.constant = 0.0
         if isIndivisualUser {
@@ -93,6 +99,15 @@ class HomePageVC: UIViewController {
         }
     }
     
+    @objc func refresh(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.fetchBannerData()
+            self.fetchDashboardPostData()
+            self.fetchDashboardNews()
+            self.fetchDashboardEvent()
+            self.fetchDashboardJob()
+        }
+    }
 
     func registerCell() {
         bannerCollectionVw.registerNib(cellNib: HomeBannerCVC.self)
@@ -243,6 +258,7 @@ extension HomePageVC {
         showActivity()
         let url = "\(EndPoints.dashboardBanner)"
         NetworkManagerr.request(url, method: .get) { (response) in
+            self.refreshControl.endRefreshing()
             self.hideActivity()
             guard response.result.isSuccess else {
                 print("Error ::", response.error?.localizedDescription as? Error ?? "Default Error")
@@ -278,6 +294,7 @@ extension HomePageVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
                 let postRoot = try jsonDecoder.decode(DashboardPostDataModel.self, from: response.data!)
@@ -309,6 +326,7 @@ extension HomePageVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
                 let newsRoot = try jsonDecoder.decode(RelatedNewsDataModel.self, from: response.data!)
@@ -334,6 +352,7 @@ extension HomePageVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
                 let eventRoot = try jsonDecoder.decode(DashboardItemRoot.self, from: response.data!)
@@ -354,6 +373,7 @@ extension HomePageVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
                 let jobRoot = try jsonDecoder.decode(DashboardJobDataModel.self, from: response.data!)
@@ -510,9 +530,9 @@ extension HomePageVC {
 //MARK: Custom Methods
 extension HomePageVC {
     @objc func viewDetailsTapped(sender: UIButton) {
-        let obj = eventList[sender.tag]
+        let obj = dashboardBannerList[sender.tag]
         let vc = EventMainVC.instantiate()
-        vc.eventId = obj.id
+        vc.eventId = obj.id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -558,11 +578,15 @@ extension HomePageVC {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func reqToJoinTapped(sender: UIButton) {
-        print("resquested Event")
-        showActivity()
-        let event = eventList[sender.tag]
-        reqToJoin(eventtId: event.id, type: 1)
+    @objc func eventViewDetailsTapped(sender: UIButton) {
+        print("View Details Event")
+//        showActivity()
+//        let event = eventList[sender.tag]
+//        reqToJoin(eventtId: event.id, type: 1)
+        let obj = self.eventList[sender.tag]
+        let vc = EventMainVC.instantiate()
+        vc.eventId = obj.id
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func saveEventTapped(sender: UIButton) {
@@ -630,7 +654,15 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             }
             
             cell.titleLbl.text = banner.name ?? ""
-            cell.subtitleLbl.text = banner.content ?? ""
+//            cell.subtitleLbl.text = banner.content ?? ""
+            DispatchQueue.main.async {
+                let content = banner.content ?? ""
+                if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), color: UIColor(hex: "#030229")) {
+                    //cell.subtitleLbl.attributedText = attributed
+                    cell.subtitleLbl.text = attributed.string
+                }
+            }
+            
             cell.locationLbl.text = "\(banner.city ?? ""),\(banner.country ?? "")"
             cell.dateLbl.text = "\(banner.startDate ?? "") - \(banner.endDate ?? "")"
             cell.timeLbl.text = "\(banner.startTime ?? "") - \(banner.endTime ?? "")"
@@ -645,27 +677,17 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
                 if banner.isinvited == 0 {
                     cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
                 } else {
-                    cell.requestJoinBtn.setTitle("Accepted", for: .normal)
+                    cell.requestJoinBtn.setTitle("Accept", for: .normal)
                 }
             }
             else {
                 cell.requestJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
             }
-
-//            switch banner.eventAttendeesStatus {
-//            case .none:
-//                cell.requestJoinBtn.isHidden = false
-//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//            case .requestToJoin:
-//                cell.requestJoinBtn.isHidden = false
-//                cell.requestJoinBtn.setTitle("Requested", for: .normal)
-//            case .accepted:
-//                cell.requestJoinBtn.isHidden = true
-//                cell.requestJoinBtn.setTitle("View details", for: .normal)
-//            case .decline:
-//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//            }
             
+            let status = banner.eventAttendeesStatus ?? ""
+            if status == "Approved" {
+                cell.requestJoinBtn.isHidden = true
+            }
             
             cell.viewDetailsBtn.tag = indexPath.row
             cell.viewDetailsBtn.addTarget(self, action: #selector(viewDetailsTapped(sender:)), for: .touchUpInside)
@@ -713,24 +735,24 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
                 cell.privateBtn.isHidden = true
             }
             
-            let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-            if eventAttendeesStatus == "accepted" {
-                cell.requestJoinBtn.setTitle("View details", for: .normal)
-            }
-            else if eventAttendeesStatus == "Request_To_Join" {
-                cell.requestJoinBtn.setTitle("Requested", for: .normal)
-            }
-            else if eventAttendeesStatus == "decline" {
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            }
-            else {
-                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-            }
+//            let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+//            if eventAttendeesStatus == "accepted" {
+//                cell.requestJoinBtn.setTitle("View details", for: .normal)
+//            }
+//            else if eventAttendeesStatus == "Request_To_Join" {
+//                cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//            }
+//            else if eventAttendeesStatus == "decline" {
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            }
+//            else {
+//                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//            }
             
             cell.detailNavigateBtn.tag = indexPath.row
             cell.detailNavigateBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-            cell.requestJoinBtn.tag = indexPath.row
-            cell.requestJoinBtn.addTarget(self, action: #selector(reqToJoinTapped(sender:)), for: .touchUpInside)
+            cell.viewDetailsBtn.tag = indexPath.row
+            cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
             cell.saveBtn.tag = indexPath.row
             cell.saveBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
             

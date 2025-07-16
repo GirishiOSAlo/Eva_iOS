@@ -89,6 +89,7 @@ extension DelegatesVC {
         let obj = delegateData[sender.tag]
         let vc = StoryboardRouter.othersProfileVC()
         vc.profileID = obj.id ?? 0
+        vc.eventID = self.eventId
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
