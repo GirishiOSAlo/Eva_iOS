@@ -29,9 +29,13 @@ class ReschedulePopupVw: UIViewController, XIBed {
         self.setupUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        baseView.roundCorners([.topRight, .topLeft], radius: 35.0)
+    }
+    
     func setupUI() {
         self.setupTextView()
-        baseView.roundCorners([.topRight, .topLeft], radius: 35.0)
         headingLbl.font = UIFont(name: Myfonts.bold, size: 18.0)
         rescheduleBtn.cornerRadius = 14.0
         for baseView in baseViewCollection {
