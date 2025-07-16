@@ -181,7 +181,14 @@ class EventDetailsVC: UIViewController, XIBed {
         
         eventLocationLabel.text = "\(eventDetail.address ?? ""), \(eventDetail.city ?? ""), \(eventDetail.country ?? "")"
         
-        descriptionLabel.text = "\(eventDetail.content ?? "")"
+        //descriptionLabel.text = "\(eventDetail.content ?? "")"
+        let content = eventDetail.content ?? ""
+//        if let attributed = content.htmlToAttributedString {
+//            descriptionLabel.attributedText = attributed
+//        }
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#030229")) {
+            descriptionLabel.attributedText = attributed
+        }
     }
     
     @IBAction func reqToJoinTapped(_ sender: UIButton) {

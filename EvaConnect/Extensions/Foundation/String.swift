@@ -10,6 +10,47 @@ import UIKit
 
 extension String {
     
+//    var htmlToAttributedString: NSAttributedString? {
+//        guard let data = self.data(using: .utf8) else { return nil }
+//        do {
+//            return try NSAttributedString(
+//                data: data,
+//                options: [
+//                    .documentType: NSAttributedString.DocumentType.html,
+//                    .characterEncoding: String.Encoding.utf8.rawValue
+//                ],
+//                documentAttributes: nil
+//            )
+//        } catch {
+//            print("HTML to Attributed String Error: \(error)")
+//            return nil
+//        }
+//    }
+    
+    func htmlToAttributedString(withFont font: UIFont, color: UIColor = .label) -> NSAttributedString? {
+        guard let data = self.data(using: .utf8) else { return nil }
+        do {
+            let attributedString = try NSMutableAttributedString(
+                data: data,
+                options: [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding: String.Encoding.utf8.rawValue
+                ],
+                documentAttributes: nil
+            )
+            
+            // Apply custom font and color to entire string
+            let fullRange = NSRange(location: 0, length: attributedString.length)
+            attributedString.addAttribute(.font, value: font, range: fullRange)
+            attributedString.addAttribute(.foregroundColor, value: color, range: fullRange)
+            
+            return attributedString
+        } catch {
+            print("HTML to Attributed String Error: \(error)")
+            return nil
+        }
+    }
+    
     public var length: Int {
         return self.count
     }
