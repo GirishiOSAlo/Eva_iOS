@@ -677,7 +677,8 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
                 if banner.isinvited == 0 {
                     cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
                 } else {
-                    cell.requestJoinBtn.setTitle("Accept", for: .normal)
+                    //cell.requestJoinBtn.setTitle("Accept", for: .normal)
+                    cell.requestJoinBtn.isHidden = true
                 }
             }
             else {
