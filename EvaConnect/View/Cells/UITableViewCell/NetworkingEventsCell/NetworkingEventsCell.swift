@@ -55,7 +55,13 @@ class NetworkingEventsCell: UITableViewCell {
     
     func setData(obj: EventNetworking) {
         self.eventNameLabel.text = obj.networkingeventName ?? ""
-        self.eventDescLable.text = obj.description ?? ""
+        
+//        self.eventDescLable.text = obj.description ?? ""
+        let content = obj.description ?? ""
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+            self.eventDescLable.attributedText = attributed
+        } else { self.eventDescLable.text = content }
+        
         self.dateLabel.text = obj.date ?? ""
         self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
         self.sponsorsLabel.text = "--"
@@ -64,7 +70,13 @@ class NetworkingEventsCell: UITableViewCell {
 
     func setListData(obj: NetworkEventList) {
         self.eventNameLabel.text = obj.networkingeventName ?? ""
-        self.eventDescLable.text = obj.description ?? ""
+        
+//        self.eventDescLable.text = obj.description ?? ""
+        let content = obj.description ?? ""
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+            self.eventDescLable.attributedText = attributed
+        } else { self.eventDescLable.text = content }
+        
         self.dateLabel.text = obj.date ?? ""
         self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
         self.sponsorsLabel.text = "--"

@@ -46,6 +46,7 @@ struct UserDetailsData: Codable {
     let companyURL, phoneNumber: String?
     let linkedinURL: String?
     let connectionStatus, city: String?
+    let followers, following: Int?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -93,7 +94,7 @@ struct UserDetailsData: Codable {
         case phoneNumber = "phone_number"
         case linkedinURL = "linkedin_url"
         case connectionStatus = "connection_status"
-        case city
+        case city, followers, following
     }
 }
 

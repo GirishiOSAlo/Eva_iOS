@@ -257,19 +257,25 @@ class OthersProfileVC: UIViewController {
         
         if user.type!.elementsEqual("user") {
             professionLbl.text = "\(user.designation ?? "No Designation")"
-            self.followingLabel.text = "\(user.pendingConnection ?? "")"
+            //self.followingLabel.text = "\(user.pendingConnection ?? "")"
+            self.followingLabel.text = "\(user.following ?? 0)"
         }
         else {
             professionLbl.text = "\(user.companyName ?? "")"
             self.followingLabel.text = ""
         }
 
-        aboutLbl.text = user.bioData ?? ""
+        //aboutLbl.text = user.bioData ?? ""
+        let content = user.bioData ?? ""
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 12) ?? UIFont.systemFont(ofSize: 12.0), color: UIColor(hex: "#565656")) {
+            aboutLbl.attributedText = attributed
+        } else { aboutLbl.text = content }
+        
         //Set bio view Height.....
         let lblHeight = self.heightForView(text: self.aboutLbl.text ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: self.view.frame.width - 72.0)
         self.bioViewHeight.constant = lblHeight + 64.0
         
-        self.followerLabel.text = "\(user.connectionCount ?? 0)"
+        self.followerLabel.text = "\(user.followers ?? 0)"
 //        self.companyId = user.companyID ?? 0
         
 //        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"

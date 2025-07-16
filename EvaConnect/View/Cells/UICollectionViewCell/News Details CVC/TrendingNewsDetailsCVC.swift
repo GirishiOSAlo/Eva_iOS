@@ -39,8 +39,9 @@ class TrendingNewsDetailsCVC: UICollectionViewCell {
     }
     
     func setData(obj: NewsTrendingList) {
-        if obj.newsSource?.image != nil {
-            self.imgVw.sd_setImage(with: URL(string: obj.newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
+//        if obj.newsSource?.image != nil {
+        if obj.image != nil {
+            self.imgVw.sd_setImage(with: URL(string: obj.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
         } else {
             self.imgVw.image = UIImage(named: "noPhoto")
         }

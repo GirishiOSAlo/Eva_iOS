@@ -86,15 +86,15 @@ class HomeEvent: BaseCellClass {
         self.dateLbl.text = "\(dataMaper.eventStartDate ?? "") - \(dataMaper.eventEndDate ?? "")"
         self.locationLbl.text = "\(dataMaper.eventCity ?? ""), \(dataMaper.eventCountry ?? "")"
         
-        var startTime = ""
-        var endTime = ""
-        if let startTime12 = convertTo12HourFormat(from: "\(dataMaper.startTime ?? "")") {
-            startTime = startTime12
-        }
-        if let endTime12 = convertTo12HourFormat(from: "\(dataMaper.endTime ?? "")") {
-            endTime = endTime12
-        }
-        self.timeLbl.text = "\(startTime) - \(endTime)"
+//        var startTime = ""
+//        var endTime = ""
+//        if let startTime12 = convertTo12HourFormat(from: "\(dataMaper.startTime ?? "")") {
+//            startTime = startTime12
+//        }
+//        if let endTime12 = convertTo12HourFormat(from: "\(dataMaper.endTime ?? "")") {
+//            endTime = endTime12
+//        }
+        self.timeLbl.text = "\(dataMaper.startTime ?? "") - \(dataMaper.endTime ?? "")"
         
         if dataMaper.isNewsSave == 1 {
             self.saveImgVw.image = UIImage(named: "save_selected")

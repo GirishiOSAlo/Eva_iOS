@@ -691,15 +691,15 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             cell.dateLbl.text = "\(event.eventStartDate ?? "") - \(event.eventEndDate ?? "")"
             cell.locationLbl.text = "\(event.eventCity ?? ""), \(event.eventCountry ?? "")"
             
-            var startTime = ""
-            var endTime = ""
-            if let startTime12 = convertTo12HourFormat(from: "\(event.startTime ?? "")") {
-                startTime = startTime12
-            }
-            if let endTime12 = convertTo12HourFormat(from: "\(event.endTime ?? "")") {
-                endTime = endTime12
-            }
-            cell.timeLbl.text = "\(startTime) - \(endTime)"
+//            var startTime = ""
+//            var endTime = ""
+//            if let startTime12 = convertTo12HourFormat(from: "\(event.startTime ?? "")") {
+//                startTime = startTime12
+//            }
+//            if let endTime12 = convertTo12HourFormat(from: "\(event.endTime ?? "")") {
+//                endTime = endTime12
+//            }
+            cell.timeLbl.text = "\(event.startTime ?? "") - \(event.endTime ?? "")"
             
             if event.isNewsSave == 1 {
                 cell.saveImgVw.image = UIImage(named: "save_selected")
@@ -711,6 +711,20 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
                 cell.privateBtn.isHidden = false
             } else {
                 cell.privateBtn.isHidden = true
+            }
+            
+            let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+            if eventAttendeesStatus == "accepted" {
+                cell.requestJoinBtn.setTitle("View details", for: .normal)
+            }
+            else if eventAttendeesStatus == "Request_To_Join" {
+                cell.requestJoinBtn.setTitle("Requested", for: .normal)
+            }
+            else if eventAttendeesStatus == "decline" {
+                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+            }
+            else {
+                cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
             }
             
             cell.detailNavigateBtn.tag = indexPath.row

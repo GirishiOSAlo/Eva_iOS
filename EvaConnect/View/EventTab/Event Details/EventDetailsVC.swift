@@ -192,7 +192,11 @@ class EventDetailsVC: UIViewController, XIBed {
     }
     
     @IBAction func reqToJoinTapped(_ sender: UIButton) {
-        reqToJoin(eventId: self.eventId, type: 1)
+        if self.eventDetail?.eventAttendeesStatus == "Approved" {
+            print("already approved.")
+        } else {
+            reqToJoin(eventId: self.eventId, type: 1)
+        }
     }
     
     @IBAction func acceptBtnTapped(_ sender: UIButton) {

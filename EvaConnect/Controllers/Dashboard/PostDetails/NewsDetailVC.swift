@@ -581,12 +581,13 @@ extension NewsDetailVC: UITableViewDataSource, UITableViewDelegate {
         
         let newsSource = obj.newsSource
         //cell.profileImage.kf.setImage(with: URL(string: newsSource?.image ?? ""))
-        if newsSource?.image != nil {
-            cell.profileImage.sd_setImage(with: URL(string: newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
+        if obj.image != nil {
+            cell.profileImage.sd_setImage(with: URL(string: obj.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
         } else {
             cell.profileImage.image = UIImage(named: "noPhoto")
         }
-        cell.newzName.text = newsSource?.name ?? "--"
+//        cell.newzName.text = newsSource?.name ?? "--"
+        cell.newzName.text = obj.title ?? "--"
         cell.timeWhenPost.text = obj.createdDatetime ?? "--"
         
 //        cell.urlImage.kf.setImage(with: URL(string: obj.image ?? ""))

@@ -37,7 +37,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GO7-p1-g1Y">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="130.33333333333334"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="120.66666666666667"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVu-ue-7af">
                             <rect key="frame" x="10" y="75" width="40" height="40"/>
@@ -51,8 +51,8 @@
                                 <action selector="backBtnTapped:" destination="-1" eventType="touchUpInside" id="64G-Dg-j3n"/>
                             </connections>
                         </button>
-                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AIN's Corporate Aviation Leadership Summit (CALS)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gW-Ae-NyH">
-                            <rect key="frame" x="58" y="76" width="319" height="38.333333333333343"/>
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gW-Ae-NyH">
+                            <rect key="frame" x="58" y="85.333333333333329" width="319" height="19.333333333333329"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                             <nil key="textColor"/>
@@ -69,10 +69,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFj-2f-RdZ" userLabel="Category View">
-                    <rect key="frame" x="0.0" y="130.33333333333334" width="393" height="50"/>
+                    <rect key="frame" x="0.0" y="120.66666666666669" width="393" height="50"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Mg-lC-hrl" userLabel="UnderLineView">
-                            <rect key="frame" x="0.0" y="49" width="393" height="1"/>
+                            <rect key="frame" x="0.0" y="48.999999999999986" width="393" height="1"/>
                             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="U4q-p9-PNA"/>
@@ -104,7 +104,7 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="que-wf-wij">
-                    <rect key="frame" x="20" y="212.33333333333331" width="353" height="573.66666666666674"/>
+                    <rect key="frame" x="20" y="202.66666666666669" width="353" height="583.33333333333326"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="PAL-WA-jC6">
                         <size key="itemSize" width="128" height="128"/>
