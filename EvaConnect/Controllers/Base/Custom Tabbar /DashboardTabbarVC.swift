@@ -291,7 +291,7 @@ extension DashboardTabbarVC {
             case "news":
                 if let endpoint2 = notification.userInfo?["param2"] as? String {
                     let vc = StoryboardRouter.openNewsDetail() //openURLVC()
-                    vc.newsID = Int(endpoint2) ?? 0
+                    vc.selectedNewsId = Int(endpoint2) ?? 0
                     navigationController?.pushViewController(vc, animated: true)
                     break
                 }

@@ -61,7 +61,7 @@ class NewsDetailVC: UIViewController {
     var selectedNewsId = 0
     var newsDetails: NewsDetailData?
     
-    var newsID = 0
+    //var newsID = 0
     var categoryID = 0
     var offsetCount = 1
     
@@ -500,7 +500,7 @@ extension NewsDetailVC {
         SVProgressHUD.show()
         let trendingNews = self.trendingNewsList[sender.tag]
         let vc = StoryboardRouter.openNewsDetail() //openURLVC()
-        vc.newsID = trendingNews.id ?? 0
+        vc.selectedNewsId = trendingNews.id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func likeTrendingNewsTapped(sender: UIButton){
@@ -528,7 +528,7 @@ extension NewsDetailVC {
         SVProgressHUD.show()
         let relatedNews = self.newsList[sender.tag]
         let vc = StoryboardRouter.openNewsDetail()
-        vc.newsID = relatedNews.id ?? 0
+        vc.selectedNewsId = relatedNews.id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func likeRelatedNewsTapped(sender: UIButton){

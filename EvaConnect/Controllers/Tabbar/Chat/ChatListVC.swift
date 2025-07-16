@@ -742,7 +742,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             switch notification.objectType {
             case "news":
                 let vc = StoryboardRouter.openNewsDetail() //openURLVC()
-                vc.newsID = notification.objectID
+                vc.selectedNewsId = notification.objectID
                 navigationController?.pushViewController(vc, animated: true)
                 break
             case "post":

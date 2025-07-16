@@ -533,7 +533,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                 case "news":
                     if let news = item as? SearchNews {
                         let vc = StoryboardRouter.openNewsDetail()
-                        vc.newsID = Int(news.id ?? "0") ?? 0
+                        vc.selectedNewsId = Int(news.id ?? "0") ?? 0
 //                        vc.delegate = self
                         navigationController?.pushViewController(vc, animated: true)
                     }
