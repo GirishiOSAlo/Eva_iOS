@@ -249,22 +249,8 @@ extension NewsDetailVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             let cell = self.trendingNewsCollectionVw.dequeueReusableCell(withReuseIdentifier: TrendingNewsDetailsCVC.ReuseId, for: indexPath) as! TrendingNewsDetailsCVC
             
             let trendingNews = self.trendingNewsList[indexPath.row]
-            
-            cell.imgVw.kf.setImage(with: URL(string: trendingNews.newsSource?.image ?? ""))
-            cell.titleLbl.text = trendingNews.title ?? ""
-            cell.categoryLbl.text = trendingNews.newsSource?.name ?? ""
-            cell.dateTimeLbl.text = trendingNews.createdDatetime ?? ""
-            
-            cell.likeCountLbl.text = "\(trendingNews.likeCount ?? 0)"
-            cell.commentCountLbl.text = "\(trendingNews.commentCount ?? 0)"
-            cell.shareCountLbl.text = "\(trendingNews.shareCount ?? 0)"
-            
-            if trendingNews.isNewsLike == 1 {
-                cell.likeImageVw.image = UIImage(named: "like_selected")
-            } else {
-                cell.likeImageVw.image = UIImage(named: "ic_like")
-            }
-            
+            cell.setData(obj: trendingNews)
+
             cell.detailNavigateBtn.tag = indexPath.row
             cell.detailNavigateBtn.addTarget(self, action: #selector(detailNavigateTapped(sender:)), for: .touchUpInside)
             cell.likeBtn.tag = indexPath.row
@@ -290,7 +276,7 @@ extension NewsDetailVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             return CGSize(width: label.frame.width+16, height: 30)
             
         case self.trendingNewsCollectionVw:
-            return CGSize(width: self.trendingNewsCollectionVw.frame.size.width, height: 112.0)
+            return CGSize(width: self.trendingNewsCollectionVw.frame.size.width, height: 113.0)
 
         default:
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
@@ -393,7 +379,7 @@ extension NewsDetailVC {
                             self.trendingNewsList = data
                             //Height Managed.....
                             let count = Double(self.trendingNewsList.count)
-                            let trendingCellHeight = (112.0 * count)
+                            let trendingCellHeight = (113.0 * count)
                             self.trendingNewsBaseVwHeight.constant = trendingCellHeight + 50.0 // +50.0 is header label
                         }
                     } else {

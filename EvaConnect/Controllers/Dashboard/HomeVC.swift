@@ -1210,7 +1210,7 @@ private extension HomeVC {
     
     
     func EventsAPICall(offSet: Int) {
-        var url =  URL(string: "https://aviationconnect.com/api/v1/event/filter?limit=\(pageSize)&offset=\(offSet)")! // Replace with your API endpoint URL
+        let url =  URL(string: "https://aviationconnect.com/api/v1/event/filter?limit=\(pageSize)&offset=\(offSet)")! // Replace with your API endpoint URL
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
