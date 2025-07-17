@@ -112,7 +112,7 @@
                         <constraint firstAttribute="trailing" secondItem="ioO-M1-9X0" secondAttribute="trailing" id="vAj-6d-fvZ"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTn-5z-z6E">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTn-5z-z6E">
                     <rect key="frame" x="0.0" y="202" width="393" height="616"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tV6-mA-h40">
@@ -204,7 +204,7 @@
         <image name="baseline_arrow_back_black_24pt" width="24" height="24"/>
         <image name="ic_arrow_down" width="14.5" height="8"/>
         <systemColor name="secondarySystemFillColor">
-            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

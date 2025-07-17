@@ -15,8 +15,6 @@ class EventDetailsVC: UIViewController, XIBed {
         vc.eventId = eventId
         return vc
     }
-
-    @IBOutlet weak var testView: UIView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -53,8 +51,12 @@ class EventDetailsVC: UIViewController, XIBed {
     
     
     @IBOutlet weak var bottomBtnView: UIView!
-    @IBOutlet weak var bottomBtnViewConst: NSLayoutConstraint!
+    @IBOutlet weak var requestToJoinBtnVw: UIView!
     @IBOutlet weak var requstToJoinBtn: UIButton!
+    @IBOutlet weak var acceptDeclineBtnVw: UIView!
+    @IBOutlet weak var acceptBtn: UIButton!
+    @IBOutlet weak var declineBtn: UIButton!
+    
     
     var eventId = 0
     var eventDetail: NewEventDetailsData?
@@ -140,8 +142,10 @@ class EventDetailsVC: UIViewController, XIBed {
         
         createdByLabel.text = "Created By \(eventDetail.createdByUser ?? "")"
         
-        let Count: Int = Int(eventDetail.interestedUsersCount ?? "") ?? 0
-        noOfJoinedPeopleLabel.text = Count > 100 ? "\(eventDetail.interestedUsersCount ?? "")+ joined" : "\(eventDetail.interestedUsersCount ?? "")"
+//        let Count: Int = Int(eventDetail.interestedUsersCount ?? "") ?? 0
+//        noOfJoinedPeopleLabel.text = Count > 100 ? "\(eventDetail.interestedUsersCount ?? "")+ joined" : "\(eventDetail.interestedUsersCount ?? "")"
+        let count = eventDetail.attendeesCount ?? 0
+        noOfJoinedPeopleLabel.text = "\(count)+ Joined"
         
         eventTypeLabel.text = "\(eventDetail.isPrivate ?? 0 == 1 ? "Private" : "Public")"
         
@@ -189,6 +193,10 @@ class EventDetailsVC: UIViewController, XIBed {
         if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#030229")) {
             descriptionLabel.attributedText = attributed
         }
+        
+        self.requestToJoinBtnVw.isHidden = false
+        self.acceptDeclineBtnVw.isHidden = true
+        
     }
     
     @IBAction func reqToJoinTapped(_ sender: UIButton) {
