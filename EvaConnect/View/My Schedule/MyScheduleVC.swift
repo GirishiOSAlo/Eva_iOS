@@ -17,7 +17,7 @@ class MyScheduleVC: UIViewController, XIBed {
         
     let scrollView = UIScrollView()
     let contentView = UIView()
-    
+    var eventID = 0
     let pixelsPerMinute: CGFloat = 1.0
     let scheduleStartHour = 1  // Starting at 01:00
     let scheduleEndHour = 25   // Ending at 24:00
@@ -47,6 +47,7 @@ class MyScheduleVC: UIViewController, XIBed {
     @IBAction func onCreateMeetingBtnTap(_ sender: UIButton) {
         print("Create a Meeting")
         let vc = StoryboardRouter.createMeeting()
+        vc.eventID = self.eventID
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -160,9 +161,9 @@ extension MyScheduleVC {
 
     func setupEvents() {
         // Example: Team Standup 09:45 - 10:15
-        addEvent(title: "Team Standup", startHour: 9, startMinute: 45, durationMinutes: 30)
-        addEvent(title: "Client Call", startHour: 11, startMinute: 30, durationMinutes: 45)
-        addEvent(title: "Lunch Break", startHour: 12, startMinute: 45, durationMinutes: 60)
+//        addEvent(title: "Team Standup", startHour: 9, startMinute: 45, durationMinutes: 30)
+//        addEvent(title: "Client Call", startHour: 11, startMinute: 30, durationMinutes: 45)
+//        addEvent(title: "Lunch Break", startHour: 12, startMinute: 45, durationMinutes: 60)
     }
 
     func addEvent(title: String, startHour: Int, startMinute: Int, durationMinutes: Int) {

@@ -61,6 +61,8 @@ class CompanyListPopupVC: UIViewController,XIBed {
             self.getCategory()
         case .company:
             self.companySearchQuery()
+        case .locationRoom:
+            break
         }
     }
 
@@ -169,6 +171,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
             return categoryList.count
         case .company:
             return companyList.count
+        case .locationRoom:
+            return 0
         }
     }
     
@@ -185,6 +189,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
             cell.titleName.text = categoryList[indexPath.row].categoryName
         case .company:
             cell.titleName.text = companyList[indexPath.row].companyName
+        case .locationRoom:
+            break
         }
         return cell
     }
@@ -205,6 +211,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
         case .company:
             let obj = companyList[indexPath.row]
             self.completion?(obj.companyName ?? "", obj.id ?? 0)
+        case .locationRoom:
+            break
         }
     }
 }

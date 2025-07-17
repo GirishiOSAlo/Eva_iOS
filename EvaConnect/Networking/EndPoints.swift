@@ -127,6 +127,8 @@ enum EndPoints {
     static let delegateSendRequest = baseURL + "user/connection/sendrequest" //New
     static let delegateAcceptReject = baseURL + "user/connection/acceptreject" //New
     
+    static let createEventMeetingDetails = baseURL + "event/createeventmeetingdetails" //New
+    
     //MARK: News
     static let newsCommentLike = baseURL + "news/comment/like" //using
     static let dashboardShareNews = baseURL + "news/share"

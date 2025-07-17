@@ -19,7 +19,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     @IBOutlet weak var startDate: UITextField!
 //    @IBOutlet weak var endDate: UITextField!
     @IBOutlet weak var startTime: UITextField!
-//    @IBOutlet weak var endTime: UITextField!
+    @IBOutlet weak var endTime: UITextField!
     @IBOutlet weak var videoConfLinkTF: UITextField!
     @IBOutlet weak var descriptionTV: UITextView!
     @IBOutlet weak var createMeeting: UIButton!
@@ -41,9 +41,12 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var isCancelTapeed = false
     var isGmail = false
     var meetingId = 0
+    var eventID = 0
     var webView: WKWebView!
     
-    var locationsArr = ["Meeting Room 1", "Meeting Room 2", "Meeting Room 3"]
+    //var locationsArr = ["Meeting Room 1", "Meeting Room 2", "Meeting Room 3"]
+    var eventLocations: [EventLocation] = []
+    var attendeesList: [AttendeesList] = []
     
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
@@ -82,6 +85,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         
         collectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+        self.fetchCreateMeetingDetails()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,17 +137,50 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         self.startDate.becomeFirstResponder()
     }
     
-    @IBAction func onTimePickerBtnTap(_ sender: UIButton) {
+    @IBAction func onStartTimePickerBtnTap(_ sender: UIButton) {
         self.startTime.becomeFirstResponder()
     }
+    
+    @IBAction func onEndTimePickerBtnTap(_ sender: UIButton) {
+        self.endTime.becomeFirstResponder()
+    }
+    
     @IBAction func SelectLoactionBtnTapped(_ sender: UIButton) {
         let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
         popupvc.modalPresentationStyle = .overFullScreen
-        popupvc.activeDataType = .string
-        popupvc.stringArray = self.locationsArr
+        popupvc.activeDataType = .locationRoom
+        popupvc.eventLocations = self.eventLocations
         popupvc.completion = { passedAns, passedId in
         }
         self.navigationController?.present(popupvc, animated: true)
+    }
+}
+
+extension CreateMeetingVC {
+    func fetchCreateMeetingDetails() {
+        let url = EndPoints.createEventMeetingDetails
+        let parameters = [
+            "event_id": self.eventID,
+            "user_id": myUserDefaults.userId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let meetingDetails = try jsonDecoder.decode(CreateEventMeetingDetailsDataModel.self, from: response.data!)
+                if !(meetingDetails.error ?? false) {
+                    let details = meetingDetails.data
+                    self.eventLocations = details?[0].eventLocations ?? []
+                    self.attendeesList = details?[0].attendeesList ?? []
+                    
+                } else {
+                    print("Error :: \(meetingDetails.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
 }
 
@@ -167,8 +204,8 @@ extension CreateMeetingVC {
 //        endDate.inputAccessoryView = toolBar
         startTime.inputView = timePicker
         startTime.inputAccessoryView = toolBar
-//        endTime.inputView = timePicker
-//        endTime.inputAccessoryView = toolBar
+        endTime.inputView = timePicker
+        endTime.inputAccessoryView = toolBar
         
         collectionView.registerNib(cellNib: AddParticipantCell.self)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)

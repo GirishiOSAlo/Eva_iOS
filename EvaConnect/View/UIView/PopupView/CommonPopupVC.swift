@@ -21,6 +21,7 @@ enum TableDataType {
     case sector
     case category
     case company
+    case locationRoom
 }
 
 class CommonPopupVC: UIViewController {
@@ -37,6 +38,7 @@ class CommonPopupVC: UIViewController {
     var sectorsArray : [Sectors] = []
     var categoryArray : [CategoryList] = []
     var companyArray : [Companylist] = []
+    var eventLocations: [EventLocation] = []
     weak var businessSectorDismissDelegate: BusinessSectorPopUpDismiss?
     weak var regionDismissDelegate: RegionPopUpDismiss?
     
@@ -69,6 +71,8 @@ class CommonPopupVC: UIViewController {
             rowCount = categoryArray.count
         case .company:
             rowCount = companyArray.count
+        case .locationRoom:
+            rowCount = eventLocations.count
         }
         
         let tblHeight = CGFloat(rowCount * 50) + 40.0
@@ -107,6 +111,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             return categoryArray.count
         case .company:
             return companyArray.count
+        case .locationRoom:
+            return eventLocations.count
         }
     }
     
@@ -129,6 +135,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             cell.titleName.text = categoryArray[indexPath.row].categoryName // adjust as needed
         case .company:
             cell.titleName.text = companyArray[indexPath.row].companyName
+        case .locationRoom:
+            cell.titleName.text = eventLocations[indexPath.row].name
         }
         return cell
     }
@@ -188,6 +196,11 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
         case .company:
             let selectedID = companyArray[indexPath.row].id ?? 0
             let selectedStr = companyArray[indexPath.row].companyName ?? ""
+            self.dismiss(animated: true)
+            self.completion?(selectedStr, selectedID)
+        case .locationRoom:
+            let selectedID = eventLocations[indexPath.row].id ?? 0
+            let selectedStr = eventLocations[indexPath.row].name ?? ""
             self.dismiss(animated: true)
             self.completion?(selectedStr, selectedID)
         }

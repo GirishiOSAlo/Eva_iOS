@@ -465,6 +465,9 @@ class OthersProfileVC: UIViewController {
     }
     
     @IBAction func onScheduleMeetingBtntapped(_ sender: UIButton) {
+        let vc = MyScheduleVC.instantiate()
+        vc.eventID = self.eventID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -531,10 +534,9 @@ extension OthersProfileVC {
     func getPosts(offSet: Int) {
 //        if stopAPICall { return }
         
-        var url = "\(EndPoints.getAllHomePost)?limit=\(pageSize)&offset=\(offSet)"
+        let url = "\(EndPoints.getAllHomePost)?limit=\(pageSize)&offset=\(offSet)"
         print(url)
-        
-        var param: AFParameters = ["user_id": profileID, "filter": "all_posts"] //
+        let param: AFParameters = ["user_id": profileID, "filter": "all_posts"] //
 
         NetworkManagerr.request(url, method: .post, parameters: param) { [weak self] (result: Result<DashboardItemRoot>) in
             guard let self = self else { return }
@@ -625,6 +627,8 @@ extension OthersProfileVC {
                 }
             case .failure(let failure):
                 self.presentAlert("Error", nil, failure)
+            default:
+                break
             }
         }
     }
@@ -659,7 +663,7 @@ extension OthersProfileVC {
     }
     
     func callCancelrequest(id: Int) {
-        var params: AFParameters  = ["user_id": id]
+        let params: AFParameters  = ["user_id": id]
         showActivity()
         NetworkManagerr.request(EndPoints.cancelRequest, method: .post, parameters: params) { (response) in
             self.hideActivity()
