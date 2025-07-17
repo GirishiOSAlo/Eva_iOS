@@ -124,6 +124,7 @@ enum EndPoints {
     static let userAcceptReject = baseURL + "user/connection/acceptreject" //New
     
     static let connectionFollowUnfollow = baseURL + "user/connection/followunfollowuser" //New
+    static let delegateSendRequest = baseURL + "user/connection/sendrequest" //New
     
     
     //MARK: News

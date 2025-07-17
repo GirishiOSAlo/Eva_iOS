@@ -375,18 +375,21 @@ class OthersProfileVC: UIViewController {
 
     @IBAction func followBtnTapped(_ sender: UIButton) {
         let receiverID = userDetails?.id ?? 0
-        self.connectionFollowUnfollow(receiverID: receiverID, status: 2) //2=follow
+        self.connectionFollowUnfollow(receiverID: receiverID, status: 2) //2= follow
     }
     
     @IBAction func unfollowBtnTapped(_ sender: UIButton) {
         let receiverID = userDetails?.id ?? 0
-        self.connectionFollowUnfollow(receiverID: receiverID, status: 6) //6=unfollow
+        self.connectionFollowUnfollow(receiverID: receiverID, status: 6) //6= unfollow
     }
     
     @IBAction func unblockBtnTapped(_ sender: UIButton) {
+        self.blockUser(userId: self.profileID)
     }
     
     @IBAction func sendRequestBtnTapped(_ sender: UIButton) {
+        let receiverID = userDetails?.id ?? 0
+        self.connectionSendRequest(receiverID: receiverID, status: 1) //1= pending
     }
     
 //    @IBAction func sendMsgTapped(_ sender: UIButton) {
@@ -703,6 +706,31 @@ extension OthersProfileVC {
     
     func connectionFollowUnfollow(receiverID: Int, status: Int) {
         let url = EndPoints.connectionFollowUnfollow
+        let parameters = [
+            "receiverId": receiverID,
+            "status": status] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
+                if !(networkEventRoot.error ?? false) {
+                    self.presentAlert(networkEventRoot.message ?? "Success", networkEventRoot.data ?? "")
+                    self.fetchUserDetailsData()
+                } else {
+                    self.presentAlert(networkEventRoot.message ?? "")
+                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func connectionSendRequest(receiverID: Int, status: Int) {
+        let url = EndPoints.delegateSendRequest
         let parameters = [
             "receiverId": receiverID,
             "status": status] as [String: Any]
