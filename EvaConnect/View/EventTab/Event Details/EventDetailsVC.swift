@@ -55,7 +55,7 @@ class EventDetailsVC: UIViewController, XIBed {
     @IBOutlet weak var requstToJoinBtn: UIButton!
     @IBOutlet weak var acceptDeclineBtnVw: UIView!
     @IBOutlet weak var acceptBtn: UIButton!
-    @IBOutlet weak var declineBtn: UIButton!
+    @IBOutlet weak var rejectBtn: UIButton!
     
     
     var eventId = 0
@@ -124,7 +124,13 @@ class EventDetailsVC: UIViewController, XIBed {
         
         requstToJoinBtn.layer.cornerRadius = 14
         requstToJoinBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
-        requstToJoinBtn.setTitle("Request to Join", for: .normal)
+        
+        acceptBtn.layer.cornerRadius = 14
+        acceptBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
+        
+        rejectBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1.0, radius: 14)
+        rejectBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
+        
         if let eventDetail = self.eventDetail {
             self.setUIData(eventDetail: eventDetail)
         }
@@ -156,33 +162,6 @@ class EventDetailsVC: UIViewController, XIBed {
         eventDateLabel.text = "\(eventDetail.startDate ?? "")"
         eventTimingsLabel.text = "\(eventDetail.startTime ?? "") - \(eventDetail.endTime ?? "")"
         
-        let eventAttendeesStatus = eventDetail.eventAttendeesStatus ?? ""
-        requstToJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
-//        if eventAttendeesStatus == "accepted" {
-//            requstToJoinBtn.setTitle("View details", for: .normal)
-//        }
-//        else if eventAttendeesStatus == "Request_To_Join" {
-//            requstToJoinBtn.setTitle("Requested", for: .normal)
-//        }
-//        else if eventAttendeesStatus == "decline" {
-//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-//        }
-//        else {
-//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-//        }
-        
-//        switch eventDetail.eventAttendeesStatus {
-//        case .none:
-//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-//        case .requestToJoin:
-//            requstToJoinBtn.setTitle("Requested", for: .normal)
-//        case .accepted:
-//            requstToJoinBtn.setTitle("View details", for: .normal)
-//            requstToJoinBtn.isHidden = true
-//        case .decline:
-//            requstToJoinBtn.setTitle("Request To Join", for: .normal)
-//        }
-        
         eventLocationLabel.text = "\(eventDetail.address ?? ""), \(eventDetail.city ?? ""), \(eventDetail.country ?? "")"
         
         //descriptionLabel.text = "\(eventDetail.content ?? "")"
@@ -194,9 +173,28 @@ class EventDetailsVC: UIViewController, XIBed {
             descriptionLabel.attributedText = attributed
         }
         
-        self.requestToJoinBtnVw.isHidden = false
+        //--> Bottom Button Ui Managed...
+        self.requestToJoinBtnVw.isHidden = true
         self.acceptDeclineBtnVw.isHidden = true
+        let isInvited = eventDetail.isinvited ?? 0
+        let eventAttendeesStatus = eventDetail.eventAttendeesStatus ?? ""
         
+        if eventAttendeesStatus == "" && isInvited == 1 {
+            self.acceptDeclineBtnVw.isHidden = false
+        } else {
+            self.requestToJoinBtnVw.isHidden = false
+            if eventAttendeesStatus == "" {
+                requstToJoinBtn.isEnabled = true
+                requstToJoinBtn.setTitle("Request To Join", for: .normal)
+                requstToJoinBtn.backgroundColor = UIColor(hex: "#4D76CD", alpha: 1.0)
+                requstToJoinBtn.titleLabel?.textColor = UIColor(hex: "#FFFFFF", alpha: 1.0)
+            } else {
+                requstToJoinBtn.isEnabled = false
+                requstToJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
+                requstToJoinBtn.backgroundColor = UIColor(hex: "#4D76CD", alpha: 0.5)
+                requstToJoinBtn.titleLabel?.textColor = UIColor(hex: "#000000", alpha: 0.5)
+            }
+        }
     }
     
     @IBAction func reqToJoinTapped(_ sender: UIButton) {
@@ -211,7 +209,7 @@ class EventDetailsVC: UIViewController, XIBed {
         reqToJoin(eventId: self.eventId, type: 2)
     }
     
-    @IBAction func declinedBtnTapped(_ sender: UIButton) {
+    @IBAction func rejectBtnTapped(_ sender: UIButton) {
         reqToJoin(eventId: self.eventId, type: 3)
     }
     

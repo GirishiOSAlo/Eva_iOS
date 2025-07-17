@@ -20,7 +20,6 @@
                 <outlet property="acceptDeclineBtnVw" destination="ILZ-HF-oyv" id="fMI-Ah-IzP"/>
                 <outlet property="bottomBtnView" destination="cqC-0I-CMv" id="hNz-rQ-Ilj"/>
                 <outlet property="createdByLabel" destination="2kg-Hd-DVK" id="yMu-DP-gQP"/>
-                <outlet property="declineBtn" destination="o1z-ge-zwO" id="PNc-fi-2lY"/>
                 <outlet property="descriptionHeadingLabel" destination="zND-Ih-76t" id="aJ6-U2-mOL"/>
                 <outlet property="descriptionLabel" destination="ZQ3-0n-0Mc" id="N8j-tV-EoB"/>
                 <outlet property="eventDateHeadingLabel" destination="woM-f3-jbo" id="KYS-oy-Kl4"/>
@@ -44,6 +43,7 @@
                 <outlet property="per1imgView" destination="IWx-e3-966" id="LJ1-ym-w8C"/>
                 <outlet property="per2imgView" destination="WcE-lQ-yL9" id="Y7g-Q2-01t"/>
                 <outlet property="per3imgView" destination="5du-29-1Mv" id="KFU-4w-7VP"/>
+                <outlet property="rejectBtn" destination="o1z-ge-zwO" id="2wl-3Q-5zP"/>
                 <outlet property="requestToJoinBtnVw" destination="IbP-NS-m7m" id="uK2-KQ-dYK"/>
                 <outlet property="requstToJoinBtn" destination="Af0-fE-jE8" id="Y7i-kz-oCu"/>
                 <outlet property="scrollView" destination="998-xU-2HU" id="bbY-bC-xdt"/>
@@ -407,7 +407,9 @@
                                                 <constraint firstAttribute="height" constant="49" id="hnL-Fb-PcK"/>
                                             </constraints>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Request to join"/>
+                                            <state key="normal" title="Request to join">
+                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="reqToJoinTapped:" destination="-1" eventType="touchUpInside" id="R5U-pZ-r4D"/>
                                             </connections>
@@ -432,18 +434,22 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="194" height="49"/>
                                                     <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Accept"/>
+                                                    <state key="normal" title="Accept">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="acceptBtnTapped:" destination="-1" eventType="touchUpInside" id="881-Wg-XcJ"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o1z-ge-zwO">
                                                     <rect key="frame" x="206" y="0.0" width="194" height="49"/>
-                                                    <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Decline"/>
+                                                    <state key="normal" title="Reject">
+                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <connections>
-                                                        <action selector="declinedBtnTapped:" destination="-1" eventType="touchUpInside" id="gJI-yD-SIs"/>
+                                                        <action selector="rejectBtnTapped:" destination="-1" eventType="touchUpInside" id="egh-90-Nie"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

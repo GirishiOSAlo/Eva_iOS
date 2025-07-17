@@ -239,6 +239,7 @@ struct NewEventDetailsData: Codable {
     let isNewsSave, isEventLike: Int?
     let createdByUser: String?
     let attendeesCount, isJoined: Int?
+    let isinvited: Int?
     let evaEventsAttendees: [EvaEventsAttendee]?
     let conferenceagenda: [ConferenceAgenda]?
     let exhibitorslists, speakerslists, mediapartnerslists, delegatelists: [List]?
@@ -281,6 +282,7 @@ struct NewEventDetailsData: Codable {
         case createdByUser = "created_by_user"
         case attendeesCount = "attendees_count"
         case isJoined = "is_joined"
+        case isinvited = "Isinvited"
         case evaEventsAttendees = "eva_events_attendees"
         case conferenceagenda, exhibitorslists, speakerslists, mediapartnerslists, delegatelists, sponsorslists, eventNetworking, delegatemeetings, eventHotels, eventVenu
         case floorPlan = "floor_plan"
@@ -377,7 +379,7 @@ struct EventNetworking: Codable {
     let deletedAt: String?
     let createdAt, updatedAt: String?
     let evaEvent: EvaEvent?
-    let evaUserNetworkingMappings: [String]?
+    let evaUserNetworkingMappings: [EvaUserNetworkingMapping]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -393,6 +395,23 @@ struct EventNetworking: Codable {
         case updatedAt = "updated_at"
         case evaEvent = "eva_event"
         case evaUserNetworkingMappings = "eva_user_networking_mappings"
+    }
+}
+
+// MARK: - EvaUserNetworkingMapping
+struct EvaUserNetworkingMapping: Codable {
+    let id, eventNetworkingID, userID, status: Int?
+    let deletedAt: String?
+    let createdAt, updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case eventNetworkingID = "event_networking_id"
+        case userID = "user_id"
+        case status
+        case deletedAt = "deleted_at"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
     }
 }
 
@@ -558,7 +577,7 @@ struct EvaEventsAttendeeUser: Codable {
     let lastLogin, dateJoined: String?
     let modifiedDatetime, sort: String?
     let status, verificationPin: Int?
-    let createdByID, modifiedByID: String?
+    let createdByID, modifiedByID: Int?
     let bioData, companyName: String?
     let categoryID: Int?
     let logo, companyURL: String?
