@@ -118,6 +118,10 @@ class NetworkingEventsListVC: UIViewController,XIBed {
         self.updateTableHeigth()
     }
     
+    @objc func joinBtnTapped(sender: UIButton) {
+        print("Join Btn Tapped.")
+    }
+    
     func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
@@ -174,6 +178,8 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnBtn.tag = indexPath.row
         cell.drpDwnBtn.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
+        cell.joinBtn.tag = indexPath.row
+        cell.joinBtn.addTarget(self, action: #selector(self.joinBtnTapped(sender:)), for: .touchUpInside)
         
         return cell
     }
