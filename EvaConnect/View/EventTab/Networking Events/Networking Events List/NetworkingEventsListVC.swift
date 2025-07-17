@@ -120,6 +120,14 @@ class NetworkingEventsListVC: UIViewController,XIBed {
     
     @objc func joinBtnTapped(sender: UIButton) {
         print("Join Btn Tapped.")
+        let networkId = self.networkingEventList[sender.tag].id ?? 0
+        self.networkJoinApiCall(networkingID: networkId, status: "join")
+    }
+    
+    @objc func cancelBtnTapped(sender: UIButton) {
+        print("Cancel Btn Tapped.")
+        let networkId = self.networkingEventList[sender.tag].id ?? 0
+        self.networkJoinApiCall(networkingID: networkId, status: "cancel")
     }
     
     func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
@@ -161,6 +169,32 @@ extension NetworkingEventsListVC {
             }
         }
     }
+    
+    func networkJoinApiCall(networkingID: Int, status: String) {
+        let url = EndPoints.eventNetworkingStatus
+        let parameters = [
+            "event_id": self.eventId,
+            "networking_id": networkingID,
+            "status": status,
+            "user_id": myUserDefaults.userId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(networkEventRoot.error) {
+                    print("Success")
+                    self.fetchNetworkEventListData(page: self.currentPage)
+                } else {
+                    print("Error :: \(networkEventRoot.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
 }
 
 
@@ -180,7 +214,8 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         cell.drpDwnBtn.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
         cell.joinBtn.tag = indexPath.row
         cell.joinBtn.addTarget(self, action: #selector(self.joinBtnTapped(sender:)), for: .touchUpInside)
-        
+        cell.cancelBtn.tag = indexPath.row
+        cell.cancelBtn.addTarget(self, action: #selector(self.cancelBtnTapped(sender:)), for: .touchUpInside)
         return cell
     }
     

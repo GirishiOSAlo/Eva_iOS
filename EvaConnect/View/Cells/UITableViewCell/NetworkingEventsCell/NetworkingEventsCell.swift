@@ -22,6 +22,7 @@ class NetworkingEventsCell: UITableViewCell {
     
     @IBOutlet weak var drpDwnBtn: UIButton!
     @IBOutlet weak var joinBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
     
     var isExpanded: Bool = false {
         didSet {
@@ -50,6 +51,7 @@ class NetworkingEventsCell: UITableViewCell {
         
         drpDwnBtn.layer.cornerRadius = drpDwnBtn.layer.frame.height/2
         joinBtn.layer.cornerRadius = 10
+        cancelBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1, radius: 10)
         
     }
     
@@ -66,6 +68,21 @@ class NetworkingEventsCell: UITableViewCell {
         self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
         self.sponsorsLabel.text = "--"
         self.locationLabel.text = obj.location ?? ""
+        
+        self.joinBtn.isHidden = true
+        self.cancelBtn.isHidden = true
+        
+        let mapping = obj.evaUserNetworkingMappings ?? []
+        if mapping.count == 0 {
+            self.joinBtn.isHidden = false
+        } else {
+            if mapping[0].status == 1 {
+                self.cancelBtn.isHidden = false
+            } else {
+                self.joinBtn.isHidden = false
+            }
+        }
+        
     }
 
     func setListData(obj: NetworkEventList) {
@@ -81,6 +98,20 @@ class NetworkingEventsCell: UITableViewCell {
         self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
         self.sponsorsLabel.text = "--"
         self.locationLabel.text = obj.location ?? ""
+        
+        self.joinBtn.isHidden = true
+        self.cancelBtn.isHidden = true
+        
+        let mapping = obj.evaUserNetworkingMappings ?? []
+        if mapping.count == 0 {
+            self.joinBtn.isHidden = false
+        } else {
+            if mapping[0].status == 1 {
+                self.cancelBtn.isHidden = false
+            } else {
+                self.joinBtn.isHidden = false
+            }
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

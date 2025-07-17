@@ -67,7 +67,7 @@ struct NetworkEventList: Codable {
     let description, notes: String?
     let userInput: String?
     let eventID: Int?
-    //let evaUserNetworkingMappings: [JSONAny]
+    let evaUserNetworkingMappings: [EvaUserNetworkingMapping]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -78,6 +78,23 @@ struct NetworkEventList: Codable {
         case description, notes
         case userInput = "user_input"
         case eventID = "event_id"
-        //case evaUserNetworkingMappings = "eva_user_networking_mappings"
+        case evaUserNetworkingMappings = "eva_user_networking_mappings"
     }
 }
+
+//// MARK: - EvaUserNetworkingMapping
+//struct EvaUserNetworkingMapping: Codable {
+//    let id, eventNetworkingID, userID, status: Int?
+//    let deletedAt: String?
+//    let createdAt, updatedAt: String?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case eventNetworkingID = "event_networking_id"
+//        case userID = "user_id"
+//        case status
+//        case deletedAt = "deleted_at"
+//        case createdAt = "created_at"
+//        case updatedAt = "updated_at"
+//    }
+//}

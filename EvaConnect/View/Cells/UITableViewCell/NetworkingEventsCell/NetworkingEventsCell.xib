@@ -109,28 +109,47 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="ic_drpdwn_dwn_fill"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5V-vs-g5I">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1Ml-yc-3hJ">
                                 <rect key="frame" x="0.0" y="205.33333333333334" width="288" height="40"/>
-                                <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5V-vs-g5I">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="40"/>
+                                        <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="6Gg-19-iKV"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Join"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmc-W2-zH8">
+                                        <rect key="frame" x="0.0" y="6" width="288" height="34"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="dPK-Vc-YyZ"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="6Gg-19-iKV"/>
+                                    <constraint firstAttribute="height" constant="40" id="4bq-W9-PHH"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Join"/>
-                            </button>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Agk-5t-6tW" firstAttribute="top" secondItem="VbE-fv-ESb" secondAttribute="bottom" constant="5" id="1li-L6-Z4C"/>
+                            <constraint firstAttribute="trailing" secondItem="1Ml-yc-3hJ" secondAttribute="trailing" id="1or-4E-sR4"/>
                             <constraint firstAttribute="trailing" secondItem="SNN-wQ-Xwt" secondAttribute="trailing" id="5ys-mf-xzB"/>
                             <constraint firstItem="AkG-4g-275" firstAttribute="top" secondItem="wxg-Co-qBK" secondAttribute="bottom" constant="6" id="ABv-nt-bHe"/>
-                            <constraint firstAttribute="trailing" secondItem="F5V-vs-g5I" secondAttribute="trailing" id="BZO-GF-MFg"/>
-                            <constraint firstItem="F5V-vs-g5I" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="FU0-9F-75d"/>
                             <constraint firstItem="FT3-Ws-ZGe" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="Ix5-ly-jvM"/>
                             <constraint firstAttribute="trailing" secondItem="Agk-5t-6tW" secondAttribute="trailing" id="J4a-7F-6wr"/>
                             <constraint firstAttribute="trailing" secondItem="VbE-fv-ESb" secondAttribute="trailing" id="Mv1-eU-TXj"/>
                             <constraint firstItem="Agk-5t-6tW" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="S4K-dW-MJL"/>
                             <constraint firstItem="COG-pd-pi1" firstAttribute="top" secondItem="FT3-Ws-ZGe" secondAttribute="bottom" constant="6" id="SpL-xR-dZp"/>
+                            <constraint firstItem="1Ml-yc-3hJ" firstAttribute="top" secondItem="AkG-4g-275" secondAttribute="bottom" constant="12" id="UfA-c0-Pgh"/>
                             <constraint firstAttribute="trailing" secondItem="FT3-Ws-ZGe" secondAttribute="trailing" id="UwE-jH-iYZ"/>
                             <constraint firstItem="wxg-Co-qBK" firstAttribute="top" secondItem="COG-pd-pi1" secondAttribute="bottom" constant="12" id="Vr6-de-Kb0"/>
                             <constraint firstItem="EkR-6d-8zR" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="W3O-ZR-rQj"/>
@@ -141,12 +160,12 @@
                             <constraint firstItem="VbE-fv-ESb" firstAttribute="top" secondItem="EkR-6d-8zR" secondAttribute="bottom" constant="6" id="ij6-wU-axY"/>
                             <constraint firstAttribute="trailing" secondItem="AkG-4g-275" secondAttribute="trailing" id="juS-gg-y8B"/>
                             <constraint firstItem="VbE-fv-ESb" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="lE8-uX-WW2"/>
+                            <constraint firstItem="1Ml-yc-3hJ" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="lu4-gF-HTp"/>
                             <constraint firstItem="39e-NZ-LNY" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="mtb-YE-Dee"/>
                             <constraint firstAttribute="trailing" secondItem="wxg-Co-qBK" secondAttribute="trailing" id="nTH-HU-Bqh"/>
                             <constraint firstAttribute="trailing" secondItem="EkR-6d-8zR" secondAttribute="trailing" id="oeW-uU-XZW"/>
                             <constraint firstItem="SNN-wQ-Xwt" firstAttribute="leading" secondItem="39e-NZ-LNY" secondAttribute="trailing" constant="5" id="pXS-SX-ciD"/>
                             <constraint firstItem="SNN-wQ-Xwt" firstAttribute="centerY" secondItem="39e-NZ-LNY" secondAttribute="centerY" id="tte-eH-0m3"/>
-                            <constraint firstItem="F5V-vs-g5I" firstAttribute="top" secondItem="AkG-4g-275" secondAttribute="bottom" constant="12" id="w4X-Mx-1QY"/>
                             <constraint firstItem="EkR-6d-8zR" firstAttribute="top" secondItem="39e-NZ-LNY" secondAttribute="bottom" constant="10" id="xSS-72-2so"/>
                             <constraint firstItem="AkG-4g-275" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="y7n-YA-x5s"/>
                             <constraint firstItem="COG-pd-pi1" firstAttribute="leading" secondItem="MX4-8o-pQz" secondAttribute="leading" id="zc1-vx-Rev"/>
@@ -162,6 +181,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cancelBtn" destination="xmc-W2-zH8" id="Lg2-Q8-hhy"/>
                 <outlet property="dateLabel" destination="OfT-UE-JUG" id="yTa-xP-WrW"/>
                 <outlet property="drpDwnBtn" destination="SNN-wQ-Xwt" id="1gF-Cq-1Bz"/>
                 <outlet property="eventDescLable" destination="VbE-fv-ESb" id="XZP-89-hXi"/>

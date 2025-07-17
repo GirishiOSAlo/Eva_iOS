@@ -129,6 +129,14 @@ class NetworkingEventsVC: UIViewController, XIBed {
     
     @objc func joinBtnTapped(sender: UIButton) {
         print("Join Btn Tapped.")
+        let networkId = self.networkingEventList[sender.tag].id ?? 0
+        self.networkJoinApiCall(networkingID: networkId, status: "join")
+    }
+    
+    @objc func cancelBtnTapped(sender: UIButton) {
+        print("Cancel Btn Tapped.")
+        let networkId = self.networkingEventList[sender.tag].id ?? 0
+        self.networkJoinApiCall(networkingID: networkId, status: "cancel")
     }
     
     func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
@@ -136,6 +144,56 @@ class NetworkingEventsVC: UIViewController, XIBed {
         let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
         let boundingRect = attributedText.boundingRect(with: size, options: options, context: nil)
         return ceil(boundingRect.height)
+    }
+}
+
+extension NetworkingEventsVC {
+    func fetchEventDetail() {
+        let parameters: AFParameters = [ "id": eventId]
+        showActivity()
+        NetworkManagerr.request(EndPoints.eventDetail , method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            if response.result.isSuccess {
+                do {
+                    let decoder = JSONDecoder()
+                    let eventDetail = try decoder.decode(NewEventDetailsModel.self, from: response.data!)
+                    
+                    if !(eventDetail.error ?? false), ((eventDetail.data?.count ?? 0) > 0) {
+                        let eventDetail = eventDetail.data?[0]
+                        self.networkingEventList = eventDetail?.eventNetworking ?? []
+                        self.networkinEventListTable.reloadData()
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+        
+    func networkJoinApiCall(networkingID: Int, status: String) {
+        let url = EndPoints.eventNetworkingStatus
+        let parameters = [
+            "event_id": self.eventId,
+            "networking_id": networkingID,
+            "status": status,
+            "user_id": myUserDefaults.userId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(networkEventRoot.error) {
+                    print("Success")
+                    self.fetchEventDetail()
+                } else {
+                    print("Error :: \(networkEventRoot.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
 }
 
@@ -155,7 +213,8 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
         cell.drpDwnBtn.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
         cell.joinBtn.tag = indexPath.row
         cell.joinBtn.addTarget(self, action: #selector(self.joinBtnTapped(sender:)), for: .touchUpInside)
-        
+        cell.cancelBtn.tag = indexPath.row
+        cell.cancelBtn.addTarget(self, action: #selector(self.cancelBtnTapped(sender:)), for: .touchUpInside)
         return cell
     }
     
