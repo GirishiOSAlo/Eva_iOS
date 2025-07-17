@@ -441,6 +441,8 @@ class OthersProfileVC: UIViewController {
 //                }
 //            }
 //        }
+        let connectionId = self.userDetails?.id ?? 0
+        self.connectionAcceptReject(conectionID: connectionId, action: "accept")
     }
     
     @IBAction func declineBtnTapped(_ sender: UIButton) {
@@ -458,6 +460,8 @@ class OthersProfileVC: UIViewController {
 //                }
 //            }
 //        }
+        let connectionId = self.userDetails?.id ?? 0
+        self.connectionAcceptReject(conectionID: connectionId, action: "reject")
     }
     
     @IBAction func onScheduleMeetingBtntapped(_ sender: UIButton) {
@@ -734,6 +738,31 @@ extension OthersProfileVC {
         let parameters = [
             "receiverId": receiverID,
             "status": status] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(SendRequestDataModel.self, from: response.data!)
+                if !(networkEventRoot.error ?? false) {
+                    self.presentAlert(networkEventRoot.message ?? "Success")
+                    self.fetchUserDetailsData()
+                } else {
+                    self.presentAlert(networkEventRoot.message ?? "")
+                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func connectionAcceptReject(conectionID: Int, action: String) {
+        let url = EndPoints.delegateAcceptReject
+        let parameters = [
+            "connection_id": conectionID,
+            "action": action] as [String: Any]
         
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
