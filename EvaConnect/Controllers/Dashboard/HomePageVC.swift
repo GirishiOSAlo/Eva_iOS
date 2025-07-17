@@ -360,11 +360,7 @@ extension HomePageVC {
                 let eventRoot = try jsonDecoder.decode(DashboardItemRoot.self, from: response.data!)
                 if !(eventRoot.error) {
                     self.eventList = eventRoot.data
-                    var height = 0.0
-                    for event in self.eventList {
-                        height = height + 440.0
-                    }
-                    self.eventCollectionVwHeight.constant = height
+                    self.eventCollectionVwHeight.constant = CGFloat(self.eventList.count * 440)
                 } else {
                     print("Error :: \(eventRoot.message ?? "")")
                 }
@@ -386,12 +382,7 @@ extension HomePageVC {
                 let jobRoot = try jsonDecoder.decode(DashboardJobDataModel.self, from: response.data!)
                 if !(jobRoot.error ?? false) {
                     self.jobList = jobRoot.data?.jobs ?? []
-                    //Set collection height as per data....
-                    var height = 0.0
-                    for job in self.jobList {
-                        height = height + 290.0
-                    }
-                    self.jobCollectionVwHeight.constant = height
+                    self.jobCollectionVwHeight.constant = CGFloat(self.jobList.count * 290)
                 } else {
                     print("Error :: \(jobRoot.message ?? "")")
                 }
