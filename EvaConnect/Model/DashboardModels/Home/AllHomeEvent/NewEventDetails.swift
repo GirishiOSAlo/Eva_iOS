@@ -418,7 +418,7 @@ struct EvaUserNetworkingMapping: Codable {
 // MARK: - EventVenu
 struct EventVenu: Codable {
     let id, eventID: Int?
-    let floorplanImage: String?
+    let floorplanImage: [String]?
 
     enum CodingKeys: String, CodingKey {
         case id

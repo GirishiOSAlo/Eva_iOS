@@ -13,6 +13,7 @@ class VenueMapVC: UIViewController, XIBed {
     @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     @IBOutlet weak var listCollectionVw: UICollectionView!
     var venueList: [EventVenu] = []
+    var forPlanImages: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,10 @@ class VenueMapVC: UIViewController, XIBed {
     
     func setupUI() {
         self.registerCell()
+        if venueList.count > 0 {
+            self.forPlanImages = venueList[0].floorplanImage ?? []
+        }
+        
         updateCollectionHeigth()
     }
     
@@ -31,24 +36,22 @@ class VenueMapVC: UIViewController, XIBed {
     }
     
     func updateCollectionHeigth() {
-        self.collectionVwHeight.constant = CGFloat(self.venueList.count) * 250.0
+        self.collectionVwHeight.constant = CGFloat(self.forPlanImages.count) * 250.0
     }
 }
 
 //MARK: UICollection Delegate & DataSource....
 extension VenueMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.venueList.count
+        return self.forPlanImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.listCollectionVw.dequeueReusableCell(withReuseIdentifier: VenueCVC.ReuseId, for: indexPath) as! VenueCVC
         
-        let venue = self.venueList[indexPath.row]
-
-        if let imageUrl = venue.floorplanImage,
-           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
-           let url = URL(string: imageUrl),
+        let venueImg = self.forPlanImages[indexPath.row]
+        if !venueImg.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: venueImg),
            UIApplication.shared.canOpenURL(url) {
             cell.venueImgVw.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
         } else {

@@ -137,6 +137,7 @@ class EventMainVC: UIViewController, XIBed {
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
+//        self.openDropDown()
         if self.eventDetail?.isPrivate == 0 { //Public...
             self.openDropDown()
         } else { //Private...
@@ -146,18 +147,6 @@ class EventMainVC: UIViewController, XIBed {
                 print("user did not requested for event")
             }
         }
-//        if self.eventDetail?.eventAttendeesStatus == "accepted" {
-//            isSelected.toggle()
-//            if isSelected {
-//                drpDwnICImgVw.image = UIImage(named: "ic_dropdown_up")
-//                eventListTable.isHidden = false
-//            } else {
-//                drpDwnICImgVw.image = UIImage(named: "ic_dropdown_down")
-//                eventListTable.isHidden = true
-//            }
-//        } else {
-//            print("user did not requested for event")
-//        }
     }
     
     func openDropDown() {
