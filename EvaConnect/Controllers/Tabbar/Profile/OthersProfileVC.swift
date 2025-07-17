@@ -29,6 +29,10 @@ class OthersProfileVC: UIViewController {
     //    @IBOutlet weak var connectedView: UIView!
     @IBOutlet weak var followBtnView: UIView!
     @IBOutlet weak var followBtn: UIButton!
+    @IBOutlet weak var unfollowBtnView: UIView!
+    @IBOutlet weak var unfollowBtn: UIButton!
+    @IBOutlet weak var unblockBtnView: UIView!
+    @IBOutlet weak var unblockBtn: UIButton!
     @IBOutlet weak var aacceptDeclineBtnView: UIView!
     //    @IBOutlet weak var sendMsgCnct: UIButton!
 //    @IBOutlet weak var pendingView: UIView!
@@ -36,6 +40,8 @@ class OthersProfileVC: UIViewController {
     @IBOutlet weak var declineBtn: UIButton!
     @IBOutlet weak var scheduleMeetingBtnView: UIView!
     @IBOutlet weak var scheduleMeetingBtn: UIButton!
+    @IBOutlet weak var sendRequestBtnView: UIView!
+    @IBOutlet weak var sendRequestBtn: UIButton!
     
     @IBOutlet weak var chatBtn: UIButton!
     @IBOutlet weak var downloadResumeBtn: UIButton!
@@ -143,8 +149,14 @@ class OthersProfileVC: UIViewController {
         self.bioMainView.layer.cornerRadius = 13
         
         self.followBtn.layer.cornerRadius = 13
+        self.unfollowBtn.layer.cornerRadius = 13
+        self.unblockBtn.layer.cornerRadius = 13
         self.acceptBtn.layer.cornerRadius = 13
         self.declineBtn.layer.cornerRadius = 13
+        self.scheduleMeetingBtn.layer.cornerRadius = 13
+        self.sendRequestBtn.layer.cornerRadius = 13
+        
+        
         self.inviteToFollowBtn.layer.cornerRadius = 13
 //        self.sendMsgCnct.layer.cornerRadius = sendMsgCnct.layer.bounds.width/2
 //        self.sendMsgPend.layer.cornerRadius = sendMsgPend.layer.bounds.width/2
@@ -265,6 +277,7 @@ class OthersProfileVC: UIViewController {
             professionLbl.text = "\(user.companyName ?? "")"
             self.followingLabel.text = ""
         }
+        self.companyNameLbl.text = user.companyName ?? ""
 
         //aboutLbl.text = user.bioData ?? ""
         let content = user.bioData ?? ""
@@ -282,27 +295,48 @@ class OthersProfileVC: UIViewController {
 //        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
 //        self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
         
+        if self.eventID == 0 {
+            self.downloadResumeBtn.isHidden = true
+        } else {
+            self.downloadResumeBtn.isHidden = false
+        }
+        
+        
+        self.followBtnView.isHidden = true
+        self.unfollowBtnView.isHidden = true
+        self.unblockBtnView.isHidden = true
+        self.aacceptDeclineBtnView.isHidden = true
+        self.scheduleMeetingBtnView.isHidden = true
+        self.sendRequestBtnView.isHidden = true
+        
         let connectionStatus = user.connectionStatus ?? ""
         if connectionStatus == "Connected" && self.eventID != 0 {
-            //schedule meeting button tap...
+            //schedule meeting button show...
+            self.scheduleMeetingBtnView.isHidden = false
         }
         else if connectionStatus == "Connected" && self.eventID == 0 {
             //unfollow...
+            self.unfollowBtnView.isHidden = false
         }
         else if connectionStatus == "sent request" {
             //Friend request send...
+            self.sendRequestBtnView.isHidden = false
         }
         else if connectionStatus == "received request" {
             //accept reject btn show...
+            self.aacceptDeclineBtnView.isHidden = false
         }
         else if connectionStatus == "Block" {
             //unblock btn show...
+            self.unblockBtnView.isHidden = false
         }
         else {
             if user.isPublic == 0 {
                 //Send Request btn show...
+                self.sendRequestBtnView.isHidden = false
             } else {
                 //Follow btn show...
+                self.followBtnView.isHidden = false
             }
         }
     }
@@ -340,58 +374,30 @@ class OthersProfileVC: UIViewController {
     
 
     @IBAction func followBtnTapped(_ sender: UIButton) {
-        
-//        switch status {
-//        case "Connected":
-//            ProfileManager.shared.deleteConnection(id: profileID) { [weak self] title, message in
-//                guard let self = self else { return }
-//                fetchUserDetail(userId: profileID) { (user, error) in
-//                    if let user = user {
-//                        self.setUI(for: user)
-//                    }
-//                    
-//                    if let error = error {
-//                        self.presentAlert("Failure", nil, error)
-//                    }
-//                }
-//                self.presentAlert(title, message, nil)
-//            }
-//            break
-//        case "NotConnected":
-//                addConnection(receiverId: profileID) {
-//                    self.fetchUserDetail(userId: self.profileID) { (user, error) in
-//                        if let user = user {
-//                            self.setUI(for: user)
-//                        }
-//                        
-//                        if let error = error {
-//                            self.presentAlert("Failure", nil, error)
-//                        }
-//                    }
-//                    self.showToast(message: "Request Sent!!")
-//                }
-//            break
-//        case "sent request":
-//            self.callCancelrequest(id: profileID)
-//            break
-//        case "Blocked":
-//            self.blockUser(userId: profileID)
-//        default:
-//            break
-//        }
-
-        
+        let receiverID = userDetails?.id ?? 0
+        self.connectionFollowUnfollow(receiverID: receiverID, status: 2) //2=follow
     }
     
-    @IBAction func sendMsgTapped(_ sender: UIButton) {
-        if isChatEnable {
-            let chatVC = StoryboardRouter.chat()
-            chatVC.userId = profileID
-            navigationController?.pushViewController(chatVC, animated: true)
-        } else {
-            self.presentAlert("Alert", "This action has been disabled, Please contact admin.")
-        }
+    @IBAction func unfollowBtnTapped(_ sender: UIButton) {
+        let receiverID = userDetails?.id ?? 0
+        self.connectionFollowUnfollow(receiverID: receiverID, status: 6) //6=unfollow
     }
+    
+    @IBAction func unblockBtnTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func sendRequestBtnTapped(_ sender: UIButton) {
+    }
+    
+//    @IBAction func sendMsgTapped(_ sender: UIButton) {
+//        if isChatEnable {
+//            let chatVC = StoryboardRouter.chat()
+//            chatVC.userId = profileID
+//            navigationController?.pushViewController(chatVC, animated: true)
+//        } else {
+//            self.presentAlert("Alert", "This action has been disabled, Please contact admin.")
+//        }
+//    }
     
 //    @IBAction func sendMsgPendTapped(_ sender: UIButton) {
 //        if isChatEnable {
@@ -434,7 +440,7 @@ class OthersProfileVC: UIViewController {
 //        }
     }
     
-    @IBAction func DeclineBtnTapped(_ sender: UIButton) {
+    @IBAction func declineBtnTapped(_ sender: UIButton) {
 //        ProfileManager.shared.deleteConnection(id: profileID) { [weak self] title, message in
 //            guard let self = self else { return }
 //            self.presentAlert(title, message, nil) {
@@ -449,6 +455,9 @@ class OthersProfileVC: UIViewController {
 //                }
 //            }
 //        }
+    }
+    
+    @IBAction func onScheduleMeetingBtntapped(_ sender: UIButton) {
     }
 }
 
@@ -689,6 +698,31 @@ extension OthersProfileVC {
                 print("Error: \(error)")
             }
             
+        }
+    }
+    
+    func connectionFollowUnfollow(receiverID: Int, status: Int) {
+        let url = EndPoints.connectionFollowUnfollow
+        let parameters = [
+            "receiverId": receiverID,
+            "status": status] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
+                if !(networkEventRoot.error ?? false) {
+                    self.presentAlert(networkEventRoot.message ?? "Success", networkEventRoot.data ?? "")
+                    self.fetchUserDetailsData()
+                } else {
+                    self.presentAlert(networkEventRoot.message ?? "")
+                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
         }
     }
 }

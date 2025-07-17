@@ -123,6 +123,8 @@ enum EndPoints {
     static let userFollowUnfollow = baseURL + "user/connection/followunfollowuser" //New
     static let userAcceptReject = baseURL + "user/connection/acceptreject" //New
     
+    static let connectionFollowUnfollow = baseURL + "user/connection/followunfollowuser" //New
+    
     
     //MARK: News
     static let newsCommentLike = baseURL + "news/comment/like" //using

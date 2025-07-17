@@ -21,6 +21,7 @@ class HomePageVC: UIViewController {
     
     @IBOutlet weak var eventBaseVw: UIView!
     @IBOutlet weak var eventCollectionVw: UICollectionView!
+    @IBOutlet weak var eventCollectionVwHeight: NSLayoutConstraint!
     
     @IBOutlet weak var postBaseVw: UIView!
     @IBOutlet weak var postTableVw: UITableView!
@@ -92,6 +93,7 @@ class HomePageVC: UIViewController {
 
         self.registerCell()
         self.jobCollectionVwHeight.constant = 0.0
+        self.eventCollectionVwHeight.constant = 0.0
         if isIndivisualUser {
             Constants.saveEnumToUserDefaults(.news)
         } else {
@@ -358,6 +360,11 @@ extension HomePageVC {
                 let eventRoot = try jsonDecoder.decode(DashboardItemRoot.self, from: response.data!)
                 if !(eventRoot.error) {
                     self.eventList = eventRoot.data
+                    var height = 0.0
+                    for event in self.eventList {
+                        height = height + 440.0
+                    }
+                    self.eventCollectionVwHeight.constant = height
                 } else {
                     print("Error :: \(eventRoot.message ?? "")")
                 }

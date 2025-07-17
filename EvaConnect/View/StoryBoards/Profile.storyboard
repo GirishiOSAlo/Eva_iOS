@@ -2604,7 +2604,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daniel Elwell" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSq-I9-tBo">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSq-I9-tBo">
                                                         <rect key="frame" x="119" y="32" width="245" height="24"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="20"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2773,6 +2773,9 @@
                                                                         <state key="normal" title="Unfollow">
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
+                                                                        <connections>
+                                                                            <action selector="unfollowBtnTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="QTs-Cp-IhG"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -2799,6 +2802,9 @@
                                                                         <state key="normal" title="Unblock">
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
+                                                                        <connections>
+                                                                            <action selector="unblockBtnTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="DsA-6c-YfL"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -2810,7 +2816,7 @@
                                                                     <constraint firstAttribute="trailing" secondItem="ruW-Jg-zcs" secondAttribute="trailing" id="wQp-1J-T0a"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16o-K3-6iI" userLabel="Accept View">
+                                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16o-K3-6iI" userLabel="Accept Decline View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="189" height="40"/>
                                                                 <subviews>
                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ltB-jV-1ex">
@@ -2825,6 +2831,9 @@
                                                                         <state key="normal" title="Accept">
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
+                                                                        <connections>
+                                                                            <action selector="acceptBtnTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="GCp-86-NsT"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o01-ki-RCf">
                                                                         <rect key="frame" x="99" y="0.0" width="90" height="40"/>
@@ -2838,6 +2847,9 @@
                                                                         <state key="normal" title="Decline">
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
+                                                                        <connections>
+                                                                            <action selector="declineBtnTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="3v1-zx-UnV"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -2867,7 +2879,7 @@
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="onEditProfilrBtnTapped:" destination="gVm-UI-Zei" eventType="touchUpInside" id="jr5-EI-Inb"/>
+                                                                            <action selector="onScheduleMeetingBtntapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="Dzo-Yv-Emd"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -2895,7 +2907,7 @@
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="onEditProfilrBtnTapped:" destination="gVm-UI-Zei" eventType="touchUpInside" id="TLc-b3-pjC"/>
+                                                                            <action selector="sendRequestBtnTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="pe1-Fe-gzP"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -3429,6 +3441,12 @@
                         <outlet property="scheduleMeetingBtnView" destination="5Sc-2g-cwG" id="TCw-gu-b4b"/>
                         <outlet property="scrollViewTopConst" destination="O8O-sk-4fS" id="CjB-Rh-2wF"/>
                         <outlet property="sendMsgPend" destination="uif-Xk-gHP" id="1wD-h7-ePW"/>
+                        <outlet property="sendRequestBtn" destination="nDJ-kD-5Rr" id="pyY-6H-4aP"/>
+                        <outlet property="sendRequestBtnView" destination="ths-af-HpM" id="gMn-td-vI7"/>
+                        <outlet property="unblockBtn" destination="ruW-Jg-zcs" id="Bmd-Jc-uTp"/>
+                        <outlet property="unblockBtnView" destination="ayA-fj-QHB" id="aVS-3I-8AF"/>
+                        <outlet property="unfollowBtn" destination="pEd-py-HI2" id="Kup-9C-u9f"/>
+                        <outlet property="unfollowBtnView" destination="yBc-Zd-eDG" id="LTs-XN-iMo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qub-Ud-Kds" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
