@@ -193,6 +193,7 @@ class HomeVC: BaseVC {
                 self.allEventLblHeight.constant = 0
                 self.currentEventListHeight.constant = 0
             }
+            self.getPosts(offSet: 1, inserted: false)
         }
         else {
             height = 32

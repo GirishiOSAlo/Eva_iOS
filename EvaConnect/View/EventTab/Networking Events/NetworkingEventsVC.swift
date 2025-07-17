@@ -77,12 +77,24 @@ class NetworkingEventsVC: UIViewController, XIBed {
         for (i,network) in self.networkingEventList.enumerated() {
             let eventNameLblHeight = self.heightForView(text: network.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
+//            let content = network.description ?? ""
+//            var desc = ""
+//            if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+//                desc = attributed.string
+//            } else { desc = content }
+//            let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             let content = network.description ?? ""
-            var desc = ""
-            if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-                desc = attributed.string
-            } else { desc = content }
-            let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
+            let color = UIColor(hex: "#848397")
+
+            var descLblHeight = 0.0
+            if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+                let labelWidth = self.view.frame.width - 96.0
+                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+            } else {
+                descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            }
+            
             let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             let locationLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
@@ -115,6 +127,12 @@ class NetworkingEventsVC: UIViewController, XIBed {
         self.updateTableHeigth()
     }
 
+    func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let boundingRect = attributedText.boundingRect(with: size, options: options, context: nil)
+        return ceil(boundingRect.height)
+    }
 }
 
 extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
@@ -140,13 +158,23 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
         let networkEvent = self.networkingEventList[indexPath.row]
         let eventNameLblHeight = self.heightForView(text: networkEvent.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
+//        let content = networkEvent.description ?? ""
+//        var desc = ""
+//        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+//            desc = attributed.string
+//        } else { desc = content }
         let content = networkEvent.description ?? ""
-        var desc = ""
-        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-            desc = attributed.string
-        } else { desc = content }
+        let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let color = UIColor(hex: "#848397")
+
+        var descLblHeight = 0.0
+        if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+            let labelWidth = self.view.frame.width - 96.0
+            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+        } else {
+            descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        }
         
-        let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         let locationLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
