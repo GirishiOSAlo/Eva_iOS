@@ -420,7 +420,7 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
     
     @objc func openRescheduleVw(sender: UIButton) {
         let vc = ReschedulePopupVw.instantiate()
-        vc.meetingID = self.list[sender.tag].id ?? 0
+        vc.eventDetails = self.list[sender.tag]
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
     }
