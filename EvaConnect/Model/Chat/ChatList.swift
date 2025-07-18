@@ -39,7 +39,7 @@ struct ChatData: Codable {
         let actualAudioFileName: String?
         let createdAt: String?
         let updatedAt: String?
-        let isRead: String?
+        let isRead: Int?
         let readTime: String?
         let deletedAt: String?
         let replyMessageID: String?
@@ -73,34 +73,6 @@ struct ChatData: Codable {
             case audioSize = "audio_size"
             case replyMessage = "reply_message"
             case chatTime = "chat_time"
-        }
-
-        init(id: Int?, createdDatetime: String?, modifiedDatetime: String?, senderID: Int?, receiverID: Int?, message: String?, image: String?, imageURL: String?, document: String?, documentURL: String?, actualDocumentName: String?, audioFile: String?, audioFileURL: String?, actualAudioFileName: String?, createdAt: String?, updatedAt: String?, isRead: String?, readTime: String?, deletedAt: String?, replyMessageID: String?, type: ChatTypeEnum?, documentSize: String?, audioSize: String?, replyMessage: ChatList?, chatTime: String?) {
-            self.id = id
-            self.createdDatetime = createdDatetime
-            self.modifiedDatetime = modifiedDatetime
-            self.senderID = senderID
-            self.receiverID = receiverID
-            self.message = message
-            self.image = image
-            self.imageURL = imageURL
-            self.document = document
-            self.documentURL = documentURL
-            self.actualDocumentName = actualDocumentName
-            self.audioFile = audioFile
-            self.audioFileURL = audioFileURL
-            self.actualAudioFileName = actualAudioFileName
-            self.createdAt = createdAt
-            self.updatedAt = updatedAt
-            self.isRead = isRead
-            self.readTime = readTime
-            self.deletedAt = deletedAt
-            self.replyMessageID = replyMessageID
-            self.type = type
-            self.documentSize = documentSize
-            self.audioSize = audioSize
-            self.replyMessage = replyMessage
-            self.chatTime = chatTime
         }
     }
 

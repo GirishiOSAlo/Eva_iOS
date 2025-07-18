@@ -382,6 +382,8 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
         case categoryCollectionVw:
             self.categorySelectedIndex = indexPath.row
             self.categoryCollectionVw.reloadData()
+            self.expandedIndexPath = nil
+            self.listCollectionVw.setContentOffset(.zero, animated: true)
             
             self.list = []
             if (indexPath.row == 0) { //Approved Meetings...

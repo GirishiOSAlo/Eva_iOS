@@ -7,128 +7,6 @@ struct NewEventDetailsModel: Codable {
     let data: [NewEventDetailsData]?
 }
 
-// MARK: - Datum
-//struct NewEventDetailsData: Codable {
-//    let id: Int?
-//    let content, createdDatetime, modifiedDatetime, city: String?
-//    let country, address, endDate, startTime: String?
-//    let endTime, name, featuredImage, startDate: String?
-//    let registrationLink, eventEndDatetime, eventStartDatetime: String?
-//    let agenda, status: Int?
-//    let os, createdDate: String?
-//    let createdByID, modifiedByID, userID: Int?
-//    let isPrivate: Int?
-//    let tempImage: String?
-//    let comments: [String]?
-//    let isNewsSave, isEventLike: Int?
-//    let createdByUser: String?
-//    let attendeesCount, isJoined: Int?
-//    let evaEventsAttendees: [String]?
-//    let exhibitorslists: [Exhibitorslist]?
-//    let speakerslists: [List]?
-//    let mediapartnerslists: [String]?
-//    let delegatelists, sponsorslists: [List]?
-//    let floorPlan: String?
-//    let user: NewEventDetailsUser?
-//    let invitedByYou: [String]?
-//    let interestedUsersCount: String?
-//    let interestedUsers: [NewEventDetailsInterestedUser]?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id, content
-//        case createdDatetime = "created_datetime"
-//        case modifiedDatetime = "modified_datetime"
-//        case city, country, address
-//        case endDate = "end_date"
-//        case startTime = "start_time"
-//        case endTime = "end_time"
-//        case name
-//        case featuredImage = "featured_image"
-//        case startDate = "start_date"
-//        case registrationLink = "registration_link"
-//        case eventEndDatetime = "event_end_datetime"
-//        case eventStartDatetime = "event_start_datetime"
-//        case agenda, status, os
-//        case createdDate = "created_date"
-//        case createdByID = "created_by_id"
-//        case modifiedByID = "modified_by_id"
-//        case userID = "user_id"
-//        case isPrivate = "is_private"
-//        case tempImage = "temp_image"
-//        case comments, isNewsSave, isEventLike
-//        case createdByUser = "created_by_user"
-//        case attendeesCount = "attendees_count"
-//        case isJoined = "is_joined"
-//        case evaEventsAttendees = "eva_events_attendees"
-//        case exhibitorslists, speakerslists, mediapartnerslists, delegatelists, sponsorslists
-//        case floorPlan = "floor_plan"
-//        case user
-//        case invitedByYou = "invited_by_you"
-//        case interestedUsersCount = "interested_users_count"
-//        case interestedUsers = "interested_users"
-//    }
-//}
-
-// MARK: - List
-//struct List: Codable {
-//    let id, assignedBy, eventID, meetingStatus: Int?
-//    let userID, userStatus, userType: Int?
-//    let exhibitorName, firstName, lastName, description: String?
-//    let logo: String?
-//    let phoneNumber: Int?
-//    let email, countryCode, city, country: String?
-//    let url: String?
-//    let jobTitle, companyID, companyName: String?
-//    let telephoneNumber: Int?
-//    let speakerLinkedin, sponsorGraphic: String?
-//    let sponsorName: String?
-//    let linkedin: String?
-//    let status: Int?
-//    let mailStatus, createdAt, updatedAt: String?
-//    let deletedAt: String?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case assignedBy = "assigned_by"
-//        case eventID = "event_id"
-//        case meetingStatus = "meeting_status"
-//        case userID = "user_id"
-//        case userStatus = "user_status"
-//        case userType = "user_type"
-//        case exhibitorName = "exhibitor_name"
-//        case firstName = "first_name"
-//        case lastName = "last_name"
-//        case description, logo
-//        case phoneNumber = "phone_number"
-//        case email
-//        case countryCode = "country_code"
-//        case city, country, url
-//        case jobTitle = "job_title"
-//        case companyID = "company_id"
-//        case companyName = "company_name"
-//        case telephoneNumber = "telephone_number"
-//        case speakerLinkedin = "speaker_linkedin"
-//        case sponsorGraphic = "sponsor_graphic"
-//        case sponsorName = "sponsor_name"
-//        case linkedin, status
-//        case mailStatus = "mail_status"
-//        case createdAt = "created_at"
-//        case updatedAt = "updated_at"
-//        case deletedAt = "deleted_at"
-//    }
-//}
-
-// MARK: - InterestedUser
-//struct NewEventDetailsInterestedUser: Codable {
-//    let id: Int?
-//    let userImageURL: String?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case userImageURL = "user_image_url"
-//    }
-//}
-
 // MARK: - User
 struct NewEventDetailsUser: Codable {
     let id: Int?
@@ -429,36 +307,25 @@ struct EventVenu: Codable {
 
 // MARK: - Delegatemeeting
 struct Delegatemeeting: Codable {
-    let id: Int?
     let startDay, startTime, endTime, location: String?
-    let meetingNotes: String?
+    let meetingNotes, locationName: String?
     let rescheduleReason: String?
-    let meetingDetails: String?
-    let requestedByID, requestedToID, status, eventID: Int?
-    let userType: String?
-    let createdAt, updatedAt: String?
-    let deletedAt: String?
-    let userUserBy, userUserTo: EvaEventsAttendeeUser?
-
+    let meetingDetails, meetingWith, withColleagues: String?
+    let requestedByID, requestedToID: Int?
+    
     enum CodingKeys: String, CodingKey {
-        case id
         case startDay = "start_day"
         case startTime = "start_time"
         case endTime = "end_time"
         case location
         case meetingNotes = "meeting_notes"
+        case locationName = "location_name"
         case rescheduleReason = "reschedule_reason"
         case meetingDetails = "meeting_details"
+        case meetingWith = "meeting_with"
+        case withColleagues = "with_colleagues"
         case requestedByID = "requested_by_id"
         case requestedToID = "requested_to_id"
-        case status
-        case eventID = "event_id"
-        case userType = "user_type"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case deletedAt = "deleted_at"
-        case userUserBy = "user_user_by"
-        case userUserTo = "user_user_to"
     }
 }
 

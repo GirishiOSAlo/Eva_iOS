@@ -160,8 +160,8 @@ extension MeetingListVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.eventNameLbl.text = event.meetingNotes ?? "--"
         cell.dateLbl.text = event.startDay ?? "--"
         cell.timeLbl.text = "\(event.startTime ?? "--") - \(event.endTime ?? "--")"
-        cell.meetingWithLbl.text = "--"
-        cell.colleaguesLbl.text = "--"
+        cell.meetingWithLbl.text = event.meetingWith ?? "--"
+        cell.colleaguesLbl.text = event.withColleagues ?? "--"
         cell.locationLbl.text = event.location ?? "--"
         return cell
     }
