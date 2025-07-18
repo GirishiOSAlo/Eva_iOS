@@ -2355,7 +2355,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uht-pg-QgX">
                                                             <rect key="frame" x="0.0" y="0.0" width="358" height="50"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="zDp-Lw-Uud">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="zDp-Lw-Uud">
                                                                     <rect key="frame" x="0.0" y="4" width="48" height="42"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="47.799999999999997" id="HyC-kn-oBz"/>
@@ -2428,7 +2428,7 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhb-lP-4Jv" userLabel="Log out">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhb-lP-4Jv">
                                         <rect key="frame" x="28" y="548" width="358" height="50"/>
                                         <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -2607,7 +2607,7 @@
         <image name="linkShareIC" width="68" height="68"/>
         <image name="location" width="12.5" height="16.5"/>
         <image name="noImage" width="220" height="145"/>
-        <image name="person" width="44" height="44"/>
+        <image name="profile" width="111" height="111"/>
         <image name="register" width="10" height="8"/>
         <image name="registration" width="17" height="17"/>
         <image name="searchShare" width="21" height="21"/>
