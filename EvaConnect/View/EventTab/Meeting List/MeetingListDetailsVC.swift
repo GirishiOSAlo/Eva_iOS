@@ -35,7 +35,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     @IBOutlet weak var okPopupBtn: UIButton!
     
     var type: MeetingDetailBtnEnum = .approved
-    
+    let refreshControl = UIRefreshControl()
     var acceptedMeetingsList: [EventMeeting] = []
     var pendingMeetingsList: [EventMeeting] = []
     var cancelledMeetingsList: [EventMeeting] = []
@@ -70,6 +70,10 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         self.fetchMeetingData()
         self.registerCell()
         self.setupSuccessPopup()
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        listCollectionVw.addSubview(refreshControl) // not required when using UITableViewController
     }
     
     func setupSuccessPopup() {
@@ -87,6 +91,12 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         listCollectionVw.registerNib(cellNib: MeetingDetailsCVC.self)
         listCollectionVw.delegate = self
         listCollectionVw.dataSource = self
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.fetchMeetingData()
+        }
     }
     
     func didTapDropdownButton(in cell: MeetingDetailsCVC) {
@@ -128,6 +138,36 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         animationContainerView.addSubview(animationView)
         animationView.play()
     }
+    
+    func updateCategoryCollectionHeader() {
+        var acceptedMeetingHeader = ""
+        var pendingMeetingHeader = ""
+        var cancelMeetingHeader = ""
+        var rescheduleMeetingHeader = ""
+        
+        if (self.acceptedMeetingsList.count) == 0 {
+            acceptedMeetingHeader = "Approved Meetings"
+        } else {
+            acceptedMeetingHeader = "Approved Meetings (\(self.acceptedMeetingsList.count))"
+        }
+        if (self.pendingMeetingsList.count) == 0 {
+            pendingMeetingHeader = "Pending Meetings"
+        } else {
+            pendingMeetingHeader = "Pending Meetings (\(self.pendingMeetingsList.count))"
+        }
+        if (self.cancelledMeetingsList.count) == 0 {
+            cancelMeetingHeader = "Cancelled Meetings"
+        } else {
+            cancelMeetingHeader = "Cancelled Meetings (\(self.cancelledMeetingsList.count))"
+        }
+        if (self.rescheduledMeetingsList.count) == 0 {
+            rescheduleMeetingHeader = "Rescheduled Meetings"
+        } else {
+            rescheduleMeetingHeader = "Rescheduled Meetings (\(self.rescheduledMeetingsList.count))"
+        }
+        self.categoryList = [acceptedMeetingHeader,pendingMeetingHeader,cancelMeetingHeader,rescheduleMeetingHeader]
+        self.categoryCollectionVw.reloadData()
+    }
 }
 
 extension MeetingListDetailsVC {
@@ -147,6 +187,7 @@ extension MeetingListDetailsVC {
                     self.cancelledMeetingsList = meetingsRoot.data?.cancelledMeetings ?? []
                     self.rescheduledMeetingsList = meetingsRoot.data?.rescheduledMeetings ?? []
                     
+                    self.updateCategoryCollectionHeader()
                     self.list = self.acceptedMeetingsList
                     self.listCollectionVw.reloadData()
                 } else {

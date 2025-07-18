@@ -79,10 +79,10 @@
                             </constraints>
                         </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4Mg-gk-xHa">
-                            <rect key="frame" x="0.0" y="5" width="393" height="40"/>
+                            <rect key="frame" x="0.0" y="2.6666666666666572" width="393" height="45"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="MEd-hu-rdV"/>
+                                <constraint firstAttribute="height" constant="45" id="MEd-hu-rdV"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="x3O-PM-z7Y">
                                 <size key="itemSize" width="128" height="128"/>
