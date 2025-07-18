@@ -48,6 +48,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
             } else {
                 self.noRecordLbl.isHidden = false
             }
+            self.listCollectionVw.reloadData()
         }
     }
     var eventId = 0
@@ -178,6 +179,7 @@ extension MeetingListDetailsVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
                 let meetingsRoot = try jsonDecoder.decode(MeetingListDataModel.self, from: response.data!)
@@ -188,10 +190,47 @@ extension MeetingListDetailsVC {
                     self.rescheduledMeetingsList = meetingsRoot.data?.rescheduledMeetings ?? []
                     
                     self.updateCategoryCollectionHeader()
-                    self.list = self.acceptedMeetingsList
-                    self.listCollectionVw.reloadData()
+                    self.expandedIndexPath = nil
+                    
+                    if self.type == .approved {
+                        self.list = self.acceptedMeetingsList
+                    } else if self.type == .pending {
+                        self.list = self.pendingMeetingsList
+                    } else if self.type == .cancelled {
+                        self.list = self.cancelledMeetingsList
+                    } else if self.type == .rescheduled {
+                        self.list = self.rescheduledMeetingsList
+                    }
                 } else {
                     print("Error :: \(meetingsRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func meetingAcceptCancelUpdate(meetingID: Int, status: String) {
+        let url = EndPoints.eventDelegateMeetingStatus
+        let parameters = [
+            "meeting_id": meetingID,
+            "status": status,
+            "event_id": self.eventId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let meetingStatusRoot = try jsonDecoder.decode(DelegateEventMeetingStatusModel.self, from: response.data ?? Data())
+                if meetingStatusRoot.success ?? false {
+                    print("Success")
+                    self.fetchMeetingData()
+                    self.titlePopupLbl.text = meetingStatusRoot.message ?? ""
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                } else {
+                    print("Error :: \(meetingStatusRoot.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
@@ -374,18 +413,22 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @objc func joinMeeting(sender: UIButton) {
-        self.successPopupVw.isHidden = false
-        self.addAnimation()
+        let meetingID = self.list[sender.tag].id ?? 0
+        self.meetingAcceptCancelUpdate(meetingID: meetingID, status: "accepted")
     }
     
     @objc func cancelMeeting(sender: UIButton) {
-        showCustomAlert(title: "Are you sure you want to Cancel this Meeting?", doneTitle: "Confirm", on: self.view) {
+        showCustomAlert(title: "Are you sure you want to Cancel this Meeting ?", doneTitle: "Confirm", on: self.view) {
             print("Confirmed")
-            // Add your action logic here
+            let meetingID = self.list[sender.tag].id ?? 0
+            self.meetingAcceptCancelUpdate(meetingID: meetingID, status: "cancelled")
         }
     }
     
     @objc func message(sender: UIButton) {
-        //
+        let requestById = self.list[sender.tag].requestedByID ?? 0
+        let chatVC = StoryboardRouter.chat()
+        chatVC.userId = requestById
+        navigationController?.pushViewController(chatVC, animated: true)
     }
 }

@@ -581,6 +581,7 @@
 		A6D00EBF2AB41D8400016672 /* SearchNewsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6D00EBD2AB41D8400016672 /* SearchNewsTVCell.xib */; };
 		A6D00EC12AB42AE300016672 /* SearchDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D00EC02AB42AE300016672 /* SearchDetailsVC.swift */; };
 		A6D00EC52AB447E500016672 /* SearchCategoryCollctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D00EC42AB447E500016672 /* SearchCategoryCollctionCell.swift */; };
+		A6D231802E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */; };
 		A6D9F6672AAF4C6D00F604BF /* EventDelegatesTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */; };
 		A6E754342DD2FF560057B781 /* CommentCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6E754332DD2FF560057B781 /* CommentCVC.xib */; };
 		A6E754352DD2FF560057B781 /* CommentCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E754322DD2FF560057B781 /* CommentCVC.swift */; };
@@ -1188,6 +1189,7 @@
 		A6D00EBD2AB41D8400016672 /* SearchNewsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchNewsTVCell.xib; sourceTree = "<group>"; };
 		A6D00EC02AB42AE300016672 /* SearchDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsVC.swift; sourceTree = "<group>"; };
 		A6D00EC42AB447E500016672 /* SearchCategoryCollctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryCollctionCell.swift; sourceTree = "<group>"; };
+		A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateEventMeetingStatusModel.swift; sourceTree = "<group>"; };
 		A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegatesTblCell.swift; sourceTree = "<group>"; };
 		A6E754322DD2FF560057B781 /* CommentCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCVC.swift; sourceTree = "<group>"; };
 		A6E754332DD2FF560057B781 /* CommentCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCVC.xib; sourceTree = "<group>"; };
@@ -1717,6 +1719,7 @@
 				A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */,
 				A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */,
 				A6C5E0632E291AF400CEE383 /* SendRequestDataModel.swift */,
+				A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4089,6 +4092,7 @@
 				4802FF772AE15D0200DCC112 /* UserDetails.swift in Sources */,
 				181BEA4A2495F0D20020D456 /* SearchHome.swift in Sources */,
 				1898D98024B49F9C00E625AB /* GooglePlaceManager.swift in Sources */,
+				A6D231802E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift in Sources */,
 				483EDA032B5809F0003257C7 /* UINavigationController.swift in Sources */,
 				48B285712AB319660086CA61 /* SenderImgTVCell.swift in Sources */,
 				501AD125249AFC0F00FE39BE /* PostNotificationsRoot.swift in Sources */,
