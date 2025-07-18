@@ -134,7 +134,7 @@ class UserProfileVC: BaseVC {
     
     @IBAction func messageBtnTapped(_ sender: Any) {
         guard let userDetail = userDetail else { return }
-        if userDetail.isConnected == .active {
+        if userDetail.isConnected == "active" {
             if isChatEnable {
                 let chatVC = StoryboardRouter.chat()
                 navigationController?.pushViewController(chatVC, animated: true)
@@ -150,11 +150,11 @@ class UserProfileVC: BaseVC {
     }
     
     @IBAction func connectBtnTapped(_ sender: Any) {
-        if userDetail?.isConnected == IsConnected.active { return }
+        if userDetail?.isConnected == "active" { return }
         guard let userId = connectionDetail?.userID ?? userDetail?.id else { return }
-        if userDetail?.isConnected == .pending && userDetail?.isReceiver == "false" {
+        if userDetail?.isConnected == "pending" && userDetail?.isReceiver == "false" {
             updateConnection()
-        } else if userDetail?.isConnected != .pending {
+        } else if userDetail?.isConnected != "pending" {
             addConnection(id: userId)
         }
     }
@@ -385,17 +385,28 @@ extension UserProfileVC {
     
     func applyConditionalLayout() {
         let status = connectionDetail?.isConnected ?? userDetail?.isConnected ?? .none
-        switch status {
-        case .active:
-//            getPosts()
-            break
-        case .pending:
+        if status == "active" {
+            //
+        }
+        else if status == "pending" {
             setLayoutForPending()
             tableView.tableFooterView = UIView()
-        default:
+        }
+        else {
             setLayoutForPrivate()
             tableView.tableFooterView = UIView()
         }
+//        switch status {
+//        case "active":
+////            getPosts()
+//            break
+//        case "pending":
+//            setLayoutForPending()
+//            tableView.tableFooterView = UIView()
+//        default:
+//            setLayoutForPrivate()
+//            tableView.tableFooterView = UIView()
+//        }
     }
     
     func setLayoutForPending() {
@@ -495,26 +506,26 @@ extension UserProfileVC {
 //                tableView.tableFooterView = UIView()
 //            }
             
-            if bindData.isConnected == .notConnected {
+            if bindData.isConnected == "not_connected" {
                 connectedBtn.isUserInteractionEnabled = true
                 connectedBtn.setTitle(isCompanyUser ? Constants.Label.inviteToFollow : Constants.Label.connect, for: .normal)
             }
-            else if bindData.isConnected == .pending && bindData.isReceiver == "true" {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == "true" {
                 connectedBtn.setTitle(isCompanyUser ? "  \(Constants.Label.invited)" : Constants.Label.pending, for: .normal)
                 connectedBtn.backgroundColor = isCompanyUser ? Constants.AppColorLiteral.nextButtonColor : .clear
                 connectedBtn.setTitleColor(isCompanyUser ? .white : Constants.AppColorLiteral.nextButtonColor, for: .normal)
                 connectedBtn.setImage(isCompanyUser ? UIImage(named: "ic_intersted") : nil, for: .normal)
                 connectedBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == .pending && bindData.isReceiver == "true" {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == "true" {
                 connectedBtn.setTitle(Constants.Label.pending, for: .normal)
                 connectedBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == .pending && bindData.isReceiver == "false" {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == "false" {
                 connectedBtn.setTitle(Constants.Label.accept, for: .normal)
                 connectedBtn.isUserInteractionEnabled = true
             }
-            else if bindData.isConnected == .active {
+            else if bindData.isConnected == "active" {
                 connectedBtn.setTitle(Constants.Label.connected, for: .normal)
                 connectedBtn.isUserInteractionEnabled = false
                 profileViews[2].isHidden = false
@@ -1477,14 +1488,14 @@ extension UserProfileVC {
     
 }
 
-extension UserProfileVC {
-    
-    private func convertEvaUserToUser(_ user: EvaUser) -> User {
-        User(id: user.id ?? 0, firstName: user.firstName ?? "", email: user.email ?? "", uniqueCode: user.uniqueCode, lastName: user.lastName, username: user.username ?? "none",
-             dateOfBirth: user.dateOfBirth, userImage: user.username, city: user.city, country: user.country, bioData: user.bioData, type: user.type,
-             status: user.status, address: user.address, companyName: user.companyName, field: user.field, designation: user.designation,
-             isConnected: user.isConnected?.rawValue, isReceiver: user.isReceiver == "true", isOnline: false, lastOnlineDateTime: nil, connectionID: user.connectionID,
-             isNotifications: user.is_notifications)
-    }
-    
-}
+//extension UserProfileVC {
+//    
+//    private func convertEvaUserToUser(_ user: EvaUser) -> User {
+//        User(id: user.id ?? 0, firstName: user.firstName ?? "", email: user.email ?? "", uniqueCode: user.uniqueCode, lastName: user.lastName, username: user.username ?? "none",
+//             dateOfBirth: user.dateOfBirth, userImage: user.username, city: user.city, country: user.country, bioData: user.bioData, type: user.type,
+//             status: user.status, address: user.address, companyName: user.companyName, field: user.field, designation: user.designation,
+//             isConnected: user.isConnected?.rawValue, isReceiver: user.isReceiver == "true", isOnline: false, lastOnlineDateTime: nil, connectionID: user.connectionID,
+//             isNotifications: user.is_notifications)
+//    }
+//    
+//}

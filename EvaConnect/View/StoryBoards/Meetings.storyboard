@@ -1277,11 +1277,11 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hG9-Xh-Vaa" userLabel="TimeView">
                                                 <rect key="frame" x="36" y="230.5" width="341" height="90"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="PvH-49-Tio">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="PvH-49-Tio">
                                                         <rect key="frame" x="0.0" y="0.0" width="341" height="90"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXu-ef-bJ4">
-                                                                <rect key="frame" x="0.0" y="0.0" width="170.5" height="90"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="165.5" height="90"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aoC-v7-4GI" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="84.5" height="44"/>
@@ -1290,7 +1290,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ti9-8l-B3g" userLabel="Time View">
-                                                                        <rect key="frame" x="0.0" y="44" width="170.5" height="46"/>
+                                                                        <rect key="frame" x="0.0" y="44" width="165.5" height="46"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time" translatesAutoresizingMaskIntoConstraints="NO" id="v8X-iO-ZHv">
                                                                                 <rect key="frame" x="12" y="15" width="16" height="16"/>
@@ -1300,7 +1300,7 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="HH:MM" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uwe-uz-Eb2">
-                                                                                <rect key="frame" x="38" y="8" width="122.5" height="30"/>
+                                                                                <rect key="frame" x="38" y="8" width="117.5" height="30"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="30" id="D5b-wy-srI"/>
                                                                                 </constraints>
@@ -1308,7 +1308,7 @@
                                                                                 <textInputTraits key="textInputTraits"/>
                                                                             </textField>
                                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ti-bK-W2S">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="170.5" height="46"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="165.5" height="46"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                 <connections>
@@ -1353,7 +1353,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hPQ-5E-et5">
-                                                                <rect key="frame" x="170.5" y="0.0" width="170.5" height="90"/>
+                                                                <rect key="frame" x="175.5" y="0.0" width="165.5" height="90"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5B-xo-wT2" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="44"/>
@@ -1362,7 +1362,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDF-yo-Ids" userLabel="Time View">
-                                                                        <rect key="frame" x="0.0" y="44" width="170.5" height="46"/>
+                                                                        <rect key="frame" x="0.0" y="44" width="165.5" height="46"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time" translatesAutoresizingMaskIntoConstraints="NO" id="53l-sQ-9mW">
                                                                                 <rect key="frame" x="12" y="15" width="16" height="16"/>
@@ -1372,7 +1372,7 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="HH:MM" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7cf-oB-aKG">
-                                                                                <rect key="frame" x="38" y="8" width="122.5" height="30"/>
+                                                                                <rect key="frame" x="38" y="8" width="117.5" height="30"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="30" id="FSY-rN-mhE"/>
                                                                                 </constraints>
@@ -1380,7 +1380,7 @@
                                                                                 <textInputTraits key="textInputTraits"/>
                                                                             </textField>
                                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xpu-gh-5c3">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="170.5" height="46"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="165.5" height="46"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                 <connections>
@@ -1684,6 +1684,7 @@
                         <outlet property="endTime" destination="7cf-oB-aKG" id="bA9-9N-U4Z"/>
                         <outlet property="headerTitleLbl" destination="8mo-4c-F9h" id="Flp-pQ-4ti"/>
                         <outlet property="name" destination="nKi-T3-XX3" id="rCQ-FR-AzU"/>
+                        <outlet property="selecMeetingtLocationTF" destination="Z00-UJ-2X7" id="di0-2o-per"/>
                         <outlet property="selectLocationBtn" destination="eCJ-5K-GFZ" id="GxM-Sc-LVs"/>
                         <outlet property="startDate" destination="zRP-1L-BFi" id="Ayo-bB-3Sc"/>
                         <outlet property="startTime" destination="Uwe-uz-Eb2" id="iHq-ci-6qe"/>

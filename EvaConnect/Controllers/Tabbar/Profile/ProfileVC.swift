@@ -161,29 +161,29 @@ extension ProfileVC {
         
         if bindData.userID != myUserDefaults.userId {  //LoggedUserDetails.shared.user!.id {
             connectBtn.isHidden = false
-            if bindData.isConnected == .deleted {
+            if bindData.isConnected == "deleted" {
                 connectBtn.isHidden = true
             }
             
-            if bindData.isConnected == .notConnected {
+            if bindData.isConnected == "not_connected" {
                 connectBtn.isUserInteractionEnabled = true
                 connectBtn.setTitle("Connect", for: .normal)
                 connectBtn.addTarget(self, action:#selector(createConnection(sender:)), for: .touchUpInside)
             }
-            else if bindData.isConnected == .pending && bindData.isReceiver == false {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == false {
                 connectBtn.setTitle("Pending", for: .normal)
                 connectBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == .pending && bindData.isReceiver == false {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == false {
                 connectBtn.setTitle("Pending", for: .normal)
                 connectBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == .pending && bindData.isReceiver == true {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == true {
                 connectBtn.setTitle("Accept", for: .normal)
                 connectBtn.isUserInteractionEnabled = true
                 connectBtn.addTarget(self, action:#selector(updateConnection(sender:)), for: .touchUpInside)
             }
-            else if bindData.isConnected == .active {
+            else if bindData.isConnected == "active" {
                 connectBtn.setTitle("Connected", for: .normal)
                 connectBtn.isUserInteractionEnabled = false
             }
@@ -204,7 +204,7 @@ extension ProfileVC {
     //MARK: CUSTOM FUNCTION
     @objc func createConnection(sender: UIButton) {
         
-        if connectionDetail!.isConnected == .notConnected {
+        if connectionDetail!.isConnected == "not_connected" {
             addConnection(id: connectionDetail!.id)
         }
     }
@@ -212,7 +212,7 @@ extension ProfileVC {
     @objc func updateConnection(sender: UIButton) {
 
         let bindData = connectionDetail
-        if bindData!.isConnected == .pending && bindData!.isReceiver == true {
+        if bindData!.isConnected == "pending" && bindData!.isReceiver == true {
             //Working
             updateConnection(id: bindData!.connectionID!)
             sender.isUserInteractionEnabled = true

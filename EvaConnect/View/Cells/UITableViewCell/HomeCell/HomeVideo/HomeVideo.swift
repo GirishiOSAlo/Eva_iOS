@@ -158,27 +158,27 @@ class HomeVideo: BaseCellClass {
     }
     
     func configureConnectedStatus(dataMaper: DashboardItem)-> ButtonStatus {
-        if dataMaper.isConnected! == .notConnected {
+        if dataMaper.isConnected! == "not_connected" {
             //Not Connected
             isConnectedBtn.setTitle("Connect", for: .normal)
             return .createConnect
         }
-        if dataMaper.isConnected! == .notConnected  && dataMaper.isReceiver == false {
+        if dataMaper.isConnected! == "not_connected"  && dataMaper.isReceiver == false {
             //Not Connected
             isConnectedBtn.setTitle("Connect", for: .normal)
             return .createConnect
         }
-        else if dataMaper.isConnected! == .pending && dataMaper.isReceiver == false {
+        else if dataMaper.isConnected! == "pending" && dataMaper.isReceiver == false {
             //Pending
             isConnectedBtn.setTitle("Pending", for: .normal)
             return .none
         }
-        else if dataMaper.isConnected! == .pending && dataMaper.isReceiver == true {
+        else if dataMaper.isConnected! == "pending" && dataMaper.isReceiver == true {
             //Accept
             isConnectedBtn.setTitle("Accept", for: .normal)
             return .accept
         }
-        else if dataMaper.isConnected! == .active {
+        else if dataMaper.isConnected! == "active" {
             //Connected
             isConnectedBtn.setTitle("Connected", for: .normal)
             return .connected

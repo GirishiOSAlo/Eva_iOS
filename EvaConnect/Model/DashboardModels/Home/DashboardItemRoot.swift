@@ -42,7 +42,7 @@ struct DashboardItem: Codable {
     var status: String?
     var isURL: Bool?
     var postVideo: String?
-    var isConnected: IsConnected?
+    var isConnected: String?//IsConnected?
     var connectionId:Int?
     var isReceiver: Bool?
     var isPostLike: Int?

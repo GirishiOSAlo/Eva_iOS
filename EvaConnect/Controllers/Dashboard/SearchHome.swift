@@ -1227,7 +1227,7 @@ extension SearchHome {
         
         if  dashBoardModelArray.count != 0 {
             let bindData = dashBoardModelArray[sender.tag]
-            if bindData.isConnected! == .notConnected {
+            if bindData.isConnected! == "not_connected" {
                 addConnection(otherID: bindData.userID!,status: "pending")
             }
         }
@@ -1237,7 +1237,7 @@ extension SearchHome {
         
         if dashBoardModelArray.count != 0 {
             let  bindData = dashBoardModelArray[sender.tag]
-            if bindData.isConnected! == .pending && bindData.isReceiver == true {
+            if bindData.isConnected! == "pending" && bindData.isReceiver == true {
                 if sender.titleLabel!.text == "Accept" {
                     updateConnection(otherID: bindData.connectionID!)
                 }

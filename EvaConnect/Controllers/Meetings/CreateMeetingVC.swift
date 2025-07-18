@@ -20,6 +20,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
 //    @IBOutlet weak var endDate: UITextField!
     @IBOutlet weak var startTime: UITextField!
     @IBOutlet weak var endTime: UITextField!
+    @IBOutlet weak var selecMeetingtLocationTF: UITextField!
     @IBOutlet weak var videoConfLinkTF: UITextField!
     @IBOutlet weak var descriptionTV: UITextView!
     @IBOutlet weak var createMeeting: UIButton!
@@ -43,10 +44,16 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var meetingId = 0
     var eventID = 0
     var webView: WKWebView!
+    var selectedMeetingLocationId = 0
+    
     
     //var locationsArr = ["Meeting Room 1", "Meeting Room 2", "Meeting Room 3"]
     var eventLocations: [EventLocation] = []
     var attendeesList: [AttendeesList] = []
+    
+    var startDatePicker = UIDatePicker()
+    var startTimePicker = UIDatePicker()
+    var endTimePicker = UIDatePicker()
     
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
@@ -134,14 +141,17 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     }
     
     @IBAction func onDatePickerBtnTap(_ sender: UIButton) {
+        startDatePickerSet()
         self.startDate.becomeFirstResponder()
     }
     
     @IBAction func onStartTimePickerBtnTap(_ sender: UIButton) {
+        startTimePickerSet()
         self.startTime.becomeFirstResponder()
     }
     
     @IBAction func onEndTimePickerBtnTap(_ sender: UIButton) {
+        endTimePickerSet()
         self.endTime.becomeFirstResponder()
     }
     
@@ -151,6 +161,8 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         popupvc.activeDataType = .locationRoom
         popupvc.eventLocations = self.eventLocations
         popupvc.completion = { passedAns, passedId in
+            self.selecMeetingtLocationTF.text = passedAns
+            self.selectedMeetingLocationId = passedId
         }
         self.navigationController?.present(popupvc, animated: true)
     }
@@ -197,16 +209,17 @@ extension CreateMeetingVC {
         descriptionTV.textColor = AppColors.lightBg
         descriptionTV.text = "Describe your Note..."
         
-        let toolBar = toolBarAccessory()
-        startDate.inputView = datePicker
-        startDate.inputAccessoryView = toolBar
-//        endDate.inputView = datePicker
-//        endDate.inputAccessoryView = toolBar
-        startTime.inputView = timePicker
-        startTime.inputAccessoryView = toolBar
-        endTime.inputView = timePicker
-        endTime.inputAccessoryView = toolBar
+//        let toolBar = toolBarAccessory()
+//        startDate.inputView = datePicker
+//        startDate.inputAccessoryView = toolBar
+////        endDate.inputView = datePicker
+////        endDate.inputAccessoryView = toolBar
+//        startTime.inputView = timePicker
+//        startTime.inputAccessoryView = toolBar
+//        endTime.inputView = timePicker
+//        endTime.inputAccessoryView = toolBar
         
+
         collectionView.registerNib(cellNib: AddParticipantCell.self)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
@@ -232,48 +245,142 @@ extension CreateMeetingVC {
         collectionView.reloadData()
     }
     
-    func toolBarAccessory() -> UIToolbar {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(onClickDoneButton))
-        toolBar.setItems([space, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        toolBar.sizeToFit()
-        return toolBar
+//    func toolBarAccessory() -> UIToolbar {
+//        let toolBar = UIToolbar()
+//        toolBar.barStyle = .default
+//        toolBar.isTranslucent = true
+//        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(onClickDoneButton))
+//        toolBar.setItems([space, doneButton], animated: false)
+//        toolBar.isUserInteractionEnabled = true
+//        toolBar.sizeToFit()
+//        return toolBar
+//    }
+//    
+//    @objc func onClickDoneButton() {
+//        
+//        if startDate.isFirstResponder {
+//            startDate.text = datePicker.date.toString(formatter: .apiBody)
+//            dateTime.startDate = datePicker.date.toString(formatter: .apiBodyUTC)
+//            startDate.resignFirstResponder()
+//        }
+////        else if endDate.isFirstResponder {
+////            endDate.text = datePicker.date.toString(formatter: .apiBody)
+////            dateTime.endDate = datePicker.date.toString(formatter: .apiBodyUTC)
+////            endDate.resignFirstResponder()
+////            
+////        }
+//        else if startTime.isFirstResponder {
+//            startTime.text = timePicker.date.toString(formatter: .timeOnly)
+////            dateTime.startTime = timePicker.date.toString(formatter: .timeOnlyUTC).in12HourFormat()
+//            dateTime.startTime = timePicker.date.toString(formatter: .timeOnly)
+//            
+//            //Select time to next 1hr time.....
+//            var components = DateComponents()
+//            components.hour = 1
+//            let oneHourBefore = Calendar.current.date(byAdding: components, to: timePicker.date)
+//            dateTime.endTime = oneHourBefore!.toString(formatter: .timeOnly)
+//            
+//            startTime.resignFirstResponder()
+//        }  else {
+////            endTime.text = timePicker.date.toString(formatter: .timeOnly)
+//            dateTime.endTime = timePicker.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
+////            endTime.resignFirstResponder()
+//        }
+//    }
+    
+    func startDatePickerSet() {
+        startDatePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            startDatePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        startDatePicker.minimumDate = Date()//.addingTimeInterval(168 * 60 * 60)  //Next to 7 day select...
+
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartDatePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
+        toolbar.tintColor = UIColor(hex: "#000000")
+
+        self.startDate.inputView = startDatePicker
+        self.startDate.inputAccessoryView = toolbar
     }
     
-    @objc func onClickDoneButton() {
+    func startTimePickerSet() {
+        startTimePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            startTimePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         
-        if startDate.isFirstResponder {
-            startDate.text = datePicker.date.toString(formatter: .apiBody)
-            dateTime.startDate = datePicker.date.toString(formatter: .apiBodyUTC)
-            startDate.resignFirstResponder()
+        startTimePicker.minimumDate = Date()
+
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartTimePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
+        toolbar.tintColor = UIColor(hex: "#000000")
+
+        self.startTime.inputView = startTimePicker
+        self.startTime.inputAccessoryView = toolbar
+    }
+    
+    func endTimePickerSet() {
+        endTimePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            endTimePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
         }
-//        else if endDate.isFirstResponder {
-//            endDate.text = datePicker.date.toString(formatter: .apiBody)
-//            dateTime.endDate = datePicker.date.toString(formatter: .apiBodyUTC)
-//            endDate.resignFirstResponder()
-//            
-//        }
-        else if startTime.isFirstResponder {
-            startTime.text = timePicker.date.toString(formatter: .timeOnly)
-//            dateTime.startTime = timePicker.date.toString(formatter: .timeOnlyUTC).in12HourFormat()
-            dateTime.startTime = timePicker.date.toString(formatter: .timeOnly)
-            
-            //Select time to next 1hr time.....
-            var components = DateComponents()
-            components.hour = 1
-            let oneHourBefore = Calendar.current.date(byAdding: components, to: timePicker.date)
-            dateTime.endTime = oneHourBefore!.toString(formatter: .timeOnly)
-            
-            startTime.resignFirstResponder()
-        }  else {
-//            endTime.text = timePicker.date.toString(formatter: .timeOnly)
-            dateTime.endTime = timePicker.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-//            endTime.resignFirstResponder()
-        }
+        
+        endTimePicker.minimumDate = Date()
+
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneEndTimePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
+        toolbar.tintColor = UIColor(hex: "#000000")
+
+        self.endTime.inputView = endTimePicker
+        self.endTime.inputAccessoryView = toolbar
+    }
+    
+    @objc func doneStartDatePicker() {
+        self.startDate.resignFirstResponder()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        startDate.text = formatter.string(from: startDatePicker.date)
+        self.view.endEditing(true)
+    }
+    @objc func doneStartTimePicker() {
+        self.startTime.resignFirstResponder()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm" // 24-hour format
+        startTime.text = formatter.string(from: startTimePicker.date)
+        self.view.endEditing(true)
+    }
+    @objc func doneEndTimePicker() {
+        self.endTime.resignFirstResponder()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm" // 24-hour format
+        endTime.text = formatter.string(from: endTimePicker.date)
+        self.view.endEditing(true)
+    }
+    @objc func cancelPicker() {
+        self.view.endEditing(true)
     }
     
 //    func handleTimePicker(sender: UIDatePicker) {

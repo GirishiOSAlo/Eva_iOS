@@ -18,7 +18,7 @@ struct EvaUser: Codable {
     
     let id: Int?
     let firstName: String?
-    let isConnected: IsConnected?
+    let isConnected: String?//IsConnected?
     let isReceiver: String?
     let city, country, region: String?
     let connectionID: Int?
