@@ -10,14 +10,13 @@ import UIKit
 import WebKit
 import GoogleSignIn
 import GoogleAPIClientForREST
-//import GTMSessionFetcher
+import Lottie
 
 class CreateMeetingVC: BaseVC, WKNavigationDelegate {
 
     @IBOutlet weak var headerTitleLbl: HeadingLabel!
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var startDate: UITextField!
-//    @IBOutlet weak var endDate: UITextField!
     @IBOutlet weak var startTime: UITextField!
     @IBOutlet weak var endTime: UITextField!
     @IBOutlet weak var selecMeetingtLocationTF: UITextField!
@@ -27,13 +26,22 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var CollectionViewHeightConst: NSLayoutConstraint!
-//    @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     @IBOutlet weak var createLink: UIButton!
     @IBOutlet weak var selectLocationBtn: UIButton!
     
-//    var connections: [(user: User, type: ViewerType)] = []
-    var connections: [UserConnection] = []
-    var attendees: [UserConnection] = []
+    @IBOutlet weak var successPopupVw: UIView!
+    @IBOutlet weak var successSubPopupVw: UIView!
+    @IBOutlet weak var animationContainerView: UIView!
+    @IBOutlet weak var titlePopupLbl: UILabel!
+    @IBOutlet weak var okPopupBtn: UIButton!
+    @IBOutlet weak var placeholderLabel: UILabel!
+    
+    var animationView: LottieAnimationView!
+    
+//    var connections: [UserConnection] = []
+//    var attendees: [UserConnection] = []
+    var connections: [AttendeesList] = []
+    var attendees: [AttendeesList] = []
     var meetingDetailsData: MeetingDetail?
     private var connectionAdded = false
     var invitedIds: [Int] = []
@@ -45,35 +53,15 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var eventID = 0
     var webView: WKWebView!
     var selectedMeetingLocationId = 0
+    var otherUserID = 0
     
-    
-    //var locationsArr = ["Meeting Room 1", "Meeting Room 2", "Meeting Room 3"]
     var eventLocations: [EventLocation] = []
     var attendeesList: [AttendeesList] = []
     
     var startDatePicker = UIDatePicker()
     var startTimePicker = UIDatePicker()
     var endTimePicker = UIDatePicker()
-    
-    lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.minimumDate = Date()
-        datePicker.datePickerMode = .date
-        if #available(iOS 13.4, *) { datePicker.preferredDatePickerStyle = .wheels }
-        datePicker.addTarget(self, action: #selector(datePicker_valueChanged(_:)), for: .valueChanged)
-        return datePicker
-    }()
-    
-    lazy var timePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .time
-        datePicker.minuteInterval = 5
-        if #available(iOS 13.4, *) { datePicker.preferredDatePickerStyle = .wheels }
-//        datePicker.locale = Locale(identifier: "en_GB")
-        datePicker.addTarget(self, action: #selector(timePicker_valueChanged(_:)), for: .valueChanged)
-        return datePicker
-    }()
-    
+        
     var meetingDetail: MeetingDetail?
     var mode: PostLoadingMode = .create
     private var dateTime = (startDate: "", startTime: "", endDate: "", endTime: "")
@@ -99,26 +87,46 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         super.viewWillAppear(animated)
         if !connectionAdded { initUI() }
         connectionAdded = false
-        if isReschedule {
-            guard let meetingDetailElement = meetingDetailsData else { return }
-            name.text = meetingDetailElement.title
-            startDate.text = meetingDetailElement.startDate
-            startTime.text = meetingDetailElement.startTime
-            gMeetLink = meetingDetailElement.gmeetLink ?? ""
-            gMeetId = meetingDetailElement.gMeetId ?? ""
-            videoConfLinkTF.text = gMeetLink
-            
-            self.connections = meetingDetailElement.users ?? []
-            
-            self.invitedIds =  connections.compactMap { $0.id }
-            self.invitedEmail = connections.compactMap { $0.email }
-            
-            descriptionTV.textColor = .black
-            descriptionTV.text = meetingDetailElement.details
-//            self.attendees = meetingDetailsData?.users ?? []
-            collectionView.reloadData()
-            
-        }
+//        if isReschedule {
+//            guard let meetingDetailElement = meetingDetailsData else { return }
+//            name.text = meetingDetailElement.title
+//            startDate.text = meetingDetailElement.startDate
+//            startTime.text = meetingDetailElement.startTime
+//            gMeetLink = meetingDetailElement.gmeetLink ?? ""
+//            gMeetId = meetingDetailElement.gMeetId ?? ""
+//            videoConfLinkTF.text = gMeetLink
+//            
+//            self.connections = meetingDetailElement.users ?? []
+//            
+//            self.invitedIds =  connections.compactMap { $0.id }
+//            self.invitedEmail = connections.compactMap { $0.email }
+//            
+//            descriptionTV.textColor = .black
+//            descriptionTV.text = meetingDetailElement.details
+////            self.attendees = meetingDetailsData?.users ?? []
+//            collectionView.reloadData()
+//            
+//        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        placeholderLabel.frame = self.descriptionTV.frame
+        placeholderLabel.sizeToFit()
+    }
+    
+    func addAnimation(){
+        animationView = LottieAnimationView(name: "successLottie.json")
+        animationView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        animationView.loopMode = .loop
+        animationView.contentMode = .scaleAspectFit
+        animationContainerView.addSubview(animationView)
+        animationView.play()
+    }
+    @IBAction func onSuccessOkBtn(_ sender: UIButton) {
+        self.successPopupVw.isHidden = true
+        self.animationView.stop()
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -199,95 +207,25 @@ extension CreateMeetingVC {
 extension CreateMeetingVC {
     
     func initUI() {
-        
+        self.successPopupVw.isHidden = true
         videoConfLinkTF.isUserInteractionEnabled = false
         headerTitleLbl.text = mode == .create ? "Create a meeting" : "Edit a meeting"
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
         descriptionTV.delegate = self
-        descriptionTV.textColor = AppColors.lightBg
-        descriptionTV.text = "Describe your Note..."
+        placeholderLabel.font = UIFont(name: Myfonts.regular, size: 14.0)
         
-//        let toolBar = toolBarAccessory()
-//        startDate.inputView = datePicker
-//        startDate.inputAccessoryView = toolBar
-////        endDate.inputView = datePicker
-////        endDate.inputAccessoryView = toolBar
-//        startTime.inputView = timePicker
-//        startTime.inputAccessoryView = toolBar
-//        endTime.inputView = timePicker
-//        endTime.inputAccessoryView = toolBar
-        
-
         collectionView.registerNib(cellNib: AddParticipantCell.self)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        
-//        if let detail = meetingDetail {
-//            name.text = detail.name
-//            startDate.text = detail.startDate
-//            endDate.text = detail.endDate
-//            startTime.text = detail.startTime.in12HourFormat(isUTC: true)
-//            endTime.text = detail.endTime.in12HourFormat(isUTC: true)
-//            location.text = detail.address
-//            descriptionTV.text = detail.content
-//            descriptionTV.textColor = .black
-//            createMeeting.setTitle("Update", for: .normal)
-//            
-//            dateTime = (startDate: detail.startDate, startTime: detail.startTime, endDate: detail.endDate, endTime: detail.endTime)
-//            connections = detail.attendees.compactMap({ (user: convertAttendeeToUser(attendee: $0), type: .invited) })
-//        }
-        
-//        connections.append((user: User(id: -1, firstName: "Add Participants", email: "", uniqueCode: nil, lastName: "", username: "", dateOfBirth: nil, userImage: nil, city: nil,
-//                                       country: nil, bioData: nil, type: nil, status: nil, address: nil, companyName: nil, field: nil, designation: nil, isConnected: nil,
-//                                       isReceiver: nil, isOnline: nil, lastOnlineDateTime: nil, connectionID: nil, isNotifications: nil), type: .creator))
-//        collectionVwHeight.constant = CGFloat(connections.count) * 61.0
         collectionView.reloadData()
+        
+        self.successSubPopupVw.cornerRadius = 20.0
+        self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 22)
+        self.okPopupBtn.cornerRadius = 14.0
+        self.okPopupBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
     }
-    
-//    func toolBarAccessory() -> UIToolbar {
-//        let toolBar = UIToolbar()
-//        toolBar.barStyle = .default
-//        toolBar.isTranslucent = true
-//        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(onClickDoneButton))
-//        toolBar.setItems([space, doneButton], animated: false)
-//        toolBar.isUserInteractionEnabled = true
-//        toolBar.sizeToFit()
-//        return toolBar
-//    }
-//    
-//    @objc func onClickDoneButton() {
-//        
-//        if startDate.isFirstResponder {
-//            startDate.text = datePicker.date.toString(formatter: .apiBody)
-//            dateTime.startDate = datePicker.date.toString(formatter: .apiBodyUTC)
-//            startDate.resignFirstResponder()
-//        }
-////        else if endDate.isFirstResponder {
-////            endDate.text = datePicker.date.toString(formatter: .apiBody)
-////            dateTime.endDate = datePicker.date.toString(formatter: .apiBodyUTC)
-////            endDate.resignFirstResponder()
-////            
-////        }
-//        else if startTime.isFirstResponder {
-//            startTime.text = timePicker.date.toString(formatter: .timeOnly)
-////            dateTime.startTime = timePicker.date.toString(formatter: .timeOnlyUTC).in12HourFormat()
-//            dateTime.startTime = timePicker.date.toString(formatter: .timeOnly)
-//            
-//            //Select time to next 1hr time.....
-//            var components = DateComponents()
-//            components.hour = 1
-//            let oneHourBefore = Calendar.current.date(byAdding: components, to: timePicker.date)
-//            dateTime.endTime = oneHourBefore!.toString(formatter: .timeOnly)
-//            
-//            startTime.resignFirstResponder()
-//        }  else {
-////            endTime.text = timePicker.date.toString(formatter: .timeOnly)
-//            dateTime.endTime = timePicker.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-////            endTime.resignFirstResponder()
-//        }
-//    }
     
     func startDatePickerSet() {
         startDatePicker.datePickerMode = .date
@@ -361,7 +299,7 @@ extension CreateMeetingVC {
     @objc func doneStartDatePicker() {
         self.startDate.resignFirstResponder()
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
+        formatter.dateFormat = "yyyy-MM-dd"
         startDate.text = formatter.string(from: startDatePicker.date)
         self.view.endEditing(true)
     }
@@ -383,128 +321,43 @@ extension CreateMeetingVC {
         self.view.endEditing(true)
     }
     
-//    func handleTimePicker(sender: UIDatePicker) {
-//        
-//        let todayMinutes = calculateInputMinutes(sender: Date())
-//        if startTime.isFirstResponder {
-//            
-//            if !startDate.text.isNilOrEmpty,
-//                let startDate = startDate.text?.date(formatter: .apiBody),
-//                let todayDate = Date().toString(formatter: .apiBody).date(formatter: .apiBody),
-//                startDate.days(from: todayDate) <= 0 {
-//                
-//                let startDateMinutes = calculateInputMinutes(sender: sender.date)
-//                if todayMinutes - startDateMinutes < 0 {
-//                    startTime.text = sender.date.toString(formatter: .timeOnly)
-//                    dateTime.startTime = sender.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-//                } else {
-//                    self.presentAlert("Time Selection Problem", "You cannot select the Past time", nil)
-//                }
-//            } else {
-//                
-//                startTime.text = sender.date.toString(formatter: .timeOnly)
-//                dateTime.startTime = sender.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-//            }
-//        } else {
-//            
-//            guard let startDatee = startDate.text?.date(formatter: .apiBody) else { return }
-////            guard let endDate = endDate.text?.date(formatter: .apiBody) else { return }
-//            
-//            let difference = endDate.days(from: startDatee)
-//            
-//            if difference == 0 {
-//                
-//                
-//                let startTimeAndDateString = String(format: "%@ %@", self.startDate.text!, self.startTime.text!)
-//                let startTimeAndDate = startTimeAndDateString.date(formatter: .combinedStandardDateAndTime)
-//                let startDateMinutes = calculateInputMinutes(sender: startTimeAndDate!)
-//                let endDateMinutes = calculateInputMinutes(sender: sender.date)
-//                
-//                if startDateMinutes - endDateMinutes < 0 {
-//                    endTime.text = sender.date.toString(formatter: .timeOnly)
-//                    dateTime.endTime = sender.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-//                } else {
-//                    self.presentAlert("Time Selection Problem", "You cannot select the Past time", nil)
-//                }
-//                
-//            } else {
-//                if let todayDate = Date().toString(formatter: .apiBody).date(formatter: .apiBody),
-//                    endDate.days(from: todayDate) <= 0 {
-//                    
-//                    let endDateMinutes = calculateInputMinutes(sender: sender.date)
-//                    if todayMinutes - endDateMinutes < 0 {
-//                        endTime.text = sender.date.toString(formatter: .timeOnly)
-//                        dateTime.endTime = sender.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-//                    } else {
-//                        self.presentAlert("Time Selection Problem", "You cannot select the Past time", nil)
-//                    }
-//                } else {
-//                    endTime.text = sender.date.toString(formatter: .timeOnly)
-//                    dateTime.endTime = sender.date.toString(formatter: .timeOnlyUTC).in24hourFormat()
-//                }
-//            }
-//        }
-//    }
-    
-    func calculateInputMinutes(sender: Date) -> Int {
-        
-        let components = Calendar.current.dateComponents([.hour, .minute], from: sender)
-        return (components.hour! * 60) + components.minute!
-    }
-    
-    @objc func datePicker_valueChanged(_ sender: UIDatePicker) {
-        if startDate.isFirstResponder {
-            startDate.text = sender.date.toString(formatter: .apiBody)
-            dateTime.startDate = sender.date.toString(formatter: .apiBodyUTC)
-        } else {
-//            
-//            guard let startDate = startDate.text?.date(formatter: .apiBody) else {
-//                return
-//            }
-//            guard let endDate = sender.date.toString(formatter: .apiBody).date(formatter: .apiBody) else {
-//                return
-//            }
-//            
-//            if endDate.days(from: startDate) >= 0 {
-//                self.endDate.text = sender.date.toString(formatter: .apiBody)
-//                dateTime.endDate = sender.date.toString(formatter: .apiBodyUTC)
-//            } else {
-//                self.presentAlert("Time Selection Problem", "End date should be greater than start date", nil)
-//            }
-        }
-    }
-    
-    @objc func timePicker_valueChanged(_ sender: UIDatePicker) {
-        
-//        handleTimePicker(sender: sender)
-    }
-    
     @IBAction func back_touchUpInside(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 
     @IBAction func meetingButton(_ sender: UIButton) {
         
-        guard !invitedIds.isEmpty else {
-            self.presentAlert("Alert", "You need to add at least one attendee before creating the meeting")
-            return
+        if self.name.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "Please enter the title.")
+        }
+        else if self.startDate.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "Please select a start date.")
+        }
+        else if self.startTime.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "Please select a start time.")
+        }
+        else if self.endTime.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "Please select an end time.")
+        }
+        else if self.selectedMeetingLocationId == 0 {
+            self.makeAlert(titleMsg: "Error", messageData: "Please select a location.")
+        }
+        else {
+            self.createEventMeeting()
         }
         
-        GIDSignIn.sharedInstance().signIn()
+//        guard !invitedIds.isEmpty else {
+//            self.presentAlert("Alert", "You need to add at least one attendee before creating the meeting")
+//            return
+//        }
+//        
+//        GIDSignIn.sharedInstance().signIn()
     }
 }
 
 extension CreateMeetingVC: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        
-        if textView.textColor == AppColors.lightBg {
-            textView.text = nil
-            textView.textColor = AppColors.textColor2
-        }
-    }
-    
     func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
         if textView.contentSize.height >= 100 {
             descriptionTV.isScrollEnabled = true
         }
@@ -513,16 +366,43 @@ extension CreateMeetingVC: UITextViewDelegate {
             descriptionTV.isScrollEnabled = false
         }
     }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Describe your Note..."
-            textView.textColor = AppColors.lightBg
-        }
-    }
 }
 
 extension CreateMeetingVC {
+    
+    func createEventMeeting() {
+        let url = EndPoints.createEventMeetings
+        let parameters = [
+            "event_id": "\(eventID)",
+            "title": name.text ?? "",
+            "date": startDate.text ?? "",
+            "start_time": startTime.text ?? "",
+            "end_time": endTime.text ?? "",
+            "description": descriptionTV.text ?? "",
+            "location_id": selectedMeetingLocationId,
+            "requested_to_id": "\(self.otherUserID)",
+            "invited_user_ids": self.invitedIds ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(networkEventRoot.error) {
+                    print("Success")
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                } else {
+                    print("Error :: \(networkEventRoot.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    
     func createMeetingAPICall(meetId: String) {
         
         let parameters = [
@@ -843,16 +723,13 @@ extension CreateMeetingVC: UICollectionViewDelegate, UICollectionViewDataSource,
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddParticipantCell.ReuseId, for: indexPath) as? AddParticipantCell else {
             return UICollectionViewCell()
         }
-//        let obj = connections[(indexPath.item) + 1]
-//        cell.name.text = obj.firstName
-//        cell.occupation.text = obj.companyName
-        
         if isReschedule {
             if indexPath.row == self.attendees.count {
             cell.defaultUI()
             return cell
             } else {
-                cell.connection = attendees[indexPath.row]
+                //cell.connection = attendees[indexPath.row]
+                cell.attendees = attendees[indexPath.row]
                 cell.showCross = false
                 return cell
             }
@@ -862,7 +739,7 @@ extension CreateMeetingVC: UICollectionViewDelegate, UICollectionViewDataSource,
                 
                 return cell
             } else {
-                cell.connection = connections[indexPath.row]
+                cell.attendees = connections[indexPath.row]
                 cell.showCross = true
                 return cell
             }
@@ -870,8 +747,6 @@ extension CreateMeetingVC: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if connections[indexPath.item].type == .creator { tappedCell() }
-//        else { removeParticipant(indexPath) }
         if isReschedule {
             if indexPath.row == self.attendees.count {
                 print("Invite")
@@ -881,6 +756,7 @@ extension CreateMeetingVC: UICollectionViewDelegate, UICollectionViewDataSource,
                 removeParticipant(indexPath)
             }
         } else {
+//            if indexPath.row == connections.count {
             if indexPath.row == connections.count {
                 print("Invite")
                 tappedCell()
@@ -900,7 +776,7 @@ extension CreateMeetingVC: UICollectionViewDelegate, UICollectionViewDataSource,
             } else {
                 self.connections.remove(at: indexPath.item)
                 self.invitedIds = self.connections.compactMap { $0.id }
-                self.invitedEmail = self.connections.compactMap { $0.email }
+                //self.invitedEmail = self.connections.compactMap { $0.email }
             }
             self.collectionView.deleteItems(at: [indexPath])
         }))
@@ -912,38 +788,16 @@ extension CreateMeetingVC: UICollectionViewDelegate, UICollectionViewDataSource,
     }
 }
 
-
-//extension CreateMeetingVC: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let inset: CGFloat = 2
-//        let width = collectionView.frame.width * 0.25
-//        let height = collectionView.frame.height
-//        return CGSize(width: width - inset, height: height)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { 5 }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat { 5 }
-//}
-
 extension CreateMeetingVC: AddParticipantActionable {
 
     func tappedCell() {
-//        if descriptionTV.isFirstResponder { descriptionTV.resignFirstResponder() }
-//        performSegue(withIdentifier: Constants.Segues.inviteConnections, sender: nil)
-//        connectionAdded = true
         let storyboard = UIStoryboard(name: "Meetings", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "InviteVC") as! InviteVC
-        vc.passedConnections = connections
+        vc.attendeesList = attendeesList
+        
         vc.completion = { ids, users in
             self.connections = users
-            
             self.invitedIds =  ids.compactMap { $0 }
-            self.invitedEmail = users.compactMap { $0.email }
             
             let totalcount = self.connections.count + 1
             if totalcount % 2 == 0 { //Even Number
@@ -961,11 +815,12 @@ extension CreateMeetingVC: AddParticipantActionable {
         let storyboard = UIStoryboard(name: "Meetings", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "InviteVC") as! InviteVC
         
-        vc.passedConnections = isReschedule ? attendees : connections
+        //vc.passedConnections = isReschedule ? attendees : connections
+        vc.attendeesList = isReschedule ? attendees : connections
         vc.completion = { ids, users in
             self.connections = users
             self.invitedIds = ids.compactMap { $0 }
-            self.invitedEmail = users.compactMap { $0.email }
+            //self.invitedEmail = users.compactMap { $0.email }
             self.collectionView.reloadData()
         }
         self.present(vc, animated: true)

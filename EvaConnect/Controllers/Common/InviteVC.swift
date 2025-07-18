@@ -19,45 +19,55 @@ class InviteVC: UIViewController {
     @IBOutlet weak var smsBtn: UIButton!
     @IBOutlet weak var searchTF: UITextField!
     
-    var completion: (([Int?], [UserConnection]) -> ())? = nil
+//    var completion: (([Int?], [UserConnection]) -> ())? = nil
+    var completion: (([Int?], [AttendeesList]) -> ())? = nil
     
     
     var inSearchMode = false
     var offSet = 0
     var pageSize = 50
     var selectedIndex = 0
-    var passedConnections: [UserConnection] = []
+    //var passedConnections: [UserConnection] = []
+    var attendeesList: [AttendeesList] = []
     
-    var connectionUsers: [UserConnection] = [] {
+//    var connectionUsers: [UserConnection] = [] {
+//        didSet {
+//            shareTableView.reloadData()
+//        }
+//    }
+    var connectionUsers: [AttendeesList] = [] {
         didSet {
             shareTableView.reloadData()
         }
     }
     
-//    var rescheduleUsers: [UserConnection] = [] {
-//        didSet {
-//            shareTableView.reloadData()
-//        }
-//    }
+    var rescheduleUsers: [UserConnection] = [] {
+        didSet {
+            shareTableView.reloadData()
+        }
+    }
     
-    var filteredUsers: [UserConnection] = []
+//    var filteredUsers: [UserConnection] = []
+    var filteredUsers: [AttendeesList] = []
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getAllConnection()
+        //getAllConnection()
     }
     
     func initUI() {
+        self.connectionUsers = self.attendeesList
         popupView(uiView: mainUiView)
         shareTableView.delegate = self
         shareTableView.dataSource = self
         self.shareTableView.separatorColor = UIColor.clear
+        
     }
 
     @IBAction func DoneBtnTapped(_ sender: UIButton) {
@@ -78,78 +88,78 @@ extension InviteVC {
     }
     
     func synchronizeSelection() {
-        for passedConnection in passedConnections {
-            if let index = connectionUsers.firstIndex(where: { $0.id == passedConnection.id }) {
+        for attendees in attendeesList {
+            if let index = connectionUsers.firstIndex(where: { $0.id == attendees.id }) {
                 // Update isSelected in connectionUsers based on passedConnections
-                connectionUsers[index].isSelected = passedConnection.isSelected
+                connectionUsers[index].isSelected = attendees.isSelected
             }
         }
     }
 }
 
-private extension InviteVC {
-    
-    func getAllConnection() {
-        let endPoint = String(format: "?limit=%d&offset=%d", pageSize, offSet)
-        getConnections(pagination: endPoint) { (userConnections, error) in
-            
-            if let connections = userConnections {
-                if connections.count > 0 {
-                    self.connectionUsers.append(contentsOf: connections)
-                    if self.passedConnections.count > 0 {
-                        self.synchronizeSelection()
-                    }
-                } else {
-                    //                    self.stopAPICall = true
-                }
-            }
-            
-            if let error = error {
-                self.presentAlert("Failure", nil, error)
-            }
-        }
-    }
-    
-    func getConnections(pagination: String? = nil,
-                        parameters: AFParameters? = nil,
-                        completion: @escaping ([UserConnection]? , Error?) -> ()) {
-        
-        var parameterss: AFParameters  = ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "connection_status": "active"]
-        
-        if let parameters = parameters {
-            parameterss = parameters
-        }
-        
-        var endPoint = EndPoints.getFilterConnection
-        
-        if let pagination = pagination {
-            endPoint += pagination
-        }
-        
-        NetworkManagerr.request(endPoint, method: .post, parameters: parameterss) { (response) in
-            
-            self.shareTableView.refreshControl?.endRefreshing()
-            
-            if response.result.isSuccess {
-                
-                let jsonDecoder = JSONDecoder()
-                
-                do {
-                    let connectionRoot = try jsonDecoder.decode(ConnectionFilterModel.self, from: response.data!)
-                    print("json -> \(String(data: response.data!, encoding: .utf8) ?? "invalid json")")
-                    if !connectionRoot.error  {
-                        
-                        completion(connectionRoot.data, nil)
-                    }
-                    
-                } catch {
-                    
-                    completion(nil, error)
-                }
-            }
-        }
-    }
-}
+//private extension InviteVC {
+//    
+//    func getAllConnection() {
+//        let endPoint = String(format: "?limit=%d&offset=%d", pageSize, offSet)
+//        getConnections(pagination: endPoint) { (userConnections, error) in
+//            
+//            if let connections = userConnections {
+//                if connections.count > 0 {
+//                    self.connectionUsers.append(contentsOf: connections)
+//                    if self.passedConnections.count > 0 {
+//                        self.synchronizeSelection()
+//                    }
+//                } else {
+//                    //                    self.stopAPICall = true
+//                }
+//            }
+//            
+//            if let error = error {
+//                self.presentAlert("Failure", nil, error)
+//            }
+//        }
+//    }
+//    
+//    func getConnections(pagination: String? = nil,
+//                        parameters: AFParameters? = nil,
+//                        completion: @escaping ([UserConnection]? , Error?) -> ()) {
+//        
+//        var parameterss: AFParameters  = ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "connection_status": "active"]
+//        
+//        if let parameters = parameters {
+//            parameterss = parameters
+//        }
+//        
+//        var endPoint = EndPoints.getFilterConnection
+//        
+//        if let pagination = pagination {
+//            endPoint += pagination
+//        }
+//        
+//        NetworkManagerr.request(endPoint, method: .post, parameters: parameterss) { (response) in
+//            
+//            self.shareTableView.refreshControl?.endRefreshing()
+//            
+//            if response.result.isSuccess {
+//                
+//                let jsonDecoder = JSONDecoder()
+//                
+//                do {
+//                    let connectionRoot = try jsonDecoder.decode(ConnectionFilterModel.self, from: response.data!)
+//                    print("json -> \(String(data: response.data!, encoding: .utf8) ?? "invalid json")")
+//                    if !connectionRoot.error  {
+//                        
+//                        completion(connectionRoot.data, nil)
+//                    }
+//                    
+//                } catch {
+//                    
+//                    completion(nil, error)
+//                }
+//            }
+//        }
+//    }
+//}
 
 extension InviteVC : SelectionCellActionable {
     func selectedButton(sender: UIButton, completion: @escaping () -> Void) {
@@ -169,7 +179,7 @@ extension InviteVC : SelectionCellActionable {
         }
         
         inSearchMode = true
-        filteredUsers = connectionUsers.filter({ $0.firstName?.lowercased().range(of: searchText) != nil })
+        filteredUsers = connectionUsers.filter({ $0.name?.lowercased().range(of: searchText) != nil })
         if filteredUsers.count > 0 {
             shareTableView.reloadData()
         } else {
@@ -210,9 +220,10 @@ extension InviteVC: UITableViewDataSource, UITableViewDelegate {
 //            cell.inviteBtn.tag = indexPath.row
 //            return cell
 //        } else {
-            cell.connection = inSearchMode ? filteredUsers[indexPath.row] : connectionUsers[indexPath.row]
+//            cell.connection = inSearchMode ? filteredUsers[indexPath.row] : connectionUsers[indexPath.row]
+            cell.Attendees = inSearchMode ? filteredUsers[indexPath.row] : connectionUsers[indexPath.row]
             //        cell.connection.isSelected ? cell.inviteBtn.setImage(UIImage(named: "fillRadioBtn"), for: .normal) : cell.inviteBtn.setImage(UIImage(named: "emptyRadioBtn"), for: .normal)
-            if cell.connection.isSelected {
+        if cell.Attendees.isSelected {
                 cell.inviteBtn.setTitle("Invited", for: .normal)
                 cell.inviteBtn.setTitleColor(.white, for: .normal)
                 cell.inviteBtn.layer.borderWidth = 1

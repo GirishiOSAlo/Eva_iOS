@@ -46,27 +46,7 @@ class AddParticipantCell: UICollectionViewCell {
             crossView.isHidden = !showCross
         }
     }
-    
-//    var attendee: Attendee! {
-//
-//        didSet {
-//            // name.text = attendee.user.firstName + attendee.user.lastName.stringValue
-//            name.text = attendee.userName
-//            if let imageUrl = attendee.userImage {
-//
-//                userAvatar.getImage(urlString: imageUrl) { (image, error) in
-//                    if let image = image {
-////                        self.userAvatar.image = image.imageWithInsets(insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-//                        self.userAvatar.image = image
-//                    }
-//                }
-//            }
-//
-//            occupation.text = attendee.company ?? ""
-////            occupation.textColor = UIColor(named: "Red")!
-//        }
-//    }
-    
+        
     var connection: UserConnection! {
         
         didSet {
@@ -80,6 +60,17 @@ class AddParticipantCell: UICollectionViewCell {
             
             if !connection.userImage.isNil {
                 userAvatar.sd_setImage(with: URL(string: connection.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
+            }
+        }
+    }
+    
+    var attendees: AttendeesList! {
+        
+        didSet {
+            name.text = attendees.name ?? "" //+ " " + connection.lastName.stringValue
+            occupation.text = attendees.companyName ?? ""
+            if !attendees.userImage.isNil {
+                userAvatar.sd_setImage(with: URL(string: attendees.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
             }
         }
     }

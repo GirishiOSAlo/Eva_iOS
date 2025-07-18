@@ -17,39 +17,35 @@ class InviteTVC: UITableViewCell {
     
     weak var delegate: SelectionCellActionable?
     
-    var connection: UserConnection! {
-        
-        didSet {
-            print("user", connection.firstName ?? "") //, connection.lastName)
-            nameLbl.text = connection.firstName.stringValue //+ " " + connection.lastName.stringValue
-            
-            let company = !connection.companyName.isNilOrEmpty ? "\(connection.companyName.stringValue)" : "\(connection.designation.stringValue)"
-            
-            subLbl.text = company
-            
-            
-            if !connection.userImage.isNil {
-                imgVw.sd_setImage(with: URL(string: connection.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
-            }
-        }
-    }
-    
-//    var attendee: Attendee! {
+//    var connection: UserConnection! {
 //        
 //        didSet {
-//            print("user", attendee.userName ?? "") //, connection.lastName)
-//            nameLbl.text = attendee.userName  //+ " " + connection.lastName.stringValue
+//            print("user", connection.firstName ?? "") //, connection.lastName)
+//            nameLbl.text = connection.firstName.stringValue //+ " " + connection.lastName.stringValue
 //            
-////            let company = !attendee.company.isNilOrEmpty ? "\(attendee.company.stringValue)" : "\(connection.designation.stringValue)"
+//            let company = !connection.companyName.isNilOrEmpty ? "\(connection.companyName.stringValue)" : "\(connection.designation.stringValue)"
 //            
-//            subLbl.text = attendee.company
+//            subLbl.text = company
 //            
 //            
-//            if !attendee.userImage.isNil {
-//                imgVw.sd_setImage(with: URL(string: attendee.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
+//            if !connection.userImage.isNil {
+//                imgVw.sd_setImage(with: URL(string: connection.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
 //            }
 //        }
 //    }
+    
+    var Attendees: AttendeesList! {
+        
+        didSet {
+            print("user", Attendees.name ?? "") //, connection.lastName)
+            nameLbl.text = Attendees.name.stringValue //+ " " + connection.lastName.stringValue
+            subLbl.text = Attendees.companyName ?? ""
+            
+            if !Attendees.userImage.isNil {
+                imgVw.sd_setImage(with: URL(string: Attendees.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
+            }
+        }
+    }
     
     
     override func awakeFromNib() {

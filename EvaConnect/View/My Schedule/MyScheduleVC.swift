@@ -22,6 +22,8 @@ class MyScheduleVC: UIViewController, XIBed {
     let scheduleStartHour = 1  // Starting at 01:00
     let scheduleEndHour = 25   // Ending at 24:00
     
+    var otherUserID = 0
+    
     private var currentDate = Date() {
         didSet {
             updateDateLabel()
@@ -48,6 +50,7 @@ class MyScheduleVC: UIViewController, XIBed {
         print("Create a Meeting")
         let vc = StoryboardRouter.createMeeting()
         vc.eventID = self.eventID
+        vc.otherUserID = self.otherUserID
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -64,6 +67,7 @@ class MyScheduleVC: UIViewController, XIBed {
         self.setupTimeSlots()
         self.setupEvents()
     }
+    
     
     @IBAction func onPreviousDateBtnTap(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!

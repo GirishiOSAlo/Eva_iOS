@@ -42,7 +42,8 @@ struct CreateEventMeetingDetailsData: Codable {
 }
 
 // MARK: - AttendeesList
-struct AttendeesList: Codable {
+struct AttendeesList: Codable, Equatable {
+    var isSelected = false
     let id: Int?
     let name, companyName: String?
     let status: Int?

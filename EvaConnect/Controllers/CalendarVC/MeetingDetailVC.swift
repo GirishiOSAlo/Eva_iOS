@@ -172,7 +172,7 @@ class MeetingDetailVC: UIViewController {
         if isReschedule {
             let vc = StoryboardRouter.createMeeting()
             vc.meetingDetailsData = self.meetingDetailElement
-            vc.attendees = self.attendees
+            //vc.attendees = self.attendees
             vc.isReschedule = true
             vc.meetingId = meetingId
             navigationController?.pushViewController(vc, animated: true)

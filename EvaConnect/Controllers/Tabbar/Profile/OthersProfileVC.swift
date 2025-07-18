@@ -83,6 +83,8 @@ class OthersProfileVC: UIViewController {
     var eventID = 0
     var userDetails: UserDetailsData?
     
+    var otherUserID = 0
+    
     var posts: [DashboardItem] = [] {
         didSet {
             self.postTableView.reloadData()
@@ -257,6 +259,7 @@ class OthersProfileVC: UIViewController {
     }
     
     func setData(user: UserDetailsData) {
+        self.otherUserID = user.id ?? 0
         if let imageUrl = user.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
@@ -467,6 +470,7 @@ class OthersProfileVC: UIViewController {
     @IBAction func onScheduleMeetingBtntapped(_ sender: UIButton) {
         let vc = MyScheduleVC.instantiate()
         vc.eventID = self.eventID
+        vc.otherUserID = self.otherUserID
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
