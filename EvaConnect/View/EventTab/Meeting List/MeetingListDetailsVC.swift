@@ -58,6 +58,11 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         self.navigationController?.isNavigationBarHidden = true
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchMeetingData()
+    }
 
     @IBAction func backBtnTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -68,13 +73,18 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         self.successPopupVw.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.semiBold, size: 14.0)
         self.type = .approved
-        self.fetchMeetingData()
+        //self.fetchMeetingData()
         self.registerCell()
         self.setupSuccessPopup()
         
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         listCollectionVw.addSubview(refreshControl) // not required when using UITableViewController
+        
+        self.successSubPopupVw.cornerRadius = 20.0
+        self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 22)
+        self.okPopupBtn.cornerRadius = 14.0
+        self.okPopupBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
     }
     
     func setupSuccessPopup() {
@@ -410,6 +420,7 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
     
     @objc func openRescheduleVw(sender: UIButton) {
         let vc = ReschedulePopupVw.instantiate()
+        vc.meetingID = self.list[sender.tag].id ?? 0
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
     }
