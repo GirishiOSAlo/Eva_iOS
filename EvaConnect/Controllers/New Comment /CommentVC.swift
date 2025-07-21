@@ -288,8 +288,25 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         self.commentTextView.becomeFirstResponder()
     }
     
+    //--> Coment More Button...
+    @objc func commentMoreTapped(sender: UIButton){
+        FTPopOverMenu.showForSender(sender: sender, with: ["Report","Block"], done: { (selectedIndex) -> () in
+            switch selectedIndex {
+            case 0: //Report...
+                let vc = ReportVC.instantiate()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.delegate = self
+                vc.selectedNewsId = self.commentData[sender.tag].id ?? 0
+                self.present(vc, animated: true)
+            case 1: //Block...
+                break
+            default:
+                break
+            }
+        })
+    }
     
-    //Reply Comment Like Dislike...
+    //Reply Comment Like...
     func didTapReplyLikeButton(replyComment: RepliesComment, isComeFromNews: Bool) {
         let commentID = replyComment.id ?? 0
         if isComeFromNews {
@@ -300,6 +317,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         }
     }
     
+    //Reply Comment Dislike...
     func didTapReplyDislikeButton(replyComment: RepliesComment, isComeFromNews: Bool) {
         let commentID = replyComment.id ?? 0
         if isComeFromNews {
@@ -310,12 +328,24 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         }
     }
     
+    //Reply Comment Reply...
     func didTapReplyButton(replyComment: RepliesComment, isComeFromNews: Bool) {
         presentAlert("Coming Soon..")
 //        self.isReplyComment = true
 //        self.postCommentId = replyComment.id ?? 0
 //        self.commentTextView.becomeFirstResponder()
     }
+    
+    //Reply Comment More...
+//    func didTapMoreButton(sender: Int, replyComment: RepliesComment, isComeFromNews: Bool) {
+//
+//    }
+}
+
+extension CommentVC: ReportCellDelegate {
+    func didTapSelectButton(report: ReportData, id: Int) {
+        print(report.tagName ?? "")
+    }    
 }
 
 extension CommentVC {
@@ -460,6 +490,10 @@ extension CommentVC {
             }
         }
     }
+    
+    func reportCommet(tagID: Int, id: Int) {
+        
+    }
 }
 
 //MARK: UITextview
@@ -556,6 +590,8 @@ extension CommentVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         cell.dislikeBtn.addTarget(self, action: #selector(dislikeCommentTapped(sender:)), for: .touchUpInside)
         cell.replyBtn.tag = indexPath.row
         cell.replyBtn.addTarget(self, action: #selector(replyCommentTapped(sender:)), for: .touchUpInside)
+        cell.moreBtn.tag = indexPath.row
+        cell.moreBtn.addTarget(self, action: #selector(commentMoreTapped(sender:)), for: .touchUpInside)
         
         return cell
     }

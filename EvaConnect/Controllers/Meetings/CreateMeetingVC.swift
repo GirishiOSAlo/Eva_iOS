@@ -192,8 +192,10 @@ extension CreateMeetingVC {
                 let meetingDetails = try jsonDecoder.decode(CreateEventMeetingDetailsDataModel.self, from: response.data!)
                 if !(meetingDetails.error ?? false) {
                     self.eventDetails = meetingDetails.data ?? []
-                    self.eventLocations = self.eventDetails[0].eventLocations ?? []
-                    self.attendeesList = self.eventDetails[0].attendeesList ?? []
+                    if self.eventDetails.count > 0 {
+                        self.eventLocations = self.eventDetails[0].eventLocations ?? []
+                        self.attendeesList = self.eventDetails[0].attendeesList ?? []
+                    } else { print("Event Details Not Found.") }
                     
                 } else {
                     print("Error :: \(meetingDetails.message ?? "")")

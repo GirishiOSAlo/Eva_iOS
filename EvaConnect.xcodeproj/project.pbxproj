@@ -500,6 +500,11 @@
 		A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */; };
 		A6508FB52E2DE0D5007587C3 /* DashboardEventDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FB42E2DE0D5007587C3 /* DashboardEventDataModel.swift */; };
 		A6508FB92E2DF7C7007587C3 /* FAQlistDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */; };
+		A6508FBD2E2E3893007587C3 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FBB2E2E3893007587C3 /* ReportVC.swift */; };
+		A6508FBE2E2E3893007587C3 /* ReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6508FBC2E2E3893007587C3 /* ReportVC.xib */; };
+		A6508FC02E2E3A3D007587C3 /* ReportDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FBF2E2E3A3D007587C3 /* ReportDataModel.swift */; };
+		A6508FC42E2E3BAA007587C3 /* ReportCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FC22E2E3BAA007587C3 /* ReportCVC.swift */; };
+		A6508FC52E2E3BAA007587C3 /* ReportCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6508FC32E2E3BAA007587C3 /* ReportCVC.xib */; };
 		A66145362B43E310009221B5 /* EventDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145352B43E310009221B5 /* EventDelegateList.swift */; };
 		A66145382B4416CD009221B5 /* EventDelegateProfileDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */; };
 		A661453A2B4448B5009221B5 /* EventDelegateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145392B4448B5009221B5 /* EventDelegateFilter.swift */; };
@@ -1112,6 +1117,11 @@
 		A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionViewController.xib; sourceTree = "<group>"; };
 		A6508FB42E2DE0D5007587C3 /* DashboardEventDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEventDataModel.swift; sourceTree = "<group>"; };
 		A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQlistDataModel.swift; sourceTree = "<group>"; };
+		A6508FBB2E2E3893007587C3 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
+		A6508FBC2E2E3893007587C3 /* ReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportVC.xib; sourceTree = "<group>"; };
+		A6508FBF2E2E3A3D007587C3 /* ReportDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDataModel.swift; sourceTree = "<group>"; };
+		A6508FC22E2E3BAA007587C3 /* ReportCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCVC.swift; sourceTree = "<group>"; };
+		A6508FC32E2E3BAA007587C3 /* ReportCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportCVC.xib; sourceTree = "<group>"; };
 		A66145352B43E310009221B5 /* EventDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateList.swift; sourceTree = "<group>"; };
 		A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateProfileDelegateList.swift; sourceTree = "<group>"; };
 		A66145392B4448B5009221B5 /* EventDelegateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateFilter.swift; sourceTree = "<group>"; };
@@ -1726,6 +1736,7 @@
 				A6C5E0632E291AF400CEE383 /* SendRequestDataModel.swift */,
 				A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */,
 				A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */,
+				A6508FBF2E2E3A3D007587C3 /* ReportDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2621,6 +2632,7 @@
 		500A54342473F72A00095324 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A6508FBA2E2E3871007587C3 /* Report */,
 				A64C49812E1BFA7900F9D3F9 /* Connections */,
 				A62AB11A2DD4A8FF006C7A21 /* Edit Profile */,
 				A6CDBDE72DD21047009B65CD /* New Comment  */,
@@ -2767,6 +2779,7 @@
 		500A544A2474050300095324 /* UICollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				A6508FC12E2E3B8C007587C3 /* ReportCVC */,
 				48BC63F12DCB7485002BA644 /* PreviousCVCell */,
 				186C010E23E948720014561D /* BaseCVCell.swift */,
 				186C010C23E943790014561D /* HomeTabsCell.swift */,
@@ -3392,6 +3405,24 @@
 			path = Connections;
 			sourceTree = "<group>";
 		};
+		A6508FBA2E2E3871007587C3 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				A6508FBB2E2E3893007587C3 /* ReportVC.swift */,
+				A6508FBC2E2E3893007587C3 /* ReportVC.xib */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		A6508FC12E2E3B8C007587C3 /* ReportCVC */ = {
+			isa = PBXGroup;
+			children = (
+				A6508FC22E2E3BAA007587C3 /* ReportCVC.swift */,
+				A6508FC32E2E3BAA007587C3 /* ReportCVC.xib */,
+			);
+			path = ReportCVC;
+			sourceTree = "<group>";
+		};
 		A661E0CA2DCE1080000D2119 /* FAQs */ = {
 			isa = PBXGroup;
 			children = (
@@ -3836,6 +3867,7 @@
 				4891768A2B0F6DFD00DC6A91 /* successLottie.json in Resources */,
 				500A54282473EE2200095324 /* Settings.storyboard in Resources */,
 				485FC1802DD3793C00AA05A4 /* DelegatesVC.xib in Resources */,
+				A6508FC52E2E3BAA007587C3 /* ReportCVC.xib in Resources */,
 				5073A849248143CD008F2E7D /* HomeVideo.xib in Resources */,
 				48A4215E2AAB51D000A8D37C /* DashboardTabbarVC.xib in Resources */,
 				485FC1AB2DDDB33D00AA05A4 /* NetworkingEventsVC.xib in Resources */,
@@ -3865,6 +3897,7 @@
 				500A54522474065000095324 /* NewsSourceCell.xib in Resources */,
 				A6CDBDEB2DD21070009B65CD /* CommentVC.xib in Resources */,
 				48E0C0DC2B480636006EBEF0 /* DownloadChatImgVC.xib in Resources */,
+				A6508FBE2E2E3893007587C3 /* ReportVC.xib in Resources */,
 				48BD86372B22EF9B0026C0B2 /* GlobalSearchTVCell.xib in Resources */,
 				A67E943E2DE8341000838FC9 /* ReschedulePopupVw.xib in Resources */,
 				18665CDB23C596D00089EF69 /* Assets.xcassets in Resources */,
@@ -4028,6 +4061,7 @@
 				A62A49C62AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift in Sources */,
 				5073A85A2481453D008F2E7D /* HomeText.swift in Sources */,
 				18789BD524935F2B00649EB4 /* RecommandConnection.swift in Sources */,
+				A6508FC42E2E3BAA007587C3 /* ReportCVC.swift in Sources */,
 				50A3FC9A24EBEB4500EACF35 /* ShareVC.swift in Sources */,
 				500A542D2473F61700095324 /* Theme.swift in Sources */,
 				185486BA25274AC7004A7620 /* EditDeleteView.swift in Sources */,
@@ -4183,6 +4217,7 @@
 				186DFB222411029E00F610FE /* PostedJobDetailVC.swift in Sources */,
 				184165F9241D29E500E9E31D /* DashboardItemRoot.swift in Sources */,
 				A6782F662DDC88B50029443B /* SpeakersViewController.swift in Sources */,
+				A6508FBD2E2E3893007587C3 /* ReportVC.swift in Sources */,
 				48A421142AA894FB00A8D37C /* ShareTableViewCell.swift in Sources */,
 				2586A8BB277C7AEA000350DE /* ErrorView.swift in Sources */,
 				1811E2BA2402B70C00DA64AD /* MyLikeModel.swift in Sources */,
@@ -4285,6 +4320,7 @@
 				A6A458E02AB31136005418F6 /* DocAudioTVCell.swift in Sources */,
 				50BA71522497D36000A17813 /* EventDetail.swift in Sources */,
 				500A542F2473F63700095324 /* DefaultTheme.swift in Sources */,
+				A6508FC02E2E3A3D007587C3 /* ReportDataModel.swift in Sources */,
 				1854A40023D5807100BBDDAB /* BaseCellClass.swift in Sources */,
 				1814EE9223EC1BFD00AF51B2 /* Debug.swift in Sources */,
 				48A0F9622B67C58100C822A7 /* InterestedListVC.swift in Sources */,

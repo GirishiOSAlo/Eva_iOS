@@ -14,6 +14,7 @@ protocol CommentsCellDelegate: AnyObject {
     func didTapReplyLikeButton(replyComment: RepliesComment, isComeFromNews: Bool)
     func didTapReplyDislikeButton(replyComment: RepliesComment, isComeFromNews: Bool)
     func didTapReplyButton(replyComment: RepliesComment, isComeFromNews: Bool)
+    //func didTapMoreButton(replyComment: RepliesComment, isComeFromNews: Bool)
 }
 
 class CommentCVC: UICollectionViewCell {
@@ -111,6 +112,12 @@ class CommentCVC: UICollectionViewCell {
             delegate?.didTapReplyButton(replyComment: reply, isComeFromNews: self.isComeFromNews)
 //        } 
     }
+    
+    @IBAction func moreTapped(_ sender: UIButton) {
+//        let reply = self.replies[sender.tag]
+        //delegate?.didTapMoreButton(replyComment: reply, isComeFromNews: self.isComeFromNews)
+    }
+    
 }
 
 //MARK: UICollection Delegate & DataSource....
