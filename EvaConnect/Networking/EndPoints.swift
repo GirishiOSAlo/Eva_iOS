@@ -242,7 +242,7 @@ enum EndPoints {
     
     // MARK: Complain
     static let complainList = baseURL + "complain_list"
-    
+    static let complain = baseURL + "create_complain"
     
     // MARK: Account Public or Private
     static let privacyMode = baseURL + "user/details/switchPrivacyMode"

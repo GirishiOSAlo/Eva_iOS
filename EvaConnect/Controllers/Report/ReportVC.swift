@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ReportCellDelegate: AnyObject {
-    func didTapSelectButton(report: ReportData, id: Int)
+    func didTapSelectButton(report: ReportData, newsID: Int, commentId: Int)
 }
 
 class ReportVC: UIViewController, XIBed {
@@ -23,6 +23,7 @@ class ReportVC: UIViewController, XIBed {
     var reportList: [ReportData] = []
     weak var delegate: ReportCellDelegate?
     var selectedNewsId = 0
+    var commentID = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +132,7 @@ extension ReportVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         dismiss(animated: true) {
             let complain = self.reportList[indexPath.row]
-            delegate?.didTapSelectButton(report: complain, id: self.selectedNewsId)
+            self.delegate?.didTapSelectButton(report: complain, newsID: self.selectedNewsId, commentId: self.commentID)
         }
     }
 }

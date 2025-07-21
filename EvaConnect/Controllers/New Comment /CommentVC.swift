@@ -296,7 +296,8 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
                 let vc = ReportVC.instantiate()
                 vc.modalPresentationStyle = .overFullScreen
                 vc.delegate = self
-                vc.selectedNewsId = self.commentData[sender.tag].id ?? 0
+                vc.selectedNewsId = self.newsId
+                vc.commentID = self.commentData[sender.tag].id ?? 0
                 self.present(vc, animated: true)
             case 1: //Block...
                 break
@@ -343,9 +344,9 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
 }
 
 extension CommentVC: ReportCellDelegate {
-    func didTapSelectButton(report: ReportData, id: Int) {
-        print(report.tagName ?? "")
-    }    
+    func didTapSelectButton(report: ReportData, newsID: Int, commentId: Int) {
+        self.reportCommet(tagID: report.id ?? 0, newsID: newsID, commentID: commentId)
+    }
 }
 
 extension CommentVC {
@@ -491,9 +492,32 @@ extension CommentVC {
         }
     }
     
-    func reportCommet(tagID: Int, id: Int) {
+    func reportCommet(tagID: Int, newsID: Int, commentID: Int) {
+        let url = EndPoints.complain
+        let parameters = [
+            "tag_id": tagID,
+            "comment_id": commentID,
+            "news_id": newsID ] as [String: Any]
         
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let reporteRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(reporteRoot.error) {
+                    print("Success")
+                    self.showToast(message: reporteRoot.message)
+                } else {
+                    print("Error :: \(reporteRoot.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
+    
+    
 }
 
 //MARK: UITextview
