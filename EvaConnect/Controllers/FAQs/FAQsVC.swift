@@ -11,11 +11,13 @@ import UIKit
 class FAQsVC: UIViewController, XIBed, FAQsCellDelegate {
 
     @IBOutlet weak var headingLbl: UILabel!
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var faqCollectionVw: UICollectionView!
+    var faqList: [FAQlistData] = []
     var expandedIndexPath: IndexPath?
     
-    var questionsList = ["What is Aviation Connect, and how can it benefit me?","How do I create an account on Aviation Connect?","Is there a mobile app available for Aviation Connect?","How can I connect with other aviation professionals?","Are there any networking events or webinars hosted on the platform?","Can I create my own group or community within Aviation Connect?"]
-    var answerList = ["Vestibulum eu quam nulla. Sed libero magna, pharetra non dolor a, volutpat sodales sapien. Aliquam accumsan fermentum pharetra. Sed sit amet finibus mi, eu ultricies orci. Aenean dapibus lacinia leo eu mollis. Donec varius arcu sem, quis interdum augue porta nec. Pellentesque bibendum lacus eget urna sagittis, vitae tincidunt enim pulvinar. Nam velit augue, accumsan quis fermentum eu, blandit id nulla. Morbi leo risus, venenatis a ex efficitur, rhoncus sagittis nunc.","Vestibulum eu quam nulla. Sed libero magna, pharetra non dolor a, volutpat sodales sapien. Aliquam accumsan fermentum pharetra. Sed sit amet finibus mi, eu ultricies orci.","Donec varius arcu sem, quis interdum augue porta nec.","Pellentesque bibendum lacus eget urna sagittis, vitae tincidunt enim pulvinar. Nam velit augue, accumsan quis fermentum eu, blandit id nulla. Morbi leo risus, venenatis a ex efficitur, rhoncus sagittis nunc.","Sed sit amet finibus mi, eu ultricies orci.","Pellentesque bibendum lacus eget urna sagittis, vitae tincidunt enim pulvinar."]
+//    var questionsList = ["What is Aviation Connect, and how can it benefit me?","How do I create an account on Aviation Connect?","Is there a mobile app available for Aviation Connect?","How can I connect with other aviation professionals?","Are there any networking events or webinars hosted on the platform?","Can I create my own group or community within Aviation Connect?"]
+//    var answerList = ["Vestibulum eu quam nulla. Sed libero magna, pharetra non dolor a, volutpat sodales sapien. Aliquam accumsan fermentum pharetra. Sed sit amet finibus mi, eu ultricies orci. Aenean dapibus lacinia leo eu mollis. Donec varius arcu sem, quis interdum augue porta nec. Pellentesque bibendum lacus eget urna sagittis, vitae tincidunt enim pulvinar. Nam velit augue, accumsan quis fermentum eu, blandit id nulla. Morbi leo risus, venenatis a ex efficitur, rhoncus sagittis nunc.","Vestibulum eu quam nulla. Sed libero magna, pharetra non dolor a, volutpat sodales sapien. Aliquam accumsan fermentum pharetra. Sed sit amet finibus mi, eu ultricies orci.","Donec varius arcu sem, quis interdum augue porta nec.","Pellentesque bibendum lacus eget urna sagittis, vitae tincidunt enim pulvinar. Nam velit augue, accumsan quis fermentum eu, blandit id nulla. Morbi leo risus, venenatis a ex efficitur, rhoncus sagittis nunc.","Sed sit amet finibus mi, eu ultricies orci.","Pellentesque bibendum lacus eget urna sagittis, vitae tincidunt enim pulvinar."]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +37,9 @@ class FAQsVC: UIViewController, XIBed, FAQsCellDelegate {
     
     func setupUI() {
         headingLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
+        self.noDataLbl.isHidden = true
         self.registerCell()
-        self.faqCollectionVw.reloadData()
+        self.fetchFaqData()
     }
     
     
@@ -74,11 +77,47 @@ class FAQsVC: UIViewController, XIBed, FAQsCellDelegate {
     }
 }
 
+extension FAQsVC {
+    func fetchFaqData() {
+        showActivity()
+        let url = "\(EndPoints.faq)"
+        NetworkManagerr.request(url, method: .get) { (response) in
+            self.hideActivity()
+            guard response.result.isSuccess else {
+                print("Error ::", response.error?.localizedDescription as? Error ?? "Default Error")
+                return
+            }
+
+            guard let data = response.data else {
+                print("Error :: No data received.")
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(FAQlistDataModel.self, from: data)
+                if let data = response.data {
+                    self.faqList = data
+                    self.faqCollectionVw.reloadData()
+                    if self.faqList.count == 0 {
+                        self.noDataLbl.isHidden = false
+                    } else {
+                        self.noDataLbl.isHidden = true
+                    }
+                } else {
+                    print("Error ::", response.message as? Error ?? "Default Error")
+                }
+            } catch {
+                print("Error ::", error)
+            }
+        }
+    }
+}
+
 
 //MARK: UICollection Delegate & DataSource....
 extension FAQsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.questionsList.count
+        return self.faqList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,10 +146,10 @@ extension FAQsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             cell.baseVw.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell.underlineVw.isHidden = true
         }
-        
-        cell.questionLbl.text = self.questionsList[indexPath.row]
+        let obj = self.faqList[indexPath.row]
+        cell.questionLbl.text = obj.question ?? ""
         cell.questionLbl.font = UIFont(name: Myfonts.medium, size: 16.0)
-        cell.answerLbl.text = self.answerList[indexPath.row]
+        cell.answerLbl.text = obj.answer ?? ""
         cell.answerLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         
         cell.delegate = self
@@ -123,23 +162,18 @@ extension FAQsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath == expandedIndexPath {
             // Expanded height
-            let question = self.questionsList[indexPath.row]
-            let answer = self.answerList[indexPath.row]
-            
-            let questionLblHeight = self.heightForView(text: question, font: UIFont(name: Myfonts.medium, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 152.0)
-            let answerLblHeight = self.heightForView(text: answer, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 126.0)
+            let obj = self.faqList[indexPath.row]
+            let questionLblHeight = self.heightForView(text: obj.question ?? "", font: UIFont(name: Myfonts.medium, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 152.0)
+            let answerLblHeight = self.heightForView(text: obj.answer ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 126.0)
             let totalCellHeight = questionLblHeight + answerLblHeight + 56.0
             
             return CGSize(width: self.faqCollectionVw.frame.size.width, height: totalCellHeight)
-        }
-        else {
+        } else {
             // Normal height
-            let question = self.questionsList[indexPath.row]
-            
-            let lblHeight = self.heightForView(text: question, font: UIFont(name: Myfonts.medium, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 152.0)
+            let obj = self.faqList[indexPath.row]
+            let lblHeight = self.heightForView(text: obj.question ?? "", font: UIFont(name: Myfonts.medium, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 152.0)
             let cellHeight = lblHeight + 40
             return CGSize(width: self.faqCollectionVw.frame.size.width, height: cellHeight)
         }
     }
-    
 }

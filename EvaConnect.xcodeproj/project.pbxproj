@@ -499,6 +499,7 @@
 		A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */; };
 		A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */; };
 		A6508FB52E2DE0D5007587C3 /* DashboardEventDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FB42E2DE0D5007587C3 /* DashboardEventDataModel.swift */; };
+		A6508FB92E2DF7C7007587C3 /* FAQlistDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */; };
 		A66145362B43E310009221B5 /* EventDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145352B43E310009221B5 /* EventDelegateList.swift */; };
 		A66145382B4416CD009221B5 /* EventDelegateProfileDelegateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */; };
 		A661453A2B4448B5009221B5 /* EventDelegateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66145392B4448B5009221B5 /* EventDelegateFilter.swift */; };
@@ -1110,6 +1111,7 @@
 		A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionViewController.xib; sourceTree = "<group>"; };
 		A6508FB42E2DE0D5007587C3 /* DashboardEventDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEventDataModel.swift; sourceTree = "<group>"; };
+		A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQlistDataModel.swift; sourceTree = "<group>"; };
 		A66145352B43E310009221B5 /* EventDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateList.swift; sourceTree = "<group>"; };
 		A66145372B4416CD009221B5 /* EventDelegateProfileDelegateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateProfileDelegateList.swift; sourceTree = "<group>"; };
 		A66145392B4448B5009221B5 /* EventDelegateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegateFilter.swift; sourceTree = "<group>"; };
@@ -1723,6 +1725,7 @@
 				A64394CA2E1CE357006EE7F4 /* FollowersDataModel.swift */,
 				A6C5E0632E291AF400CEE383 /* SendRequestDataModel.swift */,
 				A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */,
+				A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4200,6 +4203,7 @@
 				500A54422473FEDC00095324 /* StoryboardRouter.swift in Sources */,
 				25D84AB0277B1BEB00831F55 /* EditUserProfileVC.swift in Sources */,
 				A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */,
+				A6508FB92E2DF7C7007587C3 /* FAQlistDataModel.swift in Sources */,
 				A6782F6B2DDC893E0029443B /* SpeakersCVC.swift in Sources */,
 				A6B7ADBA2E0971FA009172CD /* ConferenceProgramsCVC.swift in Sources */,
 				18791B8624164D5A00BFF055 /* ApplicantDetailVC.swift in Sources */,
@@ -4547,7 +4551,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6.6;
+				CURRENT_PROJECT_VERSION = 6.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
@@ -4609,7 +4613,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6.6;
+				CURRENT_PROJECT_VERSION = 6.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;

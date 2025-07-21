@@ -11,12 +11,16 @@
         <array key="SF-Pro-Text-Bold.otf">
             <string>SFProText-Bold</string>
         </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FAQsVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
                 <outlet property="faqCollectionVw" destination="HWL-Lh-kiG" id="pBy-h8-j7h"/>
                 <outlet property="headingLbl" destination="vhP-Oy-Qhs" id="HcY-04-Gl8"/>
+                <outlet property="noDataLbl" destination="Aib-J9-98r" id="piy-I3-csO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -66,6 +70,12 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No records found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aib-J9-98r">
+                    <rect key="frame" x="130" y="416" width="131.33333333333337" height="19.333333333333314"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -78,6 +88,8 @@
                 <constraint firstItem="HWL-Lh-kiG" firstAttribute="top" secondItem="ANC-td-eI6" secondAttribute="bottom" constant="20" id="PXy-Xl-Cka"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="HWL-Lh-kiG" secondAttribute="bottom" id="TVt-fb-mjB"/>
                 <constraint firstItem="ANC-td-eI6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="cVe-YY-qi0"/>
+                <constraint firstItem="Aib-J9-98r" firstAttribute="centerY" secondItem="HWL-Lh-kiG" secondAttribute="centerY" id="pkn-T1-KqO"/>
+                <constraint firstItem="Aib-J9-98r" firstAttribute="centerX" secondItem="HWL-Lh-kiG" secondAttribute="centerX" id="sIZ-7K-ryn"/>
             </constraints>
             <point key="canvasLocation" x="61.832061068702288" y="0.0"/>
         </view>
