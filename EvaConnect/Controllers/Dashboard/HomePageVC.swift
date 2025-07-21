@@ -49,7 +49,7 @@ class HomePageVC: UIViewController {
             self.newsTableVw.reloadData()
         }
     }
-    var eventList: [DashboardItem] = [] {
+    var eventList: [DashboardEventData] = [] {
         didSet {
             self.eventCollectionVw.reloadData()
         }
@@ -357,15 +357,15 @@ extension HomePageVC {
             self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
-                let eventRoot = try jsonDecoder.decode(DashboardItemRoot.self, from: response.data!)
-                if !(eventRoot.error) {
-                    self.eventList = eventRoot.data
+                let eventRoot = try jsonDecoder.decode(DashboardEventDataModel.self, from: response.data!)
+                if !(eventRoot.error ?? false) {
+                    self.eventList = eventRoot.data ?? []
                     self.eventCollectionVwHeight.constant = CGFloat(self.eventList.count * 440)
                 } else {
                     print("Error :: \(eventRoot.message ?? "")")
                 }
             } catch {
-                print("\(String(describing: response.result.error?.localizedDescription))")
+                print(error)
             }
         }
     }
@@ -572,7 +572,7 @@ extension HomePageVC {
     
     @objc func openEventVCPost(sender: UIButton) {
         let vc = EventMainVC.instantiate()
-        vc.eventId = eventList[sender.tag].id
+        vc.eventId = eventList[sender.tag].id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -583,7 +583,9 @@ extension HomePageVC {
 //        reqToJoin(eventtId: event.id, type: 1)
         let obj = self.eventList[sender.tag]
         let vc = EventMainVC.instantiate()
-        vc.eventId = obj.id
+        vc.eventId = obj.id ?? 0
+        vc.dashboardEvent = self.eventList[sender.tag]
+        vc.isComeFromDashboard = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -591,7 +593,7 @@ extension HomePageVC {
         print("saved Event")
         showActivity()
         let event = eventList[sender.tag]
-        saveEvent(eventtId: event.id, at: sender.tag)
+        saveEvent(eventtId: event.id ?? 0, at: sender.tag)
     }
     
     @objc func saveJobTapped(sender: UIButton) {
@@ -708,9 +710,9 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
                 cell.imgVW.image = UIImage(named: "eventPlaceholder")
             }
             
-            cell.titleLbl.text = event.eventName ?? ""
-            cell.dateLbl.text = "\(event.eventStartDate ?? "") - \(event.eventEndDate ?? "")"
-            cell.locationLbl.text = "\(event.eventCity ?? ""), \(event.eventCountry ?? "")"
+            cell.titleLbl.text = event.name ?? ""
+            cell.dateLbl.text = "\(event.startDate ?? "") - \(event.endDate ?? "")"
+            cell.locationLbl.text = "\(event.city ?? ""), \(event.country ?? "")"
             
 //            var startTime = ""
 //            var endTime = ""

@@ -41,6 +41,10 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     var cancelledMeetingsList: [EventMeeting] = []
     var rescheduledMeetingsList: [EventMeeting] = []
     
+    var eventDetail: NewEventDetailsData?
+    var dashboardEvent: DashboardEventData?
+    var isComeFromDashboard = false
+    
     var list: [EventMeeting] = [] {
         didSet {
             if list.count > 0 {
@@ -420,7 +424,10 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
     
     @objc func openRescheduleVw(sender: UIButton) {
         let vc = ReschedulePopupVw.instantiate()
-        vc.eventDetails = self.list[sender.tag]
+        vc.meetingID = self.list[sender.tag].id ?? 0
+        vc.eventDetail = self.eventDetail
+        vc.dashboardEvent = self.dashboardEvent
+        vc.isComeFromDashboard = self.isComeFromDashboard
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
     }

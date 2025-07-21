@@ -21,8 +21,10 @@ class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
     @IBOutlet weak var viewAllLabel: UILabel!
     var expandedIndexPath: IndexPath?
     var delegateMeetingsList: [Delegatemeeting] = []
-    
+    var eventDetail: NewEventDetailsData?
     var eventId = 0
+    var dashboardEvent: DashboardEventData?
+    var isComeFromDashboard = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +60,9 @@ class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
         print("View All tapped")
         let vc = MeetingListDetailsVC.instantiate()
         vc.eventId = self.eventId
+        vc.eventDetail = self.eventDetail
+        vc.dashboardEvent = self.dashboardEvent
+        vc.isComeFromDashboard = self.isComeFromDashboard
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

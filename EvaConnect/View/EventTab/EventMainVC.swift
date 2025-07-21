@@ -49,6 +49,8 @@ class EventMainVC: UIViewController, XIBed {
     var VenueList: [EventVenu] = []
     var delegatelists: [List] = []
     
+    var dashboardEvent: DashboardEventData?
+    var isComeFromDashboard = false
     
     
     lazy var eventDetailsVC: EventDetailsVC = {
@@ -82,6 +84,9 @@ class EventMainVC: UIViewController, XIBed {
     lazy var meetingListVC: MeetingListVC = {
         let vc = MeetingListVC.instantiate(eventId: self.eventId)
         vc.delegateMeetingsList = self.delegateMeetingsList
+        vc.dashboardEvent = self.dashboardEvent
+        vc.eventDetail = self.eventDetail
+        vc.isComeFromDashboard = self.isComeFromDashboard
         return vc
     }()
     

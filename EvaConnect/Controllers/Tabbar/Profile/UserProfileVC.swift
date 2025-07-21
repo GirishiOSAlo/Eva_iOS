@@ -890,7 +890,6 @@ extension UserProfileVC: UITableViewDataSource {
             let cell: ReactionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
             cell.descriptionBaseVw.layer.cornerRadius = 8.0
             cell.openVideoBtn.isHidden = true
-            
             let obj = reactions[indexPath.row]
             
             if obj.type!.elementsEqual("post") {
@@ -1149,6 +1148,7 @@ extension UserProfileVC: UITableViewDataSource {
                 cell.detailsView.layer.cornerRadius = 13
                 //            cell.delegate = self
                 cell.reportBtn.isHidden = true
+                cell.followBtn.isHidden = true
                 cell.uiData(dataMaper: homePost)
                 
 //                cell.shareBtn.tag = indexPath.row

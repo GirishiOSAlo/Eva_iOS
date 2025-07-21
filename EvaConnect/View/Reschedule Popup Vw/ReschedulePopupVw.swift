@@ -34,7 +34,11 @@ class ReschedulePopupVw: UIViewController, XIBed {
     var datePicker = UIDatePicker()
     var startTimePicker = UIDatePicker()
     var endTimePicker = UIDatePicker()
-    var eventDetails: EventMeeting?
+    var meetingID = 0
+    
+    var eventDetail: NewEventDetailsData?
+    var dashboardEvent: DashboardEventData?
+    var isComeFromDashboard = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +62,7 @@ class ReschedulePopupVw: UIViewController, XIBed {
         for lbl in detilsTitleLbllCollection {
             lbl.font = UIFont(name: Myfonts.bold, size: 14.0)
         }
-        
+                
         self.dateTextField.font = UIFont(name: Myfonts.regular, size: 14.0)
         self.starttimeTextField.font = UIFont(name: Myfonts.regular, size: 14.0)
         self.endtimeTextField.font = UIFont(name: Myfonts.regular, size: 14.0)
@@ -130,7 +134,7 @@ extension ReschedulePopupVw {
     func rescheduleMeeting() {
         let url = EndPoints.rescheduleEventMeeting
         let parameters = [
-            "rescheduleMeetingid": "\(self.eventDetails.id ?? 0)",
+            "rescheduleMeetingid": "\(self.meetingID)",
             "date": self.dateTextField.text ?? "",
             "starttime": self.starttimeTextField.text ?? "",
             "endtime": self.endtimeTextField.text ?? "",
@@ -158,36 +162,20 @@ extension ReschedulePopupVw {
 }
 
 extension ReschedulePopupVw {
-//    func datePickerSet() {
-//        datePicker.datePickerMode = .date
-//        if #available(iOS 13.4, *) {
-//            datePicker.preferredDatePickerStyle = .wheels
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        
-//        datePicker.minimumDate = Date()//.addingTimeInterval(168 * 60 * 60)  //Next to 7 day select...
-//
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartDatePicker))
-//        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
-//        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
-//        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
-//        toolbar.tintColor = UIColor(hex: "#000000")
-//
-//        self.dateTextField.inputView = datePicker
-//        self.dateTextField.inputAccessoryView = toolbar
-//    }
-    
     func datePickerSet() {
-        let eventStartDateStr = self.eventDetails?.startDay ?? ""
-        let eventEndDateStr = self.eventDetails?.startDay ?? ""
+        var eventStartDateStr = ""
+        var eventEndDateStr = ""
+        if isComeFromDashboard {
+            eventStartDateStr = self.dashboardEvent?.startDate ?? ""
+            eventEndDateStr = self.dashboardEvent?.endDate ?? ""
+        } else {
+            eventStartDateStr = self.eventDetail?.startDate ?? ""
+            eventEndDateStr = self.eventDetail?.endDate ?? ""
+        }
 
         // Date formatter to convert string to Date
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "dd-MMM-yyyy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         // Convert strings to Date
@@ -202,6 +190,7 @@ extension ReschedulePopupVw {
         // Set min and max dates if conversion is successful
         if let start = eventStartDate {
             datePicker.minimumDate = start
+            datePicker.date = start // Set picker to start from start date
         }
         if let end = eventEndDate {
             datePicker.maximumDate = end
@@ -220,33 +209,18 @@ extension ReschedulePopupVw {
         self.dateTextField.inputView = datePicker
         self.dateTextField.inputAccessoryView = toolbar
     }
-    
-//    func startTimePickerSet() {
-//        startTimePicker.datePickerMode = .time
-//        if #available(iOS 13.4, *) {
-//            startTimePicker.preferredDatePickerStyle = .wheels
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        
-//        startTimePicker.minimumDate = Date()
-//
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartTimePicker))
-//        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
-//        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
-//        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
-//        toolbar.tintColor = UIColor(hex: "#000000")
-//
-//        self.starttimeTextField.inputView = startTimePicker
-//        self.starttimeTextField.inputAccessoryView = toolbar
-//    }
-    
+
     func startTimePickerSet() {
-        let eventStartTimeStr = self.eventDetails.startTime ?? ""
-        let eventEndTimeStr = self.eventDetails.endTime ?? ""
+        var eventStartTimeStr = ""
+        var eventEndTimeStr = ""
+        if isComeFromDashboard {
+            eventStartTimeStr = self.dashboardEvent?.startTime ?? ""
+            eventEndTimeStr = self.dashboardEvent?.endTime ?? ""
+        } else {
+            eventStartTimeStr = self.eventDetail?.startTime ?? ""
+            eventEndTimeStr = self.eventDetail?.endTime ?? ""
+        }
+        print("Start Time : \(eventStartTimeStr) & EndTime : \(eventEndTimeStr)")
 
         // Date formatter for time only
         let timeFormatter = DateFormatter()
@@ -259,15 +233,15 @@ extension ReschedulePopupVw {
         let todayComponents = calendar.dateComponents([.year, .month, .day], from: now)
 
         // Convert strings to Date objects (applying today's date)
-        var minDate: Date?
-        var maxDate: Date?
+        var minTime: Date?
+        var maxTime: Date?
         
         if let startTime = timeFormatter.date(from: eventStartTimeStr),
            let startComponents = calendar.dateComponents([.hour, .minute], from: startTime) as DateComponents? {
             var combinedStart = todayComponents
             combinedStart.hour = startComponents.hour
             combinedStart.minute = startComponents.minute
-            minDate = calendar.date(from: combinedStart)
+            minTime = calendar.date(from: combinedStart)
         }
 
         if let endTime = timeFormatter.date(from: eventEndTimeStr),
@@ -275,7 +249,7 @@ extension ReschedulePopupVw {
             var combinedEnd = todayComponents
             combinedEnd.hour = endComponents.hour
             combinedEnd.minute = endComponents.minute
-            maxDate = calendar.date(from: combinedEnd)
+            maxTime = calendar.date(from: combinedEnd)
         }
 
         // Setup picker
@@ -285,10 +259,11 @@ extension ReschedulePopupVw {
         }
 
         // Apply min and max time (as full Date objects)
-        if let min = minDate {
+        if let min = minTime {
             startTimePicker.minimumDate = min
+            startTimePicker.date = min
         }
-        if let max = maxDate {
+        if let max = maxTime {
             startTimePicker.maximumDate = max
         }
 
@@ -305,32 +280,17 @@ extension ReschedulePopupVw {
         self.starttimeTextField.inputView = startTimePicker
         self.starttimeTextField.inputAccessoryView = toolbar
     }
-    
-//    func endTimePickerSet() {
-//        endTimePicker.datePickerMode = .time
-//        if #available(iOS 13.4, *) {
-//            endTimePicker.preferredDatePickerStyle = .wheels
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        
-//        endTimePicker.minimumDate = Date()
-//
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneEndTimePicker))
-//        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
-//        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
-//        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
-//        toolbar.tintColor = UIColor(hex: "#000000")
-//
-//        self.endtimeTextField.inputView = endTimePicker
-//        self.endtimeTextField.inputAccessoryView = toolbar
-//    }
+
     func endTimePickerSet() {
-        let eventStartTimeStr = self.endtimeTextField.text ?? ""
-        let eventEndTimeStr = self.eventDetails.endTime ?? ""
+        var eventStartTimeStr = self.starttimeTextField.text ?? ""
+        var eventEndTimeStr = ""
+        if isComeFromDashboard {
+            //eventStartTimeStr = self.starttimeTextField.text ?? ""
+            eventEndTimeStr = self.dashboardEvent?.endTime ?? ""
+        } else {
+            //eventStartTimeStr = self.starttimeTextField.text ?? ""
+            eventEndTimeStr = self.eventDetail?.endTime ?? ""
+        }
 
         // Date formatter for time only
         let timeFormatter = DateFormatter()
@@ -343,15 +303,15 @@ extension ReschedulePopupVw {
         let todayComponents = calendar.dateComponents([.year, .month, .day], from: now)
 
         // Convert startTime string to Date
-        var minDate: Date?
-        var maxDate: Date?
+        var minTime: Date?
+        var maxTime: Date?
 
         if let startTime = timeFormatter.date(from: eventStartTimeStr) {
             var startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
             var combinedStart = todayComponents
             combinedStart.hour = startComponents.hour
             combinedStart.minute = startComponents.minute
-            minDate = calendar.date(from: combinedStart)
+            minTime = calendar.date(from: combinedStart)
         }
 
         if let endTime = timeFormatter.date(from: eventEndTimeStr) {
@@ -359,7 +319,7 @@ extension ReschedulePopupVw {
             var combinedEnd = todayComponents
             combinedEnd.hour = endComponents.hour
             combinedEnd.minute = endComponents.minute
-            maxDate = calendar.date(from: combinedEnd)
+            maxTime = calendar.date(from: combinedEnd)
         }
 
         // Setup the picker
@@ -369,10 +329,11 @@ extension ReschedulePopupVw {
         }
 
         // Set min and max time
-        if let min = minDate {
+        if let min = minTime {
             endTimePicker.minimumDate = min
+            endTimePicker.date = min
         }
-        if let max = maxDate {
+        if let max = maxTime {
             endTimePicker.maximumDate = max
         }
 
