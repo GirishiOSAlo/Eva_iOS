@@ -45,10 +45,25 @@ class HotelsVC: UIViewController, XIBed {
         var finalHeight = 0.0
         for (i,hotel) in self.hotelsData.enumerated() {
             let nameLblHeight = self.heightForView(text: hotel.hotelname ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
-            let subLblHeight = self.heightForView(text: hotel.description ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
-            finalHeight = nameLblHeight + subLblHeight + 256.0
+            
+            var descLblHeight = 0.0
+            let desc = hotel.description ?? ""
+            if let attributed = desc.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+                let labelWidth = self.view.frame.width - 96.0
+                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: self.view.frame.width - 96.0)
+            } else {
+                descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            }
+            finalHeight = nameLblHeight + descLblHeight + 256.0
         }
         self.collectionVwHeight.constant = finalHeight
+    }
+    
+    func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let boundingRect = attributedText.boundingRect(with: size, options: options, context: nil)
+        return ceil(boundingRect.height)
     }
 }
 
@@ -72,8 +87,15 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         } else {
             cell.profileImgVw.image = UIImage(named: "eventPlaceholder")
         }
-        cell.nameLbl.text = hotel.hotelname
-        cell.subLbl.text = hotel.description
+        cell.nameLbl.text = hotel.hotelname ?? "--"
+        let content = hotel.description ?? "--"
+        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+            cell.subLbl.attributedText = attributed
+            cell.subLbl.textAlignment = .center
+        } else {
+            cell.subLbl.text = content
+            cell.subLbl.textAlignment = .center
+        }
         return cell
     }
     
@@ -81,9 +103,15 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
         let hotel = self.hotelsData[indexPath.row]
         let nameLblHeight = self.heightForView(text: hotel.hotelname ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
-        let subLblHeight = self.heightForView(text: hotel.description ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
-        let totalHeight = nameLblHeight + subLblHeight + 256.0
         
+        var descLblHeight = 0.0
+        let desc = hotel.description ?? ""
+        if let attributed = desc.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: self.view.frame.width - 96.0)
+        } else {
+            descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        }
+        let totalHeight = nameLblHeight + descLblHeight + 256.0
         return CGSize(width: self.listCollectionVw.frame.size.width, height: totalHeight)
     }
 }
