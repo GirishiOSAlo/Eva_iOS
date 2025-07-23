@@ -1805,11 +1805,6 @@
                             <constraint firstItem="EHb-Oi-QEU" firstAttribute="top" secondItem="zbB-aR-3dr" secondAttribute="top" id="ulY-AP-kca"/>
                             <constraint firstItem="hrK-NB-LWo" firstAttribute="top" secondItem="b68-Lj-Qbf" secondAttribute="bottom" id="weN-MU-yue"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="EHb-Oi-QEU"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="CollectionViewHeightConst" destination="RkO-ZD-JFP" id="wnr-mK-pwN"/>

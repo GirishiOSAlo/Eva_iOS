@@ -328,7 +328,7 @@ class OthersProfileVC: UIViewController {
             //unfollow button show...
             self.unfollowBtnView.isHidden = false
         }
-        else if connectionStatus == "Request Send" { //sent request
+        else if connectionStatus == "Request Sent" { //sent request
             //Friend request send...
             self.sentRequestBtnView.isHidden = false
         }
