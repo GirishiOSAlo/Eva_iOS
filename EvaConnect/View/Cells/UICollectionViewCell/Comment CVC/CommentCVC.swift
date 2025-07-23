@@ -15,6 +15,7 @@ protocol CommentsCellDelegate: AnyObject {
     func didTapReplyDislikeButton(replyComment: RepliesComment, isComeFromNews: Bool)
     func didTapReplyButton(replyComment: RepliesComment, isComeFromNews: Bool)
     //func didTapMoreButton(replyComment: RepliesComment, isComeFromNews: Bool)
+    func didTapMoreButton(in cell: CommentCVC, sender: UIButton, replyComment: RepliesComment, isComeFromNews: Bool)
 }
 
 class CommentCVC: UICollectionViewCell {
@@ -113,9 +114,9 @@ class CommentCVC: UICollectionViewCell {
 //        } 
     }
     
-    @IBAction func moreTapped(_ sender: UIButton) {
-//        let reply = self.replies[sender.tag]
-        //delegate?.didTapMoreButton(replyComment: reply, isComeFromNews: self.isComeFromNews)
+    @objc func moreTapped(_ sender: UIButton) {
+        let reply = self.replies[sender.tag]
+        delegate?.didTapMoreButton(in: self, sender: sender, replyComment: reply, isComeFromNews: self.isComeFromNews)
     }
     
 }
@@ -169,6 +170,8 @@ extension CommentCVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.dislikeBtn.addTarget(self, action: #selector(replyDislikeTapped(_:)), for: .touchUpInside)
         cell.replyBtn.tag = indexPath.row
         cell.replyBtn.addTarget(self, action: #selector(replyTapped(_:)), for: .touchUpInside)
+        cell.moreBtn.tag = indexPath.row
+        cell.moreBtn.addTarget(self, action: #selector(moreTapped(_:)), for: .touchUpInside)
 
         return cell
     }
@@ -180,5 +183,4 @@ extension CommentCVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         let cellHeight = lblHeight + 100.0
         return CGSize(width: self.insideRepliesCollectionVw.frame.size.width, height: cellHeight)
     }
-    
 }

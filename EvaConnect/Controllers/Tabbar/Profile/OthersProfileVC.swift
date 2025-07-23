@@ -324,6 +324,7 @@ class OthersProfileVC: UIViewController {
         if connectionStatus == "Connected" && self.eventID != 0 {
             //schedule meeting button show...
             self.scheduleMeetingBtnWidth.constant = 110.0
+            
         }
         else if connectionStatus == "Connected" && self.eventID == 0 {
             //unfollow...
@@ -754,7 +755,7 @@ extension OthersProfileVC {
     func connectionSendRequest(receiverID: Int, status: Int) {
         let url = EndPoints.delegateSendRequest
         let parameters = [
-            "receiverId": receiverID,
+            "receiver_id": receiverID,
             "status": status] as [String: Any]
         
         showActivity()

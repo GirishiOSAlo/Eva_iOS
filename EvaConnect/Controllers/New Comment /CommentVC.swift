@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
+class CommentVC: UIViewController, XIBed {
     
     
     @IBOutlet weak var baseView: UIView!
@@ -40,7 +40,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupUI()
+        //        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +64,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         sendBtn.layer.cornerRadius = 10.0
         self.setupTextView()
         self.registerCell()
-//        self.getComments()
+        //        self.getComments()
         self.commentsCollectionVw.reloadData()
         //Keyboard Show Hide managed...
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -108,7 +108,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
             })
         }
     }
-
+    
     @IBAction func dismissTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -139,7 +139,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = font
         label.text = text
-
+        
         label.sizeToFit()
         return label.frame.height
     }
@@ -150,13 +150,13 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         NetworkManagerr.request(EndPoints.getCommentList, method: .post, parameters: parameters) { (response) in
             
             if response.result.isSuccess {
-
-                    let jsonDecoder = JSONDecoder()
-                    let commentsRoot = try! jsonDecoder.decode(CommentsModel.self, from: response.data!)
+                
+                let jsonDecoder = JSONDecoder()
+                let commentsRoot = try! jsonDecoder.decode(CommentsModel.self, from: response.data!)
+                completion(commentsRoot.data, nil)
+                if commentsRoot.data?.count ?? 0 > 0 {
                     completion(commentsRoot.data, nil)
-                    if commentsRoot.data?.count ?? 0 > 0 {
-                        completion(commentsRoot.data, nil)
-                    }
+                }
             } else {
                 completion(nil, response.result.error)
             }
@@ -226,7 +226,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         }
     }
     
-
+    
     func didTapDropdownButton(in cell: CommentCVC) {
         guard let indexPath = commentsCollectionVw.indexPath(for: cell) else { return }
         
@@ -256,17 +256,17 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
         let commentID = comment.id ?? 0
         
         if self.isComeFromNews {
-//            if comment.isCommentLike == 1 { //--> Dislike...
-//                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "deactivate", action: "dislike")
-//            } else { //--> Like...
-                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
-//            }
+            //            if comment.isCommentLike == 1 { //--> Dislike...
+            //                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "deactivate", action: "dislike")
+            //            } else { //--> Like...
+            self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
+            //            }
         } else {
-//            if comment.isCommentLike == 1 {
-//                self.likePostComment(postId: self.postId, commentId: commentID, status: "deactivate", action: "dislike")
-//            } else {
-                self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
-//            }
+            //            if comment.isCommentLike == 1 {
+            //                self.likePostComment(postId: self.postId, commentId: commentID, status: "deactivate", action: "dislike")
+            //            } else {
+            self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
+            //            }
         }
     }
     @objc func dislikeCommentTapped(sender: UIButton){
@@ -279,7 +279,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
             self.likePostComment(postId: self.postId, commentId: commentID, status: "deactivate", action: "dislike")
         }
     }
-
+    
     //--> Comment Reply...
     @objc func replyCommentTapped(sender: UIButton){
         self.isReplyComment = true
@@ -290,7 +290,7 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
     
     //--> Coment More Button...
     @objc func commentMoreTapped(sender: UIButton){
-        FTPopOverMenu.showForSender(sender: sender, with: ["Report","Block"], done: { (selectedIndex) -> () in
+        FTPopOverMenu.showForSender(sender: sender, with: ["Report"], done: { (selectedIndex) -> () in
             switch selectedIndex {
             case 0: //Report...
                 let vc = ReportVC.instantiate()
@@ -306,7 +306,10 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
             }
         })
     }
-    
+}
+
+//Comment Reply Button....
+extension CommentVC: CommentsCellDelegate {
     //Reply Comment Like...
     func didTapReplyLikeButton(replyComment: RepliesComment, isComeFromNews: Bool) {
         let commentID = replyComment.id ?? 0
@@ -332,15 +335,27 @@ class CommentVC: UIViewController, XIBed, CommentsCellDelegate {
     //Reply Comment Reply...
     func didTapReplyButton(replyComment: RepliesComment, isComeFromNews: Bool) {
         presentAlert("Coming Soon..")
-//        self.isReplyComment = true
-//        self.postCommentId = replyComment.id ?? 0
-//        self.commentTextView.becomeFirstResponder()
+        //        self.isReplyComment = true
+        //        self.postCommentId = replyComment.id ?? 0
+        //        self.commentTextView.becomeFirstResponder()
     }
     
     //Reply Comment More...
-//    func didTapMoreButton(sender: Int, replyComment: RepliesComment, isComeFromNews: Bool) {
-//
-//    }
+    func didTapMoreButton(in cell: CommentCVC, sender: UIButton, replyComment: RepliesComment, isComeFromNews: Bool) {
+        FTPopOverMenu.showForSender(sender: sender, with: ["Report"], done: { selectedIndex in
+            switch selectedIndex {
+            case 0:
+                let vc = ReportVC.instantiate()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.delegate = self
+                vc.selectedNewsId = self.newsId
+                vc.commentID = self.commentData[sender.tag].id ?? 0
+                self.present(vc, animated: true)
+            default:
+                break
+            }
+        })
+    }
 }
 
 extension CommentVC: ReportCellDelegate {
