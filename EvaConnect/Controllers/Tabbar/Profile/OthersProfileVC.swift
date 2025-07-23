@@ -40,6 +40,8 @@ class OthersProfileVC: UIViewController {
     @IBOutlet weak var declineBtn: UIButton!
     @IBOutlet weak var scheduleMeetingBtnView: UIView!
     @IBOutlet weak var scheduleMeetingBtn: UIButton!
+    @IBOutlet weak var scheduleMeetingBtnWidth: NSLayoutConstraint!
+    
     @IBOutlet weak var sendRequestBtnView: UIView!
     @IBOutlet weak var sendRequestBtn: UIButton!
     
@@ -313,15 +315,15 @@ class OthersProfileVC: UIViewController {
         self.sendRequestBtnView.isHidden = true
         
         if self.isComeFromDelegate {
-            self.scheduleMeetingBtnView.isHidden = false
+            self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
         } else {
-            self.scheduleMeetingBtnView.isHidden = true
+            self.scheduleMeetingBtnWidth.constant = 0 //schedule meeting button hide...
         }
         
         let connectionStatus = user.connectionStatus ?? ""
         if connectionStatus == "Connected" && self.eventID != 0 {
             //schedule meeting button show...
-            self.scheduleMeetingBtnView.isHidden = false
+            self.scheduleMeetingBtnWidth.constant = 110.0
         }
         else if connectionStatus == "Connected" && self.eventID == 0 {
             //unfollow...
