@@ -536,7 +536,7 @@ extension CreateMeetingVC {
         var maxTime: Date?
 
         if let startTime = timeFormatter.date(from: eventStartTimeStr) {
-            var startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
+            let startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
             var combinedStart = todayComponents
             combinedStart.hour = startComponents.hour
             combinedStart.minute = startComponents.minute
@@ -546,7 +546,7 @@ extension CreateMeetingVC {
         }
 
         if let endTime = timeFormatter.date(from: eventEndTimeStr) {
-            var endComponents = calendar.dateComponents([.hour, .minute], from: endTime)
+            let endComponents = calendar.dateComponents([.hour, .minute], from: endTime)
             var combinedEnd = todayComponents
             combinedEnd.hour = endComponents.hour
             combinedEnd.minute = endComponents.minute
