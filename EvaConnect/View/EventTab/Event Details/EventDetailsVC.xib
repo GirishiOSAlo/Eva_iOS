@@ -38,6 +38,8 @@
                 <outlet property="eventWebsiteLabel" destination="SC0-PB-nzs" id="cUc-nv-4x8"/>
                 <outlet property="infoIconImgView" destination="LXB-eA-h78" id="JXj-RI-Edq"/>
                 <outlet property="infoLabel" destination="hMG-BA-cdN" id="rJR-Ig-6Y8"/>
+                <outlet property="interestedBtn" destination="eNm-zS-FSA" id="IEZ-hG-Am5"/>
+                <outlet property="interestedBtnVw" destination="HUr-Mn-mVl" id="oZy-y7-Lem"/>
                 <outlet property="mainContainerView" destination="dld-tc-kX2" id="v2s-xf-JMZ"/>
                 <outlet property="noOfJoinedPeopleLabel" destination="aBa-iP-O8i" id="rxs-4v-L9y"/>
                 <outlet property="per1imgView" destination="IWx-e3-966" id="LJ1-ym-w8C"/>
@@ -397,7 +399,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Tks-3W-AnG">
                             <rect key="frame" x="20" y="20" width="400" height="49"/>
                             <subviews>
-                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IbP-NS-m7m" userLabel="ReqToJoin View">
+                                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IbP-NS-m7m" userLabel="ReqToJoin View">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="49"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Af0-fE-jE8">
@@ -422,6 +424,33 @@
                                         <constraint firstItem="Af0-fE-jE8" firstAttribute="leading" secondItem="IbP-NS-m7m" secondAttribute="leading" id="ZM3-bT-HxN"/>
                                         <constraint firstAttribute="trailing" secondItem="Af0-fE-jE8" secondAttribute="trailing" id="nnH-3L-FsB"/>
                                         <constraint firstAttribute="height" constant="49" id="zVy-wj-asQ"/>
+                                    </constraints>
+                                </view>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUr-Mn-mVl" userLabel="Interested View">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="49"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNm-zS-FSA">
+                                            <rect key="frame" x="0.0" y="0.0" width="400" height="49"/>
+                                            <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="49" id="6N4-zF-4de"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="I'm Interested">
+                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="interestedBtn:" destination="-1" eventType="touchUpInside" id="4zD-SU-fsV"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="eNm-zS-FSA" secondAttribute="bottom" id="6qk-wc-WQi"/>
+                                        <constraint firstItem="eNm-zS-FSA" firstAttribute="top" secondItem="HUr-Mn-mVl" secondAttribute="top" id="GV3-7e-rp2"/>
+                                        <constraint firstItem="eNm-zS-FSA" firstAttribute="leading" secondItem="HUr-Mn-mVl" secondAttribute="leading" id="TEK-wY-wfi"/>
+                                        <constraint firstAttribute="height" constant="49" id="hz9-rZ-ka7"/>
+                                        <constraint firstAttribute="trailing" secondItem="eNm-zS-FSA" secondAttribute="trailing" id="xWZ-zy-3MW"/>
                                     </constraints>
                                 </view>
                                 <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILZ-HF-oyv" userLabel="Accept Decline View">

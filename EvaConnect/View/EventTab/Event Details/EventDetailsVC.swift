@@ -56,6 +56,9 @@ class EventDetailsVC: UIViewController, XIBed {
     @IBOutlet weak var acceptDeclineBtnVw: UIView!
     @IBOutlet weak var acceptBtn: UIButton!
     @IBOutlet weak var rejectBtn: UIButton!
+    @IBOutlet weak var interestedBtnVw: UIView!
+    @IBOutlet weak var interestedBtn: UIButton!
+    
     
     
     var eventId = 0
@@ -176,12 +179,18 @@ class EventDetailsVC: UIViewController, XIBed {
         //--> Bottom Button Ui Managed...
         self.requestToJoinBtnVw.isHidden = true
         self.acceptDeclineBtnVw.isHidden = true
+        self.interestedBtnVw.isHidden = true
         let isInvited = eventDetail.isinvited ?? 0
         let eventAttendeesStatus = eventDetail.eventAttendeesStatus ?? ""
+        var isPrivate = self.eventDetail?.isPrivate ?? 0
         
-        if eventAttendeesStatus == "" && isInvited == 1 {
+        if isPrivate == 0 && eventAttendeesStatus == "" {
+            self.interestedBtnVw.isHidden = false
+        }
+        else if eventAttendeesStatus == "" && isInvited == 1 {
             self.acceptDeclineBtnVw.isHidden = false
-        } else {
+        }
+        else {
             self.requestToJoinBtnVw.isHidden = false
             if eventAttendeesStatus == "" {
                 requstToJoinBtn.isEnabled = true
@@ -211,6 +220,10 @@ class EventDetailsVC: UIViewController, XIBed {
     
     @IBAction func rejectBtnTapped(_ sender: UIButton) {
         reqToJoin(eventId: self.eventId, type: 3)
+    }
+    
+    @IBAction func interestedBtn(_ sender: Any) {
+        reqToJoin(eventId: self.eventId, type: 2)
     }
 }
 
