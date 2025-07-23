@@ -74,6 +74,11 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var gMeetId: String = ""
     var isComeFromDelegate = false
     
+    var eventStartDate = ""
+    var eventEndDate = ""
+    var eventStartTime = ""
+    var eventEndTime = ""
+    
     private let scopes = [kGTLRAuthScopeCalendar]
     private let service = GTLRCalendarService()
 
@@ -168,18 +173,34 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     }
     
     @IBAction func onDatePickerBtnTap(_ sender: UIButton) {
-        startDatePickerSet()
-        self.startDate.becomeFirstResponder()
+        if self.selectEvent.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "First select a event.")
+        } else {
+            startDatePickerSet()
+            self.startDate.becomeFirstResponder()
+        }
     }
     
     @IBAction func onStartTimePickerBtnTap(_ sender: UIButton) {
-        startTimePickerSet()
-        self.startTime.becomeFirstResponder()
+        if self.selectEvent.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "First select a event.")
+        } else {
+            startTimePickerSet()
+            self.startTime.becomeFirstResponder()
+        }
     }
     
     @IBAction func onEndTimePickerBtnTap(_ sender: UIButton) {
-        endTimePickerSet()
-        self.endTime.becomeFirstResponder()
+        if self.selectEvent.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "First select a event.")
+        }
+        else if self.startTime.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "First select a start time.")
+        }
+        else {
+            endTimePickerSet()
+            self.endTime.becomeFirstResponder()
+        }
     }
     
     @IBAction func SelectLoactionBtnTapped(_ sender: UIButton) {
@@ -207,9 +228,17 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
                 popupvc.modalPresentationStyle = .overFullScreen
                 popupvc.activeDataType = .currentEvent
                 popupvc.currentEventList = self.currentEventList
-                popupvc.completion = { passedAns, passedId in
-                    self.selectEvent.text = passedAns
-                    self.eventID = passedId
+//                popupvc.completion = { passedAns, passedId in
+//                    self.selectEvent.text = passedAns
+//                    self.eventID = passedId
+//                }
+                popupvc.eventCompletion = { selectedEvent in
+                    self.selectEvent.text = selectedEvent.name ?? ""
+                    self.eventID = selectedEvent.id ?? 0
+                    self.eventStartDate = selectedEvent.startDate ?? ""
+                    self.eventEndDate = selectedEvent.endDate ?? ""
+                    self.eventStartTime = selectedEvent.startTime ?? ""
+                    self.eventEndTime = selectedEvent.endTime ?? ""
                 }
                 self.navigationController?.present(popupvc, animated: true)
             }
@@ -357,12 +386,19 @@ extension CreateMeetingVC {
     }
     
     func startDatePickerSet() {
-        let eventStartDateStr = self.eventDetails[0].startDate ?? ""
-        let eventEndDateStr = self.eventDetails[0].endDate ?? ""
-
+        var eventStartDateStr = ""
+        var eventEndDateStr = ""
+        if self.eventDetails.count == 0 {
+            eventStartDateStr = self.eventStartDate
+            eventEndDateStr = self.eventEndDate
+        } else {
+            eventStartDateStr = self.eventDetails[0].startDate ?? ""
+            eventEndDateStr = self.eventDetails[0].endDate ?? ""
+        }
+        
         // Date formatter to convert string to Date
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "dd-MMM-yyyy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         // Convert strings to Date
@@ -377,6 +413,7 @@ extension CreateMeetingVC {
         // Set min and max dates if conversion is successful
         if let start = eventStartDate {
             startDatePicker.minimumDate = start
+            startDatePicker.date = start // Set picker to start from start date
         }
         if let end = eventEndDate {
             startDatePicker.maximumDate = end
@@ -394,12 +431,22 @@ extension CreateMeetingVC {
 
         self.startDate.inputView = startDatePicker
         self.startDate.inputAccessoryView = toolbar
+        
+        
     }
 
     
     func startTimePickerSet() {
-        let eventStartTimeStr = self.eventDetails[0].startTime ?? ""
-        let eventEndTimeStr = self.eventDetails[0].endTime ?? ""
+        var eventStartTimeStr = ""
+        var eventEndTimeStr = ""
+        
+        if self.eventDetails.count == 0 {
+            eventStartTimeStr = self.eventStartTime
+            eventEndTimeStr = self.eventEndTime
+        } else {
+            eventStartTimeStr = self.eventDetails[0].startTime ?? ""
+            eventEndTimeStr = self.eventDetails[0].endTime ?? ""
+        }
 
         // Date formatter for time only
         let timeFormatter = DateFormatter()
@@ -412,15 +459,15 @@ extension CreateMeetingVC {
         let todayComponents = calendar.dateComponents([.year, .month, .day], from: now)
 
         // Convert strings to Date objects (applying today's date)
-        var minDate: Date?
-        var maxDate: Date?
+        var minTime: Date?
+        var maxTime: Date?
         
         if let startTime = timeFormatter.date(from: eventStartTimeStr),
            let startComponents = calendar.dateComponents([.hour, .minute], from: startTime) as DateComponents? {
             var combinedStart = todayComponents
             combinedStart.hour = startComponents.hour
             combinedStart.minute = startComponents.minute
-            minDate = calendar.date(from: combinedStart)
+            minTime = calendar.date(from: combinedStart)
         }
 
         if let endTime = timeFormatter.date(from: eventEndTimeStr),
@@ -428,7 +475,7 @@ extension CreateMeetingVC {
             var combinedEnd = todayComponents
             combinedEnd.hour = endComponents.hour
             combinedEnd.minute = endComponents.minute
-            maxDate = calendar.date(from: combinedEnd)
+            maxTime = calendar.date(from: combinedEnd)
         }
 
         // Setup picker
@@ -438,10 +485,11 @@ extension CreateMeetingVC {
         }
 
         // Apply min and max time (as full Date objects)
-        if let min = minDate {
+        if let min = minTime {
             startTimePicker.minimumDate = min
+            startTimePicker.date = min
         }
-        if let max = maxDate {
+        if let max = maxTime {
             startTimePicker.maximumDate = max
         }
 
@@ -461,9 +509,18 @@ extension CreateMeetingVC {
 
     
     func endTimePickerSet() {
-        let eventStartTimeStr = self.eventDetails[0].startTime ?? ""
-        let eventEndTimeStr = self.eventDetails[0].endTime ?? ""
+        let eventStartTimeStr = self.startTime.text ?? ""
+        var eventEndTimeStr = ""
+        
+        if self.eventDetails.count == 0 {
+            //eventStartTimeStr = self.eventStartTime
+            eventEndTimeStr = self.eventEndTime
+        } else {
+            //eventStartTimeStr = self.eventDetails[0].startTime ?? ""
+            eventEndTimeStr = self.eventDetails[0].endTime ?? ""
+        }
 
+        
         // Date formatter for time only
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm" // Change to "hh:mm a" if your time includes AM/PM
@@ -475,15 +532,17 @@ extension CreateMeetingVC {
         let todayComponents = calendar.dateComponents([.year, .month, .day], from: now)
 
         // Convert startTime string to Date
-        var minDate: Date?
-        var maxDate: Date?
+        var minTime: Date?
+        var maxTime: Date?
 
         if let startTime = timeFormatter.date(from: eventStartTimeStr) {
             var startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
             var combinedStart = todayComponents
             combinedStart.hour = startComponents.hour
             combinedStart.minute = startComponents.minute
-            minDate = calendar.date(from: combinedStart)
+            if let baseTime = calendar.date(from: combinedStart) {
+                minTime = calendar.date(byAdding: .minute, value: 15, to: baseTime)
+            }
         }
 
         if let endTime = timeFormatter.date(from: eventEndTimeStr) {
@@ -491,7 +550,7 @@ extension CreateMeetingVC {
             var combinedEnd = todayComponents
             combinedEnd.hour = endComponents.hour
             combinedEnd.minute = endComponents.minute
-            maxDate = calendar.date(from: combinedEnd)
+            maxTime = calendar.date(from: combinedEnd)
         }
 
         // Setup the picker
@@ -501,10 +560,11 @@ extension CreateMeetingVC {
         }
 
         // Set min and max time
-        if let min = minDate {
+        if let min = minTime {
             endTimePicker.minimumDate = min
+            endTimePicker.date = min
         }
-        if let max = maxDate {
+        if let max = maxTime {
             endTimePicker.maximumDate = max
         }
 

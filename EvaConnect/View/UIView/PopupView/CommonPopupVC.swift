@@ -33,6 +33,7 @@ class CommonPopupVC: UIViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
     var completion: ((String, Int) -> ())? = nil
+    var eventCompletion: ((EventListData) -> ())? = nil
     var isComeFromEventDelegate = false
     var isRegion = false
     var stringArray : [String] = []
@@ -213,10 +214,11 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             self.dismiss(animated: true)
             self.completion?(selectedStr, selectedID)
         case .currentEvent:
-            let selectedID = currentEventList[indexPath.row].id ?? 0
-            let selectedStr = currentEventList[indexPath.row].name ?? ""
+//            let selectedID = currentEventList[indexPath.row].id ?? 0
+//            let selectedStr = currentEventList[indexPath.row].name ?? ""
             self.dismiss(animated: true)
-            self.completion?(selectedStr, selectedID)
+            //self.completion?(selectedStr, selectedID)
+            self.eventCompletion?(self.currentEventList[indexPath.row])
         }
     }
     

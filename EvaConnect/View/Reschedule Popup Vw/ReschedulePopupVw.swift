@@ -282,7 +282,7 @@ extension ReschedulePopupVw {
     }
 
     func endTimePickerSet() {
-        var eventStartTimeStr = self.starttimeTextField.text ?? ""
+        let eventStartTimeStr = self.starttimeTextField.text ?? ""
         var eventEndTimeStr = ""
         if isComeFromDashboard {
             //eventStartTimeStr = self.starttimeTextField.text ?? ""
@@ -311,7 +311,9 @@ extension ReschedulePopupVw {
             var combinedStart = todayComponents
             combinedStart.hour = startComponents.hour
             combinedStart.minute = startComponents.minute
-            minTime = calendar.date(from: combinedStart)
+            if let baseTime = calendar.date(from: combinedStart) {
+                minTime = calendar.date(byAdding: .minute, value: 15, to: baseTime)
+            }
         }
 
         if let endTime = timeFormatter.date(from: eventEndTimeStr) {
