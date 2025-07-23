@@ -321,13 +321,8 @@ class OthersProfileVC: UIViewController {
         }
         
         let connectionStatus = user.connectionStatus ?? ""
-        if connectionStatus == "Connected" && self.eventID != 0 {
-            //schedule meeting button show...
-            self.scheduleMeetingBtnWidth.constant = 110.0
-            
-        }
-        else if connectionStatus == "Connected" && self.eventID == 0 {
-            //unfollow...
+        if connectionStatus == "Connected" {
+            //unfollow button show...
             self.unfollowBtnView.isHidden = false
         }
         else if connectionStatus == "sent request" {

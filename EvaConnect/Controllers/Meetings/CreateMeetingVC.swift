@@ -220,7 +220,6 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
             } else {
                 selectedEvent = [self.eventDetails[0].name ?? ""]
             }
-            let selectedEventName = [self.eventDetails[0].name ?? ""]
             let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
             popupvc.modalPresentationStyle = .overFullScreen
             popupvc.activeDataType = .string
@@ -276,9 +275,56 @@ extension CreateMeetingVC {
                 let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
                 if !(currentEventRoot.error ?? false) {
                     self.currentEventList = currentEventRoot.data ?? []
-                    self.fetchCurrentEventData()
+                    self.fetchCreateMeetingDetails()
                 } else {
                     self.presentAlert("Failure", currentEventRoot.message, nil)
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func createEventMeeting() {
+        let url = EndPoints.createEventMeetings
+        
+        var requestedID = ""
+        var invitedUserId:[Int] = []
+        
+        if self.eventID == 0 { //come from side menu...
+            requestedID = "\(self.invitedIds[0])"
+            if !invitedIds.isEmpty {
+                invitedIds.removeFirst()
+                invitedUserId = invitedIds
+            }
+        } else {
+            requestedID = "\(self.otherUserID)"
+            invitedUserId = self.invitedIds
+        }
+        
+        let parameters = [
+            "event_id": "\(eventID)",
+            "title": name.text ?? "",
+            "date": startDate.text ?? "",
+            "start_time": startTime.text ?? "",
+            "end_time": endTime.text ?? "",
+            "description": descriptionTV.text ?? "",
+            "location_id": selectedMeetingLocationId,
+            "requested_to_id": requestedID,
+            "invited_user_ids": invitedUserId ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(networkEventRoot.error) {
+                    print("Success")
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                } else {
+                    print("Error :: \(networkEventRoot.message)")
                 }
             } catch {
                 print("Error:: ", error)
@@ -522,9 +568,6 @@ extension CreateMeetingVC {
         else if self.endTime.text == "" {
             self.makeAlert(titleMsg: "Error", messageData: "Please select an end time.")
         }
-        else if self.selectedMeetingLocationId == 0 {
-            self.makeAlert(titleMsg: "Error", messageData: "Please select a location.")
-        }
         else {
             self.createEventMeeting()
         }
@@ -552,40 +595,6 @@ extension CreateMeetingVC: UITextViewDelegate {
 }
 
 extension CreateMeetingVC {
-    
-    func createEventMeeting() {
-        let url = EndPoints.createEventMeetings
-        let parameters = [
-            "event_id": "\(eventID)",
-            "title": name.text ?? "",
-            "date": startDate.text ?? "",
-            "start_time": startTime.text ?? "",
-            "end_time": endTime.text ?? "",
-            "description": descriptionTV.text ?? "",
-            "location_id": selectedMeetingLocationId,
-            "requested_to_id": "\(self.otherUserID)",
-            "invited_user_ids": self.invitedIds ] as [String: Any]
-        
-        showActivity()
-        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
-            self.hideActivity()
-            do {
-                let jsonDecoder = JSONDecoder()
-                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
-                if !(networkEventRoot.error) {
-                    print("Success")
-                    self.successPopupVw.isHidden = false
-                    self.addAnimation()
-                } else {
-                    print("Error :: \(networkEventRoot.message)")
-                }
-            } catch {
-                print("Error:: ", error)
-            }
-        }
-    }
-    
-    
     func createMeetingAPICall(meetId: String) {
         
         let parameters = [

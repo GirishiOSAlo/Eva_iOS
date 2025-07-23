@@ -212,9 +212,6 @@ class EventDetailsVC: UIViewController, XIBed {
     @IBAction func rejectBtnTapped(_ sender: UIButton) {
         reqToJoin(eventId: self.eventId, type: 3)
     }
-    
-    
-    
 }
 
 extension EventDetailsVC {
