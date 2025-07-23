@@ -41,9 +41,10 @@ class OthersProfileVC: UIViewController {
     @IBOutlet weak var scheduleMeetingBtnView: UIView!
     @IBOutlet weak var scheduleMeetingBtn: UIButton!
     @IBOutlet weak var scheduleMeetingBtnWidth: NSLayoutConstraint!
-    
     @IBOutlet weak var sendRequestBtnView: UIView!
     @IBOutlet weak var sendRequestBtn: UIButton!
+    @IBOutlet weak var sentRequestBtnView: UIView!
+    @IBOutlet weak var sentRequestBtn: UIButton!
     
     @IBOutlet weak var chatBtn: UIButton!
     @IBOutlet weak var downloadResumeBtn: UIButton!
@@ -160,6 +161,7 @@ class OthersProfileVC: UIViewController {
         self.declineBtn.layer.cornerRadius = 13
         self.scheduleMeetingBtn.layer.cornerRadius = 13
         self.sendRequestBtn.layer.cornerRadius = 13
+        self.sentRequestBtn.layer.cornerRadius = 13
         
         
         self.inviteToFollowBtn.layer.cornerRadius = 13
@@ -313,6 +315,7 @@ class OthersProfileVC: UIViewController {
         self.unblockBtnView.isHidden = true
         self.aacceptDeclineBtnView.isHidden = true
         self.sendRequestBtnView.isHidden = true
+        self.sentRequestBtnView.isHidden = true
         
         if self.isComeFromDelegate {
             self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
@@ -325,9 +328,9 @@ class OthersProfileVC: UIViewController {
             //unfollow button show...
             self.unfollowBtnView.isHidden = false
         }
-        else if connectionStatus == "sent request" {
+        else if connectionStatus == "Request Send" { //sent request
             //Friend request send...
-            self.sendRequestBtnView.isHidden = false
+            self.sentRequestBtnView.isHidden = false
         }
         else if connectionStatus == "received request" {
             //accept reject btn show...

@@ -2729,11 +2729,11 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-JI-jDK">
                                                         <rect key="frame" x="16" y="190" width="90" height="40"/>
                                                         <subviews>
-                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTi-M3-SDM" userLabel="Follow View">
-                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTi-M3-SDM" userLabel="Follow View">
+                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
                                                                 <subviews>
                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CfP-oG-h9i">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
                                                                         <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -2864,6 +2864,30 @@
                                                                     <constraint firstAttribute="bottom" secondItem="nDJ-kD-5Rr" secondAttribute="bottom" id="bY8-2N-l0T"/>
                                                                     <constraint firstAttribute="trailing" secondItem="nDJ-kD-5Rr" secondAttribute="trailing" id="fmO-rR-4OJ"/>
                                                                     <constraint firstItem="nDJ-kD-5Rr" firstAttribute="top" secondItem="ths-af-HpM" secondAttribute="top" id="oXf-0z-liK"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0m-qR-z40" userLabel="Sent Req View">
+                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kEu-xJ-F4m">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                                        <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="0.75" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <state key="normal" title="Request Send">
+                                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="followBtnTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="tJZ-1W-Sgy"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="kEu-xJ-F4m" secondAttribute="bottom" id="G3H-od-uPd"/>
+                                                                    <constraint firstItem="kEu-xJ-F4m" firstAttribute="top" secondItem="q0m-qR-z40" secondAttribute="top" id="MRH-N8-W2W"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="kEu-xJ-F4m" secondAttribute="trailing" id="RPy-Mj-6w8"/>
+                                                                    <constraint firstItem="kEu-xJ-F4m" firstAttribute="leading" secondItem="q0m-qR-z40" secondAttribute="leading" id="h5s-wl-ufV"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
@@ -3423,6 +3447,8 @@
                         <outlet property="sendMsgPend" destination="uif-Xk-gHP" id="1wD-h7-ePW"/>
                         <outlet property="sendRequestBtn" destination="nDJ-kD-5Rr" id="pyY-6H-4aP"/>
                         <outlet property="sendRequestBtnView" destination="ths-af-HpM" id="gMn-td-vI7"/>
+                        <outlet property="sentRequestBtn" destination="kEu-xJ-F4m" id="Fcy-OS-oz2"/>
+                        <outlet property="sentRequestBtnView" destination="q0m-qR-z40" id="41q-Af-MDE"/>
                         <outlet property="unblockBtn" destination="ruW-Jg-zcs" id="Bmd-Jc-uTp"/>
                         <outlet property="unblockBtnView" destination="ayA-fj-QHB" id="aVS-3I-8AF"/>
                         <outlet property="unfollowBtn" destination="pEd-py-HI2" id="Kup-9C-u9f"/>
