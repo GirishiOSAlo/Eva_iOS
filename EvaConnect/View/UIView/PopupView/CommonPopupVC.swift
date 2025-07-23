@@ -22,6 +22,7 @@ enum TableDataType {
     case category
     case company
     case locationRoom
+    case currentEvent
 }
 
 class CommonPopupVC: UIViewController {
@@ -39,6 +40,8 @@ class CommonPopupVC: UIViewController {
     var categoryArray : [CategoryList] = []
     var companyArray : [Companylist] = []
     var eventLocations: [EventLocation] = []
+    var currentEventList: [EventListData] = []
+    
     weak var businessSectorDismissDelegate: BusinessSectorPopUpDismiss?
     weak var regionDismissDelegate: RegionPopUpDismiss?
     
@@ -73,6 +76,8 @@ class CommonPopupVC: UIViewController {
             rowCount = companyArray.count
         case .locationRoom:
             rowCount = eventLocations.count
+        case .currentEvent:
+            rowCount = currentEventList.count
         }
         
         let tblHeight = CGFloat(rowCount * 50) + 40.0
@@ -113,6 +118,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             return companyArray.count
         case .locationRoom:
             return eventLocations.count
+        case .currentEvent:
+            return currentEventList.count
         }
     }
     
@@ -137,6 +144,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             cell.titleName.text = companyArray[indexPath.row].companyName
         case .locationRoom:
             cell.titleName.text = eventLocations[indexPath.row].name
+        case .currentEvent:
+            cell.titleName.text = currentEventList[indexPath.row].name
         }
         return cell
     }
@@ -201,6 +210,11 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
         case .locationRoom:
             let selectedID = eventLocations[indexPath.row].id ?? 0
             let selectedStr = eventLocations[indexPath.row].name ?? ""
+            self.dismiss(animated: true)
+            self.completion?(selectedStr, selectedID)
+        case .currentEvent:
+            let selectedID = currentEventList[indexPath.row].id ?? 0
+            let selectedStr = currentEventList[indexPath.row].name ?? ""
             self.dismiss(animated: true)
             self.completion?(selectedStr, selectedID)
         }

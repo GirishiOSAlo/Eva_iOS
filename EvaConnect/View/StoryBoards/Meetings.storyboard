@@ -1180,16 +1180,71 @@
                                 <rect key="frame" x="0.0" y="99" width="414" height="693"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmR-YL-b8c" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="685"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="784"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Event" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2o-5M-23z" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                                                <rect key="frame" x="36" y="16" width="100.5" height="19.5"/>
+                                                <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvU-OK-Y74" userLabel="EventView">
+                                                <rect key="frame" x="36" y="47.5" width="341" height="42.5"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Event" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y1M-cL-HQV">
+                                                        <rect key="frame" x="12" y="12" width="285" height="18.5"/>
+                                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="n2E-ot-F4M">
+                                                        <rect key="frame" x="309" y="13.5" width="16" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="16" id="E8c-CN-oqz"/>
+                                                            <constraint firstAttribute="height" constant="16" id="xsF-IJ-vGh"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qqY-pZ-Gil">
+                                                        <rect key="frame" x="0.0" y="0.0" width="341" height="42.5"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <action selector="selectEventBtnTapped:" destination="vFp-hN-J6D" eventType="touchUpInside" id="AIl-dy-f6P"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="n2E-ot-F4M" firstAttribute="centerY" secondItem="cvU-OK-Y74" secondAttribute="centerY" id="3T7-dc-jOz"/>
+                                                    <constraint firstAttribute="trailing" secondItem="n2E-ot-F4M" secondAttribute="trailing" constant="16" id="7CI-o3-uTq"/>
+                                                    <constraint firstItem="y1M-cL-HQV" firstAttribute="leading" secondItem="cvU-OK-Y74" secondAttribute="leading" constant="12" id="GWZ-fV-4Bc"/>
+                                                    <constraint firstItem="y1M-cL-HQV" firstAttribute="top" secondItem="cvU-OK-Y74" secondAttribute="top" constant="12" id="Wff-Lo-SOg"/>
+                                                    <constraint firstAttribute="bottom" secondItem="qqY-pZ-Gil" secondAttribute="bottom" id="g3m-Vt-guS"/>
+                                                    <constraint firstItem="n2E-ot-F4M" firstAttribute="leading" secondItem="y1M-cL-HQV" secondAttribute="trailing" constant="12" id="iP0-hp-yhy"/>
+                                                    <constraint firstItem="qqY-pZ-Gil" firstAttribute="leading" secondItem="cvU-OK-Y74" secondAttribute="leading" id="jgV-Ro-GXo"/>
+                                                    <constraint firstAttribute="bottom" secondItem="y1M-cL-HQV" secondAttribute="bottom" constant="12" id="kPs-uJ-Ysg"/>
+                                                    <constraint firstItem="qqY-pZ-Gil" firstAttribute="top" secondItem="cvU-OK-Y74" secondAttribute="top" id="qNY-sz-keF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="qqY-pZ-Gil" secondAttribute="trailing" id="uyx-cl-YlH"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" red="0.51372549020000002" green="0.47843137250000001" blue="0.53333333329999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ilt-MT-o4j" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="16" width="36" height="19.5"/>
+                                                <rect key="frame" x="36" y="115" width="36" height="19.5"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvy-gh-bFQ" userLabel="TitleView">
-                                                <rect key="frame" x="36" y="47.5" width="341" height="42.5"/>
+                                                <rect key="frame" x="36" y="146.5" width="341" height="42.5"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKi-T3-XX3">
                                                         <rect key="frame" x="12" y="12" width="309" height="18.5"/>
@@ -1217,13 +1272,13 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgp-te-QDN" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="115" width="37.5" height="19.5"/>
+                                                <rect key="frame" x="36" y="214" width="37.5" height="19.5"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZx-Ve-WMQ" userLabel="Date View">
-                                                <rect key="frame" x="36" y="159.5" width="341" height="46"/>
+                                                <rect key="frame" x="36" y="258.5" width="341" height="46"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_calendar" translatesAutoresizingMaskIntoConstraints="NO" id="UNo-W5-U1e">
                                                         <rect key="frame" x="12" y="15" width="16" height="16"/>
@@ -1275,7 +1330,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hG9-Xh-Vaa" userLabel="TimeView">
-                                                <rect key="frame" x="36" y="230.5" width="341" height="90"/>
+                                                <rect key="frame" x="36" y="329.5" width="341" height="90"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="PvH-49-Tio">
                                                         <rect key="frame" x="0.0" y="0.0" width="341" height="90"/>
@@ -1437,13 +1492,13 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfH-UR-iCr" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="345.5" width="69.5" height="19.5"/>
+                                                <rect key="frame" x="36" y="444.5" width="69.5" height="19.5"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ufk-Zy-AcC" userLabel="LocationView">
-                                                <rect key="frame" x="36" y="373" width="341" height="36"/>
+                                                <rect key="frame" x="36" y="472" width="341" height="36"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Meeting Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z00-UJ-2X7">
                                                         <rect key="frame" x="12" y="5" width="291" height="26"/>
@@ -1542,7 +1597,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40z-Ob-yPT" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="433" width="56" height="19.5"/>
+                                                <rect key="frame" x="36" y="532" width="56" height="19.5"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1554,7 +1609,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4Q-zh-icW">
-                                                <rect key="frame" x="36" y="467.5" width="341" height="33"/>
+                                                <rect key="frame" x="36" y="566.5" width="341" height="33"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
@@ -1572,13 +1627,13 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invited" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3n-fs-Dwq" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="525.5" width="55.5" height="19.5"/>
+                                                <rect key="frame" x="36" y="624.5" width="55.5" height="19.5"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PDB-aa-0PV">
-                                                <rect key="frame" x="10" y="565" width="394" height="100"/>
+                                                <rect key="frame" x="10" y="664" width="394" height="100"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="RkO-ZD-JFP"/>
@@ -1598,13 +1653,17 @@
                                             <constraint firstItem="yW6-G0-wzY" firstAttribute="top" secondItem="U4Q-zh-icW" secondAttribute="top" id="4cg-wG-FP8"/>
                                             <constraint firstAttribute="trailing" secondItem="PDB-aa-0PV" secondAttribute="trailing" constant="10" id="5Wn-br-Ltd"/>
                                             <constraint firstItem="yW6-G0-wzY" firstAttribute="leading" secondItem="U4Q-zh-icW" secondAttribute="leading" constant="8" id="61P-bV-6yA"/>
-                                            <constraint firstItem="ilt-MT-o4j" firstAttribute="top" secondItem="TmR-YL-b8c" secondAttribute="top" constant="16" id="793-GQ-3o5"/>
+                                            <constraint firstItem="cvU-OK-Y74" firstAttribute="top" secondItem="N2o-5M-23z" secondAttribute="bottom" constant="12" id="9j2-yH-DgO"/>
                                             <constraint firstItem="nZx-Ve-WMQ" firstAttribute="leading" secondItem="TmR-YL-b8c" secondAttribute="leading" constant="36" id="9pk-IG-73a"/>
+                                            <constraint firstItem="N2o-5M-23z" firstAttribute="top" secondItem="TmR-YL-b8c" secondAttribute="top" constant="16" id="9s0-7X-jfF"/>
                                             <constraint firstItem="hG9-Xh-Vaa" firstAttribute="leading" secondItem="Jvy-gh-bFQ" secondAttribute="leading" id="BkP-OL-7b4"/>
                                             <constraint firstItem="yW6-G0-wzY" firstAttribute="bottom" secondItem="U4Q-zh-icW" secondAttribute="bottom" id="FKT-tw-12B"/>
+                                            <constraint firstItem="N2o-5M-23z" firstAttribute="leading" secondItem="TmR-YL-b8c" secondAttribute="leading" constant="36" id="GNI-nI-Enm"/>
+                                            <constraint firstItem="cvU-OK-Y74" firstAttribute="leading" secondItem="TmR-YL-b8c" secondAttribute="leading" constant="36" id="GqN-x9-Fkd"/>
                                             <constraint firstItem="Ufk-Zy-AcC" firstAttribute="leading" secondItem="cfH-UR-iCr" secondAttribute="leading" id="HtA-7B-5GJ"/>
                                             <constraint firstItem="Jvy-gh-bFQ" firstAttribute="leading" secondItem="TmR-YL-b8c" secondAttribute="leading" constant="36" id="JDc-RC-eLY"/>
                                             <constraint firstAttribute="trailing" secondItem="U4Q-zh-icW" secondAttribute="trailing" constant="37" id="KHi-c0-G4V"/>
+                                            <constraint firstAttribute="trailing" secondItem="cvU-OK-Y74" secondAttribute="trailing" constant="37" id="KRs-QV-j7R"/>
                                             <constraint firstItem="U4Q-zh-icW" firstAttribute="top" secondItem="40z-Ob-yPT" secondAttribute="bottom" constant="15" id="SQM-m7-K7f"/>
                                             <constraint firstItem="cfH-UR-iCr" firstAttribute="top" secondItem="hG9-Xh-Vaa" secondAttribute="bottom" constant="25" id="Tg9-wf-CpJ"/>
                                             <constraint firstItem="Dgp-te-QDN" firstAttribute="leading" secondItem="ilt-MT-o4j" secondAttribute="leading" id="TzX-Za-YtJ"/>
@@ -1628,6 +1687,7 @@
                                             <constraint firstItem="cfH-UR-iCr" firstAttribute="leading" secondItem="ilt-MT-o4j" secondAttribute="leading" id="mgm-UD-9LQ"/>
                                             <constraint firstItem="Y3n-fs-Dwq" firstAttribute="top" secondItem="U4Q-zh-icW" secondAttribute="bottom" constant="25" id="ofl-AD-v85"/>
                                             <constraint firstItem="Ufk-Zy-AcC" firstAttribute="trailing" secondItem="Jvy-gh-bFQ" secondAttribute="trailing" id="r4h-vZ-bjj"/>
+                                            <constraint firstItem="ilt-MT-o4j" firstAttribute="top" secondItem="cvU-OK-Y74" secondAttribute="bottom" constant="25" id="uGX-4d-4zn"/>
                                             <constraint firstItem="PDB-aa-0PV" firstAttribute="top" secondItem="Y3n-fs-Dwq" secondAttribute="bottom" constant="20" id="vAr-jY-wyc"/>
                                             <constraint firstItem="Ufk-Zy-AcC" firstAttribute="top" secondItem="cfH-UR-iCr" secondAttribute="bottom" constant="8" id="wl0-SK-czd"/>
                                             <constraint firstItem="PDB-aa-0PV" firstAttribute="leading" secondItem="TmR-YL-b8c" secondAttribute="leading" constant="10" id="zmc-3e-9m9"/>
@@ -1745,6 +1805,11 @@
                             <constraint firstItem="EHb-Oi-QEU" firstAttribute="top" secondItem="zbB-aR-3dr" secondAttribute="top" id="ulY-AP-kca"/>
                             <constraint firstItem="hrK-NB-LWo" firstAttribute="top" secondItem="b68-Lj-Qbf" secondAttribute="bottom" id="weN-MU-yue"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="EHb-Oi-QEU"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="CollectionViewHeightConst" destination="RkO-ZD-JFP" id="wnr-mK-pwN"/>
@@ -1759,6 +1824,7 @@
                         <outlet property="okPopupBtn" destination="rkg-lQ-bPB" id="REG-FB-Xj1"/>
                         <outlet property="placeholderLabel" destination="yW6-G0-wzY" id="iRH-fu-aMq"/>
                         <outlet property="selecMeetingtLocationTF" destination="Z00-UJ-2X7" id="di0-2o-per"/>
+                        <outlet property="selectEvent" destination="y1M-cL-HQV" id="gKs-vt-ELr"/>
                         <outlet property="selectLocationBtn" destination="eCJ-5K-GFZ" id="GxM-Sc-LVs"/>
                         <outlet property="startDate" destination="zRP-1L-BFi" id="Ayo-bB-3Sc"/>
                         <outlet property="startTime" destination="Uwe-uz-Eb2" id="iHq-ci-6qe"/>
@@ -1766,6 +1832,14 @@
                         <outlet property="successSubPopupVw" destination="JDp-xF-QAR" id="wuE-19-i8W"/>
                         <outlet property="titlePopupLbl" destination="ysy-zc-MMv" id="VxV-Rx-KqP"/>
                         <outlet property="videoConfLinkTF" destination="Y7f-eX-guO" id="1P0-nR-mtR"/>
+                        <outletCollection property="titleLblCollection" destination="N2o-5M-23z" collectionClass="NSMutableArray" id="zVj-zj-inh"/>
+                        <outletCollection property="titleLblCollection" destination="ilt-MT-o4j" collectionClass="NSMutableArray" id="HDG-GS-rZb"/>
+                        <outletCollection property="titleLblCollection" destination="Dgp-te-QDN" collectionClass="NSMutableArray" id="c2K-Ds-aOy"/>
+                        <outletCollection property="titleLblCollection" destination="aoC-v7-4GI" collectionClass="NSMutableArray" id="scm-0Y-3Vb"/>
+                        <outletCollection property="titleLblCollection" destination="T5B-xo-wT2" collectionClass="NSMutableArray" id="W7b-Dw-8B5"/>
+                        <outletCollection property="titleLblCollection" destination="cfH-UR-iCr" collectionClass="NSMutableArray" id="HEt-VO-1XB"/>
+                        <outletCollection property="titleLblCollection" destination="40z-Ob-yPT" collectionClass="NSMutableArray" id="c3o-Xc-gZo"/>
+                        <outletCollection property="titleLblCollection" destination="Y3n-fs-Dwq" collectionClass="NSMutableArray" id="zJA-o4-KRU"/>
                         <segue destination="cD7-jg-Gox" kind="show" identifier="showInviteConnections" id="0uZ-7K-2xe"/>
                     </connections>
                 </viewController>

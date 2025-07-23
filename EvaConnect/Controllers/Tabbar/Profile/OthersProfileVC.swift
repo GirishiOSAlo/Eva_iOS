@@ -82,8 +82,9 @@ class OthersProfileVC: UIViewController {
     var isChatEnable = true
     var eventID = 0
     var userDetails: UserDetailsData?
-    
+    var isComeFromDelegate = false
     var otherUserID = 0
+    var eventDetail: NewEventDetailsData?
     
     var posts: [DashboardItem] = [] {
         didSet {
@@ -309,8 +310,13 @@ class OthersProfileVC: UIViewController {
         self.unfollowBtnView.isHidden = true
         self.unblockBtnView.isHidden = true
         self.aacceptDeclineBtnView.isHidden = true
-        self.scheduleMeetingBtnView.isHidden = true
         self.sendRequestBtnView.isHidden = true
+        
+        if self.isComeFromDelegate {
+            self.scheduleMeetingBtnView.isHidden = false
+        } else {
+            self.scheduleMeetingBtnView.isHidden = true
+        }
         
         let connectionStatus = user.connectionStatus ?? ""
         if connectionStatus == "Connected" && self.eventID != 0 {
@@ -471,6 +477,8 @@ class OthersProfileVC: UIViewController {
         let vc = MyScheduleVC.instantiate()
         vc.eventID = self.eventID
         vc.otherUserID = self.otherUserID
+        vc.eventDetail = self.eventDetail
+        vc.isComeFromDelegate = self.isComeFromDelegate
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

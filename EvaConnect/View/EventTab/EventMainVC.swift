@@ -65,6 +65,7 @@ class EventMainVC: UIViewController, XIBed {
     
     lazy var delegatesVC: DelegatesVC = {
         let vc = DelegatesVC.instantiate(eventId: self.eventId)
+        vc.eventDetail = self.eventDetail
 //        vc.delegateData = delegatelists
         return vc
     }()

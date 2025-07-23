@@ -21,7 +21,8 @@ class MyScheduleVC: UIViewController, XIBed {
     let pixelsPerMinute: CGFloat = 1.0
     let scheduleStartHour = 1  // Starting at 01:00
     let scheduleEndHour = 25   // Ending at 24:00
-    
+    var eventDetail: NewEventDetailsData?
+    var isComeFromDelegate = false
     var otherUserID = 0
     
     private var currentDate = Date() {
@@ -51,6 +52,8 @@ class MyScheduleVC: UIViewController, XIBed {
         let vc = StoryboardRouter.createMeeting()
         vc.eventID = self.eventID
         vc.otherUserID = self.otherUserID
+        vc.eventDetail = self.eventDetail
+        vc.isComeFromDelegate = self.isComeFromDelegate
         navigationController?.pushViewController(vc, animated: true)
     }
     

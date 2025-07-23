@@ -23,6 +23,7 @@ class DelegatesVC: UIViewController, XIBed {
     @IBOutlet weak var noRecordLbl: UILabel!
     
     var delegateData: [CommonEventMetaData] = []
+    var eventDetail: NewEventDetailsData?
     var eventId = 0
     
     override func viewDidLoad() {
@@ -90,6 +91,8 @@ extension DelegatesVC {
         let vc = StoryboardRouter.othersProfileVC()
         vc.profileID = obj.id ?? 0
         vc.eventID = self.eventId
+        vc.eventDetail = self.eventDetail
+        vc.isComeFromDelegate = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

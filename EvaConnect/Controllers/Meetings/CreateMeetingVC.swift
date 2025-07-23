@@ -15,6 +15,8 @@ import Lottie
 class CreateMeetingVC: BaseVC, WKNavigationDelegate {
 
     @IBOutlet weak var headerTitleLbl: HeadingLabel!
+    @IBOutlet var titleLblCollection: [UILabel]!
+    @IBOutlet weak var selectEvent: UITextField!
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var startDate: UITextField!
     @IBOutlet weak var startTime: UITextField!
@@ -56,8 +58,10 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var otherUserID = 0
     
     var eventDetails: [CreateEventMeetingDetailsData] = []
+    var eventDetail: NewEventDetailsData?
     var eventLocations: [EventLocation] = []
     var attendeesList: [AttendeesList] = []
+    var currentEventList: [EventListData] = []
     
     var startDatePicker = UIDatePicker()
     var startTimePicker = UIDatePicker()
@@ -68,7 +72,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     private var dateTime = (startDate: "", startTime: "", endDate: "", endTime: "")
     var gMeetLink: String = ""
     var gMeetId: String = ""
-    
+    var isComeFromDelegate = false
     
     private let scopes = [kGTLRAuthScopeCalendar]
     private let service = GTLRCalendarService()
@@ -81,7 +85,21 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         
         collectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
-        self.fetchCreateMeetingDetails()
+        if self.eventID == 0 {
+            self.fetchCurrentEventData()
+        } else {
+            self.fetchCreateMeetingDetails()
+            if self.isComeFromDelegate {
+                self.selectEvent.text = self.eventDetail?.name ?? ""
+            } else {
+                self.selectEvent.text = self.eventDetails[0].name ?? ""
+            }
+        }
+        
+        for lbl in titleLblCollection {
+            lbl.font = UIFont(name: Myfonts.bold, size: 14.0)
+            lbl.textColor = UIColor(hex: "#000000", alpha: 1.0)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -165,15 +183,54 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     }
     
     @IBAction func SelectLoactionBtnTapped(_ sender: UIButton) {
-        let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
-        popupvc.modalPresentationStyle = .overFullScreen
-        popupvc.activeDataType = .locationRoom
-        popupvc.eventLocations = self.eventLocations
-        popupvc.completion = { passedAns, passedId in
-            self.selecMeetingtLocationTF.text = passedAns
-            self.selectedMeetingLocationId = passedId
+        if self.eventLocations.count == 0 {
+            self.makeAlert(titleMsg: "Error", messageData: "Location data is empty")
+        } else {
+            let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+            popupvc.modalPresentationStyle = .overFullScreen
+            popupvc.activeDataType = .locationRoom
+            popupvc.eventLocations = self.eventLocations
+            popupvc.completion = { passedAns, passedId in
+                self.selecMeetingtLocationTF.text = passedAns
+                self.selectedMeetingLocationId = passedId
+            }
+            self.navigationController?.present(popupvc, animated: true)
         }
-        self.navigationController?.present(popupvc, animated: true)
+    }
+    
+    @IBAction func selectEventBtnTapped(_ sender: UIButton) {
+        if self.eventID == 0 {
+            if self.currentEventList.count == 0 {
+                self.makeAlert(titleMsg: "Error", messageData: "Please select a event.")
+            } else {
+                let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+                popupvc.modalPresentationStyle = .overFullScreen
+                popupvc.activeDataType = .currentEvent
+                popupvc.currentEventList = self.currentEventList
+                popupvc.completion = { passedAns, passedId in
+                    self.selectEvent.text = passedAns
+                    self.eventID = passedId
+                }
+                self.navigationController?.present(popupvc, animated: true)
+            }
+        } else {
+            var selectedEvent:[String] = []
+            if self.isComeFromDelegate {
+                selectedEvent = [self.eventDetail?.name ?? ""]
+            } else {
+                selectedEvent = [self.eventDetails[0].name ?? ""]
+            }
+            let selectedEventName = [self.eventDetails[0].name ?? ""]
+            let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+            popupvc.modalPresentationStyle = .overFullScreen
+            popupvc.activeDataType = .string
+            popupvc.stringArray = selectedEvent
+            popupvc.completion = { passedAns, passedId in
+                self.selectEvent.text = passedAns
+                //self.selectedEventId = passedId
+            }
+            self.navigationController?.present(popupvc, animated: true)
+        }
     }
 }
 
@@ -199,6 +256,29 @@ extension CreateMeetingVC {
                     
                 } else {
                     print("Error :: \(meetingDetails.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func fetchCurrentEventData() {
+        let parameters = [
+            "filter": "current",
+        ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(EndPoints.homeFilterEvents,method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
+                if !(currentEventRoot.error ?? false) {
+                    self.currentEventList = currentEventRoot.data ?? []
+                    self.fetchCurrentEventData()
+                } else {
+                    self.presentAlert("Failure", currentEventRoot.message, nil)
                 }
             } catch {
                 print("Error:: ", error)
@@ -427,8 +507,10 @@ extension CreateMeetingVC {
     }
 
     @IBAction func meetingButton(_ sender: UIButton) {
-        
-        if self.name.text == "" {
+        if self.selectEvent.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "Please select a event.")
+        }
+        else if self.name.text == "" {
             self.makeAlert(titleMsg: "Error", messageData: "Please enter the title.")
         }
         else if self.startDate.text == "" {
