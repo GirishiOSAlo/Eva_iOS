@@ -549,6 +549,8 @@
 		A695AAF62AA73A50006A2A71 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695AAF52AA73A50006A2A71 /* ActivityViewController.swift */; };
 		A69A1D212AB32F72006BF71E /* TextMsgTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69A1D1F2AB32F72006BF71E /* TextMsgTVCell.swift */; };
 		A69A1D222AB32F72006BF71E /* TextMsgTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A69A1D202AB32F72006BF71E /* TextMsgTVCell.xib */; };
+		A69BD53E2E3208E800426C06 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69BD53C2E3208E800426C06 /* MeetingListViewController.swift */; };
+		A69BD53F2E3208E800426C06 /* MeetingListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A69BD53D2E3208E800426C06 /* MeetingListViewController.xib */; };
 		A6A125912DDDB01600979389 /* SponsorsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A125902DDDB01600979389 /* SponsorsVC.xib */; };
 		A6A125922DDDB01600979389 /* SponsorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A1258F2DDDB01600979389 /* SponsorsVC.swift */; };
 		A6A125962DDDB0B800979389 /* SponsorsCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A125952DDDB0B800979389 /* SponsorsCVC.xib */; };
@@ -1166,6 +1168,8 @@
 		A695AAF52AA73A50006A2A71 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		A69A1D1F2AB32F72006BF71E /* TextMsgTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMsgTVCell.swift; sourceTree = "<group>"; };
 		A69A1D202AB32F72006BF71E /* TextMsgTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMsgTVCell.xib; sourceTree = "<group>"; };
+		A69BD53C2E3208E800426C06 /* MeetingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
+		A69BD53D2E3208E800426C06 /* MeetingListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListViewController.xib; sourceTree = "<group>"; };
 		A6A1258F2DDDB01600979389 /* SponsorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsVC.swift; sourceTree = "<group>"; };
 		A6A125902DDDB01600979389 /* SponsorsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SponsorsVC.xib; sourceTree = "<group>"; };
 		A6A125942DDDB0B800979389 /* SponsorsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsCVC.swift; sourceTree = "<group>"; };
@@ -2632,6 +2636,7 @@
 		500A54342473F72A00095324 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A69BD53B2E3207D200426C06 /* MeetingList */,
 				A6508FBA2E2E3871007587C3 /* Report */,
 				A64C49812E1BFA7900F9D3F9 /* Connections */,
 				A62AB11A2DD4A8FF006C7A21 /* Edit Profile */,
@@ -3548,6 +3553,15 @@
 			path = TextMsgTVCell;
 			sourceTree = "<group>";
 		};
+		A69BD53B2E3207D200426C06 /* MeetingList */ = {
+			isa = PBXGroup;
+			children = (
+				A69BD53C2E3208E800426C06 /* MeetingListViewController.swift */,
+				A69BD53D2E3208E800426C06 /* MeetingListViewController.xib */,
+			);
+			path = MeetingList;
+			sourceTree = "<group>";
+		};
 		A6A1258E2DDDAF5400979389 /* Sponsors */ = {
 			isa = PBXGroup;
 			children = (
@@ -3776,6 +3790,7 @@
 				48B285722AB319660086CA61 /* SenderImgTVCell.xib in Resources */,
 				A6782F652DDC88B50029443B /* SpeakersViewController.xib in Resources */,
 				505176542445077600544956 /* Chat.storyboard in Resources */,
+				A69BD53F2E3208E800426C06 /* MeetingListViewController.xib in Resources */,
 				A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */,
 				259495F827884A6500C5579B /* UserJobCell.xib in Resources */,
 				A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */,
@@ -4126,6 +4141,7 @@
 				485FC1A02DD75EE700AA05A4 /* ExhibitorsVC.swift in Sources */,
 				25D40B3E27C3A30200EEF2AA /* Wrapper.swift in Sources */,
 				A63779482DE6F4DE0072055F /* AlertView.swift in Sources */,
+				A69BD53E2E3208E800426C06 /* MeetingListViewController.swift in Sources */,
 				2586A8BD277C7C3A000350DE /* UIDevice.swift in Sources */,
 				485FC19A2DD5CDD200AA05A4 /* ConferenceDetailsVC.swift in Sources */,
 				A66D344C2B45278900A797D6 /* MessageList.swift in Sources */,

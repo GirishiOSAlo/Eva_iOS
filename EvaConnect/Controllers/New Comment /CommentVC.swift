@@ -290,7 +290,11 @@ class CommentVC: UIViewController, XIBed {
     
     //--> Coment More Button...
     @objc func commentMoreTapped(sender: UIButton){
-        FTPopOverMenu.showForSender(sender: sender, with: ["Report"], done: { (selectedIndex) -> () in
+        FTPopOverMenu.showForSender(sender: sender,
+                                    with: ["Report"],
+                                    popOverPosition: .automatic,
+                                    config: Constants.configWithMenuStyle(),
+                                    done: { (selectedIndex) in
             switch selectedIndex {
             case 0: //Report...
                 let vc = ReportVC.instantiate()
@@ -342,7 +346,11 @@ extension CommentVC: CommentsCellDelegate {
     
     //Reply Comment More...
     func didTapMoreButton(in cell: CommentCVC, sender: UIButton, replyComment: RepliesComment, isComeFromNews: Bool) {
-        FTPopOverMenu.showForSender(sender: sender, with: ["Report"], done: { selectedIndex in
+        FTPopOverMenu.showForSender(sender: sender,
+                                    with: ["Report"],
+                                    popOverPosition: .automatic,
+                                    config: Constants.configWithMenuStyle(),
+                                    done: { (selectedIndex) in
             switch selectedIndex {
             case 0:
                 let vc = ReportVC.instantiate()

@@ -257,7 +257,6 @@ extension TextPostDetailVC {
                                     done: { (selectedIndex) in
             switch selectedIndex {
             case 0:
-                print("Report")
                 let vc = reportPopupVC.instantiate()
                 vc.postId = self.postId
                 vc.userId = self.postDetail?.user?.id ?? 0

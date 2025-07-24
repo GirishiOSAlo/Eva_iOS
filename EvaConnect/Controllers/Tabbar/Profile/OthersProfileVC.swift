@@ -900,7 +900,6 @@ extension OthersProfileVC {
                                     done: { (selectedIndex) in
             switch selectedIndex {
             case 0:
-                print("Report")
                 let vc = reportPopupVC.instantiate()
                 vc.postId = self.posts[index].id
                 vc.userId = self.posts[index].user?.id ?? 0

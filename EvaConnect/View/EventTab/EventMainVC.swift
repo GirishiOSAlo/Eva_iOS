@@ -36,7 +36,6 @@ class EventMainVC: UIViewController, XIBed {
     
     var eventTypeArr = ["Event Details", "Conference Agenda", "Networking Events","Delegates", "Meetings", "Exhibitors","Speakers", "Sponsors", "Hotels", "Venue Map"]
     var isSelected = false
-    var isFromSidemenu = false
     var eventId = 0
     var eventDetail: NewEventDetailsData?
     var conferenceAgendaList: [ConferenceAgenda] = []
@@ -200,13 +199,9 @@ extension EventMainVC  {
                         self.HotelList = self.eventDetail?.eventHotels ?? []
                         self.VenueList = self.eventDetail?.eventVenu ?? []
                         self.delegatelists = self.eventDetail?.delegatelists ?? []
-                        if self.isFromSidemenu {
-                            self.addModule(self.meetingListVC, to: self.meetingsView)
-                            self.drpDwnNameLable.text = "Meetings"
-                        } else {
-                            self.addModule(self.eventDetailsVC, to: self.eventDetailsView)
-                            self.drpDwnNameLable.text = "Event Details"
-                        }
+                        
+                        self.addModule(self.eventDetailsVC, to: self.eventDetailsView)
+                        self.drpDwnNameLable.text = "Event Details"
                     }
                 } catch {
                     print(error)

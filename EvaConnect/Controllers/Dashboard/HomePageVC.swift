@@ -886,7 +886,6 @@ extension HomePageVC {
                                     done: { (selectedIndex) in
             switch selectedIndex {
             case 0:
-                print("Report")
                 let vc = reportPopupVC.instantiate()
                 vc.postId = self.dashboardPostList[index].id ?? 0
                 vc.userId = self.dashboardPostList[index].user?.id ?? 0
