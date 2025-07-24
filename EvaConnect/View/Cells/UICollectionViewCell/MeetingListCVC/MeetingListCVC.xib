@@ -79,13 +79,6 @@
                                     <constraint firstItem="1um-tJ-mWf" firstAttribute="centerY" secondItem="zSm-7k-GFt" secondAttribute="centerY" id="zL0-7U-Ree"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZ7-yn-6P7">
-                                <rect key="frame" x="16" y="11" width="262" height="62"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <connections>
-                                    <action selector="detailsButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="vaQ-GY-bfB"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9hF-pY-D5A">
                                 <rect key="frame" x="16" y="119" width="303" height="225"/>
                                 <subviews>
@@ -249,7 +242,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="cZ7-yn-6P7" firstAttribute="bottom" secondItem="zSm-7k-GFt" secondAttribute="bottom" id="1Ir-Vk-5K2"/>
                             <constraint firstItem="IdE-VQ-Cse" firstAttribute="top" secondItem="4Fu-bh-7Cn" secondAttribute="top" constant="16" id="2dy-Sc-Kzp"/>
                             <constraint firstAttribute="bottom" secondItem="Med-86-PSu" secondAttribute="bottom" id="3iD-j6-yUh"/>
                             <constraint firstItem="UO9-g1-kEb" firstAttribute="trailing" secondItem="byF-2T-gOC" secondAttribute="trailing" id="4TK-Uf-a8b"/>
@@ -261,11 +253,8 @@
                             <constraint firstAttribute="trailing" secondItem="zSm-7k-GFt" secondAttribute="trailing" id="VRk-b7-TLx"/>
                             <constraint firstItem="byF-2T-gOC" firstAttribute="leading" secondItem="4Fu-bh-7Cn" secondAttribute="leading" constant="16" id="WYq-tc-tLp"/>
                             <constraint firstItem="UO9-g1-kEb" firstAttribute="leading" secondItem="byF-2T-gOC" secondAttribute="leading" id="ZYZ-U5-WhO"/>
-                            <constraint firstItem="cZ7-yn-6P7" firstAttribute="top" secondItem="byF-2T-gOC" secondAttribute="top" id="c6h-FG-B15"/>
                             <constraint firstItem="UO9-g1-kEb" firstAttribute="top" secondItem="byF-2T-gOC" secondAttribute="bottom" constant="6" id="eFe-ou-m0p"/>
                             <constraint firstAttribute="trailing" secondItem="9hF-pY-D5A" secondAttribute="trailing" constant="16" id="fON-rn-xgs"/>
-                            <constraint firstItem="cZ7-yn-6P7" firstAttribute="trailing" secondItem="byF-2T-gOC" secondAttribute="trailing" id="phX-KH-KU4"/>
-                            <constraint firstItem="cZ7-yn-6P7" firstAttribute="leading" secondItem="byF-2T-gOC" secondAttribute="leading" id="rS9-AI-ZXJ"/>
                             <constraint firstAttribute="trailing" secondItem="IdE-VQ-Cse" secondAttribute="trailing" constant="12" id="sec-dw-eGs"/>
                             <constraint firstItem="Med-86-PSu" firstAttribute="leading" secondItem="4Fu-bh-7Cn" secondAttribute="leading" id="uUA-5v-QMQ"/>
                             <constraint firstItem="IdE-VQ-Cse" firstAttribute="leading" secondItem="byF-2T-gOC" secondAttribute="trailing" constant="10" id="wg0-UZ-beH"/>
@@ -285,12 +274,9 @@
             <size key="customSize" width="420" height="361"/>
             <connections>
                 <outlet property="baseView" destination="4Fu-bh-7Cn" id="BAi-xt-L18"/>
-                <outlet property="btnVw_1" destination="e3K-ec-YZ3" id="FHL-oj-Rds"/>
-                <outlet property="btnVw_2" destination="E86-Xa-fhu" id="EOB-tO-Atf"/>
                 <outlet property="cancelMeetingBtn" destination="Cgv-dg-U5I" id="8p3-eG-NjM"/>
                 <outlet property="colleaguesLbl" destination="zVg-ls-pnY" id="BIm-rr-tSe"/>
                 <outlet property="dateLbl" destination="wx7-xn-Cvb" id="EBN-gx-Uxb"/>
-                <outlet property="detailsBtn" destination="cZ7-yn-6P7" id="ace-Gc-636"/>
                 <outlet property="dropBtn" destination="IdE-VQ-Cse" id="eMb-A8-tUE"/>
                 <outlet property="eventNameLbl" destination="UO9-g1-kEb" id="cqp-Nr-FTQ"/>
                 <outlet property="locationLbl" destination="dfP-Cs-04F" id="HoB-EZ-UUU"/>

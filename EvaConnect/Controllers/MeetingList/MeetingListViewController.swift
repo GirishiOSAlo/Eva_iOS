@@ -19,8 +19,13 @@ class MeetingListViewController: UIViewController, XIBed {
     @IBOutlet weak var fromDateTF: UITextField!
     @IBOutlet weak var toDateTF: UITextField!
     
+    @IBOutlet weak var listCollectionVw: UICollectionView!
+    
+    var refreshControl = UIRefreshControl()
     var fromDatePicker = UIDatePicker()
     var toDatePicker = UIDatePicker()
+    var expandedIndexPath: IndexPath?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +43,24 @@ class MeetingListViewController: UIViewController, XIBed {
         self.searchTF.delegate = self
         self.searchTF.addTarget(self, action: #selector(self.searchTextFieldDidChange(_:)), for: .editingChanged)
         self.selectDateBaseVw.layer.cornerRadius = 8.0
+        
+        self.registerCell()
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        listCollectionVw.addSubview(refreshControl) // not required when using UITableViewController
+    }
+    
+    func registerCell() {
+        listCollectionVw.registerNib(cellNib: MeetingListCVC.self)
+        listCollectionVw.delegate = self
+        listCollectionVw.dataSource = self
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            //self.refreshControl.endRefreshing()
+        }
     }
     
     @IBAction func onFromDateBtnTap(_ sender: UIButton) {
@@ -158,5 +181,79 @@ extension MeetingListViewController {
 
     @objc func cancelPicker() {
         self.view.endEditing(true)
+    }
+}
+
+extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.listCollectionVw.dequeueReusableCell(withReuseIdentifier: MeetingListCVC.ReuseId, for: indexPath) as! MeetingListCVC
+        
+        cell.baseView.layer.cornerRadius = 0
+        cell.baseView.layer.maskedCorners = []
+        
+        let isFirst = indexPath.item == 0
+        let isLast = indexPath.item == collectionView.numberOfItems(inSection: indexPath.section) - 1
+        cell.baseView.layer.cornerRadius = 16.0 // or any radius
+        cell.baseView.clipsToBounds = true
+        
+        if isFirst && isLast {
+            // Only one item
+            cell.baseView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner,
+                                               .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            cell.underlineVw.isHidden = true
+        } else if isFirst {
+            // First item: top corners
+            cell.baseView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            cell.underlineVw.isHidden = false
+        } else if isLast {
+            // Last item: bottom corners
+            cell.baseView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            cell.underlineVw.isHidden = true
+        }
+        cell.isExpanded = (indexPath == expandedIndexPath)
+        cell.delegate = self
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        if indexPath == expandedIndexPath {  //--> Expanded height...
+            return CGSize(width: self.listCollectionVw.frame.size.width, height: 350)
+        } else {  //--> Normal height...
+            return CGSize(width: self.listCollectionVw.frame.size.width, height: 250)
+        }
+    }
+}
+
+extension MeetingListViewController: MeetingListCellDelegate {
+    func didTapDropdownButton(in cell: MeetingListCVC) {
+        guard let indexPath = listCollectionVw.indexPath(for: cell) else { return }
+        
+        var indexPathsToReload: [IndexPath] = [indexPath]
+        
+        if let previous = expandedIndexPath, previous != indexPath {
+            indexPathsToReload.append(previous)
+        }
+        
+        // Update the expandedIndexPath
+        if expandedIndexPath == indexPath {
+            expandedIndexPath = nil // collapse
+        } else {
+            expandedIndexPath = indexPath // expand new
+        }
+        
+        // Animate height and layout changes
+        listCollectionVw.performBatchUpdates {
+            listCollectionVw.reloadItems(at: indexPathsToReload)
+            //self.setupCollectionHeight()
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }

@@ -10,7 +10,6 @@ import UIKit
 
 protocol MeetingListCellDelegate: AnyObject {
     func didTapDropdownButton(in cell: MeetingListCVC)
-    func didTapDetailsButton(in cell: MeetingListCVC)
 }
 
 class MeetingListCVC: UICollectionViewCell {
@@ -31,7 +30,6 @@ class MeetingListCVC: UICollectionViewCell {
     @IBOutlet weak var messageBtn: UIButton!
     @IBOutlet weak var rescheduleBtn: UIButton!
     @IBOutlet weak var cancelMeetingBtn: UIButton!
-    @IBOutlet weak var detailsBtn: UIButton!
     
     weak var delegate: MeetingListCellDelegate?
     
@@ -51,11 +49,7 @@ class MeetingListCVC: UICollectionViewCell {
     @IBAction func dropdownButtonTapped(_ sender: UIButton) {
         delegate?.didTapDropdownButton(in: self)
     }
-    
-    @IBAction func detailsButtonTapped(_ sender: UIButton) {
-        delegate?.didTapDetailsButton(in: self)
-    }
-    
+        
     func initUi() {
         eventNameLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         dateLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
