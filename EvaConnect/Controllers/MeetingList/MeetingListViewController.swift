@@ -63,6 +63,17 @@ class MeetingListViewController: UIViewController, XIBed {
         }
     }
     
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
+    
     @IBAction func onFromDateBtnTap(_ sender: UIButton) {
         self.fromDatePickerSet()
         self.fromDateTF.becomeFirstResponder()
@@ -186,7 +197,7 @@ extension MeetingListViewController {
 
 extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -221,11 +232,21 @@ extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let nameHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
+        let meetingWithHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+        let colleaguesHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+        let locationHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
 
+        let finalHeight = nameHeight + meetingWithHeight + colleaguesHeight + locationHeight + 301.0
+        
         if indexPath == expandedIndexPath {  //--> Expanded height...
-            return CGSize(width: self.listCollectionVw.frame.size.width, height: 350)
-        } else {  //--> Normal height...
-            return CGSize(width: self.listCollectionVw.frame.size.width, height: 250)
+            let cellHeight = finalHeight
+            return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
+        } else {  //--> Collapse height...
+            let collapseHeight = meetingWithHeight + colleaguesHeight + locationHeight + 205.0
+            let cellHeight = finalHeight - collapseHeight
+            return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
         }
     }
 }

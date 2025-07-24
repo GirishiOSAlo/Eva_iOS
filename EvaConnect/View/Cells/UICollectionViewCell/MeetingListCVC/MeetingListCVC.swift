@@ -21,7 +21,6 @@ class MeetingListCVC: UICollectionViewCell {
     @IBOutlet weak var eventNameLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
-    @IBOutlet weak var stackVw: UIStackView!
     
     @IBOutlet var detilsTitleLbllCollection: [UILabel]!
     @IBOutlet weak var meetingWithLbl: UILabel!
@@ -37,7 +36,6 @@ class MeetingListCVC: UICollectionViewCell {
         didSet {
             let imageName = isExpanded ? "ic_fillDropUp" : "ic_fillDropDown"
             dropBtn.setImage(UIImage(named: imageName), for: .normal)
-            stackVw.isHidden = isExpanded ? false : true
         }
     }
     
