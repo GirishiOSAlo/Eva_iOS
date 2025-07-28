@@ -69,6 +69,7 @@ class SignUpLocationDOBVC: BaseForAuthentication {
     var selectedAns = ""
     var companyId = 0
     var jobSectorList: [Sectors] = []
+    var categoryList: [AllCategoryList] = []
     var isFromSettings = false
     private var user = LoggedUserDetails.shared.user
     var params = [:] as [String: Any]
@@ -109,7 +110,8 @@ class SignUpLocationDOBVC: BaseForAuthentication {
     
     @IBAction func showCategoryListTapped(_ sender: UIButton) {
         showActivity()
-        getSectors()
+        //getSectors()
+        getCategory()
     }
     
     @IBAction func dobBtnTapped(_ sender: UIButton) {
@@ -325,6 +327,33 @@ extension SignUpLocationDOBVC {
                 self?.hideActivity()
                 popupvc.activeDataType = .sector
                 popupvc.sectorsArray = self?.jobSectorList ?? []
+                popupvc.completion = { passedAns, passedId in
+                    self?.categoryTextField.text = passedAns
+                    self?.passedId = passedId
+                    myUserDefaults.Cat_id = "\(passedId)"
+                    myUserDefaults.sector = "\(passedId)"
+                }
+                self?.navigationController?.present(popupvc, animated: true)
+            } catch {
+                
+                self?.presentAlert("Failure", nil, response.result.error)
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getCategory() {
+        NetworkManagerr.request(EndPoints.getCategory, method: .post, parameters: params) { [weak self] (response) in
+            do {
+                let jsonDecoder = JSONDecoder()
+                let category = try jsonDecoder.decode(AllCategoryModel.self, from: response.data!)
+                
+                self?.categoryList = category.data ?? []
+                let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+                popupvc.modalPresentationStyle = .overFullScreen
+                self?.hideActivity()
+                popupvc.activeDataType = .allCategory
+                popupvc.allCategoryList = self?.categoryList ?? []
                 popupvc.completion = { passedAns, passedId in
                     self?.categoryTextField.text = passedAns
                     self?.passedId = passedId

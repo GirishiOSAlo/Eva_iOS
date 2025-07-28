@@ -65,6 +65,8 @@ class CompanyListPopupVC: UIViewController,XIBed {
             break
         case .currentEvent:
             break
+        case .allCategory:
+            break
         }
     }
 
@@ -177,6 +179,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
             return 0
         case .currentEvent:
             return 0
+        case .allCategory:
+            return 0
         }
     }
     
@@ -196,6 +200,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
         case .locationRoom:
             break
         case .currentEvent:
+            break
+        case .allCategory:
             break
         }
         return cell
@@ -220,6 +226,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
         case .locationRoom:
             break
         case .currentEvent:
+            break
+        case .allCategory:
             break
         }
     }

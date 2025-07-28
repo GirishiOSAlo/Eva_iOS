@@ -23,6 +23,7 @@ enum TableDataType {
     case company
     case locationRoom
     case currentEvent
+    case allCategory
 }
 
 class CommonPopupVC: UIViewController {
@@ -42,6 +43,7 @@ class CommonPopupVC: UIViewController {
     var companyArray : [Companylist] = []
     var eventLocations: [EventLocation] = []
     var currentEventList: [EventListData] = []
+    var allCategoryList: [AllCategoryList] = []
     
     weak var businessSectorDismissDelegate: BusinessSectorPopUpDismiss?
     weak var regionDismissDelegate: RegionPopUpDismiss?
@@ -79,6 +81,8 @@ class CommonPopupVC: UIViewController {
             rowCount = eventLocations.count
         case .currentEvent:
             rowCount = currentEventList.count
+        case .allCategory:
+            rowCount = allCategoryList.count
         }
         
         let tblHeight = CGFloat(rowCount * 50) + 40.0
@@ -121,6 +125,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             return eventLocations.count
         case .currentEvent:
             return currentEventList.count
+        case .allCategory:
+            return allCategoryList.count
         }
     }
     
@@ -147,6 +153,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             cell.titleName.text = eventLocations[indexPath.row].name
         case .currentEvent:
             cell.titleName.text = currentEventList[indexPath.row].name
+        case .allCategory:
+            cell.titleName.text = allCategoryList[indexPath.row].categoryName
         }
         return cell
     }
@@ -219,6 +227,12 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             self.dismiss(animated: true)
             //self.completion?(selectedStr, selectedID)
             self.eventCompletion?(self.currentEventList[indexPath.row])
+            
+        case .allCategory:
+            let selectedID = allCategoryList[indexPath.row].id ?? 0
+            let selectedStr = allCategoryList[indexPath.row].categoryName ?? ""
+            self.dismiss(animated: true)
+            self.completion?(selectedStr, selectedID)
         }
     }
     

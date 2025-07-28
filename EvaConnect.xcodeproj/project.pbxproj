@@ -559,6 +559,7 @@
 		A6A1259C2DDDB5BC00979389 /* HotelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A125992DDDB5BC00979389 /* HotelsVC.swift */; };
 		A6A458E02AB31136005418F6 /* DocAudioTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A458DE2AB31136005418F6 /* DocAudioTVCell.swift */; };
 		A6A458E12AB31137005418F6 /* DocAudioTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A458DF2AB31136005418F6 /* DocAudioTVCell.xib */; };
+		A6AC12752E37340D0039F7B3 /* MeetingListsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AC12742E37340D0039F7B3 /* MeetingListsDataModel.swift */; };
 		A6ADF5932AB070E500423428 /* NotificationPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ADF5912AB070E500423428 /* NotificationPopupVC.swift */; };
 		A6ADF5942AB070E500423428 /* NotificationPopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6ADF5922AB070E500423428 /* NotificationPopupVC.xib */; };
 		A6ADF5962AB077E200423428 /* EventAgendaSheduleTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ADF5952AB077E200423428 /* EventAgendaSheduleTblCell.swift */; };
@@ -1178,6 +1179,7 @@
 		A6A1259A2DDDB5BC00979389 /* HotelsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HotelsVC.xib; sourceTree = "<group>"; };
 		A6A458DE2AB31136005418F6 /* DocAudioTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocAudioTVCell.swift; sourceTree = "<group>"; };
 		A6A458DF2AB31136005418F6 /* DocAudioTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocAudioTVCell.xib; sourceTree = "<group>"; };
+		A6AC12742E37340D0039F7B3 /* MeetingListsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListsDataModel.swift; sourceTree = "<group>"; };
 		A6ADF5912AB070E500423428 /* NotificationPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPopupVC.swift; sourceTree = "<group>"; };
 		A6ADF5922AB070E500423428 /* NotificationPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationPopupVC.xib; sourceTree = "<group>"; };
 		A6ADF5952AB077E200423428 /* EventAgendaSheduleTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAgendaSheduleTblCell.swift; sourceTree = "<group>"; };
@@ -1741,6 +1743,7 @@
 				A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */,
 				A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */,
 				A6508FBF2E2E3A3D007587C3 /* ReportDataModel.swift */,
+				A6AC12742E37340D0039F7B3 /* MeetingListsDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4159,6 +4162,7 @@
 				25DF85FC277EE4FC00E6D28C /* SecurityVC.swift in Sources */,
 				48A421642AAB56DC00A8D37C /* Nibbed.swift in Sources */,
 				18D5C65B2452D6CF0071C281 /* AllSectorModel.swift in Sources */,
+				A6AC12752E37340D0039F7B3 /* MeetingListsDataModel.swift in Sources */,
 				50436BD3249177C4009B18D2 /* NewNotificaitions.swift in Sources */,
 				182C039923C5E4FE00E42B1A /* LoginVC.swift in Sources */,
 				4802FF752AD820AD00DCC112 /* ApplicantListVC.swift in Sources */,

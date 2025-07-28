@@ -194,21 +194,22 @@ extension SignUpPasswordVC {
         if isIndivisualUser {
             parameters = [
                 "fullname": myUserDefaults.fullName,
-                "mobile": myUserDefaults.mobileNo,
-                "linkedin_url": myUserDefaults.linkedIn,
                 "email": myUserDefaults.emailAdd,
+                "mobile": myUserDefaults.mobileNo,
                 "country_code": "91",
-                "type": myUserDefaults.user,
+                "is_linkedin": 0,
+                "linkedin_url": myUserDefaults.linkedIn,
                 "password": passwordTxt.text!,
-                "status": "active",
-                "language": "English",
+                "type": myUserDefaults.user,
+                "sector_id": "",
+                "category_id": myUserDefaults.Cat_id,
                 "company_id": "\(myUserDefaults.companyId)",
                 "designation": myUserDefaults.jobTitle,
                 "region": myUserDefaults.region,
-                "bio_data": myUserDefaults.bio,
-                "category_id": myUserDefaults.Cat_id,
+                "language": "English",
                 "is_facebook": 0,
-                "is_linkedin": 0
+                "status": "active",
+                "bio_data": myUserDefaults.bio
             ]
         } else {
             parameters = [

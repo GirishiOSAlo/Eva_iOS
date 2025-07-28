@@ -32,7 +32,7 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("OTP ==> \(self.otp ?? "")")
         setLayoutStyle()
         self.startTimer()
     }
@@ -162,13 +162,26 @@ extension SignUpVerifyEmailVC {
     
     
     private func verifyAccount() {
-        
-        
         guard self.otpView.validate() else {
             self.presentAlert("Error", "Please enter OTP")
             return
         }
-        self.callVerifyOtp()
+        //self.callVerifyOtp()
+        
+        let enterOTP = self.otpView.text ?? ""
+        if enterOTP == self.otp {
+            if isFromForgotVC {
+                let vc = StoryboardRouter.editPasswordVC()
+                vc.isFromForgotVC = true
+                vc.email = email ?? ""
+                vc.code = self.otpView.text ?? ""
+                navigationController?.pushViewController(vc, animated: true)
+            } else {
+                guard let vc = storyboard?.instantiateViewController(withIdentifier: SignUpPasswordVC.storyboardIdentifier) as? SignUpPasswordVC else { return }
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
 //        if isFromForgotVC || pendingVerification {
 //            verifyOTP()
 //        } else {
