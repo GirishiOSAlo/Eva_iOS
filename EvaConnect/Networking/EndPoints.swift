@@ -228,6 +228,7 @@ enum EndPoints {
     
     static let reactions = baseURL + "reactions"
     static let createEventMeetings = baseURL + "meetings/create-meetings"
+    static let meetingLists = baseURL + "meetings/meetinglists"
     
     
     // MARK: Profile

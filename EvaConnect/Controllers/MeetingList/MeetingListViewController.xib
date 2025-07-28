@@ -15,12 +15,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MeetingListViewController" customModule="AviationConnect" customModuleProvider="target">
             <connections>
+                <outlet property="fromDateBtn" destination="V0i-ZZ-03x" id="weI-pB-Vdp"/>
                 <outlet property="fromDateTF" destination="jvj-2Y-coN" id="WWK-SH-hnd"/>
                 <outlet property="headingLbl" destination="nJb-2u-Dh2" id="6zo-pZ-62k"/>
                 <outlet property="listCollectionVw" destination="Rf7-d2-h0M" id="vKs-Np-iWm"/>
+                <outlet property="noDataLbl" destination="oPj-6o-zg9" id="G2Q-su-Ucs"/>
                 <outlet property="searchBaseVw" destination="XEA-sh-mzI" id="Um4-oR-nUM"/>
                 <outlet property="searchTF" destination="0oM-Cc-oOm" id="Mr0-Gl-Gsc"/>
                 <outlet property="selectDateBaseVw" destination="g3k-PG-rdQ" id="AVN-qO-54y"/>
+                <outlet property="toDateBtn" destination="QkN-gV-zt3" id="WJL-ma-7je"/>
                 <outlet property="toDateTF" destination="6K7-us-qKB" id="l1H-Of-vUf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -46,7 +49,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meetings" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJb-2u-Dh2">
-                            <rect key="frame" x="50" y="87" width="57.666666666666657" height="16.333333333333329"/>
+                            <rect key="frame" x="49.999999999999993" y="86.666666666666671" width="65.333333333333314" height="17"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -226,6 +229,12 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPj-6o-zg9">
+                    <rect key="frame" x="118" y="414" width="156" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -236,6 +245,8 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Rf7-d2-h0M" secondAttribute="bottom" id="7ZO-iU-iht"/>
                 <constraint firstItem="wz2-FO-itw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7Zx-Ex-3KP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Rf7-d2-h0M" secondAttribute="trailing" constant="20" id="ODj-78-hvN"/>
+                <constraint firstItem="oPj-6o-zg9" firstAttribute="centerX" secondItem="Rf7-d2-h0M" secondAttribute="centerX" id="P81-tx-8HC"/>
+                <constraint firstItem="oPj-6o-zg9" firstAttribute="centerY" secondItem="Rf7-d2-h0M" secondAttribute="centerY" id="Wzm-Sk-yK7"/>
                 <constraint firstItem="Ie8-jO-7pl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="b9a-c0-Qsa"/>
                 <constraint firstItem="jAw-Az-v1i" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eps-zG-EWV"/>
                 <constraint firstItem="Rf7-d2-h0M" firstAttribute="top" secondItem="jAw-Az-v1i" secondAttribute="bottom" constant="10" id="ezO-HY-IDL"/>

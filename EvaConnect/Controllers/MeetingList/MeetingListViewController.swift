@@ -17,9 +17,22 @@ class MeetingListViewController: UIViewController, XIBed {
     
     @IBOutlet weak var selectDateBaseVw: UIView!
     @IBOutlet weak var fromDateTF: UITextField!
+    @IBOutlet weak var fromDateBtn: UIButton!
     @IBOutlet weak var toDateTF: UITextField!
-    
+    @IBOutlet weak var toDateBtn: UIButton!
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var listCollectionVw: UICollectionView!
+    
+    var meetingLists : [approvedMeetingLists] = [] {
+        didSet {
+            self.listCollectionVw.reloadData()
+            if meetingLists.count == 0 {
+                self.noDataLbl.isHidden = false
+            } else {
+                self.noDataLbl.isHidden = true
+            }
+        }
+    }
     
     var refreshControl = UIRefreshControl()
     var fromDatePicker = UIDatePicker()
@@ -38,6 +51,7 @@ class MeetingListViewController: UIViewController, XIBed {
     }
 
     func setupUI() {
+        self.noDataLbl.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
         self.searchBaseVw.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
         self.searchTF.delegate = self
@@ -45,6 +59,7 @@ class MeetingListViewController: UIViewController, XIBed {
         self.selectDateBaseVw.layer.cornerRadius = 8.0
         
         self.registerCell()
+        self.fetchMeetingLists()
         
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -59,7 +74,7 @@ class MeetingListViewController: UIViewController, XIBed {
     
     @objc func refresh(_ sender: AnyObject) {
         DispatchQueue.main.async {
-            //self.refreshControl.endRefreshing()
+            self.fetchMeetingLists()
         }
     }
     
@@ -110,10 +125,10 @@ extension MeetingListViewController {
             fromDatePicker.preferredDatePickerStyle = .wheels
         }
 
-        // Set minimum date to today
-        let currentDate = Date()
-        fromDatePicker.minimumDate = currentDate
-        fromDatePicker.date = currentDate // Start at today
+//        // Set minimum date to today
+//        let currentDate = Date()
+//        fromDatePicker.minimumDate = currentDate
+//        fromDatePicker.date = currentDate // Start at today
 
         // Setup toolbar with Done and Cancel buttons
         let toolbar = UIToolbar()
@@ -197,7 +212,7 @@ extension MeetingListViewController {
 
 extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.meetingLists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -271,10 +286,62 @@ extension MeetingListViewController: MeetingListCellDelegate {
         // Animate height and layout changes
         listCollectionVw.performBatchUpdates {
             listCollectionVw.reloadItems(at: indexPathsToReload)
-            //self.setupCollectionHeight()
+            self.fetchMeetingLists()
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
         }
     }
+}
+
+extension MeetingListViewController {
+    func validation() {
+        if self.fromDateTF.text == "" {
+            self.presentAlertWithAction(title: "Error", message: "First select a From Date.") {
+                self.onFromDateBtnTap(self.fromDateBtn)
+            }
+        } else if self.toDateTF.text == "" {
+            self.presentAlertWithAction(title: "Error", message: "First select a To Date.") {
+                self.onToDateBtnTap(self.toDateBtn)
+            }
+        } else {
+            fetchMeetingLists()
+        }
+    }
+    
+    func fetchMeetingLists() {
+        showActivity()
+        let url = EndPoints.meetingLists
+        
+        let params: [String: Any] = [
+            "start_date": self.fromDateTF.text ?? "",
+            "end_date": self.toDateTF.text ?? ""
+        ]
+        
+        NetworkManagerr.request(url, method: .get, parameters: params) { (response) in
+            self.hideActivity()
+            self.refreshControl.endRefreshing()
+            guard response.result.isSuccess else {
+                print("Error ::", response.error?.localizedDescription ?? "Default Error")
+                return
+            }
+            
+            guard let data = response.data else {
+                print("Error :: No data received.")
+                return
+            }
+            
+            do {
+                let decodedResponse = try JSONDecoder().decode(MeetingListsDataModel.self, from: data)
+                if let data = decodedResponse.data {
+                    self.meetingLists = data.approvedmeeting ?? []
+                } else {
+                    print("Error ::", decodedResponse.message ?? "No message")
+                }
+            } catch {
+                print("Error ::", error)
+            }
+        }
+    }
+    
 }
