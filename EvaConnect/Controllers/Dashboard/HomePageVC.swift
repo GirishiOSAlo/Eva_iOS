@@ -29,6 +29,7 @@ class HomePageVC: UIViewController {
     
     @IBOutlet weak var newsBaseVw: UIView!
     @IBOutlet weak var newsTableVw: UITableView!
+    @IBOutlet weak var newsTableVwHeight: NSLayoutConstraint!
     
     @IBOutlet weak var jobBaseVw: UIView!
     @IBOutlet weak var jobCollectionVw: UICollectionView!
@@ -305,9 +306,13 @@ extension HomePageVC {
                     if (postRoot.data?.count ?? 0) > 0 {
                         if let data = postRoot.data {
                             self.dashboardPostList = data
-                            DispatchQueue.main.async {
-                                let height = self.postTableVw.contentSize.height
-                                self.postTableVwHeight.constant = height
+                            if self.dashboardPostList.count == 0 {
+                                self.postTableVwHeight.constant = 0.0
+                            } else {
+                                DispatchQueue.main.async {
+                                    let height = self.postTableVw.contentSize.height
+                                    self.postTableVwHeight.constant = height
+                                }
                             }
                         }
                     } else {
@@ -335,9 +340,8 @@ extension HomePageVC {
                 
                 if !(newsRoot.error!) {
                     if let data = newsRoot.data {
-                        if data.count > 0 {
-                            self.newsList = data
-                        }
+                        self.newsList = data
+                        self.newsTableVwHeight.constant = CGFloat(self.newsList.count * 430)
                     }
                 } else {
                     print("Error :: \(newsRoot.message ?? "")")

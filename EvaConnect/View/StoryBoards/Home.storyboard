@@ -816,6 +816,7 @@ Aviation</string>
                         <outlet property="jobCollectionVwHeight" destination="0o0-IC-HH5" id="CMS-Wx-wDh"/>
                         <outlet property="newsBaseVw" destination="91d-oy-TXJ" id="viN-8b-ORw"/>
                         <outlet property="newsTableVw" destination="5vy-Oo-eWh" id="F0g-cw-tqA"/>
+                        <outlet property="newsTableVwHeight" destination="2Gx-Ct-ubI" id="hl5-Tu-iJG"/>
                         <outlet property="postBaseVw" destination="B7Y-hq-qrK" id="hVF-XE-GD5"/>
                         <outlet property="postTableVw" destination="Yy3-Ru-KHR" id="XMf-hR-Wtk"/>
                         <outlet property="postTableVwHeight" destination="MVc-4Y-gdG" id="4Lr-qN-zbr"/>
