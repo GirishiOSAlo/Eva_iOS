@@ -95,6 +95,9 @@ class HomePageVC: UIViewController {
         self.registerCell()
         self.jobCollectionVwHeight.constant = 0.0
         self.eventCollectionVwHeight.constant = 0.0
+        self.postTableVwHeight.constant = 0.0
+        self.newsTableVwHeight.constant = 0.0
+        
         if isIndivisualUser {
             Constants.saveEnumToUserDefaults(.news)
         } else {

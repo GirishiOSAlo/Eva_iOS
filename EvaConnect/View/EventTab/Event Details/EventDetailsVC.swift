@@ -134,6 +134,9 @@ class EventDetailsVC: UIViewController, XIBed {
         rejectBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1.0, radius: 14)
         rejectBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
         
+        interestedBtn.layer.cornerRadius = 14
+        interestedBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
+        
         if let eventDetail = self.eventDetail {
             self.setUIData(eventDetail: eventDetail)
         }
@@ -182,7 +185,7 @@ class EventDetailsVC: UIViewController, XIBed {
         self.interestedBtnVw.isHidden = true
         let isInvited = eventDetail.isinvited ?? 0
         let eventAttendeesStatus = eventDetail.eventAttendeesStatus ?? ""
-        var isPrivate = self.eventDetail?.isPrivate ?? 0
+        let isPrivate = self.eventDetail?.isPrivate ?? 0
         
         if isPrivate == 0 && eventAttendeesStatus == "" {
             self.interestedBtnVw.isHidden = false
@@ -223,6 +226,7 @@ class EventDetailsVC: UIViewController, XIBed {
     }
     
     @IBAction func interestedBtn(_ sender: Any) {
+        print("Intereted Btn Tapped.")
         reqToJoin(eventId: self.eventId, type: 2)
     }
 }
