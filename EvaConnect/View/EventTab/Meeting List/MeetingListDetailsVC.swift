@@ -84,11 +84,6 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         listCollectionVw.addSubview(refreshControl) // not required when using UITableViewController
-        
-        self.successSubPopupVw.cornerRadius = 20.0
-        self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 22)
-        self.okPopupBtn.cornerRadius = 14.0
-        self.okPopupBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
     }
     
     func setupSuccessPopup() {

@@ -47,7 +47,8 @@ struct DashboardJob: Codable {
     let isApplied, likeCount, createdByID: Int?
     let createdDatetime: String?
     let modifiedByID: Int?
-    let modifiedDatetime, type, os, status: String?
+    let modifiedDatetime, type, os: String?
+    let status: Int?
     let isURL: Bool?
     let postVideo, isConnected: String?
     let connectionID: Int?

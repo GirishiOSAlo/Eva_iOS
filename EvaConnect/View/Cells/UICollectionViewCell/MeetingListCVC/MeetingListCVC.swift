@@ -67,4 +67,13 @@ class MeetingListCVC: UICollectionViewCell {
         rescheduleBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD", alpha: 1.0), value: 1.0, radius: 12.0)
         cancelMeetingBtn.cornerRadius = 12.0
     }
+    
+    func setData(obj: approvedMeetingLists) {
+        self.eventNameLbl.text = obj.eventName ?? "--"
+        self.dateLbl.text = obj.startDay ?? "--"
+        self.timeLbl.text = "\(obj.startTime ?? "--") - \(obj.endTime ?? "--")"
+        self.meetingWithLbl.text = obj.meetingWith ?? "--"
+        self.colleaguesLbl.text = obj.withColleagues ?? "--"
+        self.locationLbl.text = obj.locationName ?? "--"
+    }
 }

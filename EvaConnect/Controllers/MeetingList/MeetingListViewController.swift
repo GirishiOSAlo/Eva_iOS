@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class MeetingListViewController: UIViewController, XIBed {
 
@@ -23,12 +24,18 @@ class MeetingListViewController: UIViewController, XIBed {
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var listCollectionVw: UICollectionView!
     
+    @IBOutlet weak var successPopupVw: UIView!
+    @IBOutlet weak var successSubPopupVw: UIView!
+    @IBOutlet weak var animationContainerView: UIView!
+    @IBOutlet weak var titlePopupLbl: UILabel!
+    @IBOutlet weak var okPopupBtn: UIButton!
+    
     var meetingLists : [approvedMeetingLists] = []
     var refreshControl = UIRefreshControl()
     var fromDatePicker = UIDatePicker()
     var toDatePicker = UIDatePicker()
     var expandedIndexPath: IndexPath?
-    
+    var animationView: LottieAnimationView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +49,7 @@ class MeetingListViewController: UIViewController, XIBed {
 
     func setupUI() {
         self.noDataLbl.isHidden = true
+        self.successPopupVw.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
         self.noDataLbl.font = UIFont(name: Myfonts.regular, size: 16.0)
         self.searchBaseVw.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
@@ -51,6 +59,7 @@ class MeetingListViewController: UIViewController, XIBed {
         
         self.registerCell()
         self.fetchMeetingLists()
+        self.setupSuccessPopup()
         
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -62,6 +71,29 @@ class MeetingListViewController: UIViewController, XIBed {
         listCollectionVw.delegate = self
         listCollectionVw.dataSource = self
     }
+    
+    func setupSuccessPopup() {
+        self.successSubPopupVw.cornerRadius = 20.0
+        self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 22)
+        self.okPopupBtn.cornerRadius = 14.0
+        self.okPopupBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
+    }
+    
+    func addAnimation(){
+        animationView = LottieAnimationView(name: "successLottie.json")
+        animationView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+//        animationView.center = animationContainerView.center
+        animationView.loopMode = .loop
+        animationView.contentMode = .scaleAspectFit
+        animationContainerView.addSubview(animationView)
+        animationView.play()
+    }
+    
+    @IBAction func onSuccessOkBtn(_ sender: UIButton) {
+        self.successPopupVw.isHidden = true
+        self.animationView.stop()
+    }
+
     
     @objc func refresh(_ sender: AnyObject) {
         DispatchQueue.main.async {
@@ -239,6 +271,15 @@ extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewD
         }
         cell.isExpanded = (indexPath == expandedIndexPath)
         cell.delegate = self
+        let meeting = self.meetingLists[indexPath.row]
+        cell.setData(obj: meeting)
+        
+        cell.messageBtn.tag = indexPath.row
+        cell.messageBtn.addTarget(self, action: #selector(message(sender:)), for: .touchUpInside)
+        cell.rescheduleBtn.tag = indexPath.row
+        cell.rescheduleBtn.addTarget(self, action: #selector(openRescheduleVw(sender:)), for: .touchUpInside)
+        cell.cancelMeetingBtn.tag = indexPath.row
+        cell.cancelMeetingBtn.addTarget(self, action: #selector(cancelMeeting(sender:)), for: .touchUpInside)
         
         return cell
     }
@@ -260,6 +301,29 @@ extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewD
             let cellHeight = finalHeight - collapseHeight
             return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
         }
+    }
+    
+    @objc func openRescheduleVw(sender: UIButton) {
+        let vc = ReschedulePopupVw.instantiate()
+        vc.meetingID = self.meetingLists[sender.tag].id ?? 0
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+    }
+    
+    @objc func cancelMeeting(sender: UIButton) {
+        showCustomAlert(title: "Are you sure you want to Cancel this Meeting ?", doneTitle: "Confirm", on: self.view) {
+            print("Confirmed")
+            let meetingID = self.meetingLists[sender.tag].id ?? 0
+            let eventID = self.meetingLists[sender.tag].eventID ?? 0
+            self.meetingAcceptCancelUpdate(meetingID: meetingID, status: "cancelled", eventId: eventID)
+        }
+    }
+    
+    @objc func message(sender: UIButton) {
+        let requestById = self.meetingLists[sender.tag].requestedByID ?? 0
+        let chatVC = StoryboardRouter.chat()
+        chatVC.userId = requestById
+        navigationController?.pushViewController(chatVC, animated: true)
     }
 }
 
@@ -344,6 +408,34 @@ extension MeetingListViewController {
                 }
             } catch {
                 print("Error ::", error)
+            }
+        }
+    }
+    
+    func meetingAcceptCancelUpdate(meetingID: Int, status: String, eventId: Int) {
+        let url = EndPoints.eventDelegateMeetingStatus
+        let parameters = [
+            "meeting_id": meetingID,
+            "status": status,
+            "event_id": eventId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let meetingStatusRoot = try jsonDecoder.decode(DelegateEventMeetingStatusModel.self, from: response.data ?? Data())
+                if meetingStatusRoot.success ?? false {
+                    print("Success")
+                    self.fetchMeetingLists()
+                    self.titlePopupLbl.text = meetingStatusRoot.message ?? ""
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                } else {
+                    print("Error :: \(meetingStatusRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
             }
         }
     }
