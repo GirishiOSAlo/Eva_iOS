@@ -806,6 +806,7 @@ Aviation</string>
                     </view>
                     <connections>
                         <outlet property="bannerBaseVw" destination="jPk-Ec-14d" id="YO9-eJ-JbA"/>
+                        <outlet property="bannerBaseVwHeight" destination="KIx-zo-SX7" id="7QI-Qy-ZaA"/>
                         <outlet property="bannerCollectionVw" destination="V22-Yf-zcA" id="cXl-Mg-h43"/>
                         <outlet property="bannerPageControl" destination="LSK-tC-sJu" id="X1M-KE-yN5"/>
                         <outlet property="eventBaseVw" destination="DjW-lG-LRg" id="If1-tY-6Ef"/>

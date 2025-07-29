@@ -16,6 +16,7 @@ class HomePageVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var bannerBaseVw: UIView!
+    @IBOutlet weak var bannerBaseVwHeight: NSLayoutConstraint!
     @IBOutlet weak var bannerCollectionVw: UICollectionView!
     @IBOutlet weak var bannerPageControl: UIPageControl!
     
@@ -93,6 +94,7 @@ class HomePageVC: UIViewController {
         scrollView.addSubview(refreshControl) // not required when using UITableViewController
 
         self.registerCell()
+        self.bannerBaseVwHeight.constant = 0.0
         self.jobCollectionVwHeight.constant = 0.0
         self.eventCollectionVwHeight.constant = 0.0
         self.postTableVwHeight.constant = 0.0
@@ -280,9 +282,15 @@ extension HomePageVC {
                 let response = try JSONDecoder().decode(DashboardBannerDataModel.self, from: data)
                 if let data = response.data {
                     self.dashboardBannerList = data
-                    //--> Setup Pagination...
-                    self.bannerPageControl.numberOfPages = self.dashboardBannerList.count
-                    self.bannerPageControl.currentPage = 0
+                    
+                    if self.dashboardBannerList.count == 0 {
+                        self.bannerBaseVwHeight.constant = 0
+                    } else {
+                        self.bannerBaseVwHeight.constant = 560.0
+                        //--> Setup Pagination...
+                        self.bannerPageControl.numberOfPages = self.dashboardBannerList.count
+                        self.bannerPageControl.currentPage = 0
+                    }
                 } else {
                     print("Error ::", response.message as? Error ?? "Default Error")
                 }
