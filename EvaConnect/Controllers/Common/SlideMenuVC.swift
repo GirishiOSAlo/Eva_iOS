@@ -112,13 +112,20 @@ extension SlideMenuVC {
     private func setUserData() {
         if isIndivisualUser {
             nameLbl.text = myUserDefaults.fullName
-            viewProfileLbl.text = "View Profile"
-            
         } else {
             nameLbl.text = myUserDefaults.companyName
-            viewProfileLbl.text = "View Profile"
         }
-        if let url = URL(string: myUserDefaults.userImage) { profileImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "profile")) }
+        viewProfileLbl.text = "View Profile"
+//        if let url = URL(string: myUserDefaults.userImage) { profileImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "profile")) }
+        
+        let imageUrl = myUserDefaults.userImage
+        if !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            self.profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            self.profileImageView.image = UIImage(named: "profile")
+        }
     }
     
     private func setupTapGesture(){

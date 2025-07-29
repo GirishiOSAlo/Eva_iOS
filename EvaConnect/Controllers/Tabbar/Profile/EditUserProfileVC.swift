@@ -245,6 +245,12 @@ extension EditUserProfileVC {
                 self.user = user
                 LoggedUserDetails.shared.updateUser(userModel: user)
                 self.setUserData()
+                
+                //Saved in userdefault.....
+                myUserDefaults.fullName = user.firstName ?? ""
+                myUserDefaults.companyName = user.companyName ?? ""
+                myUserDefaults.userImage = user.userImage ?? ""
+                
             } else {
                 self.hideActivity()
                 self.presentAlert("Error", "Unable to fetch user details")
