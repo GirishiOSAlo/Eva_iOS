@@ -23,17 +23,7 @@ class MeetingListViewController: UIViewController, XIBed {
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var listCollectionVw: UICollectionView!
     
-    var meetingLists : [approvedMeetingLists] = [] {
-        didSet {
-            self.listCollectionVw.reloadData()
-            if meetingLists.count == 0 {
-                self.noDataLbl.isHidden = false
-            } else {
-                self.noDataLbl.isHidden = true
-            }
-        }
-    }
-    
+    var meetingLists : [approvedMeetingLists] = []
     var refreshControl = UIRefreshControl()
     var fromDatePicker = UIDatePicker()
     var toDatePicker = UIDatePicker()
@@ -53,6 +43,7 @@ class MeetingListViewController: UIViewController, XIBed {
     func setupUI() {
         self.noDataLbl.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
+        self.noDataLbl.font = UIFont(name: Myfonts.regular, size: 16.0)
         self.searchBaseVw.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
         self.searchTF.delegate = self
         self.searchTF.addTarget(self, action: #selector(self.searchTextFieldDidChange(_:)), for: .editingChanged)
@@ -193,6 +184,9 @@ extension MeetingListViewController {
         let selectedDate = fromDatePicker.date
         self.fromDateTF.text = formatter.string(from: selectedDate)
         self.fromDateTF.resignFirstResponder()
+        DispatchQueue.main.async {
+            self.fetchMeetingLists()
+        }
     }
     
     @objc func doneToDatePicker() {
@@ -203,6 +197,9 @@ extension MeetingListViewController {
         let selectedDate = toDatePicker.date
         self.toDateTF.text = formatter.string(from: selectedDate)
         self.toDateTF.resignFirstResponder()
+        DispatchQueue.main.async {
+            self.fetchMeetingLists()
+        }
     }
 
     @objc func cancelPicker() {
@@ -318,23 +315,30 @@ extension MeetingListViewController {
             "end_date": self.toDateTF.text ?? ""
         ]
         
-        NetworkManagerr.request(url, method: .get, parameters: params) { (response) in
+        var urlComponents = URLComponents(string: url)!
+        urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
+        let finalURL = urlComponents.url!.absoluteString
+
+        NetworkManagerr.request(finalURL, method: .get) { (response) in
             self.hideActivity()
             self.refreshControl.endRefreshing()
+            
             guard response.result.isSuccess else {
                 print("Error ::", response.error?.localizedDescription ?? "Default Error")
                 return
             }
-            
+
             guard let data = response.data else {
                 print("Error :: No data received.")
                 return
             }
-            
+
             do {
                 let decodedResponse = try JSONDecoder().decode(MeetingListsDataModel.self, from: data)
                 if let data = decodedResponse.data {
                     self.meetingLists = data.approvedmeeting ?? []
+                    self.listCollectionVw.reloadData()
+                    self.noDataLbl.isHidden = !self.meetingLists.isEmpty
                 } else {
                     print("Error ::", decodedResponse.message ?? "No message")
                 }
@@ -343,5 +347,4 @@ extension MeetingListViewController {
             }
         }
     }
-    
 }
