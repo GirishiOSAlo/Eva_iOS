@@ -682,23 +682,24 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             cell.dateLbl.text = "\(banner.startDate ?? "") - \(banner.endDate ?? "")"
             cell.timeLbl.text = "\(banner.startTime ?? "") - \(banner.endTime ?? "")"
             
-            let eventAttendeesStatus = banner.eventAttendeesStatus ?? ""
-            
-            //--> isinvite = 1 --> accept --> type = 2
-            //--> isinvite = 0 --> request to join --> type = 1
-            //--> eventAttendeesStatus = "" --> button click else button not click { check is_invite }
-            
-            if eventAttendeesStatus == "" {
-                if banner.isinvited == 0 {
-                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-                } else {
-                    cell.requestJoinBtn.isHidden = true
-                }
-            } else if eventAttendeesStatus == "Approved" {
-                cell.requestJoinBtn.isHidden = true
-            } else {
-                cell.requestJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
-            }
+//            let eventAttendeesStatus = banner.eventAttendeesStatus ?? ""
+//            
+//            //--> isinvite = 1 --> accept --> type = 2
+//            //--> isinvite = 0 --> request to join --> type = 1
+//            //--> eventAttendeesStatus = "" --> button click else button not click { check is_invite }
+//            
+//            if eventAttendeesStatus == "" {
+//                if banner.isinvited == 0 {
+//                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//                } else {
+//                    cell.requestJoinBtn.isHidden = true
+//                }
+//            } else if eventAttendeesStatus == "Approved" {
+//                cell.requestJoinBtn.isHidden = true
+//            } else {
+//                cell.requestJoinBtn.setTitle(eventAttendeesStatus, for: .normal)
+//            }
+            cell.requestJoinBtn.isHidden = true
                         
             cell.viewDetailsBtn.tag = indexPath.row
             cell.viewDetailsBtn.addTarget(self, action: #selector(viewDetailsTapped(sender:)), for: .touchUpInside)
