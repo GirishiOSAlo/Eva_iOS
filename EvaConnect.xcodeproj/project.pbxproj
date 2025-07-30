@@ -544,13 +544,13 @@
 		A689509C2DD7499300ACC16F /* MeetingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950992DD7499300ACC16F /* MeetingListVC.swift */; };
 		A68950A02DD758F400ACC16F /* MeetingListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A689509F2DD758F400ACC16F /* MeetingListCVC.xib */; };
 		A68950A12DD758F400ACC16F /* MeetingListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A689509E2DD758F400ACC16F /* MeetingListCVC.swift */; };
+		A68EB3DC2E39DC89008F6B9A /* MeetingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */; };
+		A68EB3DD2E39DC89008F6B9A /* MeetingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68EB3DB2E39DC89008F6B9A /* MeetingsVC.xib */; };
 		A695AAF32AA6EE4E006A2A71 /* ReactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695AAF12AA6EE4E006A2A71 /* ReactionTableViewCell.swift */; };
 		A695AAF42AA6EE4E006A2A71 /* ReactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A695AAF22AA6EE4E006A2A71 /* ReactionTableViewCell.xib */; };
 		A695AAF62AA73A50006A2A71 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695AAF52AA73A50006A2A71 /* ActivityViewController.swift */; };
 		A69A1D212AB32F72006BF71E /* TextMsgTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69A1D1F2AB32F72006BF71E /* TextMsgTVCell.swift */; };
 		A69A1D222AB32F72006BF71E /* TextMsgTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A69A1D202AB32F72006BF71E /* TextMsgTVCell.xib */; };
-		A69BD53E2E3208E800426C06 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69BD53C2E3208E800426C06 /* MeetingListViewController.swift */; };
-		A69BD53F2E3208E800426C06 /* MeetingListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A69BD53D2E3208E800426C06 /* MeetingListViewController.xib */; };
 		A6A125912DDDB01600979389 /* SponsorsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A125902DDDB01600979389 /* SponsorsVC.xib */; };
 		A6A125922DDDB01600979389 /* SponsorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A1258F2DDDB01600979389 /* SponsorsVC.swift */; };
 		A6A125962DDDB0B800979389 /* SponsorsCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A125952DDDB0B800979389 /* SponsorsCVC.xib */; };
@@ -1164,13 +1164,13 @@
 		A689509A2DD7499300ACC16F /* MeetingListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListVC.xib; sourceTree = "<group>"; };
 		A689509E2DD758F400ACC16F /* MeetingListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListCVC.swift; sourceTree = "<group>"; };
 		A689509F2DD758F400ACC16F /* MeetingListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListCVC.xib; sourceTree = "<group>"; };
+		A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsVC.swift; sourceTree = "<group>"; };
+		A68EB3DB2E39DC89008F6B9A /* MeetingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingsVC.xib; sourceTree = "<group>"; };
 		A695AAF12AA6EE4E006A2A71 /* ReactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTableViewCell.swift; sourceTree = "<group>"; };
 		A695AAF22AA6EE4E006A2A71 /* ReactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionTableViewCell.xib; sourceTree = "<group>"; };
 		A695AAF52AA73A50006A2A71 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		A69A1D1F2AB32F72006BF71E /* TextMsgTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMsgTVCell.swift; sourceTree = "<group>"; };
 		A69A1D202AB32F72006BF71E /* TextMsgTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMsgTVCell.xib; sourceTree = "<group>"; };
-		A69BD53C2E3208E800426C06 /* MeetingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
-		A69BD53D2E3208E800426C06 /* MeetingListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListViewController.xib; sourceTree = "<group>"; };
 		A6A1258F2DDDB01600979389 /* SponsorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsVC.swift; sourceTree = "<group>"; };
 		A6A125902DDDB01600979389 /* SponsorsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SponsorsVC.xib; sourceTree = "<group>"; };
 		A6A125942DDDB0B800979389 /* SponsorsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorsCVC.swift; sourceTree = "<group>"; };
@@ -3559,8 +3559,8 @@
 		A69BD53B2E3207D200426C06 /* MeetingList */ = {
 			isa = PBXGroup;
 			children = (
-				A69BD53C2E3208E800426C06 /* MeetingListViewController.swift */,
-				A69BD53D2E3208E800426C06 /* MeetingListViewController.xib */,
+				A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */,
+				A68EB3DB2E39DC89008F6B9A /* MeetingsVC.xib */,
 			);
 			path = MeetingList;
 			sourceTree = "<group>";
@@ -3793,7 +3793,6 @@
 				48B285722AB319660086CA61 /* SenderImgTVCell.xib in Resources */,
 				A6782F652DDC88B50029443B /* SpeakersViewController.xib in Resources */,
 				505176542445077600544956 /* Chat.storyboard in Resources */,
-				A69BD53F2E3208E800426C06 /* MeetingListViewController.xib in Resources */,
 				A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */,
 				259495F827884A6500C5579B /* UserJobCell.xib in Resources */,
 				A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */,
@@ -3929,6 +3928,7 @@
 				48A4211B2AA8AB7E00A8D37C /* CommonPopupVC.xib in Resources */,
 				18E7E23C24891ECF00384C96 /* EventCell.xib in Resources */,
 				18665CD923C596CE0089EF69 /* Main.storyboard in Resources */,
+				A68EB3DD2E39DC89008F6B9A /* MeetingsVC.xib in Resources */,
 				182AD1F824B453B600BC3889 /* NewPostImages.xib in Resources */,
 				18E7E23224891C6D00384C96 /* MeetingCell.xib in Resources */,
 				48BC63F42DCB74AC002BA644 /* CollectionViewCell.xib in Resources */,
@@ -4144,7 +4144,6 @@
 				485FC1A02DD75EE700AA05A4 /* ExhibitorsVC.swift in Sources */,
 				25D40B3E27C3A30200EEF2AA /* Wrapper.swift in Sources */,
 				A63779482DE6F4DE0072055F /* AlertView.swift in Sources */,
-				A69BD53E2E3208E800426C06 /* MeetingListViewController.swift in Sources */,
 				2586A8BD277C7C3A000350DE /* UIDevice.swift in Sources */,
 				485FC19A2DD5CDD200AA05A4 /* ConferenceDetailsVC.swift in Sources */,
 				A66D344C2B45278900A797D6 /* MessageList.swift in Sources */,
@@ -4362,6 +4361,7 @@
 				48EFB8CD2C09D297009721A2 /* reportPopupVC.swift in Sources */,
 				250FB9172771BBBA00F6E23E /* SignUpLocationDOBVC.swift in Sources */,
 				501E50BD24E56CB200E65CDA /* Collection.swift in Sources */,
+				A68EB3DC2E39DC89008F6B9A /* MeetingsVC.swift in Sources */,
 				A621889D2DEF204E006513D3 /* NewsTrendingModel.swift in Sources */,
 				50E0AA1524899CBC00EFA56D /* EventViewVC.swift in Sources */,
 				259C64742775A1D700CB9F40 /* ForgotYourPasswordVC.swift in Sources */,

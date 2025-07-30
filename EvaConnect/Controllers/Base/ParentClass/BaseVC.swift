@@ -739,8 +739,7 @@ extension BaseVC: SlideMenuVCDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
         case "Meetings":
             print("Push to Meetings Screen...")
-            //let vc = EventMainVC.instantiate()
-            let vc = MeetingListViewController.instantiate()
+            let vc = MeetingsVC.instantiate()
             navigationController?.pushViewController(vc, animated: true)
         case "News":
             Constants.saveEnumToUserDefaults(.news)

@@ -1,15 +1,15 @@
 //
-//  MeetingListViewController.swift
+//  MeetingsVC.swift
 //  EvaConnect
 //
-//  Created by Girish Bhuva on 24/07/25.
+//  Created by Girish Bhuva on 30/07/25.
 //  Copyright © 2025 HyperNym. All rights reserved.
 //
 
 import UIKit
 import Lottie
 
-class MeetingListViewController: UIViewController, XIBed {
+class MeetingsVC: UIViewController, XIBed {
 
     @IBOutlet weak var headingLbl: UILabel!
     
@@ -39,14 +39,14 @@ class MeetingListViewController: UIViewController, XIBed {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         setupUI()
     }
-    
+
     @IBAction func backBtnTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     func setupUI() {
         self.noDataLbl.isHidden = true
         self.successPopupVw.isHidden = true
@@ -127,14 +127,14 @@ class MeetingListViewController: UIViewController, XIBed {
     }
 }
 
-extension MeetingListViewController: UITextFieldDelegate {
+extension MeetingsVC: UITextFieldDelegate {
     @objc func searchTextFieldDidChange(_ textField: UITextField) {
         let searchStr = self.searchTF.text ?? ""
          print("Search Text :: \(searchStr)")
     }
 }
 
-extension MeetingListViewController {
+extension MeetingsVC {
     func fromDatePickerSet() {
         // Formatter for display
         let dateFormatter = DateFormatter()
@@ -239,7 +239,7 @@ extension MeetingListViewController {
     }
 }
 
-extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+extension MeetingsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.meetingLists.count
     }
@@ -327,7 +327,7 @@ extension MeetingListViewController: UICollectionViewDelegate, UICollectionViewD
     }
 }
 
-extension MeetingListViewController: MeetingListCellDelegate {
+extension MeetingsVC: MeetingListCellDelegate {
     func didTapDropdownButton(in cell: MeetingListCVC) {
         guard let indexPath = listCollectionVw.indexPath(for: cell) else { return }
         
@@ -355,7 +355,7 @@ extension MeetingListViewController: MeetingListCellDelegate {
     }
 }
 
-extension MeetingListViewController {
+extension MeetingsVC {
     func validation() {
         if self.fromDateTF.text == "" {
             self.presentAlertWithAction(title: "Error", message: "First select a From Date.") {
