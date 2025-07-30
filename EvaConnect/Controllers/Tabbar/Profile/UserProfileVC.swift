@@ -1378,14 +1378,17 @@ extension UserProfileVC: UITableViewDataSource {
 extension UserProfileVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        switch profileSettings[indexPath.row] {
-        case .profile(let profile):
-            didSelectProfileItem(profile)
-        default:
+        if tableView == self.reactionTblVw {
             print("none")
         }
-        
+        else {
+            switch profileSettings[indexPath.row] {
+            case .profile(let profile):
+                didSelectProfileItem(profile)
+            default:
+                break
+            }
+        }
     }
     
     private func didSelectProfileItem(_ item: ProfileData) {
