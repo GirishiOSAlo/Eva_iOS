@@ -55,6 +55,14 @@ class HomeVideo: BaseCellClass {
     }
     
     func setupUI() {
+        connectionNameLbl.font = UIFont(name: Myfonts.bold, size: 14.0)
+        dateLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        followBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
+        postMsgLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        likeValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        commentValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        shareValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        
         followBtn.layer.cornerRadius = 12
         followBtn.layer.borderWidth = 1
         followBtn.layer.borderColor = UIColor(hex: "#4D76CD").cgColor

@@ -72,6 +72,13 @@ class HomeImage: BaseCellClass {
     }
     
     func initUI() {
+        name.font = UIFont(name: Myfonts.bold, size: 14.0)
+        dateLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        followBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
+        postMsgLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        likeCountLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        commentCountLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        shareCountLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         
         backGroundView.layer.cornerRadius = 20
         pageNoLbl.layer.cornerRadius = pageNoLbl.layer.bounds.height / 2

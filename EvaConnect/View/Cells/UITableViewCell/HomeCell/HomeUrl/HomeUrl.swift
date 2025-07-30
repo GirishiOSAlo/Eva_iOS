@@ -51,6 +51,14 @@ class HomeUrl: BaseCellClass {
     }
     
     func setupUI() {
+        connectionNameLbl.font = UIFont(name: Myfonts.bold, size: 14.0)
+        timeLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        followBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
+        urlText.font = UIFont(name: Myfonts.regular, size: 14.0)
+        likeValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        commentValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        shareValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        
         followBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1, radius: 12)
         followBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
         boderView.makeRoundView(boderColor: UIColor(hex: "#5894DD") ,boderValue: 1.5) 
