@@ -20,7 +20,7 @@ extension PostActionProvidable {
     
     func postDetail(postId: Int, completion: @escaping (PostDetail?, PostType?, Error?) -> Void) {
         
-        let parameters: AFParameters = [ "user_id" : LoggedUserDetails.shared.user?.id ?? 0,
+        let parameters: AFParameters = [ "user_id" : myUserDefaults.userId,
                                          "post_id" : postId ]
         
         NetworkManagerr.request(EndPoints.postDetails, method: .post, parameters: parameters) { (response) in

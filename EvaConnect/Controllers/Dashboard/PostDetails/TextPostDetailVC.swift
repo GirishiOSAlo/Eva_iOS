@@ -349,6 +349,12 @@ extension TextPostDetailVC {
         docSizeLbl.font = UIFont(name: Myfonts.regular, size: 14)
         docTimeLbl.font = UIFont(name: Myfonts.regular, size: 14)
         
+        if self.dashboardItem?.user?.id == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
+        
         switch postType {
         case .simpleText:
             self.textDetailView.isHidden = false
@@ -563,12 +569,12 @@ extension TextPostDetailVC {
     private func likePost(postId: Int, status: String, action: String) {
         showActivity()
         let param: AFParameters = [ "post_id": postId,
-                                    "created_by_id":  LoggedUserDetails.shared.user?.id ?? 0,
+                                    "created_by_id": myUserDefaults.userId,
                                     "status": status,
                                     "action": action ]
         view.isUserInteractionEnabled = false
         
-        ApiCallerClass.likePostServiceFunc(usertoken: LoggedUserDetails.shared.token!,para: param, success: { (dataRespose) in
+        ApiCallerClass.likePostServiceFunc(usertoken: myUserDefaults.token, para: param, success: { (dataRespose) in
             let data = dataRespose as? NSDictionary
             let error = data?["error"] as? Int
             self.hideActivity()

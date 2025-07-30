@@ -258,6 +258,27 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    func setPostTableHeight() {
+        var totalHeight = 0.0
+        for homePost in self.dashboardPostList {
+            if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                totalHeight = totalHeight + height
+            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] { //Video Cell
+                totalHeight = totalHeight + 450
+            } else if homePost.postDocument != "" && homePost.datumPostImage == [] { //document Cell
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 231.0
+                totalHeight = totalHeight + height
+                
+            } else if homePost.datumPostImage!.count > 0 { //Image Cell
+                totalHeight = totalHeight + 450
+            }
+        }
+        self.postTableVwHeight.constant = totalHeight
+    }
 }
 
 //MARK: Api Call
@@ -317,14 +338,17 @@ extension HomePageVC {
                     if (postRoot.data?.count ?? 0) > 0 {
                         if let data = postRoot.data {
                             self.dashboardPostList = data
-                            if self.dashboardPostList.count == 0 {
-                                self.postTableVwHeight.constant = 0.0
-                            } else {
-                                DispatchQueue.main.async {
-                                    let height = self.postTableVw.contentSize.height
-                                    self.postTableVwHeight.constant = height
-                                }
-                            }
+                            self.setPostTableHeight()
+//                            if self.dashboardPostList.count == 0 {
+//                                self.postTableVwHeight.constant = 0.0
+//                            } else {
+//                                DispatchQueue.main.async {
+//                                    self.setPostTableHeight()
+//                                    let totalHeight = 0
+//                                    let height = self.postTableVw.contentSize.height
+//                                    self.postTableVwHeight.constant = height
+//                                }
+//                            }
                         }
                     } else {
                         self.postTableVwHeight.constant = 0.0
@@ -1114,7 +1138,10 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
         case self.postTableVw:
             let homePost = self.dashboardPostList[indexPath.row]
             if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-                return 200
+                //return 200
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                return height
             } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] { //Video Cell
                 return 450
             } else if homePost.postDocument != "" && homePost.datumPostImage == [] { //document Cell
@@ -1125,8 +1152,9 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 
             } else if homePost.datumPostImage!.count > 0 { //Image Cell
                 return 450
+            } else {
+                return UITableView.automaticDimension
             }
-            return UITableView.automaticDimension
         case self.newsTableVw:
             return 430
             

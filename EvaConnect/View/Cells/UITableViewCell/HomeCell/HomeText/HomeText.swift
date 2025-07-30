@@ -119,8 +119,7 @@ class HomeText: BaseCellClass {
 //        }
         if data.user?.userImage != nil {
            profileImage.sd_setImage(with: URL(string: data.user?.userImage ?? ""), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
-        }
-        else {
+        } else {
             profileImage.image = #imageLiteral(resourceName: "profile")
         }
         actualString = data.content ?? ""
