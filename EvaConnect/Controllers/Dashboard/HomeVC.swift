@@ -176,6 +176,7 @@ class HomeVC: BaseVC {
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
+            posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         } else if selectedTab == .events {
             height = 32
             searchHeight = 0
