@@ -102,6 +102,12 @@ class HomeUrl: BaseCellClass {
     }
     
     func setData(dataMaper: DashboardPostData) {
+        if dataMaper.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
+        
         connectionNameLbl.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
 
         agoLbl.text = dataMaper.createdDatetime

@@ -98,6 +98,12 @@ class HomeVideo: BaseCellClass {
     }
     
     func setData(dataMaper: DashboardPostData) {
+        if dataMaper.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
+        
         if let imageUrl = dataMaper.user?.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),

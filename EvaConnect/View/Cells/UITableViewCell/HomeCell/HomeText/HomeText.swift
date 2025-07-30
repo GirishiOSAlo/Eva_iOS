@@ -106,6 +106,12 @@ class HomeText: BaseCellClass {
     }
     
     func setData(data: DashboardPostData) {
+        if data.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
+        
         self.connectionNameLbl.text = data.user?.firstName ?? data.user?.companyName ?? ""
         self.dateLbl.text = data.createdDate ?? ""
         self.likeValueLbl.text = "\(data.likeCount ?? 0)"
