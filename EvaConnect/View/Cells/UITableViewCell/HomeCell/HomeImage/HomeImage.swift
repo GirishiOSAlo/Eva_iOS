@@ -145,6 +145,11 @@ class HomeImage: BaseCellClass {
     }
     
     func uiData(dataMaper: DashboardItem) {
+        if dataMaper.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         
         name.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
         dateLbl.text = dataMaper.createdDate

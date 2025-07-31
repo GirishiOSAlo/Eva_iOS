@@ -82,7 +82,11 @@ class HomeText: BaseCellClass {
     }
 
     func uiData(dataMaper: DashboardItem) {
-        
+        if dataMaper.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         connectionNameLbl.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
         dateLbl.text = dataMaper.createdDate
         likeValueLbl.text = "\(dataMaper.likeCount ?? 0)"

@@ -72,7 +72,11 @@ class HomeUrl: BaseCellClass {
     }
     
     func uiData(homePost: DashboardItem) {
-        
+        if homePost.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         connectionNameLbl.text = homePost.user?.firstName ?? homePost.user?.companyName ?? ""
 
         agoLbl.text = homePost.createdDatetime

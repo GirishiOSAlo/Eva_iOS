@@ -74,7 +74,11 @@ class HomeVideo: BaseCellClass {
     }
     
     func uiData(dataMaper: DashboardItem) {
-        
+        if dataMaper.userID == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         if dataMaper.user?.userImage != nil {
             profileImage.sd_setImage(with: URL(string: dataMaper.user?.userImage ?? ""), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
         } else { profileImage.image = #imageLiteral(resourceName: "profile") }
