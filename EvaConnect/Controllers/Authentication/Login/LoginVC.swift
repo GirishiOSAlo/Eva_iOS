@@ -74,7 +74,7 @@ class LoginVC: BaseForAuthentication {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-        self.getSettings()
+        //self.getSettings()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
