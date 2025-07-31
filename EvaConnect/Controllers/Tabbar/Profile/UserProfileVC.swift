@@ -23,10 +23,10 @@ class UserProfileVC: BaseVC {
     @IBOutlet weak var profileLoadingView: UIView!
     @IBOutlet weak var connectionCountView: UIView!
     @IBOutlet weak var connectedBtn: UIButton!
-    @IBOutlet weak var tableViewTopConst: NSLayoutConstraint!
+    //@IBOutlet weak var tableViewTopConst: NSLayoutConstraint!
     @IBOutlet var profileViews: [UIView]!
     //@IBOutlet weak var scrollViewTopConst: NSLayoutConstraint!
-    @IBOutlet weak var tableView: DynamicSizeTableView!
+    //@IBOutlet weak var tableView: DynamicSizeTableView!
     @IBOutlet var profileButtons: [UIButton]!
     @IBOutlet weak var connectionLbl: UILabel!
     @IBOutlet weak var connectionCountLbl: UILabel!
@@ -130,6 +130,27 @@ class UserProfileVC: BaseVC {
     
     @IBAction func backBtnTapped(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func setPostTableHeight() {
+        var totalHeight = 0.0
+        for homePost in self.posts {
+            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                totalHeight = totalHeight + height
+            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+                totalHeight = totalHeight + 450
+            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 231.0
+                totalHeight = totalHeight + height
+                
+            } else if homePost.postImage!.count > 0 { //Image Cell
+                totalHeight = totalHeight + 450
+            }
+        }
+        self.reactionTblViewHeight.constant = totalHeight
     }
     
     @IBAction func messageBtnTapped(_ sender: Any) {
@@ -324,6 +345,7 @@ extension UserProfileVC {
         self.reactionButton.layer.cornerRadius = 8
         
         self.Is_Reaction = false
+        self.reactionTblViewHeight.constant = 0.0
 //        self.reactionTblViewHeight.constant = (240.0 * 2)
         
         self.viewAllButton.layer.cornerRadius = self.viewAllButton.frame.size.height/2
@@ -350,8 +372,8 @@ extension UserProfileVC {
         profileButtons[1].applyBorderWithRadius(color: Constants.AppColorLiteral.loginColor, radius: 20)
         profileButtons[2].applyBorderWithRadius(color: .black, radius: 20)
         
-        tableView.delegate = self
-        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.dataSource = self
         
         if userId == LoggedUserDetails.shared.user?.id ?? 0 {
             hideUserDetails()
@@ -375,7 +397,7 @@ extension UserProfileVC {
     func hideUserDetails() {
         //scrollViewTopConst.constant = -40
         profileViews.forEach({ $0.isHidden = true })
-        tableViewTopConst.constant = -50
+//        tableViewTopConst.constant = -50
     }
     
     
@@ -390,11 +412,11 @@ extension UserProfileVC {
         }
         else if status == "pending" {
             setLayoutForPending()
-            tableView.tableFooterView = UIView()
+//            tableView.tableFooterView = UIView()
         }
         else {
             setLayoutForPrivate()
-            tableView.tableFooterView = UIView()
+//            tableView.tableFooterView = UIView()
         }
 //        switch status {
 //        case "active":
@@ -412,7 +434,7 @@ extension UserProfileVC {
     func setLayoutForPending() {
         let title = userDetail?.isReceiver == "false" ? Constants.Label.accept : Constants.Label.pending
         for i in 2..<6 { profileViews[i].isHidden = true }
-        tableView.isHidden = true
+//        tableView.isHidden = true
         connectedBtn.setTitle(title, for: .normal)
     }
     
@@ -420,12 +442,12 @@ extension UserProfileVC {
         for i in 2..<6 { profileViews[i].isHidden = true }
         connectionCountView.isHidden = true
         connectedBtn.setTitle(Constants.Label.connect, for: .normal)
-        tableViewTopConst.constant = -70
+//        tableViewTopConst.constant = -70
         
         profileSettings.append(.custom("PrivateProfileCell"))
-        tableView.separatorColor = .clear
-        tableView.reloadData()
-        tableView.invalidateIntrinsicContentSize()
+//        tableView.separatorColor = .clear
+//        tableView.reloadData()
+//        tableView.invalidateIntrinsicContentSize()
     }
     
 }
@@ -492,7 +514,7 @@ extension UserProfileVC {
     
     func updateButtons() {
         guard let bindData = userDetail else {
-            tableView.tableFooterView = UIView()
+//            tableView.tableFooterView = UIView()
             profileViews[5].isHidden.toggle()
             return
         }
@@ -678,6 +700,7 @@ extension UserProfileVC {
                         self.viewAllButton.isHidden = true
                     }
                 }
+                self.setPostTableHeight()
 
             case .failure(let failure):
                 self.presentAlert("Error", nil, failure)
@@ -877,7 +900,6 @@ extension UserProfileVC: UITableViewDataSource {
 //        } else {
 //            profileSettings.count
 //        }
-        return 0
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -1371,7 +1393,29 @@ extension UserProfileVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return UITableView.automaticDimension
+        if self.Is_Reaction {
+            return UITableView.automaticDimension
+        } else {
+            let homePost = self.posts[indexPath.row]
+            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+                //return 200
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                return height
+            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+                return 450
+            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+                
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 231.0
+                return height
+                
+            } else if homePost.postImage!.count > 0 { //Image Cell
+                return 450
+            } else {
+                return UITableView.automaticDimension
+            }
+        }
     }
 }
 
