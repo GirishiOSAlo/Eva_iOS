@@ -42,7 +42,7 @@ ACA</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JP1-E9-gVi">
-                                <rect key="frame" x="20" y="296" width="186" height="50"/>
+                                <rect key="frame" x="20" y="291" width="186" height="50"/>
                                 <color key="backgroundColor" red="0.30196078431372547" green="0.46274509803921571" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="SMK-HR-wld"/>
@@ -61,11 +61,11 @@ ACA</string>
                             <constraint firstItem="IdB-gX-cId" firstAttribute="top" secondItem="bJx-Ud-NhX" secondAttribute="top" constant="24" id="Zyb-RR-Kd2"/>
                             <constraint firstAttribute="trailing" secondItem="JP1-E9-gVi" secondAttribute="trailing" constant="20" id="aMa-Ac-bJ3"/>
                             <constraint firstItem="YPC-fc-l2b" firstAttribute="top" secondItem="itd-rg-XO5" secondAttribute="bottom" constant="10" id="cGV-8S-c9i"/>
+                            <constraint firstItem="JP1-E9-gVi" firstAttribute="top" secondItem="YPC-fc-l2b" secondAttribute="bottom" constant="20" id="ch1-ej-wHh"/>
                             <constraint firstItem="IdB-gX-cId" firstAttribute="centerX" secondItem="bJx-Ud-NhX" secondAttribute="centerX" id="get-D6-31W"/>
                             <constraint firstAttribute="trailing" secondItem="itd-rg-XO5" secondAttribute="trailing" constant="16" id="rK8-su-mPV"/>
                             <constraint firstItem="itd-rg-XO5" firstAttribute="leading" secondItem="bJx-Ud-NhX" secondAttribute="leading" constant="16" id="tTv-A2-7NJ"/>
                             <constraint firstAttribute="trailing" secondItem="YPC-fc-l2b" secondAttribute="trailing" constant="16" id="vFj-0K-QOr"/>
-                            <constraint firstAttribute="bottom" secondItem="JP1-E9-gVi" secondAttribute="bottom" constant="20" id="zV6-al-pIT"/>
                             <constraint firstItem="itd-rg-XO5" firstAttribute="top" secondItem="IdB-gX-cId" secondAttribute="bottom" constant="24" id="zaf-O1-Udw"/>
                         </constraints>
                     </view>
