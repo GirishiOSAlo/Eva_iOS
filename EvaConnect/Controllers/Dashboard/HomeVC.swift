@@ -669,12 +669,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
                     let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     
-                    if homePostUserId == myUserDefaults.userId {
-                        cell.followBtn.isHidden = true
-                    } else {
-                        cell.followBtn.isHidden = false
-                    }
-                    
                     cell.detailsView.layer.cornerRadius = 13
                     cell.delegate = self
                     cell.uiData(dataMaper: homePost)
@@ -692,12 +686,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     
                 } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
                     let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    if homePostUserId == myUserDefaults.userId {
-                        cell.followBtn.isHidden = true
-                    } else {
-                        cell.followBtn.isHidden = false
-                    }
-                    
                     cell.delegate = self
                     cell.uiData(dataMaper: homePost)
                     
@@ -721,11 +709,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     
                 } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
                     let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    if homePostUserId == myUserDefaults.userId {
-                        cell.followBtn.isHidden = true
-                    } else {
-                        cell.followBtn.isHidden = false
-                    }
                     cell.delegate = self
                     cell.uiData(homePost: homePost)
                     //                cell.isConnectedBtn.tag = indexPath.row
@@ -757,11 +740,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 } else if homePost.postImage!.count > 0 { //Image Cell
                     //
                     let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    if homePostUserId == myUserDefaults.userId {
-                        cell.followBtn.isHidden = true
-                    } else {
-                        cell.followBtn.isHidden = false
-                    }
                     cell.uiData(dataMaper: homePost)
                     //                cell.seeMore = (row: indexPath.row, lines: postSeeMore[indexPath.row]?.lines ?? 1, enabled: postSeeMore[indexPath.row]?.enabled ?? false)
                     cell.delegate = self

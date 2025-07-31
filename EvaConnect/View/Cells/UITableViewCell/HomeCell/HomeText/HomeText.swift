@@ -82,7 +82,8 @@ class HomeText: BaseCellClass {
     }
 
     func uiData(dataMaper: DashboardItem) {
-        if dataMaper.userID == myUserDefaults.userId {
+        let userid = dataMaper.user?.id ?? 0
+        if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
             followBtn.isHidden = false
@@ -110,7 +111,8 @@ class HomeText: BaseCellClass {
     }
     
     func setData(data: DashboardPostData) {
-        if data.userID == myUserDefaults.userId {
+        let userid = data.user?.id ?? 0
+        if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
             followBtn.isHidden = false
@@ -147,7 +149,12 @@ class HomeText: BaseCellClass {
     
     
     func uiData(dataMaper: SearchPost) {
-        
+        let userid = Int(dataMaper.userID ?? "")
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         connectionNameLbl.text = dataMaper.userName ?? ""
         dateLbl.text = dataMaper.createdDatetime
         likeValueLbl.text = "\(dataMaper.count?.likeCount ?? "")"

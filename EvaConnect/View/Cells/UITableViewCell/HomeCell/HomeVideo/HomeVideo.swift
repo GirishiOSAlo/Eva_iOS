@@ -74,7 +74,8 @@ class HomeVideo: BaseCellClass {
     }
     
     func uiData(dataMaper: DashboardItem) {
-        if dataMaper.userID == myUserDefaults.userId {
+        let userid = dataMaper.user?.id ?? 0
+        if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
             followBtn.isHidden = false
@@ -102,7 +103,8 @@ class HomeVideo: BaseCellClass {
     }
     
     func setData(dataMaper: DashboardPostData) {
-        if dataMaper.userID == myUserDefaults.userId {
+        let userid = dataMaper.user?.id ?? 0
+        if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
             followBtn.isHidden = false
@@ -134,7 +136,12 @@ class HomeVideo: BaseCellClass {
     }
     
     func uiData(dataMaper: SearchPost) {
-        
+        let userid = Int(dataMaper.userID ?? "")
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         if dataMaper.userImage != nil {
             profileImage.sd_setImage(with: URL(string: dataMaper.userImage ?? ""), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
         } else { profileImage.image = #imageLiteral(resourceName: "profile") }

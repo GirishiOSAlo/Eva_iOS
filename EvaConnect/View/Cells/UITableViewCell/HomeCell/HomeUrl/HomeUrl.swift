@@ -72,7 +72,8 @@ class HomeUrl: BaseCellClass {
     }
     
     func uiData(homePost: DashboardItem) {
-        if homePost.userID == myUserDefaults.userId {
+        let userid = homePost.user?.id ?? 0
+        if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
             followBtn.isHidden = false
@@ -106,7 +107,8 @@ class HomeUrl: BaseCellClass {
     }
     
     func setData(dataMaper: DashboardPostData) {
-        if dataMaper.userID == myUserDefaults.userId {
+        let userid = dataMaper.user?.id ?? 0
+        if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
             followBtn.isHidden = false
@@ -142,7 +144,12 @@ class HomeUrl: BaseCellClass {
     }
     
     func uiData(post: SearchPost) {
-        
+        let userid = Int(post.userID ?? "")
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         connectionNameLbl.text = post.userName
         agoLbl.text = post.createdDatetime//!.components(separatedBy: " ").last ?? "" : "at \(time)"
 
