@@ -23,6 +23,7 @@ class FollowersCVC: UICollectionViewCell {
     @IBOutlet weak var acceptrejectVw: UIView!
     @IBOutlet weak var rejectBtn: UIButton!
     @IBOutlet weak var acceptBtn: UIButton!
+    @IBOutlet weak var gotoProfileBtn: UIButton!
     
     
     override func awakeFromNib() {

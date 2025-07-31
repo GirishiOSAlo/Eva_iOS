@@ -284,6 +284,8 @@ extension ConnectionViewController: UICollectionViewDelegate, UICollectionViewDa
         let obj = self.list[indexPath.row]
         cell.setData(obj: obj)
         
+        cell.gotoProfileBtn.tag = indexPath.row
+        cell.gotoProfileBtn.addTarget(self, action: #selector(gotoProfileTapped(sender:)), for: .touchUpInside)
         cell.followBtn.tag = indexPath.row
         cell.followBtn.addTarget(self, action: #selector(followTapped(sender:)), for: .touchUpInside)
         cell.unfollowBtn.tag = indexPath.row
@@ -310,6 +312,13 @@ extension ConnectionViewController: UICollectionViewDelegate, UICollectionViewDa
 }
 
 extension ConnectionViewController {
+    @objc func gotoProfileTapped(sender: UIButton) {
+        let obj = list[sender.tag]
+        let vc = StoryboardRouter.othersProfileVC()
+        vc.profileID = obj.id ?? 0
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc func followTapped(sender: UIButton) {
         let obj = list[sender.tag]
         self.userFollowUnfollow(receiverId: obj.id ?? 0, status: 2)
