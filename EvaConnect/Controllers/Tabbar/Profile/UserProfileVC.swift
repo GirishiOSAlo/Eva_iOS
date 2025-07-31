@@ -25,7 +25,7 @@ class UserProfileVC: BaseVC {
     @IBOutlet weak var connectedBtn: UIButton!
     @IBOutlet weak var tableViewTopConst: NSLayoutConstraint!
     @IBOutlet var profileViews: [UIView]!
-    @IBOutlet weak var scrollViewTopConst: NSLayoutConstraint!
+    //@IBOutlet weak var scrollViewTopConst: NSLayoutConstraint!
     @IBOutlet weak var tableView: DynamicSizeTableView!
     @IBOutlet var profileButtons: [UIButton]!
     @IBOutlet weak var connectionLbl: UILabel!
@@ -373,7 +373,7 @@ extension UserProfileVC {
     }
     
     func hideUserDetails() {
-        scrollViewTopConst.constant = -40
+        //scrollViewTopConst.constant = -40
         profileViews.forEach({ $0.isHidden = true })
         tableViewTopConst.constant = -50
     }
