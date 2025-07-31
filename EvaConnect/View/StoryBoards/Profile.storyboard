@@ -633,6 +633,7 @@
                         <outlet property="reactionButton" destination="vwL-GB-w8v" id="90Z-5v-yoC"/>
                         <outlet property="reactionTblViewHeight" destination="ViB-Se-oHC" id="RFx-yt-RaM"/>
                         <outlet property="reactionTblVw" destination="O4e-Tx-nbx" id="uHY-nh-4Da"/>
+                        <outlet property="scrollView" destination="vRb-lt-J6p" id="lta-H0-WiS"/>
                         <outlet property="viewAllButton" destination="Mqz-HD-8QX" id="Le7-Ty-kQk"/>
                         <outletCollection property="profileButtons" destination="YxX-fH-RaO" collectionClass="NSMutableArray" id="XyX-sQ-D5p"/>
                         <outletCollection property="profileButtons" destination="s1e-sr-d8H" collectionClass="NSMutableArray" id="1Qh-t0-NRD"/>

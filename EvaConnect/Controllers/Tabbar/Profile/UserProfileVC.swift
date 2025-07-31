@@ -11,6 +11,8 @@ import SDWebImage
 import Network
 import Alamofire
 import AVKit
+import SVProgressHUD
+import IQKeyboardManagerSwift
 
 enum ProfileSettingData {
     case profile(ProfileData)
@@ -20,6 +22,7 @@ enum ProfileSettingData {
 
 class UserProfileVC: BaseVC {
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var profileLoadingView: UIView!
     @IBOutlet weak var connectionCountView: UIView!
     @IBOutlet weak var connectedBtn: UIButton!
@@ -62,6 +65,10 @@ class UserProfileVC: BaseVC {
     let pageSize = 10
     var companyId = 0
     var isChatEnable = true
+    
+    let likeManager = LikeManager()
+    var selectedTab: HomeTabs = .posts
+    var articleContent: String?
     
     var posts: [DashboardItem] = [] {
         didSet {
@@ -286,7 +293,7 @@ class UserProfileVC: BaseVC {
         }
     }
     
-    @objc func goToProfileTapped(_ sender: UIButton) {
+    @objc func goToReactionProfileTapped(_ sender: UIButton) {
         let reaction = reactions[sender.tag]
         let id = reaction.user?.id
         if id == LoggedUserDetails.shared.user?.id ?? 0 {
@@ -880,6 +887,185 @@ extension UserProfileVC {
     
 }
 
+extension UserProfileVC: PostActionable, CollectionViewCellDelegate {
+    func didSelectItem(at indexPath: Int, imgArr: [String?]) {
+        let image = imgArr[indexPath]
+        if image != nil {
+            let imgString = image!
+            let vc = DownloadChatImgVC.instantiate(imageString: imgString)
+            vc.modalPresentationStyle = .fullScreen
+            vc.isFromHomeVc = true
+            vc.completion = {
+                
+            }
+            self.navigationController?.present(vc, animated: true)
+            print("Selected:", imgString)
+        }
+    }
+    
+    func actionType(sender: UIButton, action: HomeCellAcitonType) {
+        switch action {
+         case .like:
+            let post = posts[sender.tag]
+            likePost(postId: post.id, status: post.status ?? "", action: post.isPostLike == 0 ? "like" : "unlike", at: sender.tag)
+         case .comment:
+            goToCommentVC(index: sender.tag)
+         case .article:
+            articleContent = posts[sender.tag].postDocument
+            openArticle()
+         case .edit:
+            openEditPost(sender)
+            
+         case .delete:
+ //           presentAlertWithAction(title: "Delete", message: "Do you want to Delete this Post") { [weak self] in self?.deletePost(sender) }
+            break
+         default:
+//             shareItemIndex = sender.tag
+            break
+         }
+    }
+}
+
+extension UserProfileVC {
+    func likePost(postId: Int, status: String, action: String, at: Int) {
+        showActivity()
+        let param: AFParameters = [ selectedTab.likePostKey: postId,
+                                    "created_by_id":  myUserDefaults.userId,
+                                    "status": status,
+                                    "action": action ]
+        view.isUserInteractionEnabled = false
+        
+        ApiCallerClass.likePostServiceFunc(usertoken: myUserDefaults.token,para: param, success: { (dataRespose) in
+            let data = dataRespose as? NSDictionary
+            let error = data?["error"] as? Int
+            SVProgressHUD.dismiss()
+            self.hideActivity()
+            if error == 0 {
+                self.posts = self.likeManager.homeLikeManager(homePosts: self.posts, indexAt: at, likeType: self.selectedTab.likeType)
+                let indexPath = IndexPath(item: at, section: 0)
+                UIView.performWithoutAnimation { self.reactionTblVw.reloadRows(at: [indexPath], with: .none) }
+                self.view.isUserInteractionEnabled = true
+            }
+            else {
+                self.posts = self.likeManager.homeLikeManager(homePosts: self.posts, indexAt: at, likeType: self.selectedTab.likeType)
+                let indexPath = IndexPath(item: at, section: 0)
+                UIView.performWithoutAnimation { self.reactionTblVw.reloadRows(at: [indexPath], with: .none) }
+                self.view.isUserInteractionEnabled = true
+            }
+        })
+        { (error) in
+            SVProgressHUD.dismiss()
+            self.hideActivity()
+            self.view.isUserInteractionEnabled = true
+        }
+    }
+    
+    func goToCommentVC(index: Int) {
+        IQKeyboardManager.shared.isEnabled = false
+        let homePost = posts[index]
+//        updateSpecificPost = homePost.id
+//        let link = homePost.content?.link
+        if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .simpleText
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] {//Video
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .video
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else if homePost.postDocument != "" && homePost.postImage == []{ //document Cell
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .article
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else { // Image Cell
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .image
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func openArticle() {
+        if let urlString = articleContent, let url = URL(string: urlString) {
+            let webVC = WebVC(url: url)
+            present(webVC, animated: true, completion: nil)
+        }
+    }
+    
+    func openEditPost(_ sender: UIButton) {
+        let postVC = StoryboardRouter.postVC()
+        postVC.mode = .edit
+        postVC.postType = returnPostType(post: posts[sender.tag])
+        postVC.data = posts[sender.tag]
+        navigationController?.pushViewController(postVC, animated: true)
+    }
+    func returnPostType(post: DashboardItem) -> PostType {
+        if !post.postImage!.isEmpty { return .image }
+        else if post.postVideo != nil { return .video }
+        else if post.postDocument != nil { return .article }
+        else { return .simpleText }
+    }
+    
+    @objc func handleShare(_ sender: UIButton) {
+        tabBarController?.tabBar.isHidden = true
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+        vc.objectId = self.posts[sender.tag].id
+        vc.type = .post
+        vc.modalPresentationStyle = .popover
+//        vc.completion = {
+//            self.showToast(message: "Successfully Shared with desired Connection")
+//        }
+        self.present(vc, animated: true)
+    }
+    
+    @objc func reportBtnTapped(_ sender: UIButton) {
+        let index = sender.tag
+        FTPopOverMenu.showForSender(sender: sender,
+                                    with: ["Report"],
+                                    popOverPosition: .automatic,
+                                    config: Constants.configWithMenuStyle(),
+                                    done: { (selectedIndex) in
+            switch selectedIndex {
+            case 0:
+                let vc = reportPopupVC.instantiate()
+                vc.postId = self.posts[index].id
+                vc.userId = self.posts[index].user?.id ?? 0
+                vc.completion = {
+                    let vc = otherReasonPopupVC.instantiate()
+                    vc.postId = self.posts[index].id
+                    vc.userId = self.posts[index].user?.id ?? 0
+                    self.navigationController?.present(vc, animated: true)
+                }
+                self.navigationController?.present(vc, animated: true)
+            default:
+                break
+            }
+        })
+    }
+}
+
+extension UserProfileVC: RefreshUpdateable {
+    
+    func refresh(homeStatus: Bool) {
+        selectedTab = .posts
+        fetchUserDetailsData()
+        getPosts(offSet: 1)
+    }
+
+}
+
 extension UserProfileVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -932,7 +1118,7 @@ extension UserProfileVC: UITableViewDataSource {
             }
             
             cell.gotoProfileBtn.tag = indexPath.row
-            cell.gotoProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+            cell.gotoProfileBtn.addTarget(self, action: #selector(goToReactionProfileTapped(_:)), for: .touchUpInside)
 
             if  obj.datumPostImage == [] && obj.postVideo == "" && obj.postDocument == "" {
                 //==> Text Cell...
@@ -1171,27 +1357,38 @@ extension UserProfileVC: UITableViewDataSource {
             if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {
                 let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.detailsView.layer.cornerRadius = 13
-                //            cell.delegate = self
-                cell.reportBtn.isHidden = true
-                cell.followBtn.isHidden = true
+                cell.delegate = self
                 cell.uiData(dataMaper: homePost)
                 
-//                cell.shareBtn.tag = indexPath.row
-//                cell.commentBtn.tag = indexPath.row
-//                cell.likeBtn.tag = indexPath.row
-
+                cell.shareBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.likeBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                
                 return cell
                 
             } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
                 let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 
-                cell.reportBtn.isHidden = true
+                cell.delegate = self
                 cell.uiData(dataMaper: homePost)
+                
+                cell.sharedBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.likeBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                 cell.openVideoBtn.tag = indexPath.row
-                cell.openVideoBtn.isHidden = false
                 cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: homePost.postVideo!,ratio: .resize)
+                cell.videoView.configure(url: homePost.postVideo!,ratio: .resizeAspectFill)
                 cell.videoView.stop()
                 cell.videoView.isHidden = false
 
@@ -1200,30 +1397,39 @@ extension UserProfileVC: UITableViewDataSource {
             } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
                 
                 let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
-                //            cell.delegate = self
-                cell.reportBtn.isHidden = true
+                cell.delegate = self
                 cell.uiData(homePost: homePost)
-                //                cell.isConnectedBtn.tag = indexPath.row
-                //
-//                cell.likeBtn.tag = indexPath.row
-//                cell.commentBtn.tag = indexPath.row
-//                cell.sharedBtn.tag = indexPath.row
-//                cell.openProfile.isUserInteractionEnabled = true
+                cell.likeBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.sharedBtn.tag = indexPath.row
+                cell.openArticleBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
 
                 return cell
             } else if homePost.postImage!.count > 0 { //Image Cell
 
                 let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
-                cell.reportBtn.isHidden = true
                 cell.uiData(dataMaper: homePost)
+                cell.delegate = self
+                cell.delegateDidSelect = self
+                cell.parentViewController = self
+
                 cell.likeButton.tag = indexPath.row
                 cell.commentButton.tag = indexPath.row
                 cell.shareButton.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
 
                 return cell
             } else {
-                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
-                cell.reportBtn.isHidden = true
+                let cell = UITableViewCell()
                 return cell
             }
         }

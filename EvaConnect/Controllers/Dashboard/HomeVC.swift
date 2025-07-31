@@ -745,7 +745,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.delegate = self
                     cell.delegateDidSelect = self
                     cell.parentViewController = self
-                    //
+
                     cell.likeButton.tag = indexPath.row
                     cell.commentButton.tag = indexPath.row
                     cell.shareButton.tag = indexPath.row
