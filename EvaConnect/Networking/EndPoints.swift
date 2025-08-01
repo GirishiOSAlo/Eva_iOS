@@ -248,6 +248,9 @@ enum EndPoints {
     // MARK: Account Public or Private
     static let privacyMode = baseURL + "user/details/switchPrivacyMode"
     
+    // MARK: Schedule Meeting
+    static let scheduleMeeting = baseURL + "event/schedule-meeting"
+    
     
     // MARK: Notifications
     static let notifications = baseURL + "user/notifications/filter"

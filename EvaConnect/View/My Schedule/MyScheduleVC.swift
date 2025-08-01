@@ -13,34 +13,26 @@ class MyScheduleVC: UIViewController, XIBed {
     @IBOutlet weak var headingLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var createMeetingBtn: UIButton!
-    @IBOutlet weak var calenderBaseVw: UIView!
-        
-    let scrollView = UIScrollView()
-    let contentView = UIView()
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var meetingListCollectionVw: UICollectionView!
+    
+    
+    let refreshControl = UIRefreshControl()
     var eventID = 0
-    let pixelsPerMinute: CGFloat = 1.0
-    let scheduleStartHour = 1  // Starting at 01:00
-    let scheduleEndHour = 25   // Ending at 24:00
     var eventDetail: NewEventDetailsData?
     var isComeFromDelegate = false
     var otherUserID = 0
     
-    private var currentDate = Date() {
-        didSet {
-            updateDateLabel()
-        }
-    }
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d'th' MMMM yyyy" // You can customize for "20th September 2021"
-        return formatter
-    }()
+    var scheduleMeetingDateList: [String] = []
+    var scheduleMeetinglist: [ScheduleMeetinglist] = []
+    var meetinglist: [scheduleMeeting] = []
+    var selectedDateIndex = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         self.setupUI()
-        self.setCalenderView()
     }
     
     @IBAction func backBtnTapped(_ sender: UIButton) {
@@ -58,167 +50,210 @@ class MyScheduleVC: UIViewController, XIBed {
     }
     
     func setupUI() {
+        self.noDataLbl.isHidden = true
+        self.noDataLbl.font = UIFont(name: Myfonts.regular, size: 16.0)
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        meetingListCollectionVw.addSubview(refreshControl)
+        
         headingLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
         dateLbl.font = UIFont(name: Myfonts.bold, size: 18.0)
         createMeetingBtn.cornerRadius = 14.0
         createMeetingBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
-        self.updateDateLabel()
+        self.registerCell()
+        self.getScheduleData()
     }
     
-    func setCalenderView() {
-        self.setupScrollView()
-        self.setupTimeSlots()
-        self.setupEvents()
+    func registerCell() {
+        meetingListCollectionVw.registerNib(cellNib: ScheduleMeetingCVC.self)
+        meetingListCollectionVw.delegate = self
+        meetingListCollectionVw.dataSource = self
     }
     
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.getScheduleData()
+        }
+    }
     
     @IBAction func onPreviousDateBtnTap(_ sender: UIButton) {
-        currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
+        if self.selectedDateIndex == 0 {
+            print("Minimum Date")
+        } else {
+            self.meetinglist = []
+            self.selectedDateIndex = self.selectedDateIndex - 1
+            let date = self.scheduleMeetingDateList[self.selectedDateIndex]
+            self.filterDataByDate(for: date)
+            self.setDateTitleLbl(for: date)
+        }
     }
     
     @IBAction func onNextDateBtnTap(_ sender: UIButton) {
-        currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+        if self.selectedDateIndex == (self.scheduleMeetingDateList.count - 1) {
+            print("Maximum Date")
+        } else {
+            self.meetinglist = []
+            self.selectedDateIndex = self.selectedDateIndex + 1
+            let date = self.scheduleMeetingDateList[self.selectedDateIndex]
+            self.filterDataByDate(for: date)
+            self.setDateTitleLbl(for: date)
+        }
     }
     
 }
 
 //MARK:  Date Update on Button click.....
 extension MyScheduleVC {
-    func updateDateLabel() {
-        dateLbl.text = formattedDate(currentDate)
-    }
-    
-    func formattedDate(_ date: Date) -> String {
+    func formatDateWithOrdinal(_ input: String, from inputFormat: String = "yyyy-MM-dd") -> String? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = inputFormat
+
+        guard let date = formatter.date(from: input) else {
+            return nil
+        }
+
+        // Get day component
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
-        
-        // Add suffix to day
+
+        // Determine ordinal suffix
         let suffix: String
         switch day {
-        case 1, 21, 31: suffix = "st"
-        case 2, 22: suffix = "nd"
-        case 3, 23: suffix = "rd"
-        default: suffix = "th"
+        case 11, 12, 13:
+            suffix = "th"
+        default:
+            switch day % 10 {
+            case 1: suffix = "st"
+            case 2: suffix = "nd"
+            case 3: suffix = "rd"
+            default: suffix = "th"
+            }
+        }
+
+        // Format month and year
+        formatter.dateFormat = "MMMM yyyy"
+        let monthYear = formatter.string(from: date)
+
+        return "\(day)\(suffix) \(monthYear)"
+    }
+
+}
+
+extension MyScheduleVC {
+    func getScheduleData() {
+        let url = EndPoints.scheduleMeeting
+        var parameters: [String: Any]? = nil
+        
+        if self.isComeFromDelegate {
+            parameters = [ "user_id" : myUserDefaults.userId,
+                           "event_id" : self.eventID ] as [String: Any]
+        } else {
+            parameters = [ "user_id" : myUserDefaults.userId ] as [String: Any]
         }
         
-        let formatted = dateFormatter.string(from: date)
-        return formatted.replacingOccurrences(of: "th", with: suffix)
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            self.refreshControl.endRefreshing()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let scheduleRoot = try jsonDecoder.decode(ScheduleMeetingDataModel.self, from: response.data!)
+                
+                if !(scheduleRoot.error!) {
+                    if let data = scheduleRoot.data {
+                        self.scheduleMeetingDateList = data.scheduleMeetingDate ?? []
+                        self.scheduleMeetinglist = data.scheduleMeetinglist ?? []
+                        
+                        if self.scheduleMeetingDateList.count > 0 {
+                            // Call the filter method for a specific date
+                            self.selectedDateIndex = 0
+                            let date = self.scheduleMeetingDateList[self.selectedDateIndex]
+                            self.filterDataByDate(for: date)
+                            self.setDateTitleLbl(for: date)
+                        } else {
+                            print("Date List Empty.")
+                            self.noDataLbl.isHidden = !self.scheduleMeetingDateList.isEmpty
+                        }
+                    }
+                } else {
+                    print("Error :: \(scheduleRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func filterDataByDate(for date: String) {
+        if let filteredMeeting = scheduleMeetinglist.first(where: { $0.startDay == date }) {
+            print("Meetings on \(date):")
+            self.meetinglist = filteredMeeting.scheduleDateList ?? []
+        } else {
+            print("No meetings found on \(date)")
+        }
+        self.meetingListCollectionVw.reloadData()
+        self.noDataLbl.isHidden = !self.meetinglist.isEmpty
+    }
+    
+    func setDateTitleLbl(for date: String) {
+        if let formatted = self.formatDateWithOrdinal(date) {
+            self.dateLbl.text = formatted  // Output: "30th July 2025"
+        } else {
+            self.dateLbl.text = "--"
+        }
     }
 }
 
-//MARK: Calender Meeting view.....
-extension MyScheduleVC {
-    func setupScrollView() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.calenderBaseVw.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.calenderBaseVw.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: self.calenderBaseVw.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.calenderBaseVw.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.calenderBaseVw.bottomAnchor),
-
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
-    }
-
-    func setupTimeSlots() {
-        for hour in scheduleStartHour..<scheduleEndHour {
-            let topOffset = CGFloat((hour - scheduleStartHour) * 60) * pixelsPerMinute
+extension MyScheduleVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView {
+        case self.meetingListCollectionVw:
+            return self.meetinglist.count
             
-            // Time Label
-            let label = UILabel()
-            label.text = String(format: "%02d:00", hour)
-            label.font = UIFont(name: Myfonts.regular, size: 11.0)
-            label.textColor = UIColor(hex: "#171930", alpha: 0.4)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(label)
-            
-            NSLayoutConstraint.activate([
-                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: topOffset),
-                label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
-            ])
-            
-            // Horizontal Line
-            let line = UIView()
-            line.backgroundColor = UIColor(hex: "#171930", alpha: 0.07)
-            line.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(line)
-            
-            NSLayoutConstraint.activate([
-                line.topAnchor.constraint(equalTo: label.centerYAnchor), // align with text
-                line.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 12),
-                line.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                line.heightAnchor.constraint(equalToConstant: 1)
-            ])
+        default:
+            return 0
         }
-        
-        let totalMinutes = (scheduleEndHour - scheduleStartHour) * 60
-        let totalHeight = CGFloat(totalMinutes) * pixelsPerMinute
-        contentView.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
     }
-
-    func setupEvents() {
-        // Example: Team Standup 09:45 - 10:15
-//        addEvent(title: "Team Standup", startHour: 9, startMinute: 45, durationMinutes: 30)
-//        addEvent(title: "Client Call", startHour: 11, startMinute: 30, durationMinutes: 45)
-//        addEvent(title: "Lunch Break", startHour: 12, startMinute: 45, durationMinutes: 60)
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView {
+        case self.meetingListCollectionVw:
+            let cell = self.meetingListCollectionVw.dequeueReusableCell(withReuseIdentifier: ScheduleMeetingCVC.ReuseId, for: indexPath) as! ScheduleMeetingCVC
+            
+            let meeting = self.meetinglist[indexPath.row]
+            cell.setData(obj: meeting)
+            
+            return cell
+            
+        default:
+            return UICollectionViewCell()
+        }
     }
-
-    func addEvent(title: String, startHour: Int, startMinute: Int, durationMinutes: Int) {
-        let eventView = UIView()
-        eventView.backgroundColor = UIColor(hex: "#EEEEEE")
-        eventView.layer.cornerRadius = 9
-        eventView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(eventView)
-
-        // Title Label
-        let titleLabel = UILabel()
-        titleLabel.text = title
-        titleLabel.font = UIFont(name: Myfonts.regular, size: 12.0)
-        titleLabel.textColor = UIColor(hex: "#171930")
-
-        // Time Label
-        let endMinutes = startHour * 60 + startMinute + durationMinutes
-        let endHour = endMinutes / 60
-        let endMinute = endMinutes % 60
-
-        let timeLabel = UILabel()
-        timeLabel.text = String(format: "%02d:%02d - %02d:%02d", startHour, startMinute, endHour, endMinute)
-        timeLabel.font = UIFont(name: Myfonts.regular, size: 10.0)
-        timeLabel.textColor = UIColor(hex: "#171930", alpha: 0.6)
-
-        // Vertical Stack View
-        let vStack = UIStackView(arrangedSubviews: [titleLabel, timeLabel])
-        vStack.axis = .horizontal
-        vStack.spacing = 2
-        vStack.alignment = .leading
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        eventView.addSubview(vStack)
-
-        // Calculate Y position
-        let totalStartMinutes = (startHour * 60 + startMinute) - (scheduleStartHour * 60)
-        let yPos = CGFloat(totalStartMinutes) * pixelsPerMinute
-        let height = CGFloat(durationMinutes) * pixelsPerMinute
-
-        // Constraints
-        NSLayoutConstraint.activate([
-            eventView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: yPos),
-            eventView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 70),
-            eventView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            eventView.heightAnchor.constraint(equalToConstant: height),
-
-            vStack.centerYAnchor.constraint(equalTo: eventView.centerYAnchor),
-            vStack.leadingAnchor.constraint(equalTo: eventView.leadingAnchor, constant: 16),
-            vStack.trailingAnchor.constraint(equalTo: eventView.trailingAnchor, constant: -16)
-        ])
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch collectionView {
+        case self.meetingListCollectionVw:
+            let meeting = self.meetinglist[indexPath.row]
+            let contain = meeting.title ?? ""
+            let lblHeight = self.heightForView(text: contain, font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 160.0)
+            let height = lblHeight + 40.0 + 20.0
+            return CGSize(width: collectionView.frame.width, height: height)
+                        
+        default:
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        }
     }
 }

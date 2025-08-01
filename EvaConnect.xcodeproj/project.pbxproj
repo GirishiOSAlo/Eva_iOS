@@ -481,6 +481,9 @@
 		A611A4452DF6F313006011AD /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A611A4442DF6F313006011AD /* UserDetailsModel.swift */; };
 		A6158D812E0177F500E43AA1 /* ResumeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */; };
 		A621889D2DEF204E006513D3 /* NewsTrendingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */; };
+		A625F9932E3C8D6000E60035 /* ScheduleMeetingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */; };
+		A625F9972E3C90FA00E60035 /* ScheduleMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A625F9962E3C90FA00E60035 /* ScheduleMeetingCVC.xib */; };
+		A625F9982E3C90FA00E60035 /* ScheduleMeetingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A625F9952E3C90FA00E60035 /* ScheduleMeetingCVC.swift */; };
 		A6285E942E27DD0C004A77DC /* EventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6285E932E27DD0C004A77DC /* EventListDataModel.swift */; };
 		A62A49C62AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */; };
 		A62AB11D2DD4A9CE006C7A21 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */; };
@@ -1101,6 +1104,9 @@
 		A611A4442DF6F313006011AD /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeDataModel.swift; sourceTree = "<group>"; };
 		A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTrendingModel.swift; sourceTree = "<group>"; };
+		A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingDataModel.swift; sourceTree = "<group>"; };
+		A625F9952E3C90FA00E60035 /* ScheduleMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCVC.swift; sourceTree = "<group>"; };
+		A625F9962E3C90FA00E60035 /* ScheduleMeetingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleMeetingCVC.xib; sourceTree = "<group>"; };
 		A6285E932E27DD0C004A77DC /* EventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListDataModel.swift; sourceTree = "<group>"; };
 		A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAgendaTimeTblCell.swift; sourceTree = "<group>"; };
 		A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
@@ -1744,6 +1750,7 @@
 				A6508FB82E2DF7C7007587C3 /* FAQlistDataModel.swift */,
 				A6508FBF2E2E3A3D007587C3 /* ReportDataModel.swift */,
 				A6AC12742E37340D0039F7B3 /* MeetingListsDataModel.swift */,
+				A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2815,6 +2822,7 @@
 				A60117452E1FE9A800B4DCE2 /* VenueCVC */,
 				A6B7ADB62E096913009172CD /* Conference Agenda CVC */,
 				A64394CC2E1CF3FD006EE7F4 /* FollowersCVC */,
+				A625F9942E3C90D100E60035 /* Schedule Meeting CVC */,
 			);
 			path = UICollectionViewCell;
 			sourceTree = "<group>";
@@ -3368,6 +3376,15 @@
 			path = VenueCVC;
 			sourceTree = "<group>";
 		};
+		A625F9942E3C90D100E60035 /* Schedule Meeting CVC */ = {
+			isa = PBXGroup;
+			children = (
+				A625F9952E3C90FA00E60035 /* ScheduleMeetingCVC.swift */,
+				A625F9962E3C90FA00E60035 /* ScheduleMeetingCVC.xib */,
+			);
+			path = "Schedule Meeting CVC";
+			sourceTree = "<group>";
+		};
 		A62AB11A2DD4A8FF006C7A21 /* Edit Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -3814,6 +3831,7 @@
 				18E7E23724891DE900384C96 /* JobCell.xib in Resources */,
 				A6C3C6012DC8822D00A2E229 /* HomeEventCVC.xib in Resources */,
 				48BC64132DCB7901002BA644 /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
+				A625F9972E3C90FA00E60035 /* ScheduleMeetingCVC.xib in Resources */,
 				48BC64142DCB7901002BA644 /* NunitoSans-Italic.ttf in Resources */,
 				489895752DDDDDDF00D2E54E /* NetworkingEventsListVC.xib in Resources */,
 				A6CDBDE62DD1E1D2009B65CD /* HelpPageVC.xib in Resources */,
@@ -4037,6 +4055,7 @@
 				A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */,
 				187A4384241A137E00176922 /* AllShowJobDetail.swift in Sources */,
 				254459C4277DC65100E8371D /* PushNotificationCell.swift in Sources */,
+				A625F9982E3C90FA00E60035 /* ScheduleMeetingCVC.swift in Sources */,
 				50B929B3244A1AEF00299CC0 /* ReusableView.swift in Sources */,
 				1870691B24222CD90092051F /* AllEventCommentModel.swift in Sources */,
 				A6A1259C2DDDB5BC00979389 /* HotelsVC.swift in Sources */,
@@ -4092,6 +4111,7 @@
 				1853109D23D6D57800C55FCB /* HomeAllPost.swift in Sources */,
 				186DFB252411179E00F610FE /* JobAdModel.swift in Sources */,
 				5042EF34244E0EF900616F7E /* UITableView.swift in Sources */,
+				A625F9932E3C8D6000E60035 /* ScheduleMeetingDataModel.swift in Sources */,
 				25D40B4227C3B1A100EEF2AA /* EventFavourite.swift in Sources */,
 				50CCA377245CBFA7001D2761 /* MediaPickerCell.swift in Sources */,
 				A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */,

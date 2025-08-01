@@ -16,10 +16,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyScheduleVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
-                <outlet property="calenderBaseVw" destination="YQY-fq-mXL" id="dtf-Ak-6d6"/>
                 <outlet property="createMeetingBtn" destination="xNw-wX-j2T" id="0Cf-mS-wi1"/>
                 <outlet property="dateLbl" destination="GUe-Qm-1Zd" id="bL5-gc-jdP"/>
                 <outlet property="headingLbl" destination="bnx-ZV-ddd" id="5H7-aO-Hzo"/>
+                <outlet property="meetingListCollectionVw" destination="kB7-iD-M9h" id="ZTw-o4-4jb"/>
+                <outlet property="noDataLbl" destination="L26-Xy-Gh8" id="U1m-tn-5X4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -114,10 +115,22 @@
                         <constraint firstAttribute="height" constant="1" id="3eT-7E-ied"/>
                     </constraints>
                 </view>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQY-fq-mXL" userLabel="Calender Base View">
-                    <rect key="frame" x="0.0" y="206" width="393" height="514"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kB7-iD-M9h">
+                    <rect key="frame" x="0.0" y="216" width="393" height="504"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="VLX-bs-lfl">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L26-Xy-Gh8">
+                    <rect key="frame" x="115.00000000000001" y="414" width="163.33333333333337" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbA-8E-4g0" userLabel="Bottom ButtonView">
                     <rect key="frame" x="0.0" y="720" width="393" height="132"/>
                     <subviews>
@@ -148,22 +161,24 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="bbA-8E-4g0" firstAttribute="top" secondItem="kB7-iD-M9h" secondAttribute="bottom" id="7w8-gS-2IU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bbA-8E-4g0" secondAttribute="trailing" id="9aw-IQ-Klx"/>
+                <constraint firstItem="L26-Xy-Gh8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BuN-Jt-BVt"/>
                 <constraint firstItem="O3F-6c-kRm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="Cvo-d1-6pZ"/>
                 <constraint firstItem="uDp-si-yVT" firstAttribute="top" secondItem="8lj-D9-Mlj" secondAttribute="bottom" id="Eve-0I-znD"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uDp-si-yVT" secondAttribute="trailing" constant="20" id="GQD-kX-olZ"/>
-                <constraint firstItem="bbA-8E-4g0" firstAttribute="top" secondItem="YQY-fq-mXL" secondAttribute="bottom" id="P7T-Fu-vpB"/>
-                <constraint firstItem="YQY-fq-mXL" firstAttribute="top" secondItem="uDp-si-yVT" secondAttribute="bottom" id="VgQ-bo-2Fc"/>
                 <constraint firstItem="uDp-si-yVT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="WKU-c7-KOv"/>
                 <constraint firstItem="bbA-8E-4g0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WtL-Hs-LL0"/>
                 <constraint firstItem="pB2-k1-edx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ZMM-Ky-HoD"/>
                 <constraint firstItem="8lj-D9-Mlj" firstAttribute="top" secondItem="pB2-k1-edx" secondAttribute="bottom" id="aSD-os-4qH"/>
-                <constraint firstItem="YQY-fq-mXL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bey-BN-yHY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pB2-k1-edx" secondAttribute="trailing" id="bxT-Yv-PAY"/>
+                <constraint firstItem="kB7-iD-M9h" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="c1d-kg-8Gx"/>
                 <constraint firstAttribute="bottom" secondItem="bbA-8E-4g0" secondAttribute="bottom" id="cMv-84-ofa"/>
                 <constraint firstItem="8lj-D9-Mlj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="djl-vd-lTv"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kB7-iD-M9h" secondAttribute="trailing" id="eA6-eM-r0E"/>
                 <constraint firstItem="pB2-k1-edx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ed1-47-ycO"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YQY-fq-mXL" secondAttribute="trailing" id="lkb-Nv-5a1"/>
+                <constraint firstItem="L26-Xy-Gh8" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="gmY-6F-Fae"/>
+                <constraint firstItem="kB7-iD-M9h" firstAttribute="top" secondItem="uDp-si-yVT" secondAttribute="bottom" constant="10" id="j15-Hw-TgY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8lj-D9-Mlj" secondAttribute="trailing" id="lrk-r5-kPt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xNw-wX-j2T" secondAttribute="bottom" constant="24" id="ySf-Z3-QwP"/>
             </constraints>
