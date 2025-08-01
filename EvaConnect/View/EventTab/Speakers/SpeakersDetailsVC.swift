@@ -47,7 +47,7 @@ class SpeakersDetailsVC: UIViewController, XIBed {
     }
     
     func setData(data: CommonEventMetaData?) {
-        if let imageUrl = data?.logo,
+        if let imageUrl = data?.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
            UIApplication.shared.canOpenURL(url) {

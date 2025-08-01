@@ -99,6 +99,16 @@ extension SpeakersViewController: UICollectionViewDelegate, UICollectionViewData
         let cell = self.listCollectionVw.dequeueReusableCell(withReuseIdentifier: SpeakersCVC.ReuseId, for: indexPath) as! SpeakersCVC
         
         let speaker = self.speakersList[indexPath.row]
+        
+        if let imageUrl = speaker.userImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            cell.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            cell.profileImgVw.image = UIImage(named: "profile")
+        }
+        
         cell.nameLbl.text = speaker.firstName ?? ""
         cell.subLbl.text = speaker.designation ?? ""
         cell.viewProfileBtn.tag = indexPath.row

@@ -39,7 +39,7 @@ class DelegatesTableCell: UITableViewCell {
         self.companyLabel.text = obj.companyName ?? ""
         self.designationLabel.text = obj.designation ?? ""
 
-        if let imageUrl = obj.userImageURL,
+        if let imageUrl = obj.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
            UIApplication.shared.canOpenURL(url) {

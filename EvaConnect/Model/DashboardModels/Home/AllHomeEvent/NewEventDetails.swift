@@ -7,6 +7,82 @@ struct NewEventDetailsModel: Codable {
     let data: [NewEventDetailsData]?
 }
 
+
+
+// MARK: - Datum
+struct NewEventDetailsData: Codable {
+    let id: Int?
+    let content, createdDatetime, modifiedDatetime: String?
+    let city: String?
+    let country, address, endDate, startTime: String?
+    let endTime, name: String?
+    let featuredImage: String?
+    let startDate: String?
+    let registrationLink: String?
+    let eventEndDatetime, eventStartDatetime: String?
+    let agenda, status: Int?
+    let os, createdDate: String?
+    let createdByID, modifiedByID, userID, isPrivate: Int?
+    let tempImage: String?
+    let comments: [String]?
+    let isNewsSave, isEventLike: Int?
+    let createdByUser: String?
+    let attendeesCount, isJoined: Int?
+    let isinvited: Int?
+    let evaEventsAttendees: [EvaEventsAttendee]?
+    let conferenceagenda: [ConferenceAgenda]?
+    let exhibitorslists, speakerslists, mediapartnerslists, delegatelists: [List]?
+    let sponsorslists: [List]?
+    let eventNetworking: [EventNetworking]?
+    let delegatemeetings: [Delegatemeeting]?
+    let eventHotels: [EventHotel]?
+    let eventVenu: [EventVenu]?
+    let floorPlan: String?
+    let user: NewEventDetailsUser?
+    let invitedByYou: [String]?
+    let interestedUsersCount: String?
+    let interestedUsers: [NewEventInterestedUser]?
+    let eventAttendeesStatus: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, content
+        case createdDatetime = "created_datetime"
+        case modifiedDatetime = "modified_datetime"
+        case city, country, address
+        case eventAttendeesStatus = "attendeesstatus"
+        case endDate = "end_date"
+        case startTime = "start_time"
+        case endTime = "end_time"
+        case name
+        case featuredImage = "featured_image"
+        case startDate = "start_date"
+        case registrationLink = "registration_link"
+        case eventEndDatetime = "event_end_datetime"
+        case eventStartDatetime = "event_start_datetime"
+        case agenda, status, os
+        case createdDate = "created_date"
+        case createdByID = "created_by_id"
+        case modifiedByID = "modified_by_id"
+        case userID = "user_id"
+        case isPrivate = "is_private"
+        case tempImage = "temp_image"
+        case comments, isNewsSave, isEventLike
+        case createdByUser = "created_by_user"
+        case attendeesCount = "attendees_count"
+        case isJoined = "is_joined"
+        case isinvited = "Isinvited"
+        case evaEventsAttendees = "eva_events_attendees"
+        case conferenceagenda, exhibitorslists, speakerslists, mediapartnerslists, delegatelists, sponsorslists, eventNetworking, delegatemeetings, eventHotels, eventVenu
+        case floorPlan = "floor_plan"
+        case user
+        case invitedByYou = "invited_by_you"
+        case interestedUsersCount = "interested_users_count"
+        case interestedUsers = "interested_users"
+    }
+    
+    
+}
+
 // MARK: - User
 struct NewEventDetailsUser: Codable {
     let id: Int?
@@ -66,6 +142,8 @@ struct Exhibitorslist: Codable {
     let status: Int?
     let mailStatus, createdAt, updatedAt: String?
     let deletedAt: String?
+    let designation: String?
+    let profile: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -95,89 +173,10 @@ struct Exhibitorslist: Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case deletedAt = "deleted_at"
+        case designation, profile
     }
 }
 
-// MARK: - Datum
-struct NewEventDetailsData: Codable {
-    let id: Int?
-    let content, createdDatetime, modifiedDatetime: String?
-    let city: String?
-    let country, address, endDate, startTime: String?
-    let endTime, name: String?
-    let featuredImage: String?
-    let startDate: String?
-    let registrationLink: String?
-    let eventEndDatetime, eventStartDatetime: String?
-    let agenda, status: Int?
-    let os, createdDate: String?
-    let createdByID, modifiedByID, userID, isPrivate: Int?
-    let tempImage: String?
-    let comments: [String]?
-    let isNewsSave, isEventLike: Int?
-    let createdByUser: String?
-    let attendeesCount, isJoined: Int?
-    let isinvited: Int?
-    let evaEventsAttendees: [EvaEventsAttendee]?
-    let conferenceagenda: [ConferenceAgenda]?
-    let exhibitorslists, speakerslists, mediapartnerslists, delegatelists: [List]?
-    let sponsorslists: [List]?
-    let eventNetworking: [EventNetworking]?
-    let delegatemeetings: [Delegatemeeting]?
-    let eventHotels: [EventHotel]?
-    let eventVenu: [EventVenu]?
-    let floorPlan: String?
-    let user: NewEventDetailsInterestedUser?
-    let invitedByYou: [String]?
-    let interestedUsersCount: String?
-    let interestedUsers: [NewEventInterestedUser]?
-//    let eventAttendeesStatus: EventAttendeeStatus?
-    let eventAttendeesStatus: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id, content
-        case createdDatetime = "created_datetime"
-        case modifiedDatetime = "modified_datetime"
-        case city, country, address
-        case eventAttendeesStatus = "attendeesstatus"
-        case endDate = "end_date"
-        case startTime = "start_time"
-        case endTime = "end_time"
-        case name
-        case featuredImage = "featured_image"
-        case startDate = "start_date"
-        case registrationLink = "registration_link"
-        case eventEndDatetime = "event_end_datetime"
-        case eventStartDatetime = "event_start_datetime"
-        case agenda, status, os
-        case createdDate = "created_date"
-        case createdByID = "created_by_id"
-        case modifiedByID = "modified_by_id"
-        case userID = "user_id"
-        case isPrivate = "is_private"
-        case tempImage = "temp_image"
-        case comments, isNewsSave, isEventLike
-        case createdByUser = "created_by_user"
-        case attendeesCount = "attendees_count"
-        case isJoined = "is_joined"
-        case isinvited = "Isinvited"
-        case evaEventsAttendees = "eva_events_attendees"
-        case conferenceagenda, exhibitorslists, speakerslists, mediapartnerslists, delegatelists, sponsorslists, eventNetworking, delegatemeetings, eventHotels, eventVenu
-        case floorPlan = "floor_plan"
-        case user
-        case invitedByYou = "invited_by_you"
-        case interestedUsersCount = "interested_users_count"
-        case interestedUsers = "interested_users"
-    }
-    
-    
-}
-
-enum EventAttendeeStatus: String, Codable {
-    case requestToJoin = "Request_To_join"
-    case accepted = "accepted"
-    case decline = "Decline"
-}
 
 // MARK: - List
 struct List: Codable {
@@ -193,7 +192,8 @@ struct List: Codable {
     let country: String?
     let url, jobTitle: String?
     let companyName: String?
-    let telephoneNumber, companyID: String?
+    let telephoneNumber: String?
+    let companyID: Int?
     let speakerLinkedin, sponsorGraphic: String?
     let sponsorName: String?
     let linkedin: String?
@@ -201,7 +201,9 @@ struct List: Codable {
     let mailStatus: String?
     let createdAt, updatedAt: String?
     let deletedAt: String?
-    let userUser: EvaEventsAttendeeUser?
+    let designation: String?
+    let profile: String?
+    //let userUser: EvaEventsAttendeeUser?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -231,7 +233,8 @@ struct List: Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case deletedAt = "deleted_at"
-        case userUser = "user_user"
+        //case userUser = "user_user"
+        case designation, profile
     }
 }
 
@@ -254,9 +257,9 @@ struct EventNetworking: Codable {
     let description, notes: String?
     let userInput: String?
     let eventID: Int?
-    let deletedAt: String?
-    let createdAt, updatedAt: String?
-    let evaEvent: EvaEvent?
+//    let deletedAt: String?
+//    let createdAt, updatedAt: String?
+//    let evaEvent: EvaEvent?
     let evaUserNetworkingMappings: [EvaUserNetworkingMapping]?
 
     enum CodingKeys: String, CodingKey {
@@ -268,10 +271,10 @@ struct EventNetworking: Codable {
         case description, notes
         case userInput = "user_input"
         case eventID = "event_id"
-        case deletedAt = "deleted_at"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case evaEvent = "eva_event"
+//        case deletedAt = "deleted_at"
+//        case createdAt = "created_at"
+//        case updatedAt = "updated_at"
+//        case evaEvent = "eva_event"
         case evaUserNetworkingMappings = "eva_user_networking_mappings"
     }
 }

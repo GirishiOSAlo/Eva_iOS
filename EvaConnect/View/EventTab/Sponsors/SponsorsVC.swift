@@ -108,7 +108,7 @@ extension SponsorsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.profileImgHeight.constant = 120.0
         cell.nameLbl.text = sponsor.firstName ?? ""
         cell.subLbl.text = sponsor.companyName ?? ""
-        if let imageUrl = sponsor.logo,
+        if let imageUrl = sponsor.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
            UIApplication.shared.canOpenURL(url) {
