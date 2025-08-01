@@ -12,6 +12,9 @@ class MyScheduleVC: UIViewController, XIBed {
     
     @IBOutlet weak var headingLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var previousDateBtn: UIButton!
+    @IBOutlet weak var nextDateBtn: UIButton!
+    
     @IBOutlet weak var createMeetingBtn: UIButton!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var meetingListCollectionVw: UICollectionView!
@@ -50,6 +53,8 @@ class MyScheduleVC: UIViewController, XIBed {
     }
     
     func setupUI() {
+        self.previousDateBtn.isEnabled = false
+        self.nextDateBtn.isEnabled = false
         self.noDataLbl.isHidden = true
         self.noDataLbl.font = UIFont(name: Myfonts.regular, size: 16.0)
         
@@ -181,8 +186,8 @@ extension MyScheduleVC {
                             // Call the filter method for a specific date
                             self.selectedDateIndex = 0
                             let date = self.scheduleMeetingDateList[self.selectedDateIndex]
-                            self.filterDataByDate(for: date)
                             self.setDateTitleLbl(for: date)
+                            self.filterDataByDate(for: date)
                         } else {
                             print("Date List Empty.")
                             self.noDataLbl.isHidden = !self.scheduleMeetingDateList.isEmpty
@@ -209,10 +214,24 @@ extension MyScheduleVC {
     }
     
     func setDateTitleLbl(for date: String) {
+        self.dateButtonUpdate()
         if let formatted = self.formatDateWithOrdinal(date) {
             self.dateLbl.text = formatted  // Output: "30th July 2025"
         } else {
             self.dateLbl.text = "--"
+        }
+    }
+    
+    func dateButtonUpdate() {
+        let totalDates = self.scheduleMeetingDateList.count
+        if totalDates <= 1 {
+            // Only one or no date — both buttons should be disabled
+            previousDateBtn.isEnabled = false
+            nextDateBtn.isEnabled = false
+        } else {
+            // More than one date
+            previousDateBtn.isEnabled = selectedDateIndex > 0 //Disable previous button
+            nextDateBtn.isEnabled = selectedDateIndex < totalDates - 1 //Disable next button
         }
     }
 }

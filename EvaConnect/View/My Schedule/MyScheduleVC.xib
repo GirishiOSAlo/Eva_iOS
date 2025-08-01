@@ -20,7 +20,9 @@
                 <outlet property="dateLbl" destination="GUe-Qm-1Zd" id="bL5-gc-jdP"/>
                 <outlet property="headingLbl" destination="bnx-ZV-ddd" id="5H7-aO-Hzo"/>
                 <outlet property="meetingListCollectionVw" destination="kB7-iD-M9h" id="ZTw-o4-4jb"/>
+                <outlet property="nextDateBtn" destination="PUV-de-Z7l" id="LX4-lC-18m"/>
                 <outlet property="noDataLbl" destination="L26-Xy-Gh8" id="U1m-tn-5X4"/>
+                <outlet property="previousDateBtn" destination="kcO-MS-Qdt" id="AKs-zF-QqD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
