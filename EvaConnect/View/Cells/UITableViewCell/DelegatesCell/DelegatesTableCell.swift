@@ -20,6 +20,11 @@ class DelegatesTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        initUI()
+    }
+    
+    func initUI() {
+        self.profileImgView.layer.cornerRadius = self.profileImgView.frame.size.height/2
         mainUiView.layer.cornerRadius = 12
         mainUiView.layer.masksToBounds = true
         viewProfileBtn.layer.cornerRadius = 12
@@ -30,7 +35,6 @@ class DelegatesTableCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
