@@ -110,7 +110,7 @@ class OthersProfileVC: UIViewController {
 //                self.presentAlert("Failure", nil, error)
 //            }
 //        }
-        postTableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+//        postTableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,11 +119,11 @@ class OthersProfileVC: UIViewController {
 //        getSettings()
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if(keyPath == "contentSize"){
-            self.postTVHeight.constant = self.postTableView.contentSize.height
-        }
-    }
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        if(keyPath == "contentSize"){
+//            self.postTVHeight.constant = self.postTableView.contentSize.height
+//        }
+//    }
     
     func setupUI(){
         
@@ -145,7 +145,10 @@ class OthersProfileVC: UIViewController {
 //            pendingView.isHidden = true
 //            inviteView.isHidden = true
 //        }
+        self.postTVHeight.constant = 0.0
+        
         fetchUserDetailsData()
+        getPosts(offSet: 1)
         privateAccView.isHidden = true
         
         self.postTableView.delegate = self
@@ -351,6 +354,27 @@ class OthersProfileVC: UIViewController {
         }
     }
     
+    func setPostTableHeight() {
+        var totalHeight = 0.0
+        for homePost in self.posts {
+            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                totalHeight = totalHeight + height
+            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+                totalHeight = totalHeight + 450
+            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 231.0
+                totalHeight = totalHeight + height
+                
+            } else if homePost.postImage!.count > 0 { //Image Cell
+                totalHeight = totalHeight + 450
+            }
+        }
+        self.postTVHeight.constant = totalHeight
+    }
+    
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
@@ -486,31 +510,31 @@ class OthersProfileVC: UIViewController {
 
 //MARK: Network calls
 extension OthersProfileVC {
-    func fetchUserDetail(userId: Int, completion: @escaping (OtherUserData?, Error?) -> Void) {
-        
-        let url = "\(EndPoints.userDetail)/\(userId)"
-        NetworkManagerr.request(url, encoding: JSONEncoding.default) { (response) in
-            self.hideActivity(isUserInteractionEnabled: true)
-            
-            if response.result.isSuccess {
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    let userData = try jsonDecoder.decode(OtherUserDataModel.self, from: response.data!)
-                    if !(userData.error ?? false), userData.data?.count ?? 0 > 0 {
-                        
-                        completion(userData.data?[0], nil)
-                    }
-                    
-                } catch {
-                    completion(nil, response.result.error)
-                }
-            } else {
-                completion(nil, response.result.error)
-            }
-            
-        }
-            
-    }
+//    func fetchUserDetail(userId: Int, completion: @escaping (OtherUserData?, Error?) -> Void) {
+//        
+//        let url = "\(EndPoints.userDetail)/\(userId)"
+//        NetworkManagerr.request(url, encoding: JSONEncoding.default) { (response) in
+//            self.hideActivity(isUserInteractionEnabled: true)
+//            
+//            if response.result.isSuccess {
+//                do {
+//                    let jsonDecoder = JSONDecoder()
+//                    let userData = try jsonDecoder.decode(OtherUserDataModel.self, from: response.data!)
+//                    if !(userData.error ?? false), userData.data?.count ?? 0 > 0 {
+//                        
+//                        completion(userData.data?[0], nil)
+//                    }
+//                    
+//                } catch {
+//                    completion(nil, response.result.error)
+//                }
+//            } else {
+//                completion(nil, response.result.error)
+//            }
+//            
+//        }
+//            
+//    }
     
     func fetchUserDetailsData() {
         showActivity()
@@ -566,8 +590,8 @@ extension OthersProfileVC {
                     postTableView.isHidden = false
                     privateAccView.isHidden = true
                     self.posts = post.data
+                    self.setPostTableHeight()
                 }
-                
                     
             case .failure(let failure):
                 self.presentAlert("Error", nil, failure)
@@ -675,34 +699,34 @@ extension OthersProfileVC {
         }
     }
     
-    func callCancelrequest(id: Int) {
-        let params: AFParameters  = ["user_id": id]
-        showActivity()
-        NetworkManagerr.request(EndPoints.cancelRequest, method: .post, parameters: params) { (response) in
-            self.hideActivity()
-            do {
-                let jsonDecoder = JSONDecoder()
-                let Root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
-                self.hideActivity()
-                if !(Root.error) {
-                    self.presentAlert("Success", Root.message, nil)
-                    self.fetchUserDetail(userId: self.profileID) { (user, error) in
-                        if let user = user {
-                            self.setUI(for: user)
-                        }
-                        
-                        if let error = error {
-                            self.presentAlert("Failure", nil, error)
-                        }
-                    }
-                } else {
-                    self.presentAlert("Failure", Root.message, nil)
-                }
-            } catch {
-                print("Error: \(error)")
-            }
-        }
-    }
+//    func callCancelrequest(id: Int) {
+//        let params: AFParameters  = ["user_id": id]
+//        showActivity()
+//        NetworkManagerr.request(EndPoints.cancelRequest, method: .post, parameters: params) { (response) in
+//            self.hideActivity()
+//            do {
+//                let jsonDecoder = JSONDecoder()
+//                let Root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+//                self.hideActivity()
+//                if !(Root.error) {
+//                    self.presentAlert("Success", Root.message, nil)
+//                    self.fetchUserDetail(userId: self.profileID) { (user, error) in
+//                        if let user = user {
+//                            self.setUI(for: user)
+//                        }
+//                        
+//                        if let error = error {
+//                            self.presentAlert("Failure", nil, error)
+//                        }
+//                    }
+//                } else {
+//                    self.presentAlert("Failure", Root.message, nil)
+//                }
+//            } catch {
+//                print("Error: \(error)")
+//            }
+//        }
+//    }
     
     private func getSettings() {
         NetworkManagerr.request(EndPoints.settingsOptions) { (response) in
@@ -1027,7 +1051,26 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return UITableView.automaticDimension
+        //return UITableView.automaticDimension
+        let homePost = self.posts[indexPath.row]
+        if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+            //return 200
+            let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+            let height = lblHeight + 195.0
+            return height
+        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+            return 450
+        } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+            
+            let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+            let height = lblHeight + 231.0
+            return height
+            
+        } else if homePost.postImage!.count > 0 { //Image Cell
+            return 450
+        } else {
+            return UITableView.automaticDimension
+        }
     }
 
 }
