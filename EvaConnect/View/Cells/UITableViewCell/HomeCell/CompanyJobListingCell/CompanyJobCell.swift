@@ -40,10 +40,10 @@ class CompanyJobCell: BaseCellClass {
     
     var item: DashboardItem! {
         didSet {
-            companyName.text = item.jobTitle
-            designation.text = item.jobSector
-            applicantsCount.text = "\(item.applicantCount ?? 0) Applicants"
-            lastActive.text = "Active for \(item.activeHours ?? 0) days"
+//            companyName.text = item.jobTitle
+//            designation.text = item.jobSector
+//            applicantsCount.text = "\(item.applicantCount ?? 0) Applicants"
+//            lastActive.text = "Active for \(item.activeHours ?? 0) days"
             jobContent.text = item.content
             if let image = item.user?.userImage, let url = URL(string: image) {
                 profileImg.kf.indicatorType = .activity

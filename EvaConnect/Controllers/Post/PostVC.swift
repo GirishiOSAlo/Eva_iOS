@@ -275,7 +275,7 @@ extension PostVC {
         case .simpleText:
             contents = [.text(data.content ?? "", 40)]
         case .image:
-            contents = [.text(data.content ?? "", 40)] + (data.postImage?.compactMap({ $0 }).map({ PostContent.image(URL(string: $0), nil) }) ?? [])
+            contents = [.text(data.content ?? "", 40)] + (data.datumPostImage?.compactMap({ $0 }).map({ PostContent.image(URL(string: $0), nil) }) ?? [])
         case .video:
             contents = [.text(data.content ?? "", 40)]
             if let url = URL(string: data.postVideo ?? "") {

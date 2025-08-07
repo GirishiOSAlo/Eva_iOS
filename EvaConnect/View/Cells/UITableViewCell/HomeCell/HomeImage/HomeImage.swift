@@ -160,10 +160,10 @@ class HomeImage: BaseCellClass {
         commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
         shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
         
-        if !dataMaper.postImage!.isEmpty {
+        if !dataMaper.datumPostImage!.isEmpty {
 //            setImages(imageUrl: dataMaper.postImage!)
             
-            self.imageArr = dataMaper.postImage ?? []
+            self.imageArr = dataMaper.datumPostImage ?? []
             pageControl.numberOfPages = self.imageArr.count
             pageControl.currentPage = 0
             pageNoLbl.text = "  \((pageControl.currentPage) + 1 )/\(pageControl.numberOfPages)  "

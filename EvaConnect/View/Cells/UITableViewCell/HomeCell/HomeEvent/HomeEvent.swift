@@ -73,40 +73,32 @@ class HomeEvent: BaseCellClass {
     }
     
     func uiData(dataMaper: DashboardItem){
-        if let imageUrl = dataMaper.tempImage,
-           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
-           let url = URL(string: imageUrl),
-           UIApplication.shared.canOpenURL(url) {
-            self.imgVW.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
-        } else {
-            self.imgVW.image = UIImage(named: "eventPlaceholder")
-        }
-        
-        self.titleLbl.text = dataMaper.eventName ?? ""
-        self.dateLbl.text = "\(dataMaper.eventStartDate ?? "") - \(dataMaper.eventEndDate ?? "")"
-        self.locationLbl.text = "\(dataMaper.eventCity ?? ""), \(dataMaper.eventCountry ?? "")"
-        
-//        var startTime = ""
-//        var endTime = ""
-//        if let startTime12 = convertTo12HourFormat(from: "\(dataMaper.startTime ?? "")") {
-//            startTime = startTime12
+//        if let imageUrl = dataMaper.tempImage,
+//           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+//           let url = URL(string: imageUrl),
+//           UIApplication.shared.canOpenURL(url) {
+//            self.imgVW.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
+//        } else {
+//            self.imgVW.image = UIImage(named: "eventPlaceholder")
 //        }
-//        if let endTime12 = convertTo12HourFormat(from: "\(dataMaper.endTime ?? "")") {
-//            endTime = endTime12
+//        
+//        self.titleLbl.text = dataMaper.eventName ?? ""
+//        self.dateLbl.text = "\(dataMaper.eventStartDate ?? "") - \(dataMaper.eventEndDate ?? "")"
+//        self.locationLbl.text = "\(dataMaper.eventCity ?? ""), \(dataMaper.eventCountry ?? "")"
+//        
+//        self.timeLbl.text = "\(dataMaper.startTime ?? "") - \(dataMaper.endTime ?? "")"
+//        
+//        if dataMaper.isNewsSave == 1 {
+//            self.saveImgVw.image = UIImage(named: "save_selected")
+//        } else {
+//            self.saveImgVw.image = UIImage(named: "save")
 //        }
-        self.timeLbl.text = "\(dataMaper.startTime ?? "") - \(dataMaper.endTime ?? "")"
-        
-        if dataMaper.isNewsSave == 1 {
-            self.saveImgVw.image = UIImage(named: "save_selected")
-        } else {
-            self.saveImgVw.image = UIImage(named: "save")
-        }
-        
-        if dataMaper.isPrivate == 1 {
-            self.privateBtn.isHidden = false
-        } else {
-            self.privateBtn.isHidden = true
-        }
+//        
+//        if dataMaper.isPrivate == 1 {
+//            self.privateBtn.isHidden = false
+//        } else {
+//            self.privateBtn.isHidden = true
+//        }
     }
     
     func uiData(dataMaper: SearchEvent){

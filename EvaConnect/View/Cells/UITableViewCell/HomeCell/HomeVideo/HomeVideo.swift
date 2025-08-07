@@ -188,17 +188,17 @@ class HomeVideo: BaseCellClass {
             isConnectedBtn.setTitle("Connect", for: .normal)
             return .createConnect
         }
-        if dataMaper.isConnected! == "not_connected"  && dataMaper.isReceiver == false {
+        if dataMaper.isConnected! == "not_connected"  && dataMaper.isReceiver == "false" {
             //Not Connected
             isConnectedBtn.setTitle("Connect", for: .normal)
             return .createConnect
         }
-        else if dataMaper.isConnected! == "pending" && dataMaper.isReceiver == false {
+        else if dataMaper.isConnected! == "pending" && dataMaper.isReceiver == "false" {
             //Pending
             isConnectedBtn.setTitle("Pending", for: .normal)
             return .none
         }
-        else if dataMaper.isConnected! == "pending" && dataMaper.isReceiver == true {
+        else if dataMaper.isConnected! == "pending" && dataMaper.isReceiver == "true" {
             //Accept
             isConnectedBtn.setTitle("Accept", for: .normal)
             return .accept

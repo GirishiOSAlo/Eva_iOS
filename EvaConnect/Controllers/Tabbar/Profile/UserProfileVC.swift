@@ -142,20 +142,41 @@ class UserProfileVC: BaseVC {
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.posts {
-            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 195.0
+            if homePost.postVideo != "" {
+                print("Video")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 356.0
                 totalHeight = totalHeight + height
-            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
-                totalHeight = totalHeight + 450
-            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+            } else if homePost.postDocuments?.count ?? 0 > 0 {
+                print("Document")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 231.0
                 totalHeight = totalHeight + height
-                
-            } else if homePost.postImage!.count > 0 { //Image Cell
-                totalHeight = totalHeight + 450
+            } else if homePost.datumPostImage!.count > 0 {
+                print("Images")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 416.0
+                totalHeight = totalHeight + height
+            } else {
+                print("Text")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                totalHeight = totalHeight + height
             }
+//            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 195.0
+//                totalHeight = totalHeight + height
+//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+//                totalHeight = totalHeight + 450
+//            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 231.0
+//                totalHeight = totalHeight + height
+//                
+//            } else if homePost.postImage!.count > 0 { //Image Cell
+//                totalHeight = totalHeight + 450
+//            }
         }
         self.reactionTblViewHeight.constant = totalHeight
     }
@@ -689,8 +710,8 @@ extension UserProfileVC {
                 }
 
                 if post.error == false {
-                    if post.data.count > 0 {
-                        self.posts = post.data
+                    if post.data?.count ?? 0 > 0 {
+                        self.posts = post.data ?? []
                         noRecordLbl.isHidden = true
                         self.viewAllButton.isHidden = false
                     } else {
@@ -698,8 +719,8 @@ extension UserProfileVC {
                         self.viewAllButton.isHidden = true
                     }
                 } else {
-                    if post.data.count > 0 {
-                        self.posts = post.data
+                    if post.data?.count ?? 0 > 0 {
+                        self.posts = post.data ?? []
                         noRecordLbl.isHidden = true
                         self.viewAllButton.isHidden = false
                     } else {
@@ -907,7 +928,7 @@ extension UserProfileVC: PostActionable, CollectionViewCellDelegate {
         switch action {
          case .like:
             let post = posts[sender.tag]
-            likePost(postId: post.id, status: post.status ?? "", action: post.isPostLike == 0 ? "like" : "unlike", at: sender.tag)
+            likePost(postId: post.id ?? 0, status: post.status ?? "", action: post.isPostLike == 0 ? "like" : "unlike", at: sender.tag)
          case .comment:
             goToCommentVC(index: sender.tag)
          case .article:
@@ -965,35 +986,66 @@ extension UserProfileVC {
         let homePost = posts[index]
 //        updateSpecificPost = homePost.id
 //        let link = homePost.content?.link
-        if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
-            let vc = StoryboardRouter.textPostDetailVC()
-            vc.postType = .simpleText
-            vc.postId = homePost.id
-            vc.dashboardItem = homePost
-            vc.delegate = self
-            navigationController?.pushViewController(vc, animated: true)
-        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] {//Video
+        
+        if homePost.postVideo != "" {//Video
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .video
             vc.postId = homePost.id
             vc.dashboardItem = homePost
             vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
-        } else if homePost.postDocument != "" && homePost.postImage == []{ //document Cell
+        } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .article
             vc.postId = homePost.id
             vc.dashboardItem = homePost
             vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
-        } else { // Image Cell
+        } else if homePost.datumPostImage!.count > 0 {//Image
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .image
             vc.postId = homePost.id
             vc.dashboardItem = homePost
             vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
+        } else {//Text
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .simpleText
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
         }
+        
+//        if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .simpleText
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] {//Video
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .video
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else if homePost.postDocument != "" && homePost.postImage == []{ //document Cell
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .article
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else { // Image Cell
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .image
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
     }
     
     func openArticle() {
@@ -1011,7 +1063,7 @@ extension UserProfileVC {
         navigationController?.pushViewController(postVC, animated: true)
     }
     func returnPostType(post: DashboardItem) -> PostType {
-        if !post.postImage!.isEmpty { return .image }
+        if !post.datumPostImage!.isEmpty { return .image }
         else if post.postVideo != nil { return .video }
         else if post.postDocument != nil { return .article }
         else { return .simpleText }
@@ -1021,7 +1073,7 @@ extension UserProfileVC {
         tabBarController?.tabBar.isHidden = true
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
-        vc.objectId = self.posts[sender.tag].id
+        vc.objectId = self.posts[sender.tag].id ?? 0
         vc.type = .post
         vc.modalPresentationStyle = .popover
 //        vc.completion = {
@@ -1040,11 +1092,11 @@ extension UserProfileVC {
             switch selectedIndex {
             case 0:
                 let vc = reportPopupVC.instantiate()
-                vc.postId = self.posts[index].id
+                vc.postId = self.posts[index].id ?? 0
                 vc.userId = self.posts[index].user?.id ?? 0
                 vc.completion = {
                     let vc = otherReasonPopupVC.instantiate()
-                    vc.postId = self.posts[index].id
+                    vc.postId = self.posts[index].id ?? 0
                     vc.userId = self.posts[index].user?.id ?? 0
                     self.navigationController?.present(vc, animated: true)
                 }
@@ -1354,24 +1406,8 @@ extension UserProfileVC: UITableViewDataSource {
         }
         else {
             let homePost = posts[indexPath.row]
-            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {
-                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
-                cell.detailsView.layer.cornerRadius = 13
-                cell.delegate = self
-                cell.uiData(dataMaper: homePost)
-                
-                cell.shareBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.likeBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                
-                return cell
-                
-            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+            
+            if homePost.postVideo != "" {//Video
                 let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 
                 cell.delegate = self
@@ -1393,9 +1429,7 @@ extension UserProfileVC: UITableViewDataSource {
                 cell.videoView.isHidden = false
 
                 return cell
-                
-            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
-                
+            } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.delegate = self
                 cell.uiData(homePost: homePost)
@@ -1410,8 +1444,7 @@ extension UserProfileVC: UITableViewDataSource {
                 cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
 
                 return cell
-            } else if homePost.postImage!.count > 0 { //Image Cell
-
+            } else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.uiData(dataMaper: homePost)
                 cell.delegate = self
@@ -1428,10 +1461,102 @@ extension UserProfileVC: UITableViewDataSource {
                 cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
 
                 return cell
-            } else {
-                let cell = UITableViewCell()
+            } else {//Text
+                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+                cell.detailsView.layer.cornerRadius = 13
+                cell.delegate = self
+                cell.uiData(dataMaper: homePost)
+                
+                cell.shareBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.likeBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                
                 return cell
             }
+            
+//            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {
+//                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.detailsView.layer.cornerRadius = 13
+//                cell.delegate = self
+//                cell.uiData(dataMaper: homePost)
+//                
+//                cell.shareBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.likeBtn.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+////                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                
+//                return cell
+//                
+//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+//                let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                
+//                cell.delegate = self
+//                cell.uiData(dataMaper: homePost)
+//                
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.likeBtn.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+////                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+//                cell.openVideoBtn.tag = indexPath.row
+//                cell.videoView.backgroundColor = .black
+//                cell.videoView.configure(url: homePost.postVideo!,ratio: .resizeAspectFill)
+//                cell.videoView.stop()
+//                cell.videoView.isHidden = false
+//
+//                return cell
+//                
+//            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+//                
+//                let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.delegate = self
+//                cell.uiData(homePost: homePost)
+//                cell.likeBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.openArticleBtn.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+////                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//
+//                return cell
+//            } else if homePost.postImage!.count > 0 { //Image Cell
+//
+//                let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.uiData(dataMaper: homePost)
+//                cell.delegate = self
+//                cell.delegateDidSelect = self
+//                cell.parentViewController = self
+//
+//                cell.likeButton.tag = indexPath.row
+//                cell.commentButton.tag = indexPath.row
+//                cell.shareButton.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+////                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//
+//                return cell
+//            } else {
+//                let cell = UITableViewCell()
+//                return cell
+//            }
         }
         
         
@@ -1603,24 +1728,46 @@ extension UserProfileVC: UITableViewDataSource {
             return UITableView.automaticDimension
         } else {
             let homePost = self.posts[indexPath.row]
-            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-                //return 200
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 195.0
+            if homePost.postVideo != "" {
+                print("Video")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 356.0
                 return height
-            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
-                return 450
-            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
-                
+            } else if homePost.postDocuments?.count ?? 0 > 0 {
+                print("Document")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 231.0
                 return height
-                
-            } else if homePost.postImage!.count > 0 { //Image Cell
-                return 450
+            } else if homePost.datumPostImage!.count > 0 {
+                print("Images")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 416.0
+                return height
             } else {
-                return UITableView.automaticDimension
+                print("Text")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                return height
             }
+            
+//            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+//                //return 200
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 195.0
+//                return height
+//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+//                return 450
+//            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+//                
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 231.0
+//                return height
+//                
+//            } else if homePost.postImage!.count > 0 { //Image Cell
+//                return 450
+//            } else {
+//                return UITableView.automaticDimension
+//            }
         }
     }
 }

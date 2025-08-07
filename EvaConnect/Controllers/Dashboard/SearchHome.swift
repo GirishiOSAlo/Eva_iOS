@@ -109,6 +109,17 @@ class SearchHome: BaseVC {
             blurView.isHidden = true
         }
     }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
 }
 //MARK: IBOutlet Action
 extension SearchHome {
@@ -200,25 +211,46 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
             if dashBoardModelArray.count != 0 {
                 let homePost = dashBoardModelArray[indexPath.row]
                 if homePost.type == .post {
-                    //image cell with text
-                    if homePost.postImage!.count > 0  {
-                        return UITableView.automaticDimension
+                    if homePost.postVideo != "" {
+                        print("Video")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 356.0
+                        return height
+                    } else if homePost.postDocuments?.count ?? 0 > 0 {
+                        print("Document")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 231.0
+                        return height
+                    } else if homePost.datumPostImage!.count > 0 {
+                        print("Images")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 416.0
+                        return height
+                    } else {
+                        print("Text")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 195.0
+                        return height
                     }
-                    
-                    //document cell with text
-                    else if homePost.postDocument != nil {
-                        return  390.0
-                    }
-                   
-                    //video cell with text
-                    else if homePost.postVideo != nil {
-                        return UITableView.automaticDimension
-                    }
-                    else {
-                        //Simple Text cell
-                        return 220.0
-                        
-                    }
+//                    //image cell with text
+//                    if homePost.postImage!.count > 0  {
+//                        return UITableView.automaticDimension
+//                    }
+//                    
+//                    //document cell with text
+//                    else if homePost.postDocument != nil {
+//                        return  390.0
+//                    }
+//                   
+//                    //video cell with text
+//                    else if homePost.postVideo != nil {
+//                        return UITableView.automaticDimension
+//                    }
+//                    else {
+//                        //Simple Text cell
+//                        return 220.0
+//                        
+//                    }
                 }
             }
         case .events, .industryEvents:
@@ -239,26 +271,47 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
             if dashBoardModelArray.count != 0 {
                 let homePost = dashBoardModelArray[indexPath.row]
                 if homePost.type == .post {
-                    //image cell with text
-                    if homePost.postImage!.count > 0  {
-                        return UITableView.automaticDimension
+                    if homePost.postVideo != "" {
+                        print("Video")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 356.0
+                        return height
+                    } else if homePost.postDocuments?.count ?? 0 > 0 {
+                        print("Document")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 231.0
+                        return height
+                    } else if homePost.datumPostImage!.count > 0 {
+                        print("Images")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 416.0
+                        return height
+                    } else {
+                        print("Text")
+                        let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                        let height = lblHeight + 195.0
+                        return height
                     }
-                    
-                    //document cell
-                    else if homePost.postDocument != nil {
-                        return  390.0
-                    }
-                    
-                    //video cell with text
-                    else if homePost.postVideo != nil {
-                        return UITableView.automaticDimension
-                        
-                    }
-                    //Simple Text cell
-                    else {
-                        return 220.0
-                        
-                    }
+//                    //image cell with text
+//                    if homePost.postImage!.count > 0  {
+//                        return UITableView.automaticDimension
+//                    }
+//                    
+//                    //document cell
+//                    else if homePost.postDocument != nil {
+//                        return  390.0
+//                    }
+//                    
+//                    //video cell with text
+//                    else if homePost.postVideo != nil {
+//                        return UITableView.automaticDimension
+//                        
+//                    }
+//                    //Simple Text cell
+//                    else {
+//                        return 220.0
+//                        
+//                    }
                 }
             }
             
@@ -369,7 +422,7 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
                     return cell
                 }
                 //Image Cell
-                else if bindModelData.postImage!.count > 0 {
+                else if bindModelData.postDocuments!.count > 0 {
                     
                     let cell = tableView.dequeueReusableCell(withIdentifier: HomeImage.id(), for: indexPath) as! HomeImage
                     
@@ -554,7 +607,7 @@ extension SearchHome {
                             self.totalRecode.text =  "Found \(0) result"
                             self.noRecordLbl.isHidden = false
                         } else {
-                            for i in dashboardPostsRoot.data {
+                            for i in dashboardPostsRoot.data ?? [] {
                                 self.dashBoardModelArray.append(i)
                             }
                             if self.dashBoardModelArray.isEmpty || self.dashBoardModelArray.count <= 0{
@@ -1074,7 +1127,7 @@ extension SearchHome {
         case .posts:
             let id = dashBoardModelArray[sender.tag].id
             let type = returnPostType(post: dashBoardModelArray[sender.tag])
-            textVC.postId = id
+            textVC.postId = id ?? 0
             switch type {
             case .image:
                 textVC.postType = .image
@@ -1117,7 +1170,7 @@ extension SearchHome {
     }
     
     func returnPostType(post: DashboardItem) -> PostType {
-        if post.postImage!.count > 0 {
+        if post.datumPostImage!.count > 0 {
             return .image
         }
         else if post.postVideo != nil {
@@ -1134,15 +1187,15 @@ extension SearchHome {
     func deletePost(_ sender: UIButton) {
             switch selectedTab {
             case .posts:
-                let id = dashBoardModelArray[sender.tag].id
+                let id = dashBoardModelArray[sender.tag].id ?? 0
                 deletePost(postId: id)
                 break
             case .events:
-                let id = dashBoardModelArray[sender.tag].id
+                let id = dashBoardModelArray[sender.tag].id ?? 0
                 deleteEvent(postId: id)
                 break
             case .jobs:
-                let id = dashBoardModelArray[sender.tag].id
+                let id = dashBoardModelArray[sender.tag].id ?? 0
                 deleteJob(postId: id)
                 break
             default:
@@ -1162,10 +1215,10 @@ extension SearchHome {
         let bindModelData = dashBoardModelArray[tapImageView.tag]
         if dashBoardModelArray.count != 0 {
             if bindModelData.isPostLike != nil {
-                likePost(postId: bindModelData.id, status: bindModelData.status ?? "", action: "unlike",at: tapImageView.tag)
+                likePost(postId: bindModelData.id ?? 0, status: bindModelData.status ?? "", action: "unlike",at: tapImageView.tag)
             }
             else{
-                likePost(postId: bindModelData.id, status: bindModelData.status ?? "", action: "like",at: tapImageView.tag)
+                likePost(postId: bindModelData.id ?? 0, status: bindModelData.status ?? "", action: "like",at: tapImageView.tag)
             }
         }
     }
@@ -1176,51 +1229,51 @@ extension SearchHome {
         if dashBoardModelArray.count != 0 {
             let bindModelData = dashBoardModelArray[sender.tag]
             if bindModelData.isPostLike != nil {
-                likePost(postId: bindModelData.id, status: bindModelData.status ?? "", action: "unlike",at: sender.tag)
+                likePost(postId: bindModelData.id ?? 0, status: bindModelData.status ?? "", action: "unlike",at: sender.tag)
             }
             else {
-                likePost(postId: bindModelData.id, status: bindModelData.status ?? "", action: "like",at: sender.tag)
+                likePost(postId: bindModelData.id ?? 0, status: bindModelData.status ?? "", action: "like",at: sender.tag)
             }
         }
     }
     
     @objc func jobLikePost(sender: UIButton) {
         
-        if dashBoardModelArray.count != 0 {
-            let bindModelData = dashBoardModelArray[sender.tag]
-            if bindModelData.isJobLike != nil {
-                likeJobPost(postId: bindModelData.id, status: "active", action: "unlike",at: sender.tag)
-            }
-            else{
-                likeJobPost(postId: bindModelData.id, status: "active", action: "like",at: sender.tag)
-            }
-        }
+//        if dashBoardModelArray.count != 0 {
+//            let bindModelData = dashBoardModelArray[sender.tag]
+//            if bindModelData.isJobLike != nil {
+//                likeJobPost(postId: bindModelData.id, status: "active", action: "unlike",at: sender.tag)
+//            }
+//            else{
+//                likeJobPost(postId: bindModelData.id, status: "active", action: "like",at: sender.tag)
+//            }
+//        }
     }
     
     @objc func eventLikePost(sender: UIButton) {
         
-        if dashBoardModelArray.count != 0 {
-            let bindModelData = dashBoardModelArray[sender.tag]
-            if bindModelData.isEventLike != nil && bindModelData.isEventLike != 0{
-                likeEventPost(postId: bindModelData.id, status:"pending", action: "unlike",at: sender.tag)
-            }
-            else {
-                likeEventPost(postId: bindModelData.id, status:"pending", action: "like",at: sender.tag)
-            }
-        }
+//        if dashBoardModelArray.count != 0 {
+//            let bindModelData = dashBoardModelArray[sender.tag]
+//            if bindModelData.isEventLike != nil && bindModelData.isEventLike != 0{
+//                likeEventPost(postId: bindModelData.id, status:"pending", action: "unlike",at: sender.tag)
+//            }
+//            else {
+//                likeEventPost(postId: bindModelData.id, status:"pending", action: "like",at: sender.tag)
+//            }
+//        }
     }
     //likeNewsPost
     @objc func newsLikePost(sender: UIButton) {
         
-        if dashBoardModelArray.count != 0 {
-            let bindModelData = dashBoardModelArray[sender.tag]
-            if bindModelData.isNewsLike != nil && bindModelData.isNewsLike != 0{
-                likeNewsPost(postId: bindModelData.id, status:"pending", action: "unlike",at: sender.tag)
-            }
-            else {
-                likeNewsPost(postId: bindModelData.id, status:"pending", action: "like",at: sender.tag)
-            }
-        }
+//        if dashBoardModelArray.count != 0 {
+//            let bindModelData = dashBoardModelArray[sender.tag]
+//            if bindModelData.isNewsLike != nil && bindModelData.isNewsLike != 0{
+//                likeNewsPost(postId: bindModelData.id, status:"pending", action: "unlike",at: sender.tag)
+//            }
+//            else {
+//                likeNewsPost(postId: bindModelData.id, status:"pending", action: "like",at: sender.tag)
+//            }
+//        }
     }
     
     @objc func createConnection(sender: UIButton) {
@@ -1237,7 +1290,7 @@ extension SearchHome {
         
         if dashBoardModelArray.count != 0 {
             let  bindData = dashBoardModelArray[sender.tag]
-            if bindData.isConnected! == "pending" && bindData.isReceiver == true {
+            if bindData.isConnected! == "pending" && bindData.isReceiver == "true" {
                 if sender.titleLabel!.text == "Accept" {
                     updateConnection(otherID: bindData.connectionID!)
                 }
@@ -1257,7 +1310,7 @@ extension SearchHome {
         
         if dashBoardModelArray.count != 0 {
             let bindModelData = dashBoardModelArray[sender.tag]
-            if bindModelData.postImage!.count == 0 && bindModelData.postVideo == nil {
+            if bindModelData.datumPostImage?.count == 0 && bindModelData.postVideo == nil {
                 let textVC = StoryboardRouter.textPostDetailVC()
                 textVC.postId = bindModelData.id
                 SVProgressHUD.dismiss()
@@ -1292,7 +1345,7 @@ extension SearchHome {
             let storyboard = UIStoryboard(name: "Home", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "OpenUrlVC") as! OpenUrlVC
             if  bindModelData.type == .news {
-                vc.contentString = bindModelData.link
+//                vc.contentString = bindModelData.link
             }
             else {
                 vc.contentString = bindModelData.content!.fetchUrlFromString()
@@ -1308,7 +1361,7 @@ extension SearchHome {
             let storyboard = UIStoryboard(name: "Home", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "NewsCommentVC") as! NewsCommentVC
             vc.btnTag = sender.tag
-            vc.newId = bindModelData.id
+            vc.newId = bindModelData.id ?? 0
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -1366,15 +1419,15 @@ extension SearchHome: PostActionable {
         case .like:
             let post = dashBoardModelArray[sender.tag]
             if post.isPostLike != nil {
-                likePost(postId: post.id, status: post.status ?? "", action: "unlike",at: sender.tag)
+                likePost(postId: post.id ?? 0, status: post.status ?? "", action: "unlike",at: sender.tag)
             }
             else {
-                likePost(postId: post.id, status: post.status ?? "", action: "like", at: sender.tag)
+                likePost(postId: post.id ?? 0, status: post.status ?? "", action: "like", at: sender.tag)
             }
             
         case .comment:
             let post = dashBoardModelArray[sender.tag]
-            if post.postImage!.count == 0 && post.postVideo == nil && post.postDocument == nil {
+            if post.datumPostImage?.count == 0 && post.postVideo == nil && post.postDocument == nil {
                 
                 performSegue(withIdentifier: Constants.Segues.textComment, sender: post.id)
                 
@@ -1437,16 +1490,16 @@ extension SearchHome {
         
         switch selectedTab {
         case .posts, .industryPost:
-            let postId = dashBoardModelArray[sender.tag].id
+            let postId = dashBoardModelArray[sender.tag].id ?? 0
             openShareVC(id: postId, type: .post)
         case .jobs, .industryJobs:
-            let postId = dashBoardModelArray[sender.tag].id
+            let postId = dashBoardModelArray[sender.tag].id ?? 0
             openShareVC(id: postId, type: .job)
         case .events, .industryEvents:
-            let postId = dashBoardModelArray[sender.tag].id
+            let postId = dashBoardModelArray[sender.tag].id ?? 0
             openShareVC(id: postId, type: .event)
         case .news:
-            let postId = dashBoardModelArray[sender.tag].id
+            let postId = dashBoardModelArray[sender.tag].id ?? 0
             openShareVC(id: postId, type: .news)
             
         }

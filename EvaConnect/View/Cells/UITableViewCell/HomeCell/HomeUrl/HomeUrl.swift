@@ -99,8 +99,9 @@ class HomeUrl: BaseCellClass {
         } else {
             self.likeImage.image = UIImage(named: "ic_like")
         }
-        documentName.text = homePost.documentFileName ?? "No Name"
-        documentSizeLbl.text = "\(homePost.documentSize ?? "")kB"
+        
+        documentName.text = "No Name"
+        documentSizeLbl.text = "0 kB"
         
         actualString = homePost.content ?? ""
         configure(with: actualString)

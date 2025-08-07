@@ -37,21 +37,21 @@ class UserJobCell: UITableViewCell {
     
     var job: DashboardItem! {
         didSet {
-            positionNameLbl.text = job.jobTitle ?? ""
-            companyNameLbl.text = job.position ?? ""
-            jobImageView.sd_setImage(with: URL(string: job.tempImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-            salaryLbl.text = "£\(job.salary ?? 0)"
-            locationLbl.text = job.location ?? ""
-            contractLbl.text = job.jobtype?.rawValue ?? ""
-            job.saved == 1 ? saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal) : saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
-            grayDotView.isHidden = false
-            if !isIndivisualUser {
-                grayDotView.isHidden = true
-                jobActiveTimeLbl.text = job.value
-                applicantBtn.setTitle("\(job.applicationsCount ?? "") Applicants", for: .normal)
-                industryJobDescLbl.text = job.content
-                jobImageView.sd_setImage(with: URL(string: job.image ?? ""), placeholderImage: UIImage(named: "profile")!)
-            }
+//            positionNameLbl.text = job.jobTitle ?? ""
+//            companyNameLbl.text = job.position ?? ""
+//            jobImageView.sd_setImage(with: URL(string: job.tempImage ?? ""), placeholderImage: UIImage(named: "profile")!)
+//            salaryLbl.text = "£\(job.salary ?? 0)"
+//            locationLbl.text = job.location ?? ""
+//            contractLbl.text = job.jobtype?.rawValue ?? ""
+//            job.saved == 1 ? saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal) : saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
+//            grayDotView.isHidden = false
+//            if !isIndivisualUser {
+//                grayDotView.isHidden = true
+//                jobActiveTimeLbl.text = job.value
+//                applicantBtn.setTitle("\(job.applicationsCount ?? "") Applicants", for: .normal)
+//                industryJobDescLbl.text = job.content
+//                jobImageView.sd_setImage(with: URL(string: job.image ?? ""), placeholderImage: UIImage(named: "profile")!)
+//            }
         }
     }
     

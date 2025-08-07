@@ -48,41 +48,41 @@ class HomeJob: BaseCellClass {
     }
     
     func uiData(dataMaper: DashboardItem){
-        jobCompanyLbl.attributedText = jobCompanyLbl.makingAttributeMultiple(getText1: "\(dataMaper.jobSector ?? "No Sector") |",
-            getColor1: .darkGray,
-            getText2: " \(dataMaper.location ?? "No Address") |",
-            getColor2: .darkGray,
-            getText3: "£ \(dataMaper.salary ?? 0) pa",
-            getColor3: .darkGray)
-        
-        jobTitleLbl.text = "\(dataMaper.jobTitle ?? "") for \(dataMaper.jobNature ?? "")"
-        commentValueLbl.text = "\(dataMaper.commentCount ?? 0)"
-        likeValueLbl.text = "\(dataMaper.likeCount ?? 0)"
-        
-        if dataMaper.isJobLike == 1 {
-            likeImage.image = #imageLiteral(resourceName: "like_selected")
-        }
-        else {
-            likeImage.image = #imageLiteral(resourceName: "like")
-        }
-        if myUserDefaults.userId == dataMaper.userID {
-            applyBtn.isHidden = true
-            moreOption.isHidden = false
-            moreOption.addTarget(self, action: #selector(openMoreOption), for: .touchUpInside)
-        } else {
-            applyBtn.isHidden = false
-            moreOption.isHidden = true
-            EditDeleteHandler.sharedInstance.hideMenu(xibOnView: editPostView ?? UIView())
-        }
-        if dataMaper.isApplied == 1 {
-            applyBtn.setTitle("Applied!", for: .normal)
-            applyBtn.isUserInteractionEnabled = false
-        }else{
-            applyBtn.setTitle("Apply", for: .normal)
-            applyBtn.isUserInteractionEnabled = true
-        }
-        profileImage.sd_setImage(with: URL(string: dataMaper.jobImage ?? ""), placeholderImage: #imageLiteral(resourceName: "jobLogoPlaceholder"), options: .progressiveLoad, completed: .none)
-        jobContentLbl.text = dataMaper.content
+//        jobCompanyLbl.attributedText = jobCompanyLbl.makingAttributeMultiple(getText1: "\(dataMaper.jobSector ?? "No Sector") |",
+//            getColor1: .darkGray,
+//            getText2: " \(dataMaper.location ?? "No Address") |",
+//            getColor2: .darkGray,
+//            getText3: "£ \(dataMaper.salary ?? 0) pa",
+//            getColor3: .darkGray)
+//        
+//        jobTitleLbl.text = "\(dataMaper.jobTitle ?? "") for \(dataMaper.jobNature ?? "")"
+//        commentValueLbl.text = "\(dataMaper.commentCount ?? 0)"
+//        likeValueLbl.text = "\(dataMaper.likeCount ?? 0)"
+//        
+//        if dataMaper.isJobLike == 1 {
+//            likeImage.image = #imageLiteral(resourceName: "like_selected")
+//        }
+//        else {
+//            likeImage.image = #imageLiteral(resourceName: "like")
+//        }
+//        if myUserDefaults.userId == dataMaper.userID {
+//            applyBtn.isHidden = true
+//            moreOption.isHidden = false
+//            moreOption.addTarget(self, action: #selector(openMoreOption), for: .touchUpInside)
+//        } else {
+//            applyBtn.isHidden = false
+//            moreOption.isHidden = true
+//            EditDeleteHandler.sharedInstance.hideMenu(xibOnView: editPostView ?? UIView())
+//        }
+//        if dataMaper.isApplied == 1 {
+//            applyBtn.setTitle("Applied!", for: .normal)
+//            applyBtn.isUserInteractionEnabled = false
+//        }else{
+//            applyBtn.setTitle("Apply", for: .normal)
+//            applyBtn.isUserInteractionEnabled = true
+//        }
+//        profileImage.sd_setImage(with: URL(string: dataMaper.jobImage ?? ""), placeholderImage: #imageLiteral(resourceName: "jobLogoPlaceholder"), options: .progressiveLoad, completed: .none)
+//        jobContentLbl.text = dataMaper.content
         
     }
     override func prepareForReuse() {

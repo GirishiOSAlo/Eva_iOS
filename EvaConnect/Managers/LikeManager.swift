@@ -35,69 +35,69 @@ class LikeManager {
             }
            return modelData
         case .event:
-            if modelData[indexAt].isEventLike == nil || modelData[indexAt].isEventLike == 0 {
-                modelData[indexAt].isEventLike = 1
-                if modelData[indexAt].likeCount != 0{
-                    modelData[indexAt].likeCount = 1 + modelData[indexAt].likeCount!
-                }
-                else{
-                    modelData[indexAt].likeCount = 1
-                }
-                modelData[indexAt].isEventLike = 1
-            }
-            else{
-                modelData[indexAt].isEventLike = nil
-                if modelData[indexAt].likeCount != 0 {
-                    modelData[indexAt].likeCount = modelData[indexAt].likeCount! - 1
-                }
-                else{
-                    modelData[indexAt].likeCount = 1
-                }
-            }
+//            if modelData[indexAt].isEventLike == nil || modelData[indexAt].isEventLike == 0 {
+//                modelData[indexAt].isEventLike = 1
+//                if modelData[indexAt].likeCount != 0{
+//                    modelData[indexAt].likeCount = 1 + modelData[indexAt].likeCount!
+//                }
+//                else{
+//                    modelData[indexAt].likeCount = 1
+//                }
+//                modelData[indexAt].isEventLike = 1
+//            }
+//            else{
+//                modelData[indexAt].isEventLike = nil
+//                if modelData[indexAt].likeCount != 0 {
+//                    modelData[indexAt].likeCount = modelData[indexAt].likeCount! - 1
+//                }
+//                else{
+//                    modelData[indexAt].likeCount = 1
+//                }
+//            }
           return  modelData
         case .job:
-            if modelData[indexAt].isJobLike == nil || modelData[indexAt].isJobLike == 0{
-                modelData[indexAt].isJobLike = 1
-                if modelData[indexAt].likeCount != 0{
-                    modelData[indexAt].likeCount = 1 + modelData[indexAt].likeCount!
-                }
-                else{
-                    modelData[indexAt].likeCount = 1
-                }
-                modelData[indexAt].isJobLike = 1
-            }
-            else{
-                modelData[indexAt].isJobLike = nil
-                if modelData[indexAt].likeCount != 0 {
-                    modelData[indexAt].likeCount = modelData[indexAt].likeCount! - 1
-                }
-                else{
-                    modelData[indexAt].likeCount = 1
-                }
-                
-            }
+//            if modelData[indexAt].isJobLike == nil || modelData[indexAt].isJobLike == 0{
+//                modelData[indexAt].isJobLike = 1
+//                if modelData[indexAt].likeCount != 0{
+//                    modelData[indexAt].likeCount = 1 + modelData[indexAt].likeCount!
+//                }
+//                else{
+//                    modelData[indexAt].likeCount = 1
+//                }
+//                modelData[indexAt].isJobLike = 1
+//            }
+//            else{
+//                modelData[indexAt].isJobLike = nil
+//                if modelData[indexAt].likeCount != 0 {
+//                    modelData[indexAt].likeCount = modelData[indexAt].likeCount! - 1
+//                }
+//                else{
+//                    modelData[indexAt].likeCount = 1
+//                }
+//                
+//            }
            return modelData
         default:
-            if modelData[indexAt].isNewsLike == nil || modelData[indexAt].isNewsLike == 0{
-                modelData[indexAt].isNewsLike = 1
-                if modelData[indexAt].likeCount != 0{
-                    modelData[indexAt].likeCount = 1 + modelData[indexAt].likeCount!
-                }
-                else{
-                    modelData[indexAt].likeCount = 1
-                }
-                modelData[indexAt].isEventLike = 1
-            }
-            else{
-                modelData[indexAt].isNewsLike = nil
-                if modelData[indexAt].likeCount != 0 {
-                    modelData[indexAt].likeCount = modelData[indexAt].likeCount! - 1
-                }
-                else{
-                    modelData[indexAt].likeCount = 1
-                }
-                
-            }
+//            if modelData[indexAt].isNewsLike == nil || modelData[indexAt].isNewsLike == 0{
+//                modelData[indexAt].isNewsLike = 1
+//                if modelData[indexAt].likeCount != 0{
+//                    modelData[indexAt].likeCount = 1 + modelData[indexAt].likeCount!
+//                }
+//                else{
+//                    modelData[indexAt].likeCount = 1
+//                }
+//                modelData[indexAt].isEventLike = 1
+//            }
+//            else{
+//                modelData[indexAt].isNewsLike = nil
+//                if modelData[indexAt].likeCount != 0 {
+//                    modelData[indexAt].likeCount = modelData[indexAt].likeCount! - 1
+//                }
+//                else{
+//                    modelData[indexAt].likeCount = 1
+//                }
+//                
+//            }
            return modelData
         }
     }

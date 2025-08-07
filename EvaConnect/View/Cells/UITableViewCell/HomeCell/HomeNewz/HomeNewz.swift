@@ -69,42 +69,41 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
     }
     
     func uiData(dataMaper: DashboardItem) {
-        timeWhenPost.text = dataMaper.createdDatetime
-        newzTitle.text = dataMaper.newsSource?.name
-        newzName.text = dataMaper.newsSource?.name
-        
-        likeCountLbl.text = "\(dataMaper.likeCount ?? 0)"
-        commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
-        shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
-
-        if dataMaper.isNewsLike == 1 {
-            likeImage.image = #imageLiteral(resourceName: "like_selected")
-        } else {
-            likeImage.image = #imageLiteral(resourceName: "Like")
-        }
-        
-        if dataMaper.isNewsSave == 1 {
-            saveNewsImgView.image = #imageLiteral(resourceName: "save_selected")
-        } else {
-            saveNewsImgView.image = #imageLiteral(resourceName: "save")
-        }
-        
-        let htmlString = dataMaper.content
-        let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
-        newzShortDetail.text = cleanString
-        
-        if dataMaper.newsSource?.image != nil {
-            profileImage.sd_setImage(with: URL(string: dataMaper.newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
-        } else {
-            profileImage.image = UIImage(named: "noPhoto")
-        }
-
-        if dataMaper.image != nil {
-            urlImage.sd_setImage(with: URL(string: dataMaper.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
-        } else {
-            urlImage.image = UIImage(named: "noPhoto")
-        }
-        
+//        timeWhenPost.text = dataMaper.createdDatetime
+//        newzTitle.text = dataMaper.newsSource?.name
+//        newzName.text = dataMaper.newsSource?.name
+//        
+//        likeCountLbl.text = "\(dataMaper.likeCount ?? 0)"
+//        commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
+//        shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
+//
+//        if dataMaper.isNewsLike == 1 {
+//            likeImage.image = #imageLiteral(resourceName: "like_selected")
+//        } else {
+//            likeImage.image = #imageLiteral(resourceName: "Like")
+//        }
+//        
+//        if dataMaper.isNewsSave == 1 {
+//            saveNewsImgView.image = #imageLiteral(resourceName: "save_selected")
+//        } else {
+//            saveNewsImgView.image = #imageLiteral(resourceName: "save")
+//        }
+//        
+//        let htmlString = dataMaper.content
+//        let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
+//        newzShortDetail.text = cleanString
+//        
+//        if dataMaper.newsSource?.image != nil {
+//            profileImage.sd_setImage(with: URL(string: dataMaper.newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
+//        } else {
+//            profileImage.image = UIImage(named: "noPhoto")
+//        }
+//
+//        if dataMaper.image != nil {
+//            urlImage.sd_setImage(with: URL(string: dataMaper.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
+//        } else {
+//            urlImage.image = UIImage(named: "noPhoto")
+//        }
     }
     
     func setData(obj: RelatedNewsData) {

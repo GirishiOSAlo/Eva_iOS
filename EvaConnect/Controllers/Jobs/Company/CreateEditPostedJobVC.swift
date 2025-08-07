@@ -538,18 +538,17 @@ extension CreateEditPostedJobVC {
     }
     
     func initUI(job: DashboardItem) {
-//        JobSwitch.curState = job.status == "active" ? .L : .R
-        self.jobStatus = job.status == "active" ? "active" : "pending"
-        enterTitleTF.text = job.jobTitle
-        enterJobSecTF.text = job.jobSector
-        
-        enterLocationTF.text = job.location
-        enterSalaryTF.text = "\(job.salary ?? 0)"
-        enterJobTypeTF.text = job.jobtype?.rawValue
-        self.jobType = job.jobtype?.rawValue ?? ""
-        enterDurationTF.text = "\(job.listingDuration ?? "") Days"
-        self.listingDuration = Int(job.listingDuration ?? "") ?? 0
-        enterDesTextView.text = job.jobDescription
+//        self.jobStatus = job.status == "active" ? "active" : "pending"
+//        enterTitleTF.text = job.jobTitle
+//        enterJobSecTF.text = job.jobSector
+//        
+//        enterLocationTF.text = job.location
+//        enterSalaryTF.text = "\(job.salary ?? 0)"
+//        enterJobTypeTF.text = job.jobtype?.rawValue
+//        self.jobType = job.jobtype?.rawValue ?? ""
+//        enterDurationTF.text = "\(job.listingDuration ?? "") Days"
+//        self.listingDuration = Int(job.listingDuration ?? "") ?? 0
+//        enterDesTextView.text = job.jobDescription
     }
     
     func updateUI(jobDetail: JobDetail) {

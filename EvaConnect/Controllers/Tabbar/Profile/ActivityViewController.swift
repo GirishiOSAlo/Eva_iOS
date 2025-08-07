@@ -145,15 +145,15 @@ extension ActivityViewController {
                 }
 
                 if post.error == false {
-                    if post.data.count > 0 {
-                        self.posts = post.data
+                    if post.data?.count ?? 0 > 0 {
+                        self.posts = post.data ?? []
                         noRecordLbl.isHidden = true
                     } else {
                         noRecordLbl.isHidden = false
                     }
                 } else {
-                    if post.data.count > 0 {
-                        self.posts = post.data
+                    if post.data?.count ?? 0 > 0 {
+                        self.posts = post.data ?? []
                         noRecordLbl.isHidden = true
                     } else {
                         noRecordLbl.isHidden = false
@@ -162,6 +162,9 @@ extension ActivityViewController {
 
             case .failure(let failure):
                 self.presentAlert("Error", nil, failure)
+                
+            default:
+                break
             }
         }
     }
@@ -531,21 +534,7 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
         }
         else {
             let homePost = posts[indexPath.row]
-            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {
-                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
-                cell.detailsView.layer.cornerRadius = 13
-                cell.delegate = self
-                cell.shareBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.likeBtn.tag = indexPath.row
-                cell.reportBtn.isHidden = true
-                cell.uiData(dataMaper: homePost)
-                
-                
-                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                return cell
-                
-            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+            if homePost.postVideo != "" {//Video
                 let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.delegate = self
                 cell.sharedBtn.tag = indexPath.row
@@ -562,10 +551,9 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
                 cell.videoView.isHidden = false
                 cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 
-//                cell.shouldSeeMore = { [weak self] index in self?.shouldSeeMoreLess(index: index) }
                 return cell
-                
-            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+            }
+            else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.delegate = self
                 cell.sharedBtn.tag = indexPath.row
@@ -576,8 +564,8 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
                 
                 cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 return cell
-            } else if homePost.postImage!.count > 0 { //Image Cell
-
+            }
+            else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.delegate = self
                 cell.shareButton.tag = indexPath.row
@@ -588,10 +576,82 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
                 
                 cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 return cell
-            } else {
+            }
+            else {//Text
                 let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+                cell.detailsView.layer.cornerRadius = 13
+                cell.delegate = self
+                cell.shareBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.likeBtn.tag = indexPath.row
+                cell.reportBtn.isHidden = true
+                cell.uiData(dataMaper: homePost)
+
+                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 return cell
             }
+
+//            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {
+//                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.detailsView.layer.cornerRadius = 13
+//                cell.delegate = self
+//                cell.shareBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.likeBtn.tag = indexPath.row
+//                cell.reportBtn.isHidden = true
+//                cell.uiData(dataMaper: homePost)
+//                
+//                
+//                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                return cell
+//                
+//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+//                let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.delegate = self
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.likeBtn.tag = indexPath.row
+//                cell.reportBtn.isHidden = true
+//                cell.uiData(dataMaper: homePost)
+//                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+//                cell.openVideoBtn.tag = indexPath.row
+//                cell.openVideoBtn.isHidden = false
+//                cell.videoView.backgroundColor = .black
+//                cell.videoView.configure(url: homePost.postVideo!,ratio: .resize)
+//                cell.videoView.stop()
+//                cell.videoView.isHidden = false
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                
+////                cell.shouldSeeMore = { [weak self] index in self?.shouldSeeMoreLess(index: index) }
+//                return cell
+//                
+//            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+//                let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.delegate = self
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.likeBtn.tag = indexPath.row
+//                cell.uiData(homePost: homePost)
+//                cell.reportBtn.isHidden = true
+//                
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                return cell
+//            } else if homePost.postImage!.count > 0 { //Image Cell
+//
+//                let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.delegate = self
+//                cell.shareButton.tag = indexPath.row
+//                cell.commentButton.tag = indexPath.row
+//                cell.likeButton.tag = indexPath.row
+//                cell.uiData(dataMaper: homePost)
+//                cell.reportBtn.isHidden = true
+//                
+//                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                return cell
+//            } else {
+//                let cell: HomeText = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+//                return cell
+//            }
         }
     }
     
@@ -639,7 +699,7 @@ extension ActivityViewController: PostActionable {
         case .like:
            self.showActivity()
            let post = posts[sender.tag]
-           likePost(postId: post.id, status: post.status ?? "", action: post.isPostLike == 0 ? "like" : "unlike", at: sender.tag)
+           likePost(postId: post.id ?? 0, status: post.status ?? "", action: post.isPostLike == 0 ? "like" : "unlike", at: sender.tag)
         case .comment:
            goToCommentVC(index: sender.tag)
         case .article:
@@ -654,32 +714,57 @@ extension ActivityViewController: PostActionable {
     private func goToCommentVC(index: Int) {
         
         let homePost = posts[index]
-        
-        if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
-            let vc = StoryboardRouter.textPostDetailVC()
-            vc.postType = .simpleText
-            vc.postId = homePost.id
-            vc.dashboardItem = homePost
-            navigationController?.pushViewController(vc, animated: true)
-        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] {//Video
+        if homePost.postVideo != "" {//Video
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .video
             vc.postId = homePost.id
             vc.dashboardItem = homePost
             navigationController?.pushViewController(vc, animated: true)
-        } else if homePost.postDocument != "" && homePost.postImage == []{ //document Cell
+        } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .article
             vc.postId = homePost.id
             vc.dashboardItem = homePost
             navigationController?.pushViewController(vc, animated: true)
-        } else { // Image Cell
+        } else if homePost.datumPostImage!.count > 0 {//Image
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .image
             vc.postId = homePost.id
             vc.dashboardItem = homePost
             navigationController?.pushViewController(vc, animated: true)
+        } else {//Text
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .simpleText
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            navigationController?.pushViewController(vc, animated: true)
         }
+
+//        if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .simpleText
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] {//Video
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .video
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else if homePost.postDocument != "" && homePost.postImage == []{ //document Cell
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .article
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else { // Image Cell
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .image
+//            vc.postId = homePost.id
+//            vc.dashboardItem = homePost
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
     }
 }
 
@@ -708,7 +793,7 @@ extension ActivityViewController {
             tabBarController?.tabBar.isHidden = true
             let storyboard = UIStoryboard(name: "Home", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
-            vc.objectId = post.id
+            vc.objectId = post.id ?? 0
             vc.type = post.type ?? .post
             vc.modalPresentationStyle = .popover
             self.present(vc, animated: true)
