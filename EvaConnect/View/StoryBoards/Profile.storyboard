@@ -2820,6 +2820,9 @@
                                                         <state key="normal" image="ic_msg">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="sendMsgTapped:" destination="db3-Th-gMW" eventType="touchUpInside" id="kW2-hh-cbP"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IuD-9q-J67">
                                                         <rect key="frame" x="278" y="190" width="40" height="40"/>

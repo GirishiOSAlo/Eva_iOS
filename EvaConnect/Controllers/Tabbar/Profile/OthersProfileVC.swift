@@ -442,15 +442,15 @@ class OthersProfileVC: UIViewController {
         self.connectionSendRequest(receiverID: receiverID, status: 1) //1= pending
     }
     
-//    @IBAction func sendMsgTapped(_ sender: UIButton) {
-//        if isChatEnable {
-//            let chatVC = StoryboardRouter.chat()
-//            chatVC.userId = profileID
-//            navigationController?.pushViewController(chatVC, animated: true)
-//        } else {
-//            self.presentAlert("Alert", "This action has been disabled, Please contact admin.")
-//        }
-//    }
+    @IBAction func sendMsgTapped(_ sender: UIButton) {
+        if isChatEnable {
+            let chatVC = StoryboardRouter.chat()
+            chatVC.userId = profileID
+            navigationController?.pushViewController(chatVC, animated: true)
+        } else {
+            self.presentAlert("Alert", "This action has been disabled, Please contact admin.")
+        }
+    }
     
 //    @IBAction func sendMsgPendTapped(_ sender: UIButton) {
 //        if isChatEnable {
