@@ -270,10 +270,11 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.dashboardPostList {
-            
             if homePost.postVideo != "" {
                 print("Video")
-                totalHeight = totalHeight + 450
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 64.0)
+                let height = lblHeight + 356.0
+                totalHeight = totalHeight + height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
                 print("Document")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
@@ -1252,7 +1253,9 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
             let homePost = self.dashboardPostList[indexPath.row]
             if homePost.postVideo != "" {
                 print("Video")
-                return 450
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 64.0)
+                let height = lblHeight + 356.0
+                return height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
                 print("Document")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)

@@ -63,14 +63,14 @@ class HomeVideo: BaseCellClass {
         commentValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         shareValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         
+        mainView.layer.cornerRadius = 20.0
+        //mainView.dropShadow()
         followBtn.layer.cornerRadius = 12
         followBtn.layer.borderWidth = 1
         followBtn.layer.borderColor = UIColor(hex: "#4D76CD").cgColor
         boderView.makeRoundView(boderColor: Constants.AppColorLiteral.loginByNew, boderValue: 2.0)
         makeImageRound(view: profileImage)
         isConnectedBtn.makeRoundView(boderColor: Constants.AppColorLiteral.signUpNew ,boderValue: 1.0)
-        mainView.layer.cornerRadius = 20.0
-//        mainView.dropShadow()
     }
     
     func uiData(dataMaper: DashboardItem) {
