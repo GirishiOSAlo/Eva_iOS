@@ -136,8 +136,14 @@ class HomeUrl: BaseCellClass {
             self.likeImage.image = UIImage(named: "ic_like")
         }
         
-        documentName.text = dataMaper.documentFileName ?? "No Name"
-        documentSizeLbl.text = "\(dataMaper.documentSize ?? "")kB"
+        let docName = dataMaper.postDocument ?? ""
+        if docName == "" {
+            documentName.text = "No Name"
+        } else {
+            documentName.text = dataMaper.postDocument
+        }
+        //documentName.text = dataMaper.postDocument ?? "No Name"
+        documentSizeLbl.text = "\(dataMaper.documentSize ?? "0") kB"
         
         actualString = dataMaper.content ?? ""
         configure(with: actualString)
