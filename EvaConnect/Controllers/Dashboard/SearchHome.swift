@@ -373,7 +373,7 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
                     cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                     cell.openVideoBtn.tag = indexPath.row
                     cell.videoView.backgroundColor = .black
-                    cell.videoView.configure(url: bindModelData.postVideo!,ratio: .resizeAspect)
+                    cell.videoView.configure(url: bindModelData.postVideo ?? "",ratio: .resizeAspect)
                     cell.videoView.stop()
                     //cell.videoView.addSubview(cell.openVideoBtn)
                     cell.videoView.isHidden = false

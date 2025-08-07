@@ -221,7 +221,7 @@ class HomeVC: BaseVC {
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.posts {
-            if homePost.postVideo != "" {
+            if homePost.postVideo != "" && homePost.postVideo != nil {
                 print("Video")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
@@ -597,7 +597,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             switch selectedTab {
             case .posts:
                 let homePost = posts[indexPath.row]
-                if homePost.postVideo != "" {
+                if homePost.postVideo != "" && homePost.postVideo != nil {
                     print("Video")
                     let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                     let height = lblHeight + 356.0
@@ -725,7 +725,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 let homePost = posts[indexPath.row]
                 let homePostUserId = homePost.user?.id ?? 0
                 
-                if homePost.postVideo != "" {
+                if homePost.postVideo != "" && homePost.postVideo != nil {
                     print("Video")
                     let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.delegate = self
@@ -744,7 +744,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                     cell.openVideoBtn.tag = indexPath.row
                     cell.videoView.backgroundColor = .black
-                    cell.videoView.configure(url: homePost.postVideo!,ratio: .resizeAspectFill)
+                    cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
                     cell.videoView.stop()
                     cell.videoView.isHidden = false
                     return cell
@@ -2326,7 +2326,7 @@ extension HomeVC: PostActionable {
     private func goToCommentVC(index: Int) {
         IQKeyboardManager.shared.isEnabled = false
         let homePost = posts[index]
-        if homePost.postVideo != "" {//Video
+        if homePost.postVideo != "" && homePost.postVideo != nil {//Video
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .video
             vc.postId = homePost.id

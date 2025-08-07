@@ -81,7 +81,6 @@ class OthersProfileVC: UIViewController {
     let pageSize = 10
     var isFollowed = false
     var status = ""
-    var articleContent: String?
     var isChatEnable = true
     var eventID = 0
     var userDetails: UserDetailsData?
@@ -357,7 +356,7 @@ class OthersProfileVC: UIViewController {
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.posts {
-            if homePost.postVideo != "" {//Video
+            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
                 totalHeight = totalHeight + height
@@ -941,17 +940,27 @@ extension OthersProfileVC {
         }
     }
     
-    @objc func openDoc(_ sender: UIButton) {
-        let obj = posts[sender.tag]
-        articleContent = obj.postDocument ?? ""
-        openArticle(doc: articleContent)
+    @objc func openDoc(_ sender: UIButton) {        
+        let articleContent = posts[sender.tag].postDocuments?[0] ?? ""
+        self.openSafari(strURL: articleContent)
+        //self.openArticle(strURL: articleContent)
     }
     
-    @objc func openArticle(doc: String?) {
-        if let urlString = doc, let url = URL(string: urlString) {
-            let webVC = WebVC(url: url)
-            present(webVC, animated: true, completion: nil)
+    func openSafari(strURL: String) {
+        let deocURl = URL(string: strURL)
+        if let url = deocURl {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    @objc func openArticle(strURL: String) {
+//        if let urlString = strURL, let url = URL(string: urlString) {
+//            let webVC = WebVC(url: url)
+//            present(webVC, animated: true, completion: nil)
+//        }
+        let docVC = DocumentVC.instantiate()
+        docVC.documentURL = URL(string: strURL)
+        navigationController?.pushViewController(docVC, animated: true)
     }
     
     @objc func reportBtnTapped(_ sender: UIButton) {
@@ -994,7 +1003,7 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
             let homePost = posts[indexPath.row]
             let Row = indexPath.row
 
-            if homePost.postVideo != "" {//Video
+            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
                 let cell: HomeVideo = postTableView.dequeueReusableCell(forIndexPath: indexPath)
                 
                 cell.uiData(dataMaper: homePost)
@@ -1005,7 +1014,7 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
                 cell.openVideoBtn.tag = Row
                 cell.reportBtn.tag = Row
                 cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: homePost.postVideo!,ratio: .resize)
+                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resize)
                 cell.videoView.stop()
                 
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
@@ -1159,7 +1168,7 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let homePost = self.posts[indexPath.row]
-        if homePost.postVideo != "" {
+        if homePost.postVideo != "" && homePost.postVideo != nil {
             print("Video")
             let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
             let height = lblHeight + 356.0

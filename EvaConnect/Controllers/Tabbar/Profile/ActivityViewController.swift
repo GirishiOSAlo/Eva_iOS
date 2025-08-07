@@ -401,7 +401,7 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
                 cell.textView.isHidden = true
                 
                 cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: obj.postVideo!,ratio: .resize)
+                cell.videoView.configure(url: obj.postVideo ?? "",ratio: .resize)
                 cell.videoView.stop()
                 
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
@@ -534,7 +534,7 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
         }
         else {
             let homePost = posts[indexPath.row]
-            if homePost.postVideo != "" {//Video
+            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
                 let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 cell.delegate = self
                 cell.sharedBtn.tag = indexPath.row
@@ -546,7 +546,7 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
                 cell.openVideoBtn.tag = indexPath.row
                 cell.openVideoBtn.isHidden = false
                 cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: homePost.postVideo!,ratio: .resize)
+                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resize)
                 cell.videoView.stop()
                 cell.videoView.isHidden = false
                 cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
@@ -714,7 +714,7 @@ extension ActivityViewController: PostActionable {
     private func goToCommentVC(index: Int) {
         
         let homePost = posts[index]
-        if homePost.postVideo != "" {//Video
+        if homePost.postVideo != "" && homePost.postVideo != nil {//Video
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .video
             vc.postId = homePost.id

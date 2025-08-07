@@ -246,41 +246,72 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
     
     private func goToCommentVC(index: Int) {
         let homePost = dashboardPostList[index]
-        if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
-            let vc = StoryboardRouter.textPostDetailVC()
-            vc.postType = .simpleText
-            vc.postId = homePost.id
-            //vc.dashboardItem = homePost
-            //vc.delegate = self
-            navigationController?.pushViewController(vc, animated: true)
-        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] {//Video
+        
+        if homePost.postVideo != "" && homePost.postVideo != nil {//Video
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .video
             vc.postId = homePost.id
             //vc.dashboardItem = homePost
             //vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
-        } else if homePost.postDocument != "" && homePost.datumPostImage == []{ //document Cell
+        } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .article
             vc.postId = homePost.id
             //vc.dashboardItem = homePost
             //vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
-        } else { // Image Cell
+        } else if homePost.datumPostImage!.count > 0 {//Image
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .image
             vc.postId = homePost.id
             //vc.dashboardItem = homePost
             //vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
+        } else {//Text
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .simpleText
+            vc.postId = homePost.id
+            //vc.dashboardItem = homePost
+            //vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
         }
+        
+//        if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .simpleText
+//            vc.postId = homePost.id
+//            //vc.dashboardItem = homePost
+//            //vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] {//Video
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .video
+//            vc.postId = homePost.id
+//            //vc.dashboardItem = homePost
+//            //vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else if homePost.postDocument != "" && homePost.datumPostImage == []{ //document Cell
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .article
+//            vc.postId = homePost.id
+//            //vc.dashboardItem = homePost
+//            //vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        } else { // Image Cell
+//            let vc = StoryboardRouter.textPostDetailVC()
+//            vc.postType = .image
+//            vc.postId = homePost.id
+//            //vc.dashboardItem = homePost
+//            //vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
     }
     
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.dashboardPostList {
-            if homePost.postVideo != "" {
+            if homePost.postVideo != "" && homePost.postVideo != nil {
                 print("Video")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
@@ -1023,7 +1054,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
         case self.postTableVw:
             let homePost = self.dashboardPostList[indexPath.row]
             
-            if homePost.postVideo != "" {
+            if homePost.postVideo != "" && homePost.postVideo != nil {
                 print("Video")
                 let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.setData(dataMaper: homePost)
@@ -1222,31 +1253,58 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
         switch tableView {
         case self.postTableVw:
             let homePost = self.dashboardPostList[indexPath.row]
-            if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
-                let vc = StoryboardRouter.textPostDetailVC()
-                vc.postType = .simpleText
-                vc.postId = homePost.id
-//                vc.delegate = self
-                navigationController?.pushViewController(vc, animated: true)
-            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] {//Video
+            
+            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
                 let vc = StoryboardRouter.textPostDetailVC()
                 vc.postType = .video
                 vc.postId = homePost.id
 //                vc.delegate = self
                 navigationController?.pushViewController(vc, animated: true)
-            } else if homePost.postDocument != "" && homePost.datumPostImage == []{ //document Cell
+            } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let vc = StoryboardRouter.textPostDetailVC()
                 vc.postType = .article
                 vc.postId = homePost.id
 //                vc.delegate = self
                 navigationController?.pushViewController(vc, animated: true)
-            } else { // Image Cell
+            } else if homePost.datumPostImage!.count > 0 {//Image
                 let vc = StoryboardRouter.textPostDetailVC()
                 vc.postType = .image
                 vc.postId = homePost.id
 //                vc.delegate = self
                 navigationController?.pushViewController(vc, animated: true)
+            } else {//Text
+                let vc = StoryboardRouter.textPostDetailVC()
+                vc.postType = .simpleText
+                vc.postId = homePost.id
+//                vc.delegate = self
+                navigationController?.pushViewController(vc, animated: true)
             }
+            
+//            if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // && post.postDocument == nil
+//                let vc = StoryboardRouter.textPostDetailVC()
+//                vc.postType = .simpleText
+//                vc.postId = homePost.id
+////                vc.delegate = self
+//                navigationController?.pushViewController(vc, animated: true)
+//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] {//Video
+//                let vc = StoryboardRouter.textPostDetailVC()
+//                vc.postType = .video
+//                vc.postId = homePost.id
+////                vc.delegate = self
+//                navigationController?.pushViewController(vc, animated: true)
+//            } else if homePost.postDocument != "" && homePost.datumPostImage == []{ //document Cell
+//                let vc = StoryboardRouter.textPostDetailVC()
+//                vc.postType = .article
+//                vc.postId = homePost.id
+////                vc.delegate = self
+//                navigationController?.pushViewController(vc, animated: true)
+//            } else { // Image Cell
+//                let vc = StoryboardRouter.textPostDetailVC()
+//                vc.postType = .image
+//                vc.postId = homePost.id
+////                vc.delegate = self
+//                navigationController?.pushViewController(vc, animated: true)
+//            }
             break
             
         case self.newsTableVw:

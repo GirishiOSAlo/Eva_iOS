@@ -319,7 +319,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                             cell.reportBtn.isHidden = true
                             cell.uiData(dataMaper: post)
                             cell.videoView.backgroundColor = .black
-                            cell.videoView.configure(url: post.postVideo!,ratio: .resize)
+                            cell.videoView.configure(url: post.postVideo ?? "",ratio: .resize)
                             cell.videoView.stop()
                             cell.videoView.isHidden = false
                             cell.likeShareUiView.isHidden = true
@@ -404,7 +404,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                         cell.uiData(dataMaper: post)
                         
                         cell.videoView.backgroundColor = .black
-                        cell.videoView.configure(url: post.postVideo!,ratio: .resize)
+                        cell.videoView.configure(url: post.postVideo ?? "",ratio: .resize)
                         cell.videoView.stop()
                         cell.likeShareUiView.isHidden = true
                         cell.videoView.isHidden = false
@@ -484,7 +484,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                     cell.uiData(dataMaper: post)
                     
                     cell.videoView.backgroundColor = .black
-                    cell.videoView.configure(url: post.postVideo!,ratio: .resize)
+                    cell.videoView.configure(url: post.postVideo ?? "",ratio: .resize)
                     cell.videoView.stop()
                     cell.likeShareUiView.isHidden = true
                     cell.videoView.isHidden = false

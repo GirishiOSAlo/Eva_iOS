@@ -68,7 +68,6 @@ class UserProfileVC: BaseVC {
     
     let likeManager = LikeManager()
     var selectedTab: HomeTabs = .posts
-    var articleContent: String?
     
     var posts: [DashboardItem] = [] {
         didSet {
@@ -142,7 +141,7 @@ class UserProfileVC: BaseVC {
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.posts {
-            if homePost.postVideo != "" {
+            if homePost.postVideo != "" && homePost.postVideo != nil {
                 print("Video")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
@@ -932,8 +931,9 @@ extension UserProfileVC: PostActionable, CollectionViewCellDelegate {
          case .comment:
             goToCommentVC(index: sender.tag)
          case .article:
-            articleContent = posts[sender.tag].postDocument
-            openArticle()
+            let articleContent = posts[sender.tag].postDocuments?[0] ?? ""
+            self.openSafari(strURL: articleContent)
+            //self.openArticle(strURL: articleContent)
          case .edit:
             openEditPost(sender)
             
@@ -987,7 +987,7 @@ extension UserProfileVC {
 //        updateSpecificPost = homePost.id
 //        let link = homePost.content?.link
         
-        if homePost.postVideo != "" {//Video
+        if homePost.postVideo != "" && homePost.postVideo != nil {//Video
             let vc = StoryboardRouter.textPostDetailVC()
             vc.postType = .video
             vc.postId = homePost.id
@@ -1048,11 +1048,21 @@ extension UserProfileVC {
 //        }
     }
     
-    func openArticle() {
-        if let urlString = articleContent, let url = URL(string: urlString) {
-            let webVC = WebVC(url: url)
-            present(webVC, animated: true, completion: nil)
+    func openSafari(strURL: String) {
+        let deocURl = URL(string: strURL)
+        if let url = deocURl {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    @objc func openArticle(strURL: String) {
+//        if let urlString = strURL, let url = URL(string: urlString) {
+//            let webVC = WebVC(url: url)
+//            present(webVC, animated: true, completion: nil)
+//        }
+        let docVC = DocumentVC.instantiate()
+        docVC.documentURL = URL(string: strURL)
+        navigationController?.pushViewController(docVC, animated: true)
     }
     
     func openEditPost(_ sender: UIButton) {
@@ -1288,7 +1298,7 @@ extension UserProfileVC: UITableViewDataSource {
                 cell.textView.isHidden = true
                 
                 cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: obj.postVideo!,ratio: .resize)
+                cell.videoView.configure(url: obj.postVideo ?? "",ratio: .resize)
                 cell.videoView.stop()
                 
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
@@ -1407,7 +1417,7 @@ extension UserProfileVC: UITableViewDataSource {
         else {
             let homePost = posts[indexPath.row]
             
-            if homePost.postVideo != "" {//Video
+            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
                 let cell: HomeVideo = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
                 
                 cell.delegate = self
@@ -1424,7 +1434,7 @@ extension UserProfileVC: UITableViewDataSource {
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                 cell.openVideoBtn.tag = indexPath.row
                 cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: homePost.postVideo!,ratio: .resizeAspectFill)
+                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
                 cell.videoView.stop()
                 cell.videoView.isHidden = false
 
@@ -1728,7 +1738,7 @@ extension UserProfileVC: UITableViewDataSource {
             return UITableView.automaticDimension
         } else {
             let homePost = self.posts[indexPath.row]
-            if homePost.postVideo != "" {
+            if homePost.postVideo != "" && homePost.postVideo != nil {
                 print("Video")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0

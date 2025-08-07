@@ -223,7 +223,7 @@ extension OtherCommentVC {
             doubleClickLike.isHidden = true
             //PostImage.isHidden = true
             
-            self.videoView.configure(url: post.postVideo!,ratio: .resize)
+            self.videoView.configure(url: post.postVideo ?? "",ratio: .resize)
             self.videoView.isLoop = true
             self.videoView.stop()
             openVideoBtn.isHidden = false
