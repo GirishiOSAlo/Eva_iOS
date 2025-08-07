@@ -272,7 +272,7 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
         for homePost in self.dashboardPostList {
             if homePost.postVideo != "" {
                 print("Video")
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 64.0)
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
                 totalHeight = totalHeight + height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
@@ -282,7 +282,9 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
                 totalHeight = totalHeight + height
             } else if homePost.datumPostImage!.count > 0 {
                 print("Images")
-                totalHeight = totalHeight + 450
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 416.0
+                totalHeight = totalHeight + height
             } else {
                 print("Text")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
@@ -1253,7 +1255,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
             let homePost = self.dashboardPostList[indexPath.row]
             if homePost.postVideo != "" {
                 print("Video")
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 64.0)
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
                 return height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
@@ -1263,7 +1265,9 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 return height
             } else if homePost.datumPostImage!.count > 0 {
                 print("Images")
-                return 450
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 416.0
+                return height
             } else {
                 print("Text")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
