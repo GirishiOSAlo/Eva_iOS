@@ -65,7 +65,6 @@ class HomePageVC: UIViewController {
     var objectId = 0
     var type : TypePostEnum = .news
     let refreshControl = UIRefreshControl()
-    var articleContent: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,8 +213,9 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
             goToCommentVC(index: sender.tag)
          case .article:
             print("Dashboard Post Article")
-            articleContent = dashboardPostList[sender.tag].postDocuments?[0]
-            openArticle()
+            let articleContent = dashboardPostList[sender.tag].postDocuments?[0] ?? ""
+            self.openSafari(strURL: articleContent)
+            //self.openArticle(strURL: articleContent)
          case .edit:
             print("Dashboard Post Edit")
 //            openEditPost(sender)
@@ -223,15 +223,25 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
             print("Dashboard Post Delete")
          default:
             print("Dashboard Post share")
-//             shareItemIndex = sender.tag
+             //shareItemIndex = sender.tag
          }
     }
     
-    @objc func openArticle() {
-        if let urlString = articleContent, let url = URL(string: urlString) {
-            let webVC = WebVC(url: url)
-            present(webVC, animated: true, completion: nil)
+    func openSafari(strURL: String) {
+        let deocURl = URL(string: strURL)
+        if let url = deocURl {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    @objc func openArticle(strURL: String) {
+//        if let urlString = strURL, let url = URL(string: urlString) {
+//            let webVC = WebVC(url: url)
+//            present(webVC, animated: true, completion: nil)
+//        }
+        let docVC = DocumentVC.instantiate()
+        docVC.documentURL = URL(string: strURL)
+        navigationController?.pushViewController(docVC, animated: true)
     }
     
     private func goToCommentVC(index: Int) {

@@ -498,6 +498,8 @@
 		A64394CF2E1CF421006EE7F4 /* FollowersCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394CD2E1CF421006EE7F4 /* FollowersCVC.swift */; };
 		A64394D02E1CF421006EE7F4 /* FollowersCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64394CE2E1CF421006EE7F4 /* FollowersCVC.xib */; };
 		A64394D22E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64394D12E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift */; };
+		A64511902E44678900DCEF25 /* DocumentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A645118E2E44678900DCEF25 /* DocumentVC.swift */; };
+		A64511912E44678900DCEF25 /* DocumentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A645118F2E44678900DCEF25 /* DocumentVC.xib */; };
 		A64C49802E1BD24000F9D3F9 /* HelpDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */; };
 		A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */; };
 		A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */; };
@@ -1121,6 +1123,8 @@
 		A64394CD2E1CF421006EE7F4 /* FollowersCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCVC.swift; sourceTree = "<group>"; };
 		A64394CE2E1CF421006EE7F4 /* FollowersCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowersCVC.xib; sourceTree = "<group>"; };
 		A64394D12E1D2F6C006EE7F4 /* AcceptRejectDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptRejectDataModel.swift; sourceTree = "<group>"; };
+		A645118E2E44678900DCEF25 /* DocumentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentVC.swift; sourceTree = "<group>"; };
+		A645118F2E44678900DCEF25 /* DocumentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentVC.xib; sourceTree = "<group>"; };
 		A64C497F2E1BD24000F9D3F9 /* HelpDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDataModel.swift; sourceTree = "<group>"; };
 		A64C49862E1BFADE00F9D3F9 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A64C49872E1BFADE00F9D3F9 /* ConnectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionViewController.xib; sourceTree = "<group>"; };
@@ -2646,6 +2650,7 @@
 		500A54342473F72A00095324 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A645118D2E44675F00DCEF25 /* DocumentVw */,
 				A69BD53B2E3207D200426C06 /* MeetingList */,
 				A6508FBA2E2E3871007587C3 /* Report */,
 				A64C49812E1BFA7900F9D3F9 /* Connections */,
@@ -3420,6 +3425,15 @@
 			path = FollowersCVC;
 			sourceTree = "<group>";
 		};
+		A645118D2E44675F00DCEF25 /* DocumentVw */ = {
+			isa = PBXGroup;
+			children = (
+				A645118E2E44678900DCEF25 /* DocumentVC.swift */,
+				A645118F2E44678900DCEF25 /* DocumentVC.xib */,
+			);
+			path = DocumentVw;
+			sourceTree = "<group>";
+		};
 		A64C49812E1BFA7900F9D3F9 /* Connections */ = {
 			isa = PBXGroup;
 			children = (
@@ -3903,6 +3917,7 @@
 				500A54282473EE2200095324 /* Settings.storyboard in Resources */,
 				485FC1802DD3793C00AA05A4 /* DelegatesVC.xib in Resources */,
 				A6508FC52E2E3BAA007587C3 /* ReportCVC.xib in Resources */,
+				A64511912E44678900DCEF25 /* DocumentVC.xib in Resources */,
 				5073A849248143CD008F2E7D /* HomeVideo.xib in Resources */,
 				48A4215E2AAB51D000A8D37C /* DashboardTabbarVC.xib in Resources */,
 				485FC1AB2DDDB33D00AA05A4 /* NetworkingEventsVC.xib in Resources */,
@@ -4145,6 +4160,7 @@
 				48BC63F52DCB74AC002BA644 /* CollectionViewCell.swift in Sources */,
 				50E2298324AC6E3C0041F472 /* URL.swift in Sources */,
 				A63714482E212BA100C6B3E8 /* MeetingListDataModel.swift in Sources */,
+				A64511902E44678900DCEF25 /* DocumentVC.swift in Sources */,
 				25147C3827857C5E00FCBC67 /* PostContent.swift in Sources */,
 				48BD862B2B1EF5040026C0B2 /* FTConstants.swift in Sources */,
 				489CB3C72DCBA2A500A0C77B /* UploadCVVC.swift in Sources */,
