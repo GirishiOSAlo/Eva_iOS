@@ -69,6 +69,18 @@ class HomeVC: BaseVC {
         }
     }
     
+    var allEventList: [EventListData] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
+    var upcomingEventList: [EventListData] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     var paginatedPosts: [DashboardItem] = []
     
     var data: [DashboardItem] = []
@@ -185,15 +197,17 @@ class HomeVC: BaseVC {
             if self.selectedHomeFilter == .new {
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "All Event"
+                self.fetchAllEventData()
             } else if self.selectedHomeFilter == .going {
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "Upcoming Event"
+                self.fetchUpcomingEventData()
             } else {
                 self.currentEventLblHeight.constant = 0
                 self.allEventLblHeight.constant = 0
                 self.currentEventListHeight.constant = 0
             }
-            self.getPosts(offSet: 1, inserted: false)
+            //self.getPosts(offSet: 1, inserted: false)
         }
         else {
             height = 32
@@ -275,6 +289,64 @@ class HomeVC: BaseVC {
                         self.currentEventListHeight.constant = CGFloat(self.currentEventList.count * 440)
                     } else {
                         self.currentEventListHeight.constant = 0
+                    }
+                } else {
+                    self.presentAlert("Failure", currentEventRoot.message, nil)
+                }
+            } catch {
+                self.offsetCount -= 1
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func fetchAllEventData() {
+        let parameters = [
+            "filter": "all_posts",
+        ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(EndPoints.homeFilterEvents,method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
+                self.filterCollectionView.isUserInteractionEnabled = true
+                if !(currentEventRoot.error ?? false) {
+                    if (currentEventRoot.data?.count ?? 0) > 0 {
+                        self.allEventList = currentEventRoot.data ?? []
+                        self.tableViewHeightConst.constant = CGFloat(self.allEventList.count * 440)
+                    } else {
+                        self.tableViewHeightConst.constant = 0
+                    }
+                } else {
+                    self.presentAlert("Failure", currentEventRoot.message, nil)
+                }
+            } catch {
+                self.offsetCount -= 1
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func fetchUpcomingEventData() {
+        let parameters = [
+            "filter": "upcoming",
+        ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(EndPoints.homeFilterEvents,method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
+                self.filterCollectionView.isUserInteractionEnabled = true
+                if !(currentEventRoot.error ?? false) {
+                    if (currentEventRoot.data?.count ?? 0) > 0 {
+                        self.upcomingEventList = currentEventRoot.data ?? []
+                        self.tableViewHeightConst.constant = CGFloat(self.upcomingEventList.count * 440)
+                    } else {
+                        self.tableViewHeightConst.constant = 0
                     }
                 } else {
                     self.presentAlert("Failure", currentEventRoot.message, nil)
@@ -682,7 +754,16 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         case self.tableView:
             if selectedTab == .jobs {
                 return self.jobList.count
-            } else {
+            }
+            else if selectedTab == .events {
+                if self.selectedHomeFilter == .new {
+                    return self.allEventList.count
+                }
+                else {
+                    return self.upcomingEventList.count
+                }
+            }
+            else {
                 return posts.count
             }
         default:
@@ -910,12 +991,41 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //                    return cell
 //                }
             case .events:
-                let event = posts[indexPath.row]
                 let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.uiData(dataMaper: event)
-                cell.dashboardItem = event
-                cell.delegate = self
-                cell.eventDelegate = self
+                if self.selectedHomeFilter == .new {
+                    let event = allEventList[indexPath.row]
+                    cell.uiData(event: event)
+                    cell.delegate = self
+                    cell.eventDelegate = self
+                    cell.navigateToDetail.tag = indexPath.row
+                    cell.saveEventBtn.tag = indexPath.row
+                    cell.viewDetailsBtn.tag = indexPath.row
+                    self.objectId = event.id ?? 0
+                    self.type = .event
+                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+
+                }
+                else {
+                    let event = upcomingEventList[indexPath.row]
+                    cell.uiData(event: event)
+                    cell.delegate = self
+                    cell.eventDelegate = self
+                    cell.navigateToDetail.tag = indexPath.row
+                    cell.saveEventBtn.tag = indexPath.row
+                    cell.viewDetailsBtn.tag = indexPath.row
+                    self.objectId = event.id ?? 0
+                    self.type = .event
+                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+                }
+//                let event = posts[indexPath.row]
+//                cell.uiData(dataMaper: event)
+//                cell.dashboardItem = event
+//                cell.delegate = self
+//                cell.eventDelegate = self
 //                cell.interrestedBtn.tag = indexPath.row
                 //            if LoggedUserDetails.shared.user!.id != event.user!.id {
                 //                cell.attendingBtn.isHidden = false
@@ -934,13 +1044,13 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //                cell.indivisualUserView.isHidden = false
 //                
 //                cell.sharedBtn.tag = indexPath.row
-                cell.navigateToDetail.tag = indexPath.row
-                cell.saveEventBtn.tag = indexPath.row
-                cell.viewDetailsBtn.tag = indexPath.row
-                self.objectId = event.id ?? 0
-                self.type = .event
-                
-                
+//                cell.navigateToDetail.tag = indexPath.row
+//                cell.saveEventBtn.tag = indexPath.row
+//                cell.viewDetailsBtn.tag = indexPath.row
+//                self.objectId = event.id ?? 0
+//                self.type = .event
+//                
+//                
 //                let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
 //                if eventAttendeesStatus == "accepted" {
 //                    cell.requestJoinBtn.setTitle("View details", for: .normal)
@@ -956,9 +1066,9 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //                }
                 
 //                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-                cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+//                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+//                cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
                 //            cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
                 
                 //            cell.intrestedTapped = { [weak self] dashboardItem in

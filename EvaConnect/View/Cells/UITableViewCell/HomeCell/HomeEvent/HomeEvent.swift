@@ -101,6 +101,35 @@ class HomeEvent: BaseCellClass {
 //        }
     }
     
+    func uiData(event: EventListData){
+        if let imageUrl = event.tempImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            self.imgVW.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
+        } else {
+            self.imgVW.image = UIImage(named: "eventPlaceholder")
+        }
+        
+        self.titleLbl.text = event.name ?? ""
+        self.dateLbl.text = "\(event.startDate ?? "") - \(event.endDate ?? "")"
+        self.locationLbl.text = "\(event.address ?? ""), \(event.city ?? ""), \(event.country ?? "")"
+        
+        self.timeLbl.text = "\(event.startTime ?? "") - \(event.endTime ?? "")"
+        
+        if event.isNewsSave == 1 {
+            self.saveImgVw.image = UIImage(named: "save_selected")
+        } else {
+            self.saveImgVw.image = UIImage(named: "save")
+        }
+        
+        if event.isPrivate == 1 {
+            self.privateBtn.isHidden = false
+        } else {
+            self.privateBtn.isHidden = true
+        }
+    }
+    
     func uiData(dataMaper: SearchEvent){
         self.titleLbl.text = dataMaper.name
         self.locationLbl.text = dataMaper.createdDate
