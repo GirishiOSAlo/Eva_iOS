@@ -771,7 +771,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             } else { return 0 }
             
         case self.postListTblVw:
-            if selectedTab == .posts && selectedTab == .news {
+            if selectedTab == .posts || selectedTab == .news {
                 return posts.count
             } else { return 0 }
             
@@ -922,9 +922,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
                 
                 return cell
-            } else {
-                return UITableViewCell()
             }
+            return UITableViewCell()
             
         case self.tableView:
             
@@ -1570,7 +1569,7 @@ private extension HomeVC {
 //                        let lines = CGFloat(post.content?.calculateMaxLines(width: self.view.frame.width - 10) ?? 1)
 //                        self.postSeeMore[index] = self.postSeeMore[index] == nil ? (lines: lines, enabled: false) : self.postSeeMore[index]
 //                    }
-                    self.tableView.reloadData()
+                    self.postListTblVw.reloadData()
                     if selectedTab == .news {
                         self.postListTblVwHeight.constant = CGFloat(self.allEventList.count * 430)
                     } else if selectedTab == .posts {

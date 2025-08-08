@@ -1290,7 +1290,7 @@ extension SearchHome {
         
         if dashBoardModelArray.count != 0 {
             let  bindData = dashBoardModelArray[sender.tag]
-            if bindData.isConnected! == "pending" && bindData.isReceiver == "true" {
+            if bindData.isConnected! == "pending" && bindData.isReceiver == true {
                 if sender.titleLabel!.text == "Accept" {
                     updateConnection(otherID: bindData.connectionID!)
                 }

@@ -167,7 +167,7 @@ struct DashboardItem: Codable {
     var isPostLike, isPostdisLike: Int?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: String?
+    let isReceiver: Bool?
     let content: String?
     var postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?

@@ -170,15 +170,15 @@ extension ProfileVC {
                 connectBtn.setTitle("Connect", for: .normal)
                 connectBtn.addTarget(self, action:#selector(createConnection(sender:)), for: .touchUpInside)
             }
-            else if bindData.isConnected == "pending" && bindData.isReceiver == "false" {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == false {
                 connectBtn.setTitle("Pending", for: .normal)
                 connectBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == "pending" && bindData.isReceiver == "false" {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == false {
                 connectBtn.setTitle("Pending", for: .normal)
                 connectBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == "pending" && bindData.isReceiver == "true" {
+            else if bindData.isConnected == "pending" && bindData.isReceiver == true {
                 connectBtn.setTitle("Accept", for: .normal)
                 connectBtn.isUserInteractionEnabled = true
                 connectBtn.addTarget(self, action:#selector(updateConnection(sender:)), for: .touchUpInside)
@@ -212,7 +212,7 @@ extension ProfileVC {
     @objc func updateConnection(sender: UIButton) {
 
         let bindData = connectionDetail
-        if bindData!.isConnected == "pending" && bindData!.isReceiver == "true" {
+        if bindData!.isConnected == "pending" && bindData!.isReceiver == true {
             //Working
             updateConnection(id: bindData!.connectionID!)
             sender.isUserInteractionEnabled = true
