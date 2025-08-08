@@ -39,6 +39,8 @@ class HomeVC: BaseVC {
     @IBOutlet weak var searchTxtField: UITextField!
     @IBOutlet weak var searchHeightConst: NSLayoutConstraint!
     
+    @IBOutlet weak var jobListTblVw: UITableView!
+    @IBOutlet weak var jobListTblVwHeight: NSLayoutConstraint!
     
     @IBOutlet weak var currentEventLbl: UILabel!
     @IBOutlet weak var currentEventLblHeight: NSLayoutConstraint!
@@ -59,7 +61,7 @@ class HomeVC: BaseVC {
     }
     var jobList: [DashboardJob] = [] {
         didSet {
-            self.tableView.reloadData()
+            self.jobListTblVw.reloadData()
         }
     }
     
@@ -152,16 +154,16 @@ class HomeVC: BaseVC {
         //getPosts(offSet: 0)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.posts = []
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        self.posts = []
+//    }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if(keyPath == "contentSize"){
-            self.tableViewHeightConst.constant = self.tableView.contentSize.height == 0 ? 100 : self.tableView.contentSize.height
-        }
-    }
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        if(keyPath == "contentSize"){
+//            self.tableViewHeightConst.constant = self.tableView.contentSize.height == 0 ? 1 : self.tableView.contentSize.height
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -177,17 +179,16 @@ class HomeVC: BaseVC {
         self.currentEventLblHeight.constant = 0
         self.allEventLblHeight.constant = 0
         self.currentEventListHeight.constant = 0
+        self.tableViewHeightConst.constant = 0
+        self.jobListTblVwHeight.constant = 0
         self.emptyListMessageLbl.text = ""
+        
         if selectedTab == .jobs {
             homeTabFilter = HomeTabFilter.job
             height = 32
             searchHeight = 40
-            //selectedHomeFilter = .all
+            selectedHomeFilter = .all
             self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-        } else if selectedTab == .posts {
-            height = 0
-            searchHeight = 0
-            posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         } else if selectedTab == .events {
             height = 32
             searchHeight = 0
@@ -208,8 +209,12 @@ class HomeVC: BaseVC {
                 self.currentEventListHeight.constant = 0
             }
             //self.getPosts(offSet: 1, inserted: false)
+        } else if selectedTab == .posts {
+            height = 0
+            searchHeight = 0
+            posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         }
-        else {
+        else if selectedTab == .news {
             height = 32
             searchHeight = 0
             posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
@@ -394,6 +399,13 @@ class HomeVC: BaseVC {
                 } else {
                     self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
                 }
+                //TableView Height Managed...
+                if self.selectedHomeFilter == .applied {
+                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * 234)
+                } else {
+                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * 284)
+                }
+                
             } else {
                 self.presentAlert("Failure", jobListData.message, nil)
             }
@@ -562,8 +574,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if tableView.refreshControl!.isRefreshing || indicatorView.isAnimating { return }
-        if self.collectionView == collectionView || selectedTabFilter == indexPath.item { return }
+//        if tableView.refreshControl!.isRefreshing || indicatorView.isAnimating { return }
+//        if self.collectionView == collectionView || selectedTabFilter == indexPath.item { return }
         selectedHomeFilter = homeTabFilter[indexPath.item]
         if selectedTab == .events {
             self.currentEventLblHeight.constant = 70.0
@@ -660,11 +672,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         switch tableView {
-//        case self.currentEventListTableVw:
-//            return 398
-            
         case self.tableView:
             switch selectedTab {
             case .posts:
@@ -690,40 +698,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     let height = lblHeight + 195.0
                     return height
                 }
-                //            let link = homePost.content?.link
-                //            if homePost.type == .post {
-                //                if !homePost.postImage!.isEmpty  { //image cell with text
-                //                    return UITableView.automaticDimension
-                //                } else if homePost.postDocument != nil || link != nil { //Url cell with text
-                //                    return UITableView.automaticDimension
-                //                } else if homePost.content != nil && homePost.postVideo == nil && homePost.postImage!.isEmpty && homePost.postDocument == nil { //Simple Text cell
-                //                    let seeMoreEnabled = postSeeMore[indexPath.row]?.enabled ?? false
-                //                    let lines = postSeeMore[indexPath.row]?.lines ?? 1
-                //                    let actualLines = seeMoreEnabled ? lines : lines > 3 ? 3 : lines
-                //                    return (180 + (actualLines * (seeMoreEnabled ? 22 : 15)))
-                //                } else if homePost.postVideo != nil { //video cell with text
-                //                    return UITableView.automaticDimension
-                //                } else {
-                //                    return 0.0
-                //                }
-                //            }
-                
-                //            let homePost = posts[indexPath.row]
-                //            if homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {
-                //                let cell = tableView.cellForRow(at: indexPath) as! HomeText
-                //                let labelSize = cell.postMsgLbl.sizeThatFits(CGSize(width: cell.postMsgLbl.frame.width, height: CGFloat.greatestFiniteMagnitude))
-                //                let calculatedHeight = labelSize.height + 215/* additional space for other UI elements */
-                //                return cell.isExpanded ? calculatedHeight : min(calculatedHeight, 600)
-                //            } else {
-//                return UITableView.automaticDimension //400
-                //            }
+
             case .events:
-                //            return UITableView.automaticDimension
-                return 440//398
+                return 440
             case .jobs:
-                //            return userType.company.rawValue == user?.type ? UITableView.automaticDimension : 110
-                
-                //if job applied == 284 - 50 (apply btn hide) else height = 284
                 if selectedHomeFilter == .applied {
                     return 234
                 } else {
@@ -731,26 +709,29 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 }
                 
             case .news:
-                return UITableView.automaticDimension
+                return 430
             case .industryEvents:
-                //            return UITableView.automaticDimension
                 return 398
             case .industryJobs:
                 return 282 //UITableView.automaticDimension
             case .industryPost:
                 return UITableView.automaticDimension
             }
+            
+        case jobListTblVw:
+            if selectedHomeFilter == .applied {
+                return 234
+            } else {
+                return 284
+            }
+            
         default:
             return 0
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        posts.count
-//        return 3
         switch tableView {
-//        case self.currentEventListTableVw:
-//            return self.currentEventList.count
         case self.tableView:
             if selectedTab == .jobs {
                 return self.jobList.count
@@ -763,48 +744,68 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     return self.upcomingEventList.count
                 }
             }
-            else {
+            else if selectedTab == .posts {
                 return posts.count
             }
+            else if selectedTab == .news{
+                return posts.count
+            }
+            else {
+                return 0
+            }
+            
+        case self.jobListTblVw:
+            if selectedTab == .jobs {
+                return self.jobList.count
+            } else { return 0 }
+            
         default:
             return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        switch tableView {
-//        case self.currentEventListTableVw:
-//            let event = self.currentEventList[indexPath.row]
-//            let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//            cell.uiData(dataMaper: event)
-//            cell.dashboardItem = event
-//            cell.delegate = self
-//            cell.eventDelegate = self
-//            cell.interrestedBtn.tag = indexPath.row
-//            if self.selectedTabFilter == 1 {
-//                cell.BottomViewStack.isHidden = true
-//            } else {
-//                cell.BottomViewStack.isHidden = false
-//            }
-//            cell.industryUserView.isHidden = true
-//            cell.indivisualUserView.isHidden = false
-//
-//            cell.sharedBtn.tag = indexPath.row
-//            cell.navigateToDetail.tag = indexPath.row
-//            cell.saveEventBtn.tag = indexPath.row
-//            self.objectId = event.id
-//            self.type = .event
-//            cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//            cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-//            cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-//            return cell
-//
-//        case self.tableView:
+        switch tableView {
+        case self.jobListTblVw:
+            //            if user?.type == userType.user.rawValue {
+            let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.baseMainView.layer.cornerRadius = 12
+            cell.indivisualViewStack.isHidden = false
+            cell.industryView.isHidden = true
+            cell.saveJobBtn.isHidden = false
+            //                cell.job = self.jobList[indexPath.row]
+            let job = self.jobList[indexPath.row]
+            cell.setData(data: job)
+            cell.viewDetailsBtn.tag = indexPath.row
+            cell.saveJobBtn.tag = indexPath.row
+            cell.editBtn.tag = indexPath.row
+            cell.applicantBtn.tag = indexPath.row
+            cell.applyNowBtn.tag = indexPath.row
+            //                cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
+            
+            if selectedHomeFilter == .applied {
+                cell.applyNowBtnHeight.constant = 0
+            } else {
+                cell.applyNowBtnHeight.constant = 50.0
+            }
+            
+            cell.viewDetailsBtn.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
+            cell.applyNowBtn.addTarget(self, action: #selector(tapJobApply(sender:)), for: .touchUpInside)
+            cell.saveJobBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
+            return cell
+            //            } else {
+            //                let cell: CompanyJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            //                cell.item = posts[indexPath.row]
+            //                cell.edit = { [weak self] in self?.navigateToEditJob(job: $0) }
+            //                return cell
+            //            }
+            
+        case self.tableView:
             
             switch selectedTab {
             case .posts, .industryPost:
                 let homePost = posts[indexPath.row]
-                let homePostUserId = homePost.user?.id ?? 0
+                //let homePostUserId = homePost.user?.id ?? 0
                 
                 if homePost.postVideo != "" && homePost.postVideo != nil {
                     print("Video")
@@ -854,7 +855,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.delegate = self
                     cell.delegateDidSelect = self
                     cell.parentViewController = self
-
+                    
                     cell.likeButton.tag = indexPath.row
                     cell.commentButton.tag = indexPath.row
                     cell.shareButton.tag = indexPath.row
@@ -885,111 +886,111 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     return cell
                 }
-
-//                if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-//                    let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                    
-//                    cell.detailsView.layer.cornerRadius = 13
-//                    cell.delegate = self
-//                    cell.uiData(dataMaper: homePost)
-//                    cell.shareBtn.tag = indexPath.row
-//                    cell.commentBtn.tag = indexPath.row
-//                    cell.likeBtn.tag = indexPath.row
-//                    cell.goToProfileBtn.tag = indexPath.row
-//                    cell.reportBtn.tag = indexPath.row
-//                    self.objectId = homePost.id
-//                    self.type = .post
-//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                    cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                    return cell
-//                    
-//                } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
-//                    let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                    cell.delegate = self
-//                    cell.uiData(dataMaper: homePost)
-//                    
-//                    cell.sharedBtn.tag = indexPath.row
-//                    cell.commentBtn.tag = indexPath.row
-//                    cell.likeBtn.tag = indexPath.row
-//                    cell.goToProfileBtn.tag = indexPath.row
-//                    cell.reportBtn.tag = indexPath.row
-//                    self.objectId = homePost.id
-//                    self.type = .post
-//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                    cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
-//                    cell.openVideoBtn.tag = indexPath.row
-//                    cell.videoView.backgroundColor = .black
-//                    cell.videoView.configure(url: homePost.postVideo!,ratio: .resizeAspectFill)
-//                    cell.videoView.stop()
-//                    cell.videoView.isHidden = false
-//                    return cell
-//                    
-//                } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
-//                    let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                    cell.delegate = self
-//                    cell.uiData(homePost: homePost)
-//                    //                cell.isConnectedBtn.tag = indexPath.row
-//                    //
-//                    cell.likeBtn.tag = indexPath.row
-//                    cell.commentBtn.tag = indexPath.row
-//                    cell.sharedBtn.tag = indexPath.row
-//                    cell.openArticleBtn.tag = indexPath.row
-//                    cell.goToProfileBtn.tag = indexPath.row
-//                    cell.reportBtn.tag = indexPath.row
-//                    self.objectId = homePost.id
-//                    self.type = .post
-//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                    
-//                    //                cell.moreOption.tag = indexPath.row
-//                    //                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                    //                cell.openProfile.tag = indexPath.row
-//                    //                cell.didTapURL = { [weak self] url in
-//                    //                    self?.present(SFSafariViewController(url: url), animated: true, completion: nil)
-//                    //                }
-//                    //
-//                    //                let tapGesture = UITapGestureRecognizer(target: self, action:#selector(openProfileVC(gesture:)))
-//                    //                cell.openProfile.addGestureRecognizer(tapGesture)
-//                    //                cell.openProfile.isUserInteractionEnabled = true
-//                    
-//                    return cell
-//                } else if homePost.postImage!.count > 0 { //Image Cell
-//                    //
-//                    let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                    cell.uiData(dataMaper: homePost)
-//                    //                cell.seeMore = (row: indexPath.row, lines: postSeeMore[indexPath.row]?.lines ?? 1, enabled: postSeeMore[indexPath.row]?.enabled ?? false)
-//                    cell.delegate = self
-//                    cell.delegateDidSelect = self
-//                    cell.parentViewController = self
-//
-//                    cell.likeButton.tag = indexPath.row
-//                    cell.commentButton.tag = indexPath.row
-//                    cell.shareButton.tag = indexPath.row
-//                    cell.goToProfileBtn.tag = indexPath.row
-//                    cell.reportBtn.tag = indexPath.row
-//                    self.objectId = homePost.id
-//                    self.type = .post
-//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                    cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                    //
-//                    //                cell.openProfile.tag = indexPath.row
-//                    //                let tapGesture = UITapGestureRecognizer(target: self, action:#selector(openProfileVC(gesture:)))
-//                    //                cell.openProfile.addGestureRecognizer(tapGesture)
-//                    //                cell.openProfile.isUserInteractionEnabled = true
-//                    //
-//                    //                let doubleTap = UITapGestureRecognizer(target: self, action:#selector(likeByDoubleClick(gesture:)))
-//                    //                doubleTap.numberOfTapsRequired = 2
-//                    //                cell.doubleLike.tag = indexPath.row
-//                    //                cell.doubleLike.addGestureRecognizer(doubleTap)
-//                    //                cell.shouldSeeMore = { [weak self] index in self?.shouldSeeMoreLess(index: index) }
-//                    
-//                    return cell
-//                }
+                
+                //                if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
+                //                    let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                //
+                //                    cell.detailsView.layer.cornerRadius = 13
+                //                    cell.delegate = self
+                //                    cell.uiData(dataMaper: homePost)
+                //                    cell.shareBtn.tag = indexPath.row
+                //                    cell.commentBtn.tag = indexPath.row
+                //                    cell.likeBtn.tag = indexPath.row
+                //                    cell.goToProfileBtn.tag = indexPath.row
+                //                    cell.reportBtn.tag = indexPath.row
+                //                    self.objectId = homePost.id
+                //                    self.type = .post
+                //                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                //                    cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                //                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                //                    return cell
+                //
+                //                } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
+                //                    let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                //                    cell.delegate = self
+                //                    cell.uiData(dataMaper: homePost)
+                //
+                //                    cell.sharedBtn.tag = indexPath.row
+                //                    cell.commentBtn.tag = indexPath.row
+                //                    cell.likeBtn.tag = indexPath.row
+                //                    cell.goToProfileBtn.tag = indexPath.row
+                //                    cell.reportBtn.tag = indexPath.row
+                //                    self.objectId = homePost.id
+                //                    self.type = .post
+                //                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                //                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                //                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                //                    cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+                //                    cell.openVideoBtn.tag = indexPath.row
+                //                    cell.videoView.backgroundColor = .black
+                //                    cell.videoView.configure(url: homePost.postVideo!,ratio: .resizeAspectFill)
+                //                    cell.videoView.stop()
+                //                    cell.videoView.isHidden = false
+                //                    return cell
+                //
+                //                } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
+                //                    let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                //                    cell.delegate = self
+                //                    cell.uiData(homePost: homePost)
+                //                    //                cell.isConnectedBtn.tag = indexPath.row
+                //                    //
+                //                    cell.likeBtn.tag = indexPath.row
+                //                    cell.commentBtn.tag = indexPath.row
+                //                    cell.sharedBtn.tag = indexPath.row
+                //                    cell.openArticleBtn.tag = indexPath.row
+                //                    cell.goToProfileBtn.tag = indexPath.row
+                //                    cell.reportBtn.tag = indexPath.row
+                //                    self.objectId = homePost.id
+                //                    self.type = .post
+                //                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                //                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                //                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                //
+                //                    //                cell.moreOption.tag = indexPath.row
+                //                    //                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                //                    //                cell.openProfile.tag = indexPath.row
+                //                    //                cell.didTapURL = { [weak self] url in
+                //                    //                    self?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+                //                    //                }
+                //                    //
+                //                    //                let tapGesture = UITapGestureRecognizer(target: self, action:#selector(openProfileVC(gesture:)))
+                //                    //                cell.openProfile.addGestureRecognizer(tapGesture)
+                //                    //                cell.openProfile.isUserInteractionEnabled = true
+                //
+                //                    return cell
+                //                } else if homePost.postImage!.count > 0 { //Image Cell
+                //                    //
+                //                    let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                //                    cell.uiData(dataMaper: homePost)
+                //                    //                cell.seeMore = (row: indexPath.row, lines: postSeeMore[indexPath.row]?.lines ?? 1, enabled: postSeeMore[indexPath.row]?.enabled ?? false)
+                //                    cell.delegate = self
+                //                    cell.delegateDidSelect = self
+                //                    cell.parentViewController = self
+                //
+                //                    cell.likeButton.tag = indexPath.row
+                //                    cell.commentButton.tag = indexPath.row
+                //                    cell.shareButton.tag = indexPath.row
+                //                    cell.goToProfileBtn.tag = indexPath.row
+                //                    cell.reportBtn.tag = indexPath.row
+                //                    self.objectId = homePost.id
+                //                    self.type = .post
+                //                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                //                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                //                    cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                //                    //
+                //                    //                cell.openProfile.tag = indexPath.row
+                //                    //                let tapGesture = UITapGestureRecognizer(target: self, action:#selector(openProfileVC(gesture:)))
+                //                    //                cell.openProfile.addGestureRecognizer(tapGesture)
+                //                    //                cell.openProfile.isUserInteractionEnabled = true
+                //                    //
+                //                    //                let doubleTap = UITapGestureRecognizer(target: self, action:#selector(likeByDoubleClick(gesture:)))
+                //                    //                doubleTap.numberOfTapsRequired = 2
+                //                    //                cell.doubleLike.tag = indexPath.row
+                //                    //                cell.doubleLike.addGestureRecognizer(doubleTap)
+                //                    //                cell.shouldSeeMore = { [weak self] index in self?.shouldSeeMoreLess(index: index) }
+                //
+                //                    return cell
+                //                }
             case .events:
                 let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 if self.selectedHomeFilter == .new {
@@ -1005,7 +1006,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
                     cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
                     cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-
+                    
                 }
                 else {
                     let event = upcomingEventList[indexPath.row]
@@ -1021,12 +1022,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
                     cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
                 }
-//                let event = posts[indexPath.row]
-//                cell.uiData(dataMaper: event)
-//                cell.dashboardItem = event
-//                cell.delegate = self
-//                cell.eventDelegate = self
-//                cell.interrestedBtn.tag = indexPath.row
+                //                let event = posts[indexPath.row]
+                //                cell.uiData(dataMaper: event)
+                //                cell.dashboardItem = event
+                //                cell.delegate = self
+                //                cell.eventDelegate = self
+                //                cell.interrestedBtn.tag = indexPath.row
                 //            if LoggedUserDetails.shared.user!.id != event.user!.id {
                 //                cell.attendingBtn.isHidden = false
                 //                cell.attendingBtn.tag = indexPath.row
@@ -1035,35 +1036,35 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 //            else {
                 //                cell.attendingBtn.isHidden = true
                 //            }
-//                if self.selectedTabFilter == 1 {
-//                    cell.BottomViewStack.isHidden = true
-//                } else {
-//                    cell.BottomViewStack.isHidden = false
-//                }
-//                cell.industryUserView.isHidden = true
-//                cell.indivisualUserView.isHidden = false
-//                
-//                cell.sharedBtn.tag = indexPath.row
-//                cell.navigateToDetail.tag = indexPath.row
-//                cell.saveEventBtn.tag = indexPath.row
-//                cell.viewDetailsBtn.tag = indexPath.row
-//                self.objectId = event.id ?? 0
-//                self.type = .event
-//                
-//                
-//                let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-//                if eventAttendeesStatus == "accepted" {
-//                    cell.requestJoinBtn.setTitle("View details", for: .normal)
-//                }
-//                else if eventAttendeesStatus == "Request_To_Join" {
-//                    cell.requestJoinBtn.setTitle("Requested", for: .normal)
-//                }
-//                else if eventAttendeesStatus == "decline" {
-//                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//                }
-//                else {
-//                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//                }
+                //                if self.selectedTabFilter == 1 {
+                //                    cell.BottomViewStack.isHidden = true
+                //                } else {
+                //                    cell.BottomViewStack.isHidden = false
+                //                }
+                //                cell.industryUserView.isHidden = true
+                //                cell.indivisualUserView.isHidden = false
+                //
+                //                cell.sharedBtn.tag = indexPath.row
+                //                cell.navigateToDetail.tag = indexPath.row
+                //                cell.saveEventBtn.tag = indexPath.row
+                //                cell.viewDetailsBtn.tag = indexPath.row
+                //                self.objectId = event.id ?? 0
+                //                self.type = .event
+                //
+                //
+                //                let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+                //                if eventAttendeesStatus == "accepted" {
+                //                    cell.requestJoinBtn.setTitle("View details", for: .normal)
+                //                }
+                //                else if eventAttendeesStatus == "Request_To_Join" {
+                //                    cell.requestJoinBtn.setTitle("Requested", for: .normal)
+                //                }
+                //                else if eventAttendeesStatus == "decline" {
+                //                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+                //                }
+                //                else {
+                //                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+                //                }
                 
 //                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
 //                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
@@ -1142,7 +1143,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.indivisualViewStack.isHidden = false
                 cell.industryView.isHidden = true
                 cell.saveJobBtn.isHidden = false
-//                cell.job = self.jobList[indexPath.row]
+                //                cell.job = self.jobList[indexPath.row]
                 let job = self.jobList[indexPath.row]
                 cell.setData(data: job)
                 cell.viewDetailsBtn.tag = indexPath.row
@@ -1191,9 +1192,9 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             }
             return UITableViewCell()
             
-//        default:
-//            return UITableViewCell()
-//        }
+        default:
+            return UITableViewCell()
+        }
     }
     
     @objc func tapJobDetail(sender: UIButton){
@@ -1296,7 +1297,7 @@ extension HomeVC: UIScrollViewDelegate {
                 } else {
                     print("Page completed. No Api call")
                 }
-            } else {
+            } else if selectedTab == .posts {
                 if paginatedPosts.count > 9 {
                     offsetCount += 1
                     getPosts(offSet: offsetCount, inserted: true)
@@ -1413,7 +1414,7 @@ private extension HomeVC {
                 if self.refreshControl.isRefreshing || self.indicatorView.isAnimating { self.postSeeMore.removeAll() }
                 self.refreshControl.endRefreshing()
                 self.indicatorView.stopAnimating()
-                self.filterCollectionView.isUserInteractionEnabled = true
+//                self.filterCollectionView.isUserInteractionEnabled = true
                 self.stopAPICall = false
                 self.updateSpecificPost = nil
                 switch result {
@@ -1424,29 +1425,33 @@ private extension HomeVC {
 //                        self.emptyListMessageLbl.text = self.searchEnabled ? "No result found" : "No result found"//post.message?.capitalized
                         self.emptyListMessageLbl.text = "No result found"
                         self.emptyListMessageLbl.isHidden = false
-                        return
-                    }
-                    
-                    if inserted {
-                        if post.data?.isEmpty ?? false {
-                           
-                        } else {
-                            paginatedPosts = post.data ?? []
-                            self.posts.append(contentsOf: paginatedPosts)
-//                            tableView.reloadData()
-//                            self.data.append(contentsOf: post.data)
-                        }
+                        //return
                     } else {
-                        self.posts = post.data ?? []
-//                        self.data = post.data
-                        self.postSeeMore.removeAll()
+                        if inserted {
+                            if post.data?.isEmpty ?? false {
+                                
+                            } else {
+                                paginatedPosts = post.data ?? []
+                                self.posts.append(contentsOf: paginatedPosts)
+                            }
+                        } else {
+                            self.posts = post.data ?? []
+                            self.postSeeMore.removeAll()
+                        }
                     }
                     
 //                    for (index, post) in post.data.enumerated() {
 //                        let lines = CGFloat(post.content?.calculateMaxLines(width: self.view.frame.width - 10) ?? 1)
 //                        self.postSeeMore[index] = self.postSeeMore[index] == nil ? (lines: lines, enabled: false) : self.postSeeMore[index]
 //                    }
-                    self.setPostTableHeight()
+                    self.tableView.reloadData()
+                    if selectedTab == .news {
+                        self.tableViewHeightConst.constant = CGFloat(self.allEventList.count * 430)
+                    } else if selectedTab == .posts {
+                        self.setPostTableHeight()
+                    } else {
+                        self.tableViewHeightConst.constant = 0.0
+                    }
                     self.emptyListMessageLbl.isHidden = true
                     self.emptyListMessageLbl.text = ""
                     self.hideActivity()
@@ -1462,62 +1467,62 @@ private extension HomeVC {
     }
     
     
-    func EventsAPICall(offSet: Int) {
-        let url =  URL(string: "https://aviationconnect.com/api/v1/event/filter?limit=\(pageSize)&offset=\(offSet)")! // Replace with your API endpoint URL
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        if let token = (UserDefaults.standard.value(forKey: "UserToken")) {
-            // Replace 'YOUR_ACCESS_TOKEN' with your actual bearer token
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-        
-//        ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "filter": selectedHomeFilter.getFilter(tab: selectedTab)]
-        // Example payload (parameters) in JSON format
-        let parameters: [String: Any] = [
-            "user_id": myUserDefaults.userId,
-            "filter": selectedHomeFilter.getFilter(tab: selectedTab)
-        ]
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                
-                self.hideActivity()
-                if let error = error {
-                    print("Error making the request: \(error)")
-                    return
-                }
-                
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    print("Invalid response")
-                    return
-                }
-                
-                if (200..<300).contains(httpResponse.statusCode) {
-                    print("Request was successful!")
-                    if let data = data {
-                        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-                        print("Response:", responseJSON ?? "")
-                        
-                    }
-                } else {
-                    print("Request failed with status code: \(httpResponse.statusCode)")
-                    if let data = data {
-                        let responseString = String(data: data, encoding: .utf8)
-                        print("Response:", responseString ?? "")
-                    }
-                }
-            }
-            
-            task.resume()
-            
-        } catch {
-            print("Error encoding parameters: \(error)")
-        }
-    }
+//    func EventsAPICall(offSet: Int) {
+//        let url =  URL(string: "https://aviationconnect.com/api/v1/event/filter?limit=\(pageSize)&offset=\(offSet)")! // Replace with your API endpoint URL
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        
+//        if let token = (UserDefaults.standard.value(forKey: "UserToken")) {
+//            // Replace 'YOUR_ACCESS_TOKEN' with your actual bearer token
+//            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//        }
+//        
+////        ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "filter": selectedHomeFilter.getFilter(tab: selectedTab)]
+//        // Example payload (parameters) in JSON format
+//        let parameters: [String: Any] = [
+//            "user_id": myUserDefaults.userId,
+//            "filter": selectedHomeFilter.getFilter(tab: selectedTab)
+//        ]
+//        
+//        do {
+//            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            
+//            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+//                
+//                self.hideActivity()
+//                if let error = error {
+//                    print("Error making the request: \(error)")
+//                    return
+//                }
+//                
+//                guard let httpResponse = response as? HTTPURLResponse else {
+//                    print("Invalid response")
+//                    return
+//                }
+//                
+//                if (200..<300).contains(httpResponse.statusCode) {
+//                    print("Request was successful!")
+//                    if let data = data {
+//                        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+//                        print("Response:", responseJSON ?? "")
+//                        
+//                    }
+//                } else {
+//                    print("Request failed with status code: \(httpResponse.statusCode)")
+//                    if let data = data {
+//                        let responseString = String(data: data, encoding: .utf8)
+//                        print("Response:", responseString ?? "")
+//                    }
+//                }
+//            }
+//            
+//            task.resume()
+//            
+//        } catch {
+//            print("Error encoding parameters: \(error)")
+//        }
+//    }
     
 //    func deletePost(postId: Int) {
 //        let url = "\(selectedTab.deletePostEndPoint)\(postId)/"
@@ -1778,7 +1783,11 @@ extension HomeVC {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeJob.self, HomeEvent.self, HomeImage.self, HomeVideo.self, HomeNewz.self, UserJobCell.self, CompanyJobCell.self])
-        tableView.registerCell(withType: HomeImage.self)
+        
+        jobListTblVw.dataSource = self
+        jobListTblVw.delegate = self
+        jobListTblVw.registerCell(withType: UserJobCell.self)
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.layer.cornerRadius = 7.0
@@ -1992,15 +2001,23 @@ extension HomeVC {
         if tableView.refreshControl?.isRefreshing ?? false || indicatorView.isAnimating || selectedTab.selectedIndex == sender.tag { return }
         self.searchTxtField.text = ""
         homeTabFilter.removeAll()
-        posts.removeAll()
-        jobList.removeAll()
+//        posts.removeAll()
+//        jobList.removeAll()
 //        tableView.reloadData()
-        
+        self.posts = []
+        self.jobList = []
+        self.currentEventList = []
+        self.allEventList = []
+        self.upcomingEventList = []
+
         self.currentEventLblHeight.constant = 0
         self.allEventLblHeight.constant = 0
         self.currentEventListHeight.constant = 0
-        
-        var tableViewBottom: CGFloat = 0
+        self.tableViewHeightConst.constant = 0
+        self.jobListTblVwHeight.constant = 0
+        self.emptyListMessageLbl.text = ""
+                
+        //var tableViewBottom: CGFloat = 0
         
         switch sender.tag {
         case 0:
@@ -2019,8 +2036,9 @@ extension HomeVC {
 //                height = 32
 //                homeTabFilter = HomeTabFilter.industryEvents
 //            }
-            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
-            reloadData()
+//            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
+//            reloadData()
+            getPosts(offSet: 1, inserted: false)
         case 1:
             print("Event Tab Select")
 //            if isIndivisualUser {
@@ -2029,13 +2047,16 @@ extension HomeVC {
                 selectedHomeFilter = .all
                 homeTabFilter = HomeTabFilter.userEvent
                 //homeTabFilter = jobListingBtn.isHidden ? HomeTabFilter.userEvent : HomeTabFilter.companyEvent
-                height = 32
-                searchHeight = 0
-                self.currentEventLblHeight.constant = 70.0
-                self.allEventLblHeight.constant = 70.0
-                //--> Set Event New Data...
-                self.fetchCurrentEventData()
-                self.allEventLbl.text = "All Event"
+            height = 32
+            searchHeight = 0
+            homeTabFilter = HomeTabFilter.userEvent
+            self.currentEventLblHeight.constant = 70.0
+            self.allEventLblHeight.constant = 70.0
+            
+            self.selectedHomeFilter = .new
+            self.fetchCurrentEventData()
+            self.allEventLbl.text = "All Event"
+            self.fetchAllEventData()
 //            } else {
 //                selectedTab = .industryJobs
 //                Constants.saveEnumToUserDefaults(.industryJobs)
@@ -2044,15 +2065,14 @@ extension HomeVC {
 //                searchHeight = 40
 //                homeTabFilter = HomeTabFilter.industryJobs
 //            }
-            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
-            reloadData()
+//            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
+//            reloadData()
         case 2:
             print("Job Tab Select")
 //            if isIndivisualUser {
                 selectedTab = .jobs
                 Constants.saveEnumToUserDefaults(.jobs)
                 selectedHomeFilter = .all
-                jobList = []
 //            if jobListingBtn.isHidden {
                 homeTabFilter = HomeTabFilter.job
                 height = 32
@@ -2066,10 +2086,10 @@ extension HomeVC {
 //                Constants.saveEnumToUserDefaults(.industryPost)
 //                selectedHomeFilter = .none
 //                reloadData()
-//                
+//
 //            }
             self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
+//            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
 //            reloadData()
         case 3:
             print("Post Tab Select")
@@ -2078,8 +2098,8 @@ extension HomeVC {
             selectedHomeFilter = .none
             height = 0
             searchHeight = 0
-            reloadData()
-            
+//            reloadData()
+            getPosts(offSet: 1, inserted: false)
 
         default:
             break
@@ -2502,7 +2522,7 @@ extension HomeVC {
     
     func addObservers() {
         
-        tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+        //tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         edgesForExtendedLayout = []
         
         NotificationCenter.default.addObserver(forName: .init(rawValue: "callUpdateApi"), object: nil, queue: .main) { [weak self] _ in

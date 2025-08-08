@@ -18,11 +18,11 @@ struct EvaUser: Codable {
     
     let id: Int?
     let firstName: String?
+    let lastName: String?
     let isConnected: String?//IsConnected?
     let isReceiver: String?
     let city, country, region: String?
     let connectionID: Int?
-    let lastName: String?
     let bioData: String?
     let about: String?
     let email, uniqueCode, username: String?

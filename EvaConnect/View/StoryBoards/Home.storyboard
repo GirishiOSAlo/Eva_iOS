@@ -202,7 +202,7 @@
                                 <rect key="frame" x="0.0" y="249" width="375" height="563"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FGV-e7-pjc">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="540"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="740"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Event" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1P-wG-DGc">
                                                 <rect key="frame" x="20" y="0.0" width="355" height="70"/>
@@ -257,20 +257,35 @@
                                                     <outlet property="delegate" destination="a94-bP-LBj" id="s1w-Iu-7Z0"/>
                                                 </connections>
                                             </tableView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="476" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DdP-S1-2DX">
+                                                <rect key="frame" x="0.0" y="440" width="375" height="200"/>
+                                                <color key="backgroundColor" name="Green"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="M8Z-tt-Pe8"/>
+                                                </constraints>
+                                                <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="a94-bP-LBj" id="bkT-oC-pph"/>
+                                                    <outlet property="delegate" destination="a94-bP-LBj" id="tOb-Tw-iOP"/>
+                                                </connections>
+                                            </tableView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="DdP-S1-2DX" firstAttribute="top" secondItem="aqj-uT-nF9" secondAttribute="bottom" id="1iy-oB-r4z"/>
                                             <constraint firstItem="aqj-uT-nF9" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="AZL-Eu-kh2"/>
+                                            <constraint firstItem="DdP-S1-2DX" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="Hrl-PM-Haf"/>
                                             <constraint firstItem="aV2-T7-J4q" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" constant="20" id="JB2-rR-5Yw"/>
                                             <constraint firstItem="aqj-uT-nF9" firstAttribute="top" secondItem="aV2-T7-J4q" secondAttribute="bottom" id="MNg-D2-oUy"/>
-                                            <constraint firstAttribute="bottom" secondItem="aqj-uT-nF9" secondAttribute="bottom" constant="100" id="MjJ-48-aOj"/>
                                             <constraint firstAttribute="trailing" secondItem="GqR-RV-wD1" secondAttribute="trailing" constant="20" id="Pfg-Pg-KeN"/>
                                             <constraint firstItem="GqR-RV-wD1" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" constant="20" id="QCA-hG-RVF"/>
                                             <constraint firstItem="GqR-RV-wD1" firstAttribute="top" secondItem="w1P-wG-DGc" secondAttribute="bottom" id="aT1-ZD-XSS"/>
+                                            <constraint firstAttribute="bottom" secondItem="DdP-S1-2DX" secondAttribute="bottom" constant="100" id="d5D-vZ-cMj"/>
                                             <constraint firstItem="w1P-wG-DGc" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" constant="20" id="doM-i1-AfC"/>
                                             <constraint firstAttribute="trailing" secondItem="aqj-uT-nF9" secondAttribute="trailing" id="jr0-3h-ugx"/>
                                             <constraint firstAttribute="trailing" secondItem="w1P-wG-DGc" secondAttribute="trailing" id="kvw-s1-eEJ"/>
                                             <constraint firstItem="w1P-wG-DGc" firstAttribute="top" secondItem="FGV-e7-pjc" secondAttribute="top" id="lKD-gC-4ug"/>
+                                            <constraint firstAttribute="trailing" secondItem="DdP-S1-2DX" secondAttribute="trailing" id="pFj-Au-W8V"/>
                                             <constraint firstItem="aV2-T7-J4q" firstAttribute="top" secondItem="GqR-RV-wD1" secondAttribute="bottom" id="tiN-2D-a1w"/>
                                             <constraint firstAttribute="trailing" secondItem="aV2-T7-J4q" secondAttribute="trailing" id="xVp-ig-AUF"/>
                                         </constraints>
@@ -338,6 +353,8 @@
                         <outlet property="filterCollectionView" destination="uX7-nB-ZDM" id="cIR-yK-XcS"/>
                         <outlet property="filterCollectionViewHeight" destination="sNL-8Y-QOG" id="ezc-UJ-hlH"/>
                         <outlet property="indicatorView" destination="BUg-lB-ICN" id="HCX-DB-hmv"/>
+                        <outlet property="jobListTblVw" destination="DdP-S1-2DX" id="sjy-rS-mNO"/>
+                        <outlet property="jobListTblVwHeight" destination="M8Z-tt-Pe8" id="ghh-No-AEv"/>
                         <outlet property="scrollvw" destination="es5-DI-TwE" id="98F-mT-VZx"/>
                         <outlet property="searchHeightConst" destination="NrU-kN-95h" id="E4u-qQ-pOI"/>
                         <outlet property="searchImageView" destination="c7E-OS-oZf" id="r2n-bw-TK1"/>
@@ -11235,6 +11252,9 @@ Airport helicopter crash</string>
         <image name="whtsappShareIC" width="68" height="68"/>
         <namedColor name="BackColor">
             <color red="0.43900001049041748" green="0.43900001049041748" blue="0.43900001049041748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Green">
+            <color red="0.1803921568627451" green="0.80000000000000004" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
