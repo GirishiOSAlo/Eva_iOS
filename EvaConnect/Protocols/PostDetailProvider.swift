@@ -37,16 +37,26 @@ extension PostActionProvidable {
                         
                         var postType: PostType = .simpleText
                         
-                        if  postDetail.datumPostImage == [] && postDetail.postVideo == "" && postDetail.postDocument == "" { // && post.postDocument == nil
-                            let vc = StoryboardRouter.textPostDetailVC()
-                            postType = .simpleText
-                        } else if postDetail.postVideo != "" {//Video
+                        if postDetail.postVideo != "" {//Video
                             postType = .video
-                        } else if postDetail.postDocument != "" { //document Cell
+                        } else if postDetail.postDocuments?.count ?? 0 > 0 {//Document
                             postType = .article
-                        } else if (postDetail.datumPostImage?.count ?? 0) > 0 { // Image Cell
+                        } else if postDetail.datumPostImage!.count > 0 {//Image
                             postType = .image
+                        } else {//Text
+                            postType = .simpleText
                         }
+                        
+//                        if  postDetail.datumPostImage == [] && postDetail.postVideo == "" && postDetail.postDocument == "" { // && post.postDocument == nil
+//                            let vc = StoryboardRouter.textPostDetailVC()
+//                            postType = .simpleText
+//                        } else if postDetail.postVideo != "" {//Video
+//                            postType = .video
+//                        } else if postDetail.postDocument != "" { //document Cell
+//                            postType = .article
+//                        } else if (postDetail.datumPostImage?.count ?? 0) > 0 { // Image Cell
+//                            postType = .image
+//                        }
                         
                         completion(postDetail, postType, nil)
                     }

@@ -137,7 +137,7 @@ class HomeUrl: BaseCellClass {
             self.likeImage.image = UIImage(named: "ic_like")
         }
         
-        let docName = dataMaper.postDocument ?? ""
+        let docName = dataMaper.documentFileName ?? ""
         if docName == "" {
             documentName.text = "No Name"
         } else {

@@ -541,8 +541,13 @@ extension TextPostDetailVC {
         } else {
             postContentLbl.text = docPost.content
         }
-        documentNameLbl.text = docPost.documentFileName
-        docSizeLbl.text = "\(docPost.documentSize ?? "") kB."
+        let docName = docPost.documentFileName ?? ""
+        if docName == "" {
+            documentNameLbl.text = "No Name"
+        } else {
+            documentNameLbl.text = docPost.postDocument
+        }
+        docSizeLbl.text = "\(docPost.documentSize ?? "0") kB"
         
         self.textDetailView.isHidden = true
         self.imageDetailView.isHidden = true
