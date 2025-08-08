@@ -518,6 +518,12 @@ extension TextPostDetailVC {
     }
     
     func setDocData(docPost: PostDetail) {
+        let userid = docPost.user?.id ?? 0
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         
         if docPost.user?.userImage != nil {
             userAvatar.sd_setImage(with: URL(string: (docPost.user?.userImage)!), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
