@@ -282,7 +282,7 @@ extension TextPostDetailVC {
     }
     
     @IBAction func imageLikeBtnTapped(_ sender: UIButton) {
-        likePost(postId: postId, status: postDetail?.status ?? "", action: postDetail?.isPostLike != nil ? "unlike" : "like")
+        likePost(postId: postDetail?.id ?? 0, status: postDetail?.status ?? "", action: postDetail?.isPostLike == 0 ? "like" : "unlike")
     }
     
     @IBAction func imageShareBtnTapped(_ sender: UIButton) {
@@ -486,8 +486,8 @@ extension TextPostDetailVC {
         dayLbl.text = imagePost.createdDate
         otherNameLbl.text = imagePost.user?.firstName ?? ""
         
-        if !imagePost.postImage!.isEmpty {
-            setImages(imageUrl: imagePost.postImage!)
+        if !imagePost.datumPostImage!.isEmpty {
+            setImages(imageUrl: imagePost.datumPostImage)
         }
         
         likeImage.image = imagePost.isPostLike == 1 ? #imageLiteral(resourceName: "like_selected") : #imageLiteral(resourceName: "Like")
@@ -574,16 +574,15 @@ extension TextPostDetailVC {
                                     "action": action ]
         view.isUserInteractionEnabled = false
         
-        ApiCallerClass.likePostServiceFunc(usertoken: myUserDefaults.token, para: param, success: { (dataRespose) in
+        ApiCallerClass.likePostServiceFunc(usertoken: myUserDefaults.token,para: param, success: { (dataRespose) in
             let data = dataRespose as? NSDictionary
             let error = data?["error"] as? Int
             self.hideActivity()
+            self.view.isUserInteractionEnabled = true
             if error == 0 {
-                self.view.isUserInteractionEnabled = true
                 self.getPostDetails()
             }
             else {
-                self.view.isUserInteractionEnabled = true
                 self.presentAlert("Error!","\(String(describing: data?["error"]))")
             }
         })
@@ -591,7 +590,6 @@ extension TextPostDetailVC {
             self.hideActivity()
             self.view.isUserInteractionEnabled = true
         }
-        
     }
     
     func handleShare() {
@@ -714,6 +712,7 @@ extension TextPostDetailVC {
             }
         }
     }
+    
     
 //    func updateComment(content: String, sender: UIButton) {
 //        let commentId = comments[sender.tag].id
@@ -941,7 +940,7 @@ extension TextPostDetailVC : BottomContentPickerDelegate {
         
     func didSelectContentPicker(_ content: BottomContentPicker.BottomContentType) {
         guard let postDetail = postDetail else { return }
-        shareContent(type: content, postType: .posts, postId: postDetail.id)
+        shareContent(type: content, postType: .posts, postId: postDetail.id ?? 0)
     }
     
 //    @objc func handleShare(_ sender: UIButton) {

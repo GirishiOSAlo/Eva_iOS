@@ -195,11 +195,11 @@ extension OtherCommentVC {
         } else {
             OtherProfileImage.image = #imageLiteral(resourceName: "noImage")
         }
-        if post.postImage!.count >= 1 {
+        if post.datumPostImage!.count >= 1 {
             imageArray.removeAll()
             images.removeAll()
-            if post.postImage!.count != 0 && !post.postImage!.isEmpty {
-                for i in post.postImage! {
+            if post.datumPostImage!.count != 0 && !post.datumPostImage!.isEmpty {
+                for i in post.datumPostImage! {
                     imageArray.append(i)
                 }
                 //ImageSlider Setting
@@ -218,7 +218,7 @@ extension OtherCommentVC {
             }
         }
         
-        else if post.postVideo != nil && post.postImage?.count == 0 {
+        else if post.postVideo != nil && post.datumPostImage?.count == 0 {
             
             doubleClickLike.isHidden = true
             //PostImage.isHidden = true
@@ -531,7 +531,7 @@ extension OtherCommentVC : BottomContentPickerDelegate {
         
     func didSelectContentPicker(_ content: BottomContentPicker.BottomContentType) {
         guard let postDetail = PostDataModel else { return }
-        shareContent(type: content, postType: .posts, postId: postDetail.id)
+        shareContent(type: content, postType: .posts, postId: postDetail.id ?? 0)
     }
     
     @objc func handleShare(_ sender: UIButton) {

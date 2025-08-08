@@ -14,7 +14,7 @@ class PostManager {
     
     func postDetailType(postDetail: PostDetail) -> UIViewController {
         
-        if postDetail.postImage?.count == 0 && postDetail.postVideo.isNil && postDetail.postDocument.isNil {
+        if postDetail.datumPostImage?.count == 0 && postDetail.postVideo.isNil && postDetail.postDocument.isNil {
             return StoryboardRouter.textPostDetailVC()
         } else if !postDetail.postDocument.isNil{
             return StoryboardRouter.urlComment()

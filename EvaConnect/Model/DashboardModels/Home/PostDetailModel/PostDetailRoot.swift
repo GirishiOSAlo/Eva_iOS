@@ -18,41 +18,61 @@ struct PostDetailRoot: Codable {
 
 // MARK: - Datum
 struct PostDetail: Codable {
-    let id, userID: Int
-    let user: PostUserDetail?
+//    let id, userID: Int?
+//    let user: PostUserDetail?
+//    let isURL, blocked: Bool?
+//    let postVideo : String?
+//    var isPostLike: Int?
+//    let createdDate: String?
+//    let isConnected: String?
+//    let connectionId:Int?
+//    let isReceiver: Bool?
+//    let content: String?
+//    let postImage: [String]?
+//    let commentCount, likeCount, createdByID: Int?
+//    let documentFileName, documentSize: String?
+//    let createdDatetime: String?
+//    let modifiedByID: Int?
+//    let type: typeEnum?
+//    let modifiedDatetime: String?
+//    let os, status: String?
+//    var postDocument: String?
+//    let shareCount: Int?
+    
+    let id, userID: Int?
     let isURL, blocked: Bool?
-    let postVideo : String?
+    let postVideo: String?
     var isPostLike: Int?
-    let createdDate: String?
-    let isConnected: String?
-    let connectionId:Int?
-    let isReceiver: Bool?
-    let content: String?
-    let postImage: [String]?
-    let commentCount, likeCount, createdByID: Int?
-    let documentFileName, documentSize: String?
+    let createdDate, isConnected: String?
+    let connectionID: Int?
+    let isReceiver: String?
+    let content, postTitle: String?
+    let postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?
     let modifiedByID: Int?
-    let type: typeEnum?
-    let modifiedDatetime: String?
-    let os, status: String?
-    var postDocument: String?
+    let type, modifiedDatetime: String?
+    let os: String?
+    let status, documentFileName, documentSize, postDocument: String?
+    let fileDatetime: String?
     let shareCount: Int?
+    let datumPostImage: [String]?
+    let postDocuments: [String]?
+    let user: PostUserDetail?
 
     enum CodingKeys: String, CodingKey {
-        case id, isURL, blocked, userID, user, postVideo, isPostLike, createdDate
-        case content, connectionId, commentCount, likeCount, postDocument, shareCount
-        case isConnected = "is_connected"
-        case isReceiver = "is_receiver"
-        case postImage = "post_image"
-        case createdByID = "created_by_id"
-        case createdDatetime = "created_datetime"
-        case modifiedByID = "modified_by_id"
-        case type
-        case modifiedDatetime = "modified_datetime"
-        case os, status
+        case id, userID, isURL, blocked, postVideo, isPostLike, createdDate, isConnected
+        case connectionID = "connectionId"
+        case isReceiver, content
+        case postTitle = "post_title"
+        case postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, type, modifiedDatetime, os, status
         case documentFileName = "document_file_name"
         case documentSize = "document_size"
+        case postDocument
+        case fileDatetime = "file_datetime"
+        case shareCount
+        case datumPostImage = "post_image"
+        case postDocuments = "post_documents"
+        case user
     }
     
     var dateTime: (date: String, time: String) {
@@ -72,18 +92,19 @@ enum typeEnum: String, Codable {
 // MARK: - User
 struct PostUserDetail: Codable {
     let id: Int?
-    let userImage: String?
+    let firstName, lastName, companyName, logo: String?
     let totalConnection: Int?
-    let firstName: String?
-    let lastName: String?
+    let userImage: String?
     let bioData: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id
-        case userImage = "user_image"
-        case totalConnection = "total_connection"
         case firstName = "first_name"
         case lastName = "last_name"
+        case companyName = "company_name"
+        case logo
+        case totalConnection = "total_connection"
+        case userImage = "user_image"
         case bioData = "bio_data"
     }
 

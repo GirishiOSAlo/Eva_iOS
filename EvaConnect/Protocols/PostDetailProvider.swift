@@ -37,14 +37,14 @@ extension PostActionProvidable {
                         
                         var postType: PostType = .simpleText
                         
-                        if  postDetail.postImage == [] && postDetail.postVideo == "" && postDetail.postDocument == "" { // && post.postDocument == nil
+                        if  postDetail.datumPostImage == [] && postDetail.postVideo == "" && postDetail.postDocument == "" { // && post.postDocument == nil
                             let vc = StoryboardRouter.textPostDetailVC()
                             postType = .simpleText
                         } else if postDetail.postVideo != "" {//Video
                             postType = .video
                         } else if postDetail.postDocument != "" { //document Cell
                             postType = .article
-                        } else if (postDetail.postImage?.count ?? 0) > 0 { // Image Cell
+                        } else if (postDetail.datumPostImage?.count ?? 0) > 0 { // Image Cell
                             postType = .image
                         }
                         

@@ -514,7 +514,7 @@ extension UrlCommentVC : BottomContentPickerDelegate {
         
     func didSelectContentPicker(_ content: BottomContentPicker.BottomContentType) {
         guard let postDetail = postDataModel else { return }
-        shareContent(type: content, postType: .posts, postId: postDetail.id)
+        shareContent(type: content, postType: .posts, postId: postDetail.id ?? 0)
     }
     
     @objc func handleShare(_ sender: UIButton) {
