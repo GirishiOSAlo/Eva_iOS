@@ -681,6 +681,30 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         case self.tableView:
             switch selectedTab {
             case .posts:
+                return 0
+            case .events:
+                return 440
+            case .jobs:
+                return 0
+            case .news:
+                return 0
+            case .industryEvents:
+                return 398
+            case .industryJobs:
+                return 282 //UITableView.automaticDimension
+            case .industryPost:
+                return UITableView.automaticDimension
+            }
+            
+        case jobListTblVw:
+            if selectedHomeFilter == .applied {
+                return 234
+            } else {
+                return 284
+            }
+            
+        case postListTblVw:
+            if selectedTab == .posts {
                 let homePost = posts[indexPath.row]
                 if homePost.postVideo != "" && homePost.postVideo != nil {
                     print("Video")
@@ -703,55 +727,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     let height = lblHeight + 195.0
                     return height
                 }
-
-            case .events:
-                return 440
-            case .jobs:
-                if selectedHomeFilter == .applied {
-                    return 234
-                } else {
-                    return 284
-                }
-                
-            case .news:
+            }
+            else if selectedTab == .news {
                 return 430
-            case .industryEvents:
-                return 398
-            case .industryJobs:
-                return 282 //UITableView.automaticDimension
-            case .industryPost:
-                return UITableView.automaticDimension
             }
-            
-        case jobListTblVw:
-            if selectedHomeFilter == .applied {
-                return 234
-            } else {
-                return 284
-            }
-            
-        case postListTblVw:
-            let homePost = posts[indexPath.row]
-            if homePost.postVideo != "" && homePost.postVideo != nil {
-                print("Video")
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 356.0
-                return height
-            } else if homePost.postDocuments?.count ?? 0 > 0 {
-                print("Document")
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 231.0
-                return height
-            } else if homePost.datumPostImage!.count > 0 {
-                print("Images")
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 416.0
-                return height
-            } else {
-                print("Text")
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 195.0
-                return height
+            else {
+                return 0
             }
 
             
@@ -764,7 +745,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         switch tableView {
         case self.tableView:
             if selectedTab == .jobs {
-                return self.jobList.count
+                return 0//self.jobList.count
             }
             else if selectedTab == .events {
                 if self.selectedHomeFilter == .new {
@@ -775,10 +756,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 }
             }
             else if selectedTab == .posts {
-                return posts.count
+                return 0//posts.count
             }
             else if selectedTab == .news{
-                return posts.count
+                return 0//posts.count
             }
             else {
                 return 0
@@ -790,7 +771,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             } else { return 0 }
             
         case self.postListTblVw:
-            if selectedTab == .posts {
+            if selectedTab == .posts && selectedTab == .news {
                 return posts.count
             } else { return 0 }
             
@@ -836,89 +817,114 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             //            }
             
         case self.postListTblVw:
-            let homePost = posts[indexPath.row]
-            //let homePostUserId = homePost.user?.id ?? 0
-            
-            if homePost.postVideo != "" && homePost.postVideo != nil {
-                print("Video")
-                let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.delegate = self
-                cell.uiData(dataMaper: homePost)
+            if selectedTab == .posts {
+                let homePost = posts[indexPath.row]
+                //let homePostUserId = homePost.user?.id ?? 0
                 
+                if homePost.postVideo != "" && homePost.postVideo != nil {
+                    print("Video")
+                    let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.delegate = self
+                    cell.uiData(dataMaper: homePost)
+                    
+                    cell.sharedBtn.tag = indexPath.row
+                    cell.commentBtn.tag = indexPath.row
+                    cell.likeBtn.tag = indexPath.row
+                    cell.goToProfileBtn.tag = indexPath.row
+                    cell.reportBtn.tag = indexPath.row
+                    self.objectId = homePost.id ?? 0
+                    self.type = .post
+                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+                    cell.openVideoBtn.tag = indexPath.row
+                    cell.videoView.backgroundColor = .black
+                    cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
+                    cell.videoView.stop()
+                    cell.videoView.isHidden = false
+                    return cell
+                }
+                else if (homePost.postDocuments?.count ?? 0) > 0 {
+                    print("Document")
+                    let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.delegate = self
+                    cell.uiData(homePost: homePost)
+                    cell.likeBtn.tag = indexPath.row
+                    cell.commentBtn.tag = indexPath.row
+                    cell.sharedBtn.tag = indexPath.row
+                    cell.openArticleBtn.tag = indexPath.row
+                    cell.goToProfileBtn.tag = indexPath.row
+                    cell.reportBtn.tag = indexPath.row
+                    self.objectId = homePost.id ?? 0
+                    self.type = .post
+                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                }
+                else if homePost.datumPostImage!.count > 0 {
+                    print("Images")
+                    let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.uiData(dataMaper: homePost)
+                    cell.delegate = self
+                    cell.delegateDidSelect = self
+                    cell.parentViewController = self
+                    
+                    cell.likeButton.tag = indexPath.row
+                    cell.commentButton.tag = indexPath.row
+                    cell.shareButton.tag = indexPath.row
+                    cell.goToProfileBtn.tag = indexPath.row
+                    cell.reportBtn.tag = indexPath.row
+                    self.objectId = homePost.id ?? 0
+                    self.type = .post
+                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                    cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                }
+                else {
+                    print("Text")
+                    let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    
+                    cell.detailsView.layer.cornerRadius = 13
+                    cell.delegate = self
+                    cell.uiData(dataMaper: homePost)
+                    cell.shareBtn.tag = indexPath.row
+                    cell.commentBtn.tag = indexPath.row
+                    cell.likeBtn.tag = indexPath.row
+                    cell.goToProfileBtn.tag = indexPath.row
+                    cell.reportBtn.tag = indexPath.row
+                    self.objectId = homePost.id ?? 0
+                    self.type = .post
+                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                    cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                    return cell
+                }
+            } else if selectedTab == .news {
+                let cell: HomeNewz = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                let newz = posts[indexPath.row]
+                
+                cell.uiData(dataMaper: newz)
+                cell.likeBtn.tag = indexPath.row
                 cell.sharedBtn.tag = indexPath.row
                 cell.commentBtn.tag = indexPath.row
-                cell.likeBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
-                cell.openVideoBtn.tag = indexPath.row
-                cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
-                cell.videoView.stop()
-                cell.videoView.isHidden = false
-                return cell
-            }
-            else if (homePost.postDocuments?.count ?? 0) > 0 {
-                print("Document")
-                let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.delegate = self
-                cell.uiData(homePost: homePost)
-                cell.likeBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.sharedBtn.tag = indexPath.row
-                cell.openArticleBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-            }
-            else if homePost.datumPostImage!.count > 0 {
-                print("Images")
-                let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.uiData(dataMaper: homePost)
-                cell.delegate = self
-                cell.delegateDidSelect = self
-                cell.parentViewController = self
+                cell.openURl.tag = indexPath.row
+                cell.saveNewsBtn.tag = indexPath.row
+                cell.detailNavigateBtn.tag = indexPath.row
                 
-                cell.likeButton.tag = indexPath.row
-                cell.commentButton.tag = indexPath.row
-                cell.shareButton.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-            }
-            else {
-                print("Text")
-                let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                self.objectId = newz.id ?? 0
+                self.type = .news
+                cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
+                cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
+                cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
+                cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
                 
-                cell.detailsView.layer.cornerRadius = 13
-                cell.delegate = self
-                cell.uiData(dataMaper: homePost)
-                cell.shareBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.likeBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 return cell
+            } else {
+                return UITableViewCell()
             }
-            return UITableViewCell()
             
         case self.tableView:
             
