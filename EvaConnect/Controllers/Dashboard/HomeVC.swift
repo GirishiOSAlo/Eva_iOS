@@ -42,6 +42,9 @@ class HomeVC: BaseVC {
     @IBOutlet weak var jobListTblVw: UITableView!
     @IBOutlet weak var jobListTblVwHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var postListTblVw: UITableView!
+    @IBOutlet weak var postListTblVwHeight: NSLayoutConstraint!
+    
     @IBOutlet weak var currentEventLbl: UILabel!
     @IBOutlet weak var currentEventLblHeight: NSLayoutConstraint!
     @IBOutlet weak var allEventLbl: UILabel!
@@ -56,7 +59,7 @@ class HomeVC: BaseVC {
     
     var posts: [DashboardItem] = [] {
         didSet {
-            self.tableView.reloadData()
+            self.postListTblVw.reloadData()
         }
     }
     var jobList: [DashboardJob] = [] {
@@ -181,6 +184,7 @@ class HomeVC: BaseVC {
         self.currentEventListHeight.constant = 0
         self.tableViewHeightConst.constant = 0
         self.jobListTblVwHeight.constant = 0
+        self.postListTblVwHeight.constant = 0
         self.emptyListMessageLbl.text = ""
         
         if selectedTab == .jobs {
@@ -262,7 +266,8 @@ class HomeVC: BaseVC {
                 totalHeight = totalHeight + height
             }
         }
-        self.tableViewHeightConst.constant = totalHeight
+        //self.tableViewHeightConst.constant = totalHeight
+        self.postListTblVwHeight.constant = totalHeight
     }
         
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
@@ -725,6 +730,31 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 return 284
             }
             
+        case postListTblVw:
+            let homePost = posts[indexPath.row]
+            if homePost.postVideo != "" && homePost.postVideo != nil {
+                print("Video")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 356.0
+                return height
+            } else if homePost.postDocuments?.count ?? 0 > 0 {
+                print("Document")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 231.0
+                return height
+            } else if homePost.datumPostImage!.count > 0 {
+                print("Images")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 416.0
+                return height
+            } else {
+                print("Text")
+                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                let height = lblHeight + 195.0
+                return height
+            }
+
+            
         default:
             return 0
         }
@@ -757,6 +787,11 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         case self.jobListTblVw:
             if selectedTab == .jobs {
                 return self.jobList.count
+            } else { return 0 }
+            
+        case self.postListTblVw:
+            if selectedTab == .posts {
+                return posts.count
             } else { return 0 }
             
         default:
@@ -799,6 +834,91 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             //                cell.edit = { [weak self] in self?.navigateToEditJob(job: $0) }
             //                return cell
             //            }
+            
+        case self.postListTblVw:
+            let homePost = posts[indexPath.row]
+            //let homePostUserId = homePost.user?.id ?? 0
+            
+            if homePost.postVideo != "" && homePost.postVideo != nil {
+                print("Video")
+                let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.delegate = self
+                cell.uiData(dataMaper: homePost)
+                
+                cell.sharedBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.likeBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                self.objectId = homePost.id ?? 0
+                self.type = .post
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+                cell.openVideoBtn.tag = indexPath.row
+                cell.videoView.backgroundColor = .black
+                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
+                cell.videoView.stop()
+                cell.videoView.isHidden = false
+                return cell
+            }
+            else if (homePost.postDocuments?.count ?? 0) > 0 {
+                print("Document")
+                let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.delegate = self
+                cell.uiData(homePost: homePost)
+                cell.likeBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.sharedBtn.tag = indexPath.row
+                cell.openArticleBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                self.objectId = homePost.id ?? 0
+                self.type = .post
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+            }
+            else if homePost.datumPostImage!.count > 0 {
+                print("Images")
+                let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.uiData(dataMaper: homePost)
+                cell.delegate = self
+                cell.delegateDidSelect = self
+                cell.parentViewController = self
+                
+                cell.likeButton.tag = indexPath.row
+                cell.commentButton.tag = indexPath.row
+                cell.shareButton.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                self.objectId = homePost.id ?? 0
+                self.type = .post
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+            }
+            else {
+                print("Text")
+                let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                
+                cell.detailsView.layer.cornerRadius = 13
+                cell.delegate = self
+                cell.uiData(dataMaper: homePost)
+                cell.shareBtn.tag = indexPath.row
+                cell.commentBtn.tag = indexPath.row
+                cell.likeBtn.tag = indexPath.row
+                cell.goToProfileBtn.tag = indexPath.row
+                cell.reportBtn.tag = indexPath.row
+                self.objectId = homePost.id ?? 0
+                self.type = .post
+                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+                return cell
+            }
+            return UITableViewCell()
             
         case self.tableView:
             
@@ -1446,11 +1566,11 @@ private extension HomeVC {
 //                    }
                     self.tableView.reloadData()
                     if selectedTab == .news {
-                        self.tableViewHeightConst.constant = CGFloat(self.allEventList.count * 430)
+                        self.postListTblVwHeight.constant = CGFloat(self.allEventList.count * 430)
                     } else if selectedTab == .posts {
                         self.setPostTableHeight()
                     } else {
-                        self.tableViewHeightConst.constant = 0.0
+                        self.postListTblVwHeight.constant = 0.0
                     }
                     self.emptyListMessageLbl.isHidden = true
                     self.emptyListMessageLbl.text = ""
@@ -1788,6 +1908,10 @@ extension HomeVC {
         jobListTblVw.delegate = self
         jobListTblVw.registerCell(withType: UserJobCell.self)
         
+        postListTblVw.dataSource = self
+        postListTblVw.delegate = self
+        postListTblVw.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self])
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.layer.cornerRadius = 7.0
@@ -2015,6 +2139,7 @@ extension HomeVC {
         self.currentEventListHeight.constant = 0
         self.tableViewHeightConst.constant = 0
         self.jobListTblVwHeight.constant = 0
+        self.postListTblVwHeight.constant = 0
         self.emptyListMessageLbl.text = ""
                 
         //var tableViewBottom: CGFloat = 0
