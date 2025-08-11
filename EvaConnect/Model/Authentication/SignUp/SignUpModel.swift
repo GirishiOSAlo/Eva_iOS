@@ -19,7 +19,8 @@ struct SignupData: Codable {
     let id: Int?
     let firstName: String?
     let lastName: String?
-    let email, isConnected, isReceiver: String?
+    let email, isConnected: String?
+    let isReceiver: Bool?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

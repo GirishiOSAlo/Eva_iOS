@@ -87,7 +87,8 @@ struct NewEventDetailsData: Codable {
 struct NewEventDetailsUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver, connectionID, bioData, uniqueCode: String?
+    let isReceiver: Bool?
+    let connectionID, bioData, uniqueCode: String?
     let dateOfBirth, status: String?
     let userImage: String?
     let createdByID: String?
@@ -347,7 +348,8 @@ struct NewEventInterestedUser: Codable {
 struct NewEventDetailsInterestedUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver, connectionID, bioData, uniqueCode: String?
+    let isReceiver: Bool?
+    let connectionID, bioData, uniqueCode: String?
     let dateOfBirth, status: String?
     let userImage: String?
     let createdByID: String?

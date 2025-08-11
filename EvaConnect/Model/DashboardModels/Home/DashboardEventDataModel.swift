@@ -22,7 +22,8 @@ struct DashboardEventData: Codable {
     let createdDate: String?
     let isConnected: String?
     let connectionID: Int?
-    let isReceiver, content, title, filename: String?
+    let isReceiver: Bool?
+    let content, title, filename: String?
     let isPrivate: Int?
     let datumCreatedDatetime, datumModifiedDatetime: String?
     let country: String?

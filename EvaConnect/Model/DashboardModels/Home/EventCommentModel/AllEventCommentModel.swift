@@ -44,7 +44,8 @@ struct EventCommentModel: Codable {
 struct EventCommentUser: Codable {
     let id: Int?
     let firstName,lastName: String?
-    let isConnected, isReceiver, connectionID : Int?
+    let isConnected, connectionID : Int?
+    let isReceiver: Bool?
     let bioData, email, uniqueCode, username: String?
     let dateOfBirth: String?
     let verificationPin: Int?

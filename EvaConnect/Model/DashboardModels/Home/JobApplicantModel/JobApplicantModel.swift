@@ -43,7 +43,8 @@ struct JobApplicant: Codable {
 struct applicantUser: Codable {
     let id: Int?
     let firstName: String?
-    let isConnected, isReceiver, connectionID, lastName: String?
+    let isConnected, connectionID, lastName: String?
+    let isReceiver: Bool?
     let bioData, email, uniqueCode, username: String?
     let dateOfBirth: String?
     let verificationPin: Int?

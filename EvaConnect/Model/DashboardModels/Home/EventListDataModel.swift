@@ -93,7 +93,7 @@ struct EventUser: Codable {
     let lastName: String?
     let email: String?
     let isConnected: String?
-    let isReceiver: String?
+    let isReceiver: Bool?
     let connectionID: Int?
     let bioData: String?
     let uniqueCode: String?

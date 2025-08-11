@@ -19,7 +19,8 @@ struct UserDetailsModel: Codable {
 struct UserData: Codable {
     let id: Int?
         let firstName, lastName, email, isConnected: String?
-        let isReceiver, connectionID: Int?
+    let isReceiver: Bool?
+        let connectionID: Int?
         let bioData, uniqueCode, dateOfBirth, status: String?
         let userImage, createdByID: String?
         let isLinkedin: Int?

@@ -253,7 +253,7 @@ struct Userdetails: Codable {
 struct ReactionUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver: String?
+    let isReceiver: Bool?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

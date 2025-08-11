@@ -101,7 +101,7 @@ struct UserConnection: Codable , Equatable {
     let id: Int?
     let firstName: String?
     var isConnected: IsConnected?
-    var isReceiver: String? 
+    var isReceiver: Bool? 
     var connectionID, userId: Int?
     let lastName, bioData: String?
     let email, uniqueCode, userName: String?
