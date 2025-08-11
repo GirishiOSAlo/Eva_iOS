@@ -19,7 +19,7 @@ struct UserDetailsDataModel: Codable {
 struct UserDetailsData: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let resumes: [Resume]?
     let dateOfArrival, timeOfArrival, location, flightNo: String?

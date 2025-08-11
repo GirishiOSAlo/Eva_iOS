@@ -30,7 +30,8 @@ struct ChatData: Codable {
     class ChatList: Codable {
         let id: Int?
         let createdDatetime, modifiedDatetime: String?
-        let senderID, receiverID: Int?
+        let senderID: Int?
+        let receiverID: ReceiverID?
         let message, image: String?
         let imageURL: String?
         let document, documentURL: String?
@@ -99,3 +100,46 @@ enum ChatTypeEnum: String, Codable {
     case reply = "reply"
     case doc = "document"
 }
+
+
+enum ReceiverID: Codable {
+    case int(Int)
+    case bool(Bool)
+    case string(String)
+    case null
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if container.decodeNil() {
+            self = .null
+        } else if let intValue = try? container.decode(Int.self) {
+            self = .int(intValue)
+        } else if let boolValue = try? container.decode(Bool.self) {
+            self = .bool(boolValue)
+        } else if let stringValue = try? container.decode(String.self) {
+            self = .string(stringValue)
+        } else {
+            throw DecodingError.typeMismatch(
+                ReceiverID.self,
+                DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Unsupported type for receiver_id")
+            )
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+
+        switch self {
+        case .int(let value):
+            try container.encode(value)
+        case .bool(let value):
+            try container.encode(value)
+        case .string(let value):
+            try container.encode(value)
+        case .null:
+            try container.encodeNil()
+        }
+    }
+}
+
