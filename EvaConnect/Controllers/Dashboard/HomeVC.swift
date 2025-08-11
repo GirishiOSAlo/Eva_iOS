@@ -301,7 +301,8 @@ class HomeVC: BaseVC {
                         self.currentEventListHeight.constant = 0
                     }
                 } else {
-                    self.presentAlert("Failure", currentEventRoot.message, nil)
+                    print("Failure :: \(currentEventRoot.message ?? "Error")")
+                    //self.presentAlert("Failure", currentEventRoot.message, nil)
                 }
             } catch {
                 self.offsetCount -= 1
@@ -320,17 +321,18 @@ class HomeVC: BaseVC {
             self.hideActivity()
             do {
                 let jsonDecoder = JSONDecoder()
-                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
+                let allEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
                 self.filterCollectionView.isUserInteractionEnabled = true
-                if !(currentEventRoot.error ?? false) {
-                    if (currentEventRoot.data?.count ?? 0) > 0 {
-                        self.allEventList = currentEventRoot.data ?? []
+                if !(allEventRoot.error ?? false) {
+                    if (allEventRoot.data?.count ?? 0) > 0 {
+                        self.allEventList = allEventRoot.data ?? []
                         self.tableViewHeightConst.constant = CGFloat(self.allEventList.count * 440)
                     } else {
                         self.tableViewHeightConst.constant = 0
                     }
                 } else {
-                    self.presentAlert("Failure", currentEventRoot.message, nil)
+                    print("Failure :: \(allEventRoot.message ?? "Error")")
+                    //self.presentAlert("Failure", allEventRoot.message, nil)
                 }
             } catch {
                 self.offsetCount -= 1
@@ -349,17 +351,18 @@ class HomeVC: BaseVC {
             self.hideActivity()
             do {
                 let jsonDecoder = JSONDecoder()
-                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
+                let upcomingEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
                 self.filterCollectionView.isUserInteractionEnabled = true
-                if !(currentEventRoot.error ?? false) {
-                    if (currentEventRoot.data?.count ?? 0) > 0 {
-                        self.upcomingEventList = currentEventRoot.data ?? []
+                if !(upcomingEventRoot.error ?? false) {
+                    if (upcomingEventRoot.data?.count ?? 0) > 0 {
+                        self.upcomingEventList = upcomingEventRoot.data ?? []
                         self.tableViewHeightConst.constant = CGFloat(self.upcomingEventList.count * 440)
                     } else {
                         self.tableViewHeightConst.constant = 0
                     }
                 } else {
-                    self.presentAlert("Failure", currentEventRoot.message, nil)
+                    print("Failure :: \(upcomingEventRoot.message ?? "Error")")
+                    //self.presentAlert("Failure", upcomingEventRoot.message, nil)
                 }
             } catch {
                 self.offsetCount -= 1
