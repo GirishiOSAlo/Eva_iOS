@@ -328,7 +328,7 @@ extension AddPostVC {
 //    }
     
     func selectMedia() {
-        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Select an Option", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Photos", style: .default, handler: { (UIAlertAction) in
             
             if #available(iOS 14, *) {
@@ -344,12 +344,14 @@ extension AddPostVC {
             self.documentView.isHidden = true
             self.documentURL = nil
         }))
+        
         alert.addAction(UIAlertAction(title: "Videos", style: .default, handler: { (UIAlertAction) in
             self.showVideoPicker()
             self.postImages = []
             self.documentView.isHidden = true
             self.documentURL = nil
         }))
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
