@@ -1513,26 +1513,27 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print("Indexpath ", indexPath.row)
-        
-        if indexPath.row == (chats.count - 1) {
-            isLstHit = true
-        }
-        
-        if isLstHit {
-            isLstHit = false
-            if indexPath.row == 0 {
-//                let lastIndexPath = IndexPath(row: self.tempChats.count - 1, section: 0)
-//                self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
-                offsetCount += 1
-                showActivity()
-                FetchMsgList(id: user?.id ?? userId, offset: self.offsetCount, autoReload: false)
-            } else {
-                
-            }
-       }
-   }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        print("Indexpath ", indexPath.row)
+//        
+//        if indexPath.row == (chats.count - 1) {
+//            isLstHit = true
+//        }
+//        
+//        if isLstHit {
+//            isLstHit = false
+//            if indexPath.row == 0 {
+////                let lastIndexPath = IndexPath(row: self.tempChats.count - 1, section: 0)
+////                self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+//                offsetCount += 1
+//                showActivity()
+//                print("Chat -- tableview will display")
+//                FetchMsgList(id: user?.id ?? userId, offset: self.offsetCount, autoReload: false)
+//            } else {
+//                
+//            }
+//       }
+//   }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Check if the content offset is close to the top
