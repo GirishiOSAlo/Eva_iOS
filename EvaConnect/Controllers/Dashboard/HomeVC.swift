@@ -211,8 +211,8 @@ class HomeVC: BaseVC {
                 self.currentEventLblHeight.constant = 0
                 self.allEventLblHeight.constant = 0
                 self.currentEventListHeight.constant = 0
+                self.getPosts(offSet: 1, inserted: false)
             }
-            //self.getPosts(offSet: 1, inserted: false)
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
@@ -586,22 +586,31 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 //        if self.collectionView == collectionView || selectedTabFilter == indexPath.item { return }
         selectedHomeFilter = homeTabFilter[indexPath.item]
         if selectedTab == .events {
+            
+            self.currentEventList = []
+            self.allEventList = []
+            self.upcomingEventList = []
+            self.posts = []
+            
             self.currentEventLblHeight.constant = 70.0
             self.allEventLblHeight.constant = 70.0
             if self.selectedHomeFilter == .new {
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "All Event"
+                self.fetchAllEventData()
             } else if self.selectedHomeFilter == .going {
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "Upcoming Event"
+                self.fetchUpcomingEventData()
             } else {
                 self.currentEventLblHeight.constant = 0
                 self.allEventLblHeight.constant = 0
                 self.currentEventListHeight.constant = 0
+                self.getPosts(offSet: 1, inserted: false)
             }
-            self.getPosts(offSet: 1, inserted: false)
         } else if selectedTab == .jobs {
             print(selectedHomeFilter)
+            self.jobList = []
             self.currentPage = 1
             self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         }
@@ -753,9 +762,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             else if selectedTab == .events {
                 if self.selectedHomeFilter == .new {
                     return self.allEventList.count
-                }
-                else {
+                } else if self.selectedHomeFilter == .going {
                     return self.upcomingEventList.count
+                } else {
+                    return self.posts.count
                 }
             }
             else if selectedTab == .posts {
@@ -1136,7 +1146,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
                     
                 }
-                else {
+                else if self.selectedHomeFilter == .going {
                     let event = upcomingEventList[indexPath.row]
                     cell.uiData(event: event)
                     cell.delegate = self
@@ -1150,61 +1160,64 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
                     cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
                 }
-                //                let event = posts[indexPath.row]
-                //                cell.uiData(dataMaper: event)
-                //                cell.dashboardItem = event
-                //                cell.delegate = self
-                //                cell.eventDelegate = self
-                //                cell.interrestedBtn.tag = indexPath.row
-                //            if LoggedUserDetails.shared.user!.id != event.user!.id {
-                //                cell.attendingBtn.isHidden = false
-                //                cell.attendingBtn.tag = indexPath.row
-                //                //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                //            }
-                //            else {
-                //                cell.attendingBtn.isHidden = true
-                //            }
-                //                if self.selectedTabFilter == 1 {
-                //                    cell.BottomViewStack.isHidden = true
-                //                } else {
-                //                    cell.BottomViewStack.isHidden = false
-                //                }
-                //                cell.industryUserView.isHidden = true
-                //                cell.indivisualUserView.isHidden = false
-                //
-                //                cell.sharedBtn.tag = indexPath.row
-                //                cell.navigateToDetail.tag = indexPath.row
-                //                cell.saveEventBtn.tag = indexPath.row
-                //                cell.viewDetailsBtn.tag = indexPath.row
-                //                self.objectId = event.id ?? 0
-                //                self.type = .event
-                //
-                //
-                //                let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-                //                if eventAttendeesStatus == "accepted" {
-                //                    cell.requestJoinBtn.setTitle("View details", for: .normal)
-                //                }
-                //                else if eventAttendeesStatus == "Request_To_Join" {
-                //                    cell.requestJoinBtn.setTitle("Requested", for: .normal)
-                //                }
-                //                else if eventAttendeesStatus == "decline" {
-                //                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-                //                }
-                //                else {
-                //                    cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-                //                }
-                
-//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-//                cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-//                cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-                //            cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
-                
-                //            cell.intrestedTapped = { [weak self] dashboardItem in
-                //                let vc = StoryboardRouter.intrested()
-                //                vc.dashboardItem = dashboardItem
-                //                self?.navigationController?.pushViewController(vc, animated: true)
-                //            }
+                else {
+                    
+                    let event = posts[indexPath.row]
+                    cell.uiData(dataMaper: event)
+                    cell.dashboardItem = event
+                    cell.delegate = self
+                    cell.eventDelegate = self
+//                    cell.interrestedBtn.tag = indexPath.row
+//                    if LoggedUserDetails.shared.user!.id != event.user!.id {
+//                        cell.attendingBtn.isHidden = false
+//                        cell.attendingBtn.tag = indexPath.row
+//                        //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                    }
+//                    else {
+//                        cell.attendingBtn.isHidden = true
+//                    }
+//                    if self.selectedTabFilter == 1 {
+//                        cell.BottomViewStack.isHidden = true
+//                    } else {
+//                        cell.BottomViewStack.isHidden = false
+//                    }
+//                    cell.industryUserView.isHidden = true
+//                    cell.indivisualUserView.isHidden = false
+//                    
+//                    cell.sharedBtn.tag = indexPath.row
+                    cell.navigateToDetail.tag = indexPath.row
+                    cell.saveEventBtn.tag = indexPath.row
+                    cell.viewDetailsBtn.tag = indexPath.row
+                    self.objectId = event.id ?? 0
+                    self.type = .event
+                    
+                    
+//                    let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+//                    if eventAttendeesStatus == "accepted" {
+//                        cell.requestJoinBtn.setTitle("View details", for: .normal)
+//                    }
+//                    else if eventAttendeesStatus == "Request_To_Join" {
+//                        cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//                    }
+//                    else if eventAttendeesStatus == "decline" {
+//                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//                    }
+//                    else {
+//                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//                    }
+//                    
+//                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+//                    cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
+//                    
+//                    cell.intrestedTapped = { [weak self] dashboardItem in
+//                        let vc = StoryboardRouter.intrested()
+//                        vc.dashboardItem = dashboardItem
+//                        self?.navigationController?.pushViewController(vc, animated: true)
+//                    }
+                }
                 
                 return cell
             case .industryEvents:
@@ -1577,7 +1590,16 @@ private extension HomeVC {
                         self.postListTblVwHeight.constant = CGFloat(self.allEventList.count * 430)
                     } else if selectedTab == .posts {
                         self.setPostTableHeight()
-                    } else {
+                    } else if selectedTab == .events {
+                        if self.selectedHomeFilter == .new {
+                            self.postListTblVwHeight.constant = 0.0
+                        } else if self.selectedHomeFilter == .going {
+                            self.postListTblVwHeight.constant = 0.0
+                        } else {
+                            self.setPostTableHeight()
+                        }
+                    }
+                    else {
                         self.postListTblVwHeight.constant = 0.0
                     }
                     self.emptyListMessageLbl.isHidden = true
@@ -1824,10 +1846,29 @@ private extension HomeVC {
 //            self.hideActivity()
             if error == 0 {
                 print("Event saved!!")
-                self.getPosts(offSet: 1, inserted: false)
-                self.fetchCurrentEventData()
-//                let indexPath = IndexPath(item: at, section: 0)
-//                UIView.performWithoutAnimation { self.tableView.reloadRows(at: [indexPath], with: .none) }
+                if self.selectedHomeFilter == .new {
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "All Event"
+                    self.fetchAllEventData()
+                } else if self.selectedHomeFilter == .going {
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "Upcoming Event"
+                    self.fetchUpcomingEventData()
+                } else {
+                    self.currentEventLblHeight.constant = 0
+                    self.allEventLblHeight.constant = 0
+                    self.currentEventListHeight.constant = 0
+                    self.getPosts(offSet: 1, inserted: false)
+                }
+//                self.getPosts(offSet: 1, inserted: false)
+//                self.fetchCurrentEventData()
+//                self.fetchAllEventData()
+//                self.fetchUpcomingEventData()
+                let indexPath = IndexPath(item: at, section: 0)
+                UIView.performWithoutAnimation {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                    self.currentEventCollectionVw.reloadItems(at: [indexPath])
+                }
                 self.view.isUserInteractionEnabled = true
             }
             else {
@@ -1856,10 +1897,30 @@ private extension HomeVC {
 //            self.hideActivity()
             if error == 0 {
                 print("Event saved!!")
-                self.getPosts(offSet: 1, inserted: false)
-                self.fetchCurrentEventData()
+                if self.selectedHomeFilter == .new {
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "All Event"
+                    self.fetchAllEventData()
+                } else if self.selectedHomeFilter == .going {
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "Upcoming Event"
+                    self.fetchUpcomingEventData()
+                } else {
+                    self.currentEventLblHeight.constant = 0
+                    self.allEventLblHeight.constant = 0
+                    self.currentEventListHeight.constant = 0
+                    self.getPosts(offSet: 1, inserted: false)
+                }
+//                self.getPosts(offSet: 1, inserted: false)
+//                self.fetchCurrentEventData()
+//                self.fetchAllEventData()
+//                self.fetchUpcomingEventData()
                 self.view.isUserInteractionEnabled = true
-
+                let indexPath = IndexPath(item: at, section: 0)
+                UIView.performWithoutAnimation {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                    self.currentEventCollectionVw.reloadItems(at: [indexPath])
+                }
             }
             else {
                 self.hideActivity()
@@ -2471,7 +2532,7 @@ extension HomeVC {
     @objc func saveEventTapped(sender: UIButton) {
         print("saved Event")
         showActivity()
-        let post = posts[sender.tag]
+        let post = self.allEventList[sender.tag]
         saveEvent(postId: post.id ?? 0, at: sender.tag)
     }
     
@@ -2483,7 +2544,7 @@ extension HomeVC {
 //    }
     @objc func eventViewDetailsTapped(sender: UIButton) {
         print("View Details Event")
-        let obj = self.posts[sender.tag]
+        let obj = self.allEventList[sender.tag]
         let vc = EventMainVC.instantiate()
         vc.eventId = obj.id ?? 0
         navigationController?.pushViewController(vc, animated: true)
