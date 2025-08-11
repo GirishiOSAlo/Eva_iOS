@@ -143,8 +143,8 @@ extension NewsSourceVC {
     }
     
     func getUserSelectedNews() {
-        guard let userId = LoggedUserDetails.shared.user?.id else { return }
-        let params = ["user_id": userId]
+        //guard let userId = LoggedUserDetails.shared.user?.id else { return }
+        let params = ["user_id": myUserDefaults.userId]
         NetworkManagerr.request(EndPoints.getUserNews, method: .post, parameters: params) { [weak self] (result: Result<NewsSourceRoot>) in
             guard let self = self else { return }
             self.hideActivity()

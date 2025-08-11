@@ -70,7 +70,7 @@ extension PrivatePublicAccVC {
     
     private func fetchUserDetail() {
         showActivity()
-        ProfileManager.shared.fetchUserDetail(userId: LoggedUserDetails.shared.user?.id ?? 0, showLoader: false) { user, error in
+        ProfileManager.shared.fetchUserDetail(userId: myUserDefaults.userId, showLoader: false) { user, error in
             self.hideActivity()
             if let error = error {
                 self.presentAlert("Error", error)

@@ -20,8 +20,8 @@ class ProfileManager {
     private init() { }
     
     func addConnection(id: Int, completion: @escaping (String, String) -> Void) {
-        let parameters: AFParameters = ["receiver_id": id, "sender_id": LoggedUserDetails.shared.user?.id ?? 0,
-                                        "status": "pending", "modified_by_id": LoggedUserDetails.shared.user?.id ?? 0]
+        let parameters: AFParameters = ["receiver_id": id, "sender_id": myUserDefaults.userId,
+                                        "status": "pending", "modified_by_id": myUserDefaults.userId]
         SVProgressHUD.show()
         NetworkManagerr.request(EndPoints.addConnection, method: .post, parameters: parameters) { [weak self] (result: Result<GenericResponse>) in
             SVProgressHUD.dismiss()
@@ -30,7 +30,7 @@ class ProfileManager {
     }
     
     func updateConnection(id: Int, completion: @escaping (String, String) -> Void) {
-        let parameters: AFParameters = ["id": id, "modified_by_id": LoggedUserDetails.shared.user?.id ?? 0,
+        let parameters: AFParameters = ["id": id, "modified_by_id": myUserDefaults.userId,
                                         "modified_datetime": Date().toString(formatter: .standardDateWithTime),
                                         "status": "active"]
         let endPoint = EndPoints.updateConnection + "\(id)"
@@ -47,7 +47,7 @@ class ProfileManager {
     
     func deleteConnection(id: Int, completion: @escaping (String, String) -> Void) {
         
-        let parameters: AFParameters = ["id": id, "modified_by_id": LoggedUserDetails.shared.user?.id ?? 0,
+        let parameters: AFParameters = ["id": id, "modified_by_id": myUserDefaults.userId,
                                         "modified_datetime": Date().toString(formatter: .standardDateWithTime),
                                         "status": "deactivate"]
         let endPoint = EndPoints.updateConnection + "\(id)"
@@ -128,7 +128,7 @@ extension ProfileManager {
                     users.append(sender)
                     users.append(receiver)
                 })
-                completion(users.filter({ $0?.id != LoggedUserDetails.shared.user?.id }).compactMap({ $0 }), nil, success.data)
+                completion(users.filter({ $0?.id != myUserDefaults.userId }).compactMap({ $0 }), nil, success.data)
             }
         case .failure(let failure):
             completion(nil, failure.localizedDescription, [])
@@ -155,7 +155,7 @@ extension ProfileManager {
                         users.append(sender)
                         users.append(receiver)
                     })
-                    completion(users.filter({ $0?.id != LoggedUserDetails.shared.user?.id }).compactMap({ $0 }), nil, success.data)
+                    completion(users.filter({ $0?.id != myUserDefaults.userId }).compactMap({ $0 }), nil, success.data)
                 }
             case .failure(let failure):
                 completion(nil, failure.localizedDescription, [])
@@ -164,7 +164,7 @@ extension ProfileManager {
     }
     
     func performGlobalSearch(search: String, filter: String, completion: @escaping completionHandler) {
-        var params: AFParameters = ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "filter": filter, "search_key": search, "connection_status": "active"]
+        var params: AFParameters = ["user_id": myUserDefaults.userId, "filter": filter, "search_key": search, "connection_status": "active"]
         if filter == SearchTags.companies.filterKey {
             params["connection_status"] = nil
             NetworkManagerr.request(EndPoints.searhDashboard, method: .post, parameters: params) { (result: Result<ConnectionFilterModel>) in
@@ -175,7 +175,7 @@ extension ProfileManager {
                     } else if success.data.isEmpty {
                         completion(nil, success.message, [])
                     } else {
-                        completion(success.data.filter({ $0.id != LoggedUserDetails.shared.user?.id }), nil, [])
+                        completion(success.data.filter({ $0.id != myUserDefaults.userId }), nil, [])
                     }
                 case .failure(let failure):
                     completion(nil, failure.localizedDescription, [])
@@ -197,7 +197,7 @@ extension ProfileManager {
 //    }
     
     func performSearch(query: String, status: String, completion: @escaping completionHandler) {
-        let params: AFParameters = ["user_id": "\(LoggedUserDetails.shared.user?.id ?? 0)", "connection_status": status, "first_name": query.name.first]
+        let params: AFParameters = ["user_id": "\(myUserDefaults.userId)", "connection_status": status, "first_name": query.name.first]
         guard let url = params.getURL(EndPoints.getFilterConnectionNew) else { return }
         NetworkManagerr.request(url, method: .post, parameters: params) { (result: Result<PendingBlockFilterModel>) in
             self.handleResultRequest(result: result, completion: completion)
@@ -205,7 +205,7 @@ extension ProfileManager {
     }
     
     func getConnectionStatus(targetId: String, completion: @escaping(Bool) -> Void) {
-        let params: AFParameters = ["user_id": "\(LoggedUserDetails.shared.user?.id ?? 0)", "target_user_key": targetId]
+        let params: AFParameters = ["user_id": "\(myUserDefaults.userId)", "target_user_key": targetId]
         guard let url = params.getURL(EndPoints.connectionStatus) else { return }
         
         NetworkManagerr.request(url) { (result: Result<Wrapper<[ConnectionStatus]>>) in
@@ -225,8 +225,8 @@ extension ProfileManager {
     
     func updateProfile(params: Parameters, images: [UIImage]? = nil, completion: @escaping (Bool, String) -> Void) {
         
-        guard let id = LoggedUserDetails.shared.user?.id else { return }
-        var tempParams: Parameters = ["modified_by_id": id, "modified_datetime": Date().toString(formatter: .standardDateWithTime)]
+        //guard let id = LoggedUserDetails.shared.user?.id else { return }
+        var tempParams: Parameters = ["modified_by_id": myUserDefaults.userId, "modified_datetime": Date().toString(formatter: .standardDateWithTime)]
         params.forEach({ tempParams[$0.key] = $0.value })
         SVProgressHUD.show()
         
@@ -307,7 +307,7 @@ extension ProfileManager {
     
     func fetchPosts(uid: Int, limit: Int = 5, offset: Int = 0, completion: @escaping ([DashboardItem], String?) -> Void) {
         let url = "\(EndPoints.homeFilterPosts)?limit=\(limit)&offset=\(0)"
-        let param: AFParameters = ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "filter": "my_posts", "user_key": uid]
+        let param: AFParameters = ["user_id": myUserDefaults.userId, "filter": "my_posts", "user_key": uid]
         
         NetworkManagerr.request(url, method: .post, parameters: param) { (result: Result<DashboardItemRoot>) in
             switch result {

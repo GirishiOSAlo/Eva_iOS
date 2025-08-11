@@ -390,7 +390,7 @@ extension UserProfileVC {
         reactionTblVw.registerCells(withTypes: [HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self, HomeUrl.self])
 
         if userId.isNil {
-            userId = LoggedUserDetails.shared.user?.id
+            userId = myUserDefaults.userId
             backView.isHidden = true
         }
         
@@ -547,7 +547,7 @@ extension UserProfileVC {
         }
         
         let isCompanyUser = LoggedUserDetails.shared.user?.type == userType.company.rawValue && userDetail?.type == userType.user.rawValue
-        if bindData.id != LoggedUserDetails.shared.user?.id {
+        if bindData.id != myUserDefaults.userId {
             connectedBtn.isHidden = false
 //            if bindData.isConnected == .deleted || bindData.isConnected == .notConnected {
 //                //connectedBtn.isHidden = true
@@ -683,7 +683,7 @@ extension UserProfileVC {
             } else if let user = user {
                 self.updateUI(user: user)
                 self.profileLoadingView.isHidden = true
-                if LoggedUserDetails.shared.user?.id != user.id { self.applyConditionalLayout() }
+                if myUserDefaults.userId != user.id { self.applyConditionalLayout() }
             } else {
                 self.presentAlert("Error", "Unable to fetch user details")
             }

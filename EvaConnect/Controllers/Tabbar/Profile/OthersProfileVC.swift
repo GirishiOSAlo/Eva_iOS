@@ -688,7 +688,7 @@ extension OthersProfileVC {
     
     func addConnection(receiverId: Int, completion: @escaping () -> Void) {
         
-        let id = LoggedUserDetails.shared.user?.id ?? 0
+        let id = myUserDefaults.userId
         let parameters: AFParameters = [ "receiver_id": receiverId,
                                          "sender_id": id,
                                          "status": "pending",

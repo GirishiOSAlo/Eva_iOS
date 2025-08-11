@@ -1288,7 +1288,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
             let chat = chats[indexPath.row]
             if chat.type == .message {
                 //MARK: Text Message Cell...
-                if (chat.senderID) == LoggedUserDetails.shared.user?.id {
+                if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+                {
                     if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
                         cell.selectionStyle = .default
                         // Add long press gesture recognizer to the cell
@@ -1356,7 +1357,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                 
             } else if chat.type == .image {
                 // MARK: Image - Send Image Cell...
-                if (chat.senderID) == LoggedUserDetails.shared.user?.id {
+                if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+                {
                     if let cell = tableView.dequeueReusableCell(withIdentifier: SenderImgTVCell.id(), for: indexPath) as? SenderImgTVCell {
                         cell.selectionStyle = .default
                         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
@@ -1396,7 +1398,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                     longPressGesture.delegate = self  // Set the delegate
                     cell.addGestureRecognizer(longPressGesture)
                     if chat.audioFileURL != nil {
-                        if (chat.senderID) == LoggedUserDetails.shared.user?.id {
+                        if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+                        {
                             cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
                             cell.mainBaseViewLeading.constant = 70.0
                             cell.mainBaseViewTralling.constant = 20.0
@@ -1430,7 +1433,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                     let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
                     longPressGesture.delegate = self  // Set the delegate
                     cell.addGestureRecognizer(longPressGesture)
-                    if (chat.senderID) == LoggedUserDetails.shared.user?.id {
+                    if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+                    {
                         cell.wholeBGVWleadingConst.constant = 70.0
                         cell.wholeBGVWtrailingConst.constant = 20.0
                         
@@ -1451,7 +1455,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                     longPressGesture.delegate = self  // Set the delegate
                     cell.addGestureRecognizer(longPressGesture)
                     if chat.documentURL != nil {
-                        if (chat.senderID) == LoggedUserDetails.shared.user?.id {
+                        if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+                        {
                             cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
                             cell.mainBaseViewLeading.constant = 70.0
                             cell.mainBaseViewTralling.constant = 20.0

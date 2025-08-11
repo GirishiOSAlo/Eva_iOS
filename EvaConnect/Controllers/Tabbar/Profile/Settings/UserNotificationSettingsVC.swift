@@ -77,8 +77,8 @@ extension UserNotificationSettingsVC {
     
     func sendNotificationSettings(){
         let notifications: AFParameters = Dictionary(notifications.map({ ($0.item.apiKey, $0.selected ? 1 : 0) })) { first, _ in first }
-        let params: AFParameters = ["notifications": notifications, "user_id": LoggedUserDetails.shared.user?.id ?? 0, "status": "active",
-                                    "created_datetime": "", "os": "iOS", "created_by": LoggedUserDetails.shared.user?.id ?? 0]
+        let params: AFParameters = ["notifications": notifications, "user_id": myUserDefaults.userId, "status": "active",
+                                    "created_datetime": "", "os": "iOS", "created_by": myUserDefaults.userId]
         
         showActivity()
         NetworkManagerr.request(EndPoints.addPushNotificationSettings, method: .post, parameters: params) { [weak self] (result: Result<GenericResponse>) in

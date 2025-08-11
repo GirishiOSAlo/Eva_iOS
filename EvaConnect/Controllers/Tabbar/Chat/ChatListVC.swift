@@ -327,10 +327,10 @@ extension ChatListVC {
     
     func getNotifications(offset: Int, paginationCalled: Bool, completion: @escaping () -> Void) {
         
-        var parameters: AFParameters = ["receiver_id": LoggedUserDetails.shared.user?.id ?? 0]
+        var parameters: AFParameters = ["receiver_id": myUserDefaults.userId]
         var url =  "\(EndPoints.notifications)?limit=\(limit)&offset=\(offset)"
         if isMyActivity {
-            parameters["id"] = LoggedUserDetails.shared.user?.id
+            parameters["id"] = myUserDefaults.userId
             url = EndPoints.userActivity
         }
         
@@ -367,7 +367,7 @@ extension ChatListVC {
     
     func readAllNotifications() {
         
-        let parameters: AFParameters = ["user_id": LoggedUserDetails.shared.user?.id ?? 0]
+        let parameters: AFParameters = ["user_id": myUserDefaults.userId]
         
         NetworkManagerr.request(EndPoints.readAllNotifications, method: .post, parameters: parameters) { (response) in
             if response.result.isSuccess {
@@ -872,7 +872,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
     
     func addConnection(connectionId: Int, completion: @escaping () -> Void) {
         let parameters: AFParameters = [ "modified_datetime" : "2020-08-12 12:30:35",
-                                         "modified_by_id" : LoggedUserDetails.shared.user?.id ?? 0,
+                                         "modified_by_id" : myUserDefaults.userId,
                                          "status": "active" ]
         
         let endPoint = EndPoints.updateConnection + "\(connectionId)/"

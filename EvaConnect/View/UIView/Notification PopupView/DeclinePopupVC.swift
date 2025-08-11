@@ -151,7 +151,7 @@ extension DeclinePopupVC {
             self.reason = self.textView.text
         }
         let parameters = ["filter": "decline",
-                          "attending_user": "\(LoggedUserDetails.shared.user?.id ?? 0)",
+                          "attending_user": "\(myUserDefaults.userId)",
                           "meeting_id": self.meetingID,
                           "reason": self.reason] as [String : Any]
         

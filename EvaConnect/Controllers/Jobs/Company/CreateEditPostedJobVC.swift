@@ -247,7 +247,7 @@ extension CreateEditPostedJobVC {
     private func getJobListingData(jobId: Int) {
         showActivity()
         let endPoint = EndPoints.showJobDetailById + "\(jobId)"
-        let parameters: AFParameters = ["user_id": LoggedUserDetails.shared.user?.id ?? 0]
+        let parameters: AFParameters = ["user_id": myUserDefaults.userId]
         NetworkManagerr.request(endPoint, method: .post, parameters: parameters) { [weak self] (result: Result<Wrapper<[DashboardItem]>>) in
             guard let self = self else { return }
             self.hideActivity()

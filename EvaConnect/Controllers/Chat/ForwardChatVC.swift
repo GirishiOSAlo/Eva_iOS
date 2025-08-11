@@ -117,7 +117,7 @@ private extension ForwardChatVC {
                                 parameters: AFParameters? = nil,
                                 completion: @escaping ([UserConnection]? , Error?) -> ()) {
         
-        var parameterss: AFParameters  = ["user_id": LoggedUserDetails.shared.user?.id ?? 0, "connection_status": "active"]
+        var parameterss: AFParameters  = ["user_id": myUserDefaults.userId, "connection_status": "active"]
         
         if let parameters = parameters {
             parameterss = parameters

@@ -76,7 +76,7 @@ extension PostActionProvidable {
     func updateLikeStatus(postId: Int, action: String, completion: @escaping (Bool?, Error?) -> Void) {
         
         let parameters: AFParameters = ["post_id" : postId,
-                                        "created_by_id" : LoggedUserDetails.shared.user?.id ?? 0,
+                                        "created_by_id" : myUserDefaults.userId,//LoggedUserDetails.shared.user?.id ?? 0,
                                         "status": "pending",
                                         "action": action ]
         

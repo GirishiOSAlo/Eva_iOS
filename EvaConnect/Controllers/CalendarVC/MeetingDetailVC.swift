@@ -407,7 +407,7 @@ extension MeetingDetailVC {
     
     func acceptMeeting() {
         let parameters = ["filter": "accept",
-                          "attending_user": "\(LoggedUserDetails.shared.user?.id ?? 0)",
+                          "attending_user": "\(myUserDefaults.userId)",
                           "meeting_id": self.meetingId,
                           "reason": ""] as [String : Any]
         

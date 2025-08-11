@@ -815,7 +815,7 @@ extension ActivityViewController {
     @objc func goToProfileTapped(_ sender: UIButton) {
         let reaction = reactions[sender.tag]
         let id = reaction.user?.id
-        if id == LoggedUserDetails.shared.user?.id ?? 0 {
+        if id == myUserDefaults.userId {
             let vc = DashboardTabbarVC.instantiate()
             vc.tabType = 1
             self.navigationController?.pushViewController(vc, animated: true)
