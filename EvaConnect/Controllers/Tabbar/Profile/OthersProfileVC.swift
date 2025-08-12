@@ -282,10 +282,17 @@ class OthersProfileVC: UIViewController {
             professionLbl.text = "\(user.designation ?? "No Designation")"
             //self.followingLabel.text = "\(user.pendingConnection ?? "")"
             self.followingLabel.text = "\(user.following ?? 0)"
+            self.downloadResumeBtn.isHidden = true
         }
         else {
             professionLbl.text = "\(user.companyName ?? "")"
             self.followingLabel.text = ""
+            
+            if self.eventID == 0 {
+                self.downloadResumeBtn.isHidden = true
+            } else {
+                self.downloadResumeBtn.isHidden = false
+            }
         }
         self.companyNameLbl.text = user.companyName ?? ""
 
@@ -305,11 +312,7 @@ class OthersProfileVC: UIViewController {
 //        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
 //        self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
         
-        if self.eventID == 0 {
-            self.downloadResumeBtn.isHidden = true
-        } else {
-            self.downloadResumeBtn.isHidden = false
-        }
+        
         
         
         self.followBtnView.isHidden = true
