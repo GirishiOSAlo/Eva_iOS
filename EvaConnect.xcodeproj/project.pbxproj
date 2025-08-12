@@ -588,6 +588,7 @@
 		A6C5E0662E29210000CEE383 /* CreateEventMeetingDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5E0652E29210000CEE383 /* CreateEventMeetingDetailsDataModel.swift */; };
 		A6C5F57A2B30154B0077B6BD /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5F5792B30154B0077B6BD /* InviteVC.swift */; };
 		A6C5F57C2B3019C00077B6BD /* InviteTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5F57B2B3019C00077B6BD /* InviteTVC.swift */; };
+		A6C5FA5C2E4B5D4E00C502EF /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5FA5B2E4B5D4E00C502EF /* DateUtils.swift */; };
 		A6CDBDE52DD1E1D2009B65CD /* HelpPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CDBDE32DD1E1D2009B65CD /* HelpPageVC.swift */; };
 		A6CDBDE62DD1E1D2009B65CD /* HelpPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6CDBDE42DD1E1D2009B65CD /* HelpPageVC.xib */; };
 		A6CDBDEA2DD21070009B65CD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CDBDE82DD21070009B65CD /* CommentVC.swift */; };
@@ -1211,6 +1212,7 @@
 		A6C5E0652E29210000CEE383 /* CreateEventMeetingDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventMeetingDetailsDataModel.swift; sourceTree = "<group>"; };
 		A6C5F5792B30154B0077B6BD /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
 		A6C5F57B2B3019C00077B6BD /* InviteTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteTVC.swift; sourceTree = "<group>"; };
+		A6C5FA5B2E4B5D4E00C502EF /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		A6CDBDE32DD1E1D2009B65CD /* HelpPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPageVC.swift; sourceTree = "<group>"; };
 		A6CDBDE42DD1E1D2009B65CD /* HelpPageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpPageVC.xib; sourceTree = "<group>"; };
 		A6CDBDE82DD21070009B65CD /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
@@ -3112,6 +3114,7 @@
 			isa = PBXGroup;
 			children = (
 				5073A82924774DE4008F2E7D /* CreateMeetingVC.swift */,
+				A6C5FA5B2E4B5D4E00C502EF /* DateUtils.swift */,
 				5073A83024775FA0008F2E7D /* InviteConnectionVC.swift */,
 				5073A832247E436A008F2E7D /* CreateEventVC.swift */,
 				50E0AA12248853A800EFA56D /* MeetingViewVC.swift */,
@@ -4098,6 +4101,7 @@
 				184BC00C23D03EA800D0AA2E /* HomeVC.swift in Sources */,
 				50102F2C2475107200E81860 /* SideMenu.swift in Sources */,
 				A6D00EC52AB447E500016672 /* SearchCategoryCollctionCell.swift in Sources */,
+				A6C5FA5C2E4B5D4E00C502EF /* DateUtils.swift in Sources */,
 				A67BD99E2DC9F415005283DF /* TrendingNewsDetailsCVC.swift in Sources */,
 				25CD345E27706A4D00AF4739 /* SignUpAboutInfoVC.swift in Sources */,
 				18EA43C423D7210100911BC1 /* VideoClass.swift in Sources */,

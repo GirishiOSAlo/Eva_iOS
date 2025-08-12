@@ -395,32 +395,32 @@ extension CreateMeetingVC {
     }
     
     
-    func parseDate(from dateString: String) -> Date? {
-        let formats = [
-            "yyyy-MM-dd",
-            "dd-MMM-yyyy",
-            "dd-MM-yyyy",
-            "MM/dd/yyyy",
-            "yyyy/MM/dd",
-            "dd MMM yyyy",
-            "MMM dd, yyyy",
-            "yyyyMMdd",
-            "yyyy-MM-dd'T'HH:mm:ss",
-            "yyyy-MM-dd HH:mm:ss"
-            // Add more formats as needed
-        ]
-        
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-
-        for format in formats {
-            formatter.dateFormat = format
-            if let date = formatter.date(from: dateString) {
-                return date
-            }
-        }
-        return nil // No matching format found
-    }
+//    func parseDate(from dateString: String) -> Date? {
+//        let formats = [
+//            "yyyy-MM-dd",
+//            "dd-MMM-yyyy",
+//            "dd-MM-yyyy",
+//            "MM/dd/yyyy",
+//            "yyyy/MM/dd",
+//            "dd MMM yyyy",
+//            "MMM dd, yyyy",
+//            "yyyyMMdd",
+//            "yyyy-MM-dd'T'HH:mm:ss",
+//            "yyyy-MM-dd HH:mm:ss"
+//            // Add more formats as needed
+//        ]
+//        
+//        let formatter = DateFormatter()
+//        formatter.locale = Locale(identifier: "en_US_POSIX")
+//
+//        for format in formats {
+//            formatter.dateFormat = format
+//            if let date = formatter.date(from: dateString) {
+//                return date
+//            }
+//        }
+//        return nil // No matching format found
+//    }
     
     func startDatePickerSet() {
         var eventStartDateStr = ""
@@ -440,7 +440,7 @@ extension CreateMeetingVC {
 
         // Convert strings to Date
         // Set min and max dates if conversion is successful
-        if let startParsedDate = parseDate(from: eventStartDateStr) {
+        if let startParsedDate = DateUtils.parseDate(from: eventStartDateStr) {
             print("✅ Parsed Start Date: \(startParsedDate)")
             startDatePicker.minimumDate = startParsedDate
             startDatePicker.date = startParsedDate
@@ -448,7 +448,7 @@ extension CreateMeetingVC {
             print("❌ Could not parse start date from input: \(eventStartDateStr)")
         }
         
-        if let endParsedDate = parseDate(from: eventEndDateStr) {
+        if let endParsedDate = DateUtils.parseDate(from: eventEndDateStr) {
             print("✅ Parsed End Date: \(endParsedDate)")
             startDatePicker.maximumDate = endParsedDate
         } else {
