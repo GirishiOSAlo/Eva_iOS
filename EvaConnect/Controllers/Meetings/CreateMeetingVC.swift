@@ -222,7 +222,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     @IBAction func selectEventBtnTapped(_ sender: UIButton) {
         if self.eventID == 0 {
             if self.currentEventList.count == 0 {
-                self.makeAlert(titleMsg: "Error", messageData: "Please select a event.")
+                self.makeAlert(titleMsg: "Alert", messageData: "Event list not found.")
             } else {
                 let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
                 popupvc.modalPresentationStyle = .overFullScreen
