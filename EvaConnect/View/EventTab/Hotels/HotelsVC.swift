@@ -79,7 +79,7 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let hotel = self.hotelsData[indexPath.row]
         cell.profileImgHeight.constant = 160.0
 
-        if let imageUrl = hotel.imageURL,
+        if let imageUrl = hotel.image,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
            UIApplication.shared.canOpenURL(url) {
