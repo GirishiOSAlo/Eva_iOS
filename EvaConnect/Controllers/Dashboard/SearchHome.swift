@@ -385,6 +385,7 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
                 //document Cell
                 else if bindModelData.postDocument != nil {
                     let cell = tableView.dequeueReusableCell(withIdentifier: HomeUrl.id(), for: indexPath) as! HomeUrl
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     let regex = try! NSRegularExpression(pattern: "<a[^>]+href=\"(.*?)\"[^>]*>")
                     let range = NSMakeRange(0, bindModelData.content!.count)
                     let matches = regex.matches(in: bindModelData.content!, range: range)
@@ -425,7 +426,7 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
                 else if bindModelData.postDocuments!.count > 0 {
                     
                     let cell = tableView.dequeueReusableCell(withIdentifier: HomeImage.id(), for: indexPath) as! HomeImage
-                    
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.uiData(dataMaper: bindModelData)
                     cell.delegate = self
                     
@@ -1290,7 +1291,7 @@ extension SearchHome {
         
         if dashBoardModelArray.count != 0 {
             let  bindData = dashBoardModelArray[sender.tag]
-            if bindData.isConnected! == "pending" && bindData.isReceiver == true {
+            if bindData.isConnected! == "pending" && (bindData.isReceiver != nil) == true {
                 if sender.titleLabel!.text == "Accept" {
                     updateConnection(otherID: bindData.connectionID!)
                 }

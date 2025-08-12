@@ -76,11 +76,6 @@ class HomeVC: BaseVC {
     var currentEventList: [EventListData] = [] {
         didSet {
             self.currentEventCollectionVw.reloadData()
-            if self.currentEventList.count == 0 {
-                self.noCurrentEventLblHeight.constant = 50.0
-            } else {
-                self.noCurrentEventLblHeight.constant = 0.0
-            }
         }
     }
     
@@ -92,11 +87,6 @@ class HomeVC: BaseVC {
     var showEventList: [EventListData] = [] {
         didSet {
             self.tableView.reloadData()
-            if self.showEventList.count == 0 {
-                self.noOtherEventLblHeight.constant = 50.0
-            } else {
-                self.noOtherEventLblHeight.constant = 0.0
-            }
         }
     }
     
@@ -155,9 +145,11 @@ class HomeVC: BaseVC {
 //        } else {
 //            Constants.saveEnumToUserDefaults(.industryEvents)
 //        }
-        // Set up the refresh control
-        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
-        tableView.refreshControl = refreshControl
+        
+//        //--> Set up the refresh control
+//        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
+//        tableView.refreshControl = refreshControl
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.sendToken), name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
         
         isSeparatorHidden = true
@@ -194,6 +186,7 @@ class HomeVC: BaseVC {
 //        }
         
         self.noCurrentEventLblHeight.constant = 0
+        self.noOtherEventLblHeight.constant = 0
         self.currentEventLblHeight.constant = 0
         self.allEventLblHeight.constant = 0
         self.currentEventListHeight.constant = 0
@@ -215,6 +208,7 @@ class HomeVC: BaseVC {
             
             self.currentEventLbl.text = "Current Event"
             self.noCurrentEventLblHeight.constant = 0.0
+            self.noOtherEventLblHeight.constant = 0.0
             self.currentEventLblHeight.constant = 0.0
             self.allEventLblHeight.constant = 0.0
             self.currentEventListHeight.constant = 0
@@ -241,12 +235,14 @@ class HomeVC: BaseVC {
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
-            posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
+            reloadData(inserted: false)
+            //posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         }
         else if selectedTab == .news {
             height = 32
             searchHeight = 0
-            posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
+            reloadData(inserted: false)
+            //posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         }
         
         animateTopView()
@@ -316,6 +312,7 @@ class HomeVC: BaseVC {
                 guard let responseData = response.data else {
                     print("No response data received.")
                     // Optionally show an alert here
+                    self.noCurrentEventLblHeight.constant = 50.0
                     return
                 }
 
@@ -328,6 +325,7 @@ class HomeVC: BaseVC {
                         print("Current Event Failure :: \(currentEventRoot.message ?? "Error")")
                         self.currentEventList = []
                         self.currentEventListHeight.constant = 0
+                        self.noCurrentEventLblHeight.constant = 50.0
                         // Optionally show an alert here
                         // self.presentAlert("Info", currentEventRoot.message, nil)
                         return
@@ -336,10 +334,12 @@ class HomeVC: BaseVC {
                     if let events = currentEventRoot.data, !events.isEmpty {
                         self.currentEventList = events
                         self.currentEventListHeight.constant = CGFloat(events.count * 440)
+                        self.noCurrentEventLblHeight.constant = 0.0
                     } else {
                         print("No current events found.")
                         self.currentEventList = []
                         self.currentEventListHeight.constant = 0
+                        self.noCurrentEventLblHeight.constant = 50.0
                     }
 
                 } catch {
@@ -361,6 +361,7 @@ class HomeVC: BaseVC {
                 print("No response data received.")
                 // Optionally show an alert here
                 self.noOtherEventLbl.text = "No All Event Found."
+                self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
@@ -375,6 +376,7 @@ class HomeVC: BaseVC {
                     self.showEventList = self.allEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No All Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                     // Optionally show an alert here
                     // self.presentAlert("Info", currentEventRoot.message, nil)
                     return
@@ -384,12 +386,14 @@ class HomeVC: BaseVC {
                     self.allEventList = events
                     self.showEventList = self.allEventList
                     self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                    self.noOtherEventLblHeight.constant = 0.0
                 } else {
                     print("No current events found.")
                     self.allEventList = []
                     self.showEventList = self.allEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No All Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                 }
 
             } catch {
@@ -412,6 +416,7 @@ class HomeVC: BaseVC {
                 print("No response data received.")
                 // Optionally show an alert here
                 self.noOtherEventLbl.text = "No Upcoming Event Found."
+                self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
@@ -425,6 +430,7 @@ class HomeVC: BaseVC {
                     self.showEventList = self.upcomingEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Upcoming Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                     // Optionally show an alert here
                     // self.presentAlert("Info", currentEventRoot.message, nil)
                     return
@@ -434,12 +440,14 @@ class HomeVC: BaseVC {
                     self.upcomingEventList = events
                     self.showEventList = self.upcomingEventList
                     self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                    self.noOtherEventLblHeight.constant = 0.0
                 } else {
                     print("No Requested events found.")
                     self.upcomingEventList = []
                     self.showEventList = self.upcomingEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Upcoming Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                 }
 
             } catch {
@@ -461,6 +469,7 @@ class HomeVC: BaseVC {
                 print("No response data received.")
                 // Optionally show an alert here
                 self.noOtherEventLbl.text = "No Requested Event Found."
+                self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
@@ -474,6 +483,7 @@ class HomeVC: BaseVC {
                     self.showEventList = self.requestedEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Requested Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                     // Optionally show an alert here
                     // self.presentAlert("Info", currentEventRoot.message, nil)
                     return
@@ -483,12 +493,14 @@ class HomeVC: BaseVC {
                     self.requestedEventList = events
                     self.showEventList = self.requestedEventList
                     self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                    self.noOtherEventLblHeight.constant = 0.0
                 } else {
                     print("No Requested events found.")
                     self.requestedEventList = []
                     self.showEventList = self.requestedEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Requested Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                 }
 
             } catch {
@@ -510,6 +522,7 @@ class HomeVC: BaseVC {
                 print("No response data received.")
                 // Optionally show an alert here
                 self.noOtherEventLbl.text = "No Saved Event Found."
+                self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
@@ -523,6 +536,7 @@ class HomeVC: BaseVC {
                     self.showEventList = self.savedEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Saved Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                     // Optionally show an alert here
                     // self.presentAlert("Info", currentEventRoot.message, nil)
                     return
@@ -532,12 +546,14 @@ class HomeVC: BaseVC {
                     self.savedEventList = events
                     self.showEventList = self.savedEventList
                     self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                    self.noOtherEventLblHeight.constant = 0.0
                 } else {
                     print("No saved events found.")
                     self.savedEventList = []
                     self.showEventList = self.savedEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Saved Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                 }
 
             } catch {
@@ -559,6 +575,7 @@ class HomeVC: BaseVC {
                 print("No response data received.")
                 // Optionally show an alert here
                 self.noOtherEventLbl.text = "No Passed Event Found."
+                self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
@@ -572,6 +589,7 @@ class HomeVC: BaseVC {
                     self.showEventList = self.passedEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Passed Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                     // Optionally show an alert here
                     // self.presentAlert("Info", currentEventRoot.message, nil)
                     return
@@ -581,12 +599,14 @@ class HomeVC: BaseVC {
                     self.passedEventList = events
                     self.showEventList = self.passedEventList
                     self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                    self.noOtherEventLblHeight.constant = 0.0
                 } else {
                     print("No passed events found.")
                     self.passedEventList = []
                     self.showEventList = self.passedEventList
                     self.tableViewHeightConst.constant = 0
                     self.noOtherEventLbl.text = "No Passed Event Found."
+                    self.noOtherEventLblHeight.constant = 50.0
                 }
 
             } catch {
@@ -823,6 +843,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             
             self.currentEventLbl.text = "Current Event"
             self.noCurrentEventLblHeight.constant = 0.0
+            self.noOtherEventLblHeight.constant = 0.0
             self.currentEventLblHeight.constant = 0.0
             self.allEventLblHeight.constant = 0.0
             self.currentEventListHeight.constant = 0
@@ -852,7 +873,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         }
         else {
-            refreshingContent()
+            //refreshingContent()
+            reloadData()
         }
         //filterCollectionView.isUserInteractionEnabled = false
         filterCollectionView.performBatchUpdates { [weak self] in
@@ -1099,6 +1121,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 else if (homePost.postDocuments?.count ?? 0) > 0 {
                     print("Document")
                     let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.delegate = self
                     cell.uiData(homePost: homePost)
                     cell.likeBtn.tag = indexPath.row
@@ -1116,6 +1139,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 else if homePost.datumPostImage!.count > 0 {
                     print("Images")
                     let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.uiData(dataMaper: homePost)
                     cell.delegate = self
                     cell.delegateDidSelect = self
@@ -1210,6 +1234,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 else if (homePost.postDocuments?.count ?? 0) > 0 {
                     print("Document")
                     let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.delegate = self
                     cell.uiData(homePost: homePost)
                     cell.likeBtn.tag = indexPath.row
@@ -1227,6 +1252,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 else if homePost.datumPostImage!.count > 0 {
                     print("Images")
                     let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.uiData(dataMaper: homePost)
                     cell.delegate = self
                     cell.delegateDidSelect = self
@@ -1839,7 +1865,7 @@ private extension HomeVC {
 //                    }
                     self.postListTblVw.reloadData()
                     if selectedTab == .news {
-                        self.postListTblVwHeight.constant = CGFloat(self.allEventList.count * 430)
+                        self.postListTblVwHeight.constant = CGFloat(self.posts.count)
                     } else if selectedTab == .posts {
                         self.setPostTableHeight()
                     } else if selectedTab == .events {
@@ -2100,6 +2126,7 @@ private extension HomeVC {
             if error == 0 {
                 print("Event saved!!")
                 self.noCurrentEventLblHeight.constant = 0
+                self.noOtherEventLblHeight.constant = 0
                 self.currentEventLblHeight.constant = 0
                 self.allEventLblHeight.constant = 0
                 self.currentEventListHeight.constant = 0
@@ -2168,6 +2195,7 @@ private extension HomeVC {
                 print("Event saved!!")
                 self.currentEventLbl.text = "Current Event"
                 self.noCurrentEventLblHeight.constant = 0.0
+                self.noOtherEventLblHeight.constant = 0.0
                 self.currentEventLblHeight.constant = 0.0
                 self.allEventLblHeight.constant = 0.0
                 self.currentEventListHeight.constant = 0
@@ -2407,7 +2435,7 @@ extension HomeVC {
     @objc private func refreshingContent() {
         postSeeMore.removeAll()
         posts.removeAll()
-        tableView.reloadData()
+        postListTblVw.reloadData()
         reloadData()
     }
     
@@ -2416,7 +2444,7 @@ extension HomeVC {
             fetchSpecificPost(updateSpecificPost)
             return
         }
-        if !inserted { refreshControl.programaticallyBeginRefreshing(in: tableView) }
+        if !inserted { refreshControl.programaticallyBeginRefreshing(in: postListTblVw) }
         if !(refreshControl.isRefreshing) { indicatorView.startAnimating() }
         emptyListMessageLbl.isHidden = true
         emptyListMessageLbl.text = ""
@@ -2498,6 +2526,7 @@ extension HomeVC {
         self.passedEventList = []
 
         self.noCurrentEventLblHeight.constant = 0
+        self.noOtherEventLblHeight.constant = 0
         self.currentEventLblHeight.constant = 0
         self.allEventLblHeight.constant = 0
         self.currentEventListHeight.constant = 0

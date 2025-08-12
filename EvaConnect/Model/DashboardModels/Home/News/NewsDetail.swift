@@ -99,7 +99,7 @@ struct RelatedNewsData: Codable {
     let isPostLike, isNewsLike: Int?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: String?
+    let isReceiver: ReceiverID?
     let content: String?
     let title: String?
     let postImage, commentCount, likeCount, createdByID: Int?

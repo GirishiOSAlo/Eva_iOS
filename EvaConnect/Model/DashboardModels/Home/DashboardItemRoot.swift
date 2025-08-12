@@ -167,7 +167,7 @@ struct DashboardItem: Codable {
     var isPostLike, isPostdisLike: Int?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let content: String?
     var postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?
@@ -180,6 +180,14 @@ struct DashboardItem: Codable {
     let datumPostImage: [String]?
     let postDocuments: [String]?
     let user: EvaUser?
+    
+    let isNewsLike, isNewsDislike: Int?
+    let newsImage, title: String?
+    let documentFileName, documentSize, fileDatetime: String?
+    let image: String?
+    let newsSource: HomeNewsSource?
+    let isNewsSave: Int?
+    let evaNewsCategory: [EvaNewsCategory]?
 
     enum CodingKeys: String, CodingKey {
         case id, userID, isURL, postVideo, isPostLike, isPostdisLike, createdDate, isConnected
@@ -188,6 +196,18 @@ struct DashboardItem: Codable {
         case datumPostImage = "post_image"
         case postDocuments = "post_documents"
         case user
+        
+        case isNewsLike = "is_news_like"
+        case isNewsDislike = "is_news_dislike"
+        case newsImage = "news_image"
+        case title
+        case documentFileName = "document_file_name"
+        case documentSize = "document_size"
+        case fileDatetime = "file_datetime"
+        case image
+        case newsSource = "news_source"
+        case isNewsSave
+        case evaNewsCategory = "eva_news_category"
     }
 }
 

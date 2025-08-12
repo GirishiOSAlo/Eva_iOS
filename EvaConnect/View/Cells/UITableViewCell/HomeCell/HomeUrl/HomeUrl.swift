@@ -59,12 +59,12 @@ class HomeUrl: BaseCellClass {
         commentValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         shareValueLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         
-        followBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1, radius: 12)
-        followBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
-        boderView.makeRoundView(boderColor: UIColor(hex: "#5894DD") ,boderValue: 1.5) 
-        makeImageRound(view: profileImage)
         mainView.layer.cornerRadius = 20.0
-        mainView.clipsToBounds = true
+        followBtn.layer.cornerRadius = 12
+        followBtn.layer.borderWidth = 1
+        followBtn.layer.borderColor = UIColor(hex: "#4D76CD").cgColor
+        boderView.makeRoundView(boderColor: Constants.AppColorLiteral.loginByNew ,boderValue: 2.0)
+        makeImageRound(view: profileImage)
 //        mainView.dropShadow()
         documentName.font = UIFont(name: Myfonts.semiBold, size: 16)
         documentSizeLbl.font = UIFont(name: Myfonts.regular, size: 14)

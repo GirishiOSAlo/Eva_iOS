@@ -1036,6 +1036,7 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
             }
             else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let cell: HomeUrl = postTableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#F8F6F8")
                 //            cell.delegate = self
                 cell.uiData(homePost: homePost)
                 
@@ -1061,6 +1062,7 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
             }
             else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = postTableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#F8F6F8")
                 cell.uiData(dataMaper: homePost)
 
                 //for other user profile...

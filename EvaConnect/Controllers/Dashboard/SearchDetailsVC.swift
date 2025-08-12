@@ -327,6 +327,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                             
                         } else if post.postDocument != "" && post.postDocument != nil { //document Cell
                             let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                            cell.backgroundColor = UIColor(hex: "#F8F6F8")
                             cell.reportBtn.isHidden = true
                             cell.uiData(post: post)
                             cell.likeShareUiView.isHidden = true
@@ -334,6 +335,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                         } else if post.postImages?.count ?? 0 > 0 { //Image Cell
 
                             let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                            cell.backgroundColor = UIColor(hex: "#F8F6F8")
                             cell.reportBtn.isHidden = true
                             cell.uiData(dataMaper: post)
                             cell.likeShareUiView.isHidden = true
@@ -412,12 +414,14 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                         
                     } else if post.postDocument != "" && post.postDocument != nil { //document Cell
                         let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                        cell.backgroundColor = UIColor(hex: "#F8F6F8")
                         cell.uiData(post: post)
                         cell.likeShareUiView.isHidden = true
                         return cell
                     } else if post.postImages?.count ?? 0 > 0 { //Image Cell
                         //
                         let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                        cell.backgroundColor = UIColor(hex: "#F8F6F8")
                         cell.uiData(dataMaper: post)
                         cell.likeShareUiView.isHidden = true
                         return cell
@@ -492,12 +496,14 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                     
                 } else if post.postDocument != "" && post.postDocument != nil { //document Cell
                     let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.uiData(post: post)
                     cell.likeShareUiView.isHidden = true
                     return cell
                 } else if post.postImages?.count ?? 0 > 0 { //Image Cell
                     //
                     let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
                     cell.uiData(dataMaper: post)
                     cell.likeShareUiView.isHidden = true
                     return cell

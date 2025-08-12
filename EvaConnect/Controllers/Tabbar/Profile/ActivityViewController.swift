@@ -555,6 +555,7 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
             }
             else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#F8F6F8")
                 cell.delegate = self
                 cell.sharedBtn.tag = indexPath.row
                 cell.commentBtn.tag = indexPath.row
@@ -567,6 +568,7 @@ extension ActivityViewController: UITableViewDelegate, UITableViewDataSource
             }
             else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#F8F6F8")
                 cell.delegate = self
                 cell.shareButton.tag = indexPath.row
                 cell.commentButton.tag = indexPath.row

@@ -1441,6 +1441,7 @@ extension UserProfileVC: UITableViewDataSource {
                 return cell
             } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let cell: HomeUrl = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#F8F6F8")
                 cell.delegate = self
                 cell.uiData(homePost: homePost)
                 cell.likeBtn.tag = indexPath.row
@@ -1456,6 +1457,7 @@ extension UserProfileVC: UITableViewDataSource {
                 return cell
             } else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = reactionTblVw.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#F8F6F8")
                 cell.uiData(dataMaper: homePost)
                 cell.delegate = self
                 cell.delegateDidSelect = self

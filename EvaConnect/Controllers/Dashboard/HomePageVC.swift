@@ -453,7 +453,7 @@ extension HomePageVC {
                     print("Error :: \(newsRoot.message ?? "")")
                 }
             } catch {
-                print("\(String(describing: response.result.error?.localizedDescription))")
+                print(error)
             }
         }
     }
@@ -1081,6 +1081,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
             else if homePost.postDocuments?.count ?? 0 > 0 {
                 print("Document")
                 let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#EDF1FA")
                 cell.delegate = self
                 cell.setData(dataMaper: homePost)
                 
@@ -1100,6 +1101,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
             else if homePost.datumPostImage!.count > 0 {
                 print("Images")
                 let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.backgroundColor = UIColor(hex: "#EDF1FA")
                 cell.delegate = self
                 cell.setData(data: homePost)
                 cell.delegateDidSelect = self
