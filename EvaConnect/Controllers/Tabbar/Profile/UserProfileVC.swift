@@ -154,7 +154,7 @@ class UserProfileVC: BaseVC {
             } else if homePost.datumPostImage!.count > 0 {
                 print("Images")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 416.0
+                let height = lblHeight + 430.0
                 totalHeight = totalHeight + height
             } else {
                 print("Text")
@@ -1751,7 +1751,7 @@ extension UserProfileVC: UITableViewDataSource {
             } else if homePost.datumPostImage!.count > 0 {
                 print("Images")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 416.0
+                let height = lblHeight + 430.0
                 return height
             } else {
                 print("Text")
