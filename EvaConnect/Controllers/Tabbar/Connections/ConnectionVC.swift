@@ -559,9 +559,9 @@ private extension ConnectionVC {
             self.hideActivity()
             if let _ = updated {
                 if self.inSearchMode {
-                    self.filteredConnections[index].isConnected = declined ? .deleted : .active
+                    self.filteredConnections[index].isConnected = declined ? "deleted" : "active"
                 } else {
-                    self.connections[index].isConnected = declined ? .deleted : .active
+                    self.connections[index].isConnected = declined ? "deleted" : "active"
                 }
                 
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
