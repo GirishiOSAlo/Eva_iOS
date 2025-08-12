@@ -326,6 +326,8 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             cell.cancelMeetingBtn.isHidden = false
             cell.rescheduleBtn.isHidden = false
             cell.messageBtn.isHidden = false
+            cell.joinMeetingBtn.setTitle("Join Meeting", for: .normal)
+            
             if self.type == .approved {
                 cell.joinMeetingBtn.isHidden = true
             }
@@ -338,6 +340,13 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             }
             else if self.type == .pending {
                 // all button show...
+                if obj.requestedByID == myUserDefaults.userId {
+                    print("Own create meeting...")
+                    cell.joinMeetingBtn.isHidden = true
+                } else {
+                    print("Other create meeting...")
+                    cell.joinMeetingBtn.setTitle("Accept Meeting", for: .normal)
+                }
             }
             
             cell.rescheduleBtn.tag = indexPath.row
