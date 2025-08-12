@@ -80,6 +80,10 @@ class HomeVideo: BaseCellClass {
         } else {
             followBtn.isHidden = false
         }
+        
+        
+        
+        
         if dataMaper.user?.userImage != nil {
             profileImage.sd_setImage(with: URL(string: dataMaper.user?.userImage ?? ""), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
         } else { profileImage.image = #imageLiteral(resourceName: "profile") }

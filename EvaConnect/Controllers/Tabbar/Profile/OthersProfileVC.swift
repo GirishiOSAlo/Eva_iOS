@@ -1008,6 +1008,13 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
                 
                 cell.uiData(dataMaper: homePost)
                 
+                //for other user profile...
+                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+                    cell.followBtn.isHidden = true
+                } else {
+                    cell.followBtn.isHidden = false
+                }
+                
                 cell.likeBtn.tag = Row
                 cell.commentBtn.tag = Row
                 cell.sharedBtn.tag = Row
@@ -1023,10 +1030,19 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
                 cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 return cell
-            } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
+            }
+            else if homePost.postDocuments?.count ?? 0 > 0 {//Document
                 let cell: HomeUrl = postTableView.dequeueReusableCell(forIndexPath: indexPath)
                 //            cell.delegate = self
                 cell.uiData(homePost: homePost)
+                
+                //for other user profile...
+                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+                    cell.followBtn.isHidden = true
+                } else {
+                    cell.followBtn.isHidden = false
+                }
+                
                 cell.likeBtn.tag = Row
                 cell.commentBtn.tag = Row
                 cell.sharedBtn.tag = Row
@@ -1039,10 +1055,18 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
                 cell.openArticleBtn.addTarget(self, action: #selector(openDoc(_:)), for: .touchUpInside)
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 return cell
-            } else if homePost.datumPostImage!.count > 0 {//Image
+            }
+            else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = postTableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.uiData(dataMaper: homePost)
 
+                //for other user profile...
+                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+                    cell.followBtn.isHidden = true
+                } else {
+                    cell.followBtn.isHidden = false
+                }
+                
                 cell.likeButton.tag = indexPath.row
                 cell.commentButton.tag = indexPath.row
                 cell.shareButton.tag = indexPath.row
@@ -1052,11 +1076,20 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
                 cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
                 cell.commentButton.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                return cell            } else {//Text
+                return cell
+            }
+            else {//Text
                 let cell: HomeText = postTableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.detailsView.layer.cornerRadius = 13
                 //            cell.delegate = self
                 cell.uiData(dataMaper: homePost)
+                
+                //for other user profile...
+                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+                    cell.followBtn.isHidden = true
+                } else {
+                    cell.followBtn.isHidden = false
+                }
                 
                 cell.likeBtn.tag = Row
                 cell.commentBtn.tag = Row
