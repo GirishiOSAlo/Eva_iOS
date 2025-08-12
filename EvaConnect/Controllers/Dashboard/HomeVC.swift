@@ -74,13 +74,12 @@ class HomeVC: BaseVC {
         }
     }
     
-    var allEventList: [EventListData] = [] {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
-    
-    var upcomingEventList: [EventListData] = [] {
+    var allEventList: [EventListData] = []
+    var upcomingEventList: [EventListData] = []
+    var requestedEventList: [EventListData] = []
+    var savedEventList: [EventListData] = []
+    var passedEventList: [EventListData] = []
+    var showEventList: [EventListData] = [] {
         didSet {
             self.tableView.reloadData()
         }
@@ -197,22 +196,31 @@ class HomeVC: BaseVC {
             height = 32
             searchHeight = 0
             homeTabFilter = HomeTabFilter.userEvent
-            self.currentEventLblHeight.constant = 70.0
-            self.allEventLblHeight.constant = 70.0
+            
+            self.currentEventLbl.text = "Current Event"
+            self.currentEventLblHeight.constant = 0.0
+            self.allEventLblHeight.constant = 0.0
+            self.currentEventListHeight.constant = 0
             if self.selectedHomeFilter == .new {
+                self.currentEventLblHeight.constant = 70.0
+                self.allEventLblHeight.constant = 70.0
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "All Event"
                 self.fetchAllEventData()
             } else if self.selectedHomeFilter == .going {
+                self.currentEventLblHeight.constant = 70.0
+                self.allEventLblHeight.constant = 70.0
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "Upcoming Event"
                 self.fetchUpcomingEventData()
-            } else {
-                self.currentEventLblHeight.constant = 0
-                self.allEventLblHeight.constant = 0
-                self.currentEventListHeight.constant = 0
-                self.getPosts(offSet: 1, inserted: false)
+            } else if self.selectedHomeFilter == .requested {
+                self.fetchRequestedEventData()
+            } else if self.selectedHomeFilter == .saved {
+                self.fetchSavedEventData()
+            } else if self.selectedHomeFilter == .passed {
+                self.fetchPassedEventData()
             }
+            
         } else if selectedTab == .posts {
             height = 0
             searchHeight = 0
@@ -282,91 +290,277 @@ class HomeVC: BaseVC {
     }
     
     func fetchCurrentEventData() {
-        let parameters = [
-            "filter": "current",
-        ] as [String: Any]
+        let parameters = [ "filter": "current" ] as [String: Any]
         
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents,method: .post, parameters: parameters) { (response) in
-            self.hideActivity()
-            do {
-                let jsonDecoder = JSONDecoder()
-                let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
-                self.filterCollectionView.isUserInteractionEnabled = true
-                if !(currentEventRoot.error ?? false) {
-                    if (currentEventRoot.data?.count ?? 0) > 0 {
-                        self.currentEventList = currentEventRoot.data ?? []
-                        self.currentEventListHeight.constant = CGFloat(self.currentEventList.count * 440)
+            NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+                self.hideActivity()
+                
+                guard let responseData = response.data else {
+                    print("No response data received.")
+                    // Optionally show an alert here
+                    return
+                }
+
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+                    self.filterCollectionView.isUserInteractionEnabled = true
+
+                    if currentEventRoot.error == true {
+                        print("Current Event Failure :: \(currentEventRoot.message ?? "Error")")
+                        self.currentEventList = []
+                        self.currentEventListHeight.constant = 0
+                        // Optionally show an alert here
+                        // self.presentAlert("Info", currentEventRoot.message, nil)
+                        return
+                    }
+
+                    if let events = currentEventRoot.data, !events.isEmpty {
+                        self.currentEventList = events
+                        self.currentEventListHeight.constant = CGFloat(events.count * 440)
                     } else {
+                        print("No current events found.")
+                        self.currentEventList = []
                         self.currentEventListHeight.constant = 0
                     }
-                } else {
-                    print("Failure :: \(currentEventRoot.message ?? "Error")")
-                    //self.presentAlert("Failure", currentEventRoot.message, nil)
+
+                } catch {
+                    self.offsetCount -= 1
+                    print("Current Decoding error: \(error.localizedDescription)")
+                    // Optionally show an alert here
                 }
-            } catch {
-                self.offsetCount -= 1
-                print("Error:: ", error)
             }
-        }
     }
-    
+        
     func fetchAllEventData() {
-        let parameters = [
-            "filter": "all_posts",
-        ] as [String: Any]
+        let parameters: [String: Any] = ["filter": "all_posts"]
         
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents,method: .post, parameters: parameters) { (response) in
+        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            
+            guard let responseData = response.data else {
+                print("No response data received.")
+                // Optionally show an alert here
+                return
+            }
+
             do {
                 let jsonDecoder = JSONDecoder()
-                let allEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
+                let allEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
                 self.filterCollectionView.isUserInteractionEnabled = true
-                if !(allEventRoot.error ?? false) {
-                    if (allEventRoot.data?.count ?? 0) > 0 {
-                        self.allEventList = allEventRoot.data ?? []
-                        self.tableViewHeightConst.constant = CGFloat(self.allEventList.count * 440)
-                    } else {
-                        self.tableViewHeightConst.constant = 0
-                    }
-                } else {
-                    print("Failure :: \(allEventRoot.message ?? "Error")")
-                    //self.presentAlert("Failure", allEventRoot.message, nil)
+
+                if allEventRoot.error == true {
+                    print("All Event Failure :: \(allEventRoot.message ?? "Error")")
+                    self.allEventList = []
+                    self.showEventList = self.allEventList
+                    self.tableViewHeightConst.constant = 0
+                    // Optionally show an alert here
+                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                    return
                 }
+
+                if let events = allEventRoot.data, !events.isEmpty {
+                    self.allEventList = events
+                    self.showEventList = self.allEventList
+                    self.currentEventListHeight.constant = CGFloat(self.showEventList.count * 440)
+                } else {
+                    print("No current events found.")
+                    self.allEventList = []
+                    self.showEventList = self.allEventList
+                    self.tableViewHeightConst.constant = 0
+                }
+
             } catch {
                 self.offsetCount -= 1
-                print("Error:: ", error)
+                print("All Decoding error: \(error.localizedDescription)")
+                // Optionally show an alert here
             }
         }
     }
+
     
     func fetchUpcomingEventData() {
-        let parameters = [
-            "filter": "upcoming",
-        ] as [String: Any]
+        let parameters = [ "filter": "upcoming" ] as [String: Any]
         
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents,method: .post, parameters: parameters) { (response) in
+        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            
+            guard let responseData = response.data else {
+                print("No response data received.")
+                // Optionally show an alert here
+                return
+            }
+
             do {
                 let jsonDecoder = JSONDecoder()
-                let upcomingEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: response.data!)
-                self.filterCollectionView.isUserInteractionEnabled = true
-                if !(upcomingEventRoot.error ?? false) {
-                    if (upcomingEventRoot.data?.count ?? 0) > 0 {
-                        self.upcomingEventList = upcomingEventRoot.data ?? []
-                        self.tableViewHeightConst.constant = CGFloat(self.upcomingEventList.count * 440)
-                    } else {
-                        self.tableViewHeightConst.constant = 0
-                    }
-                } else {
-                    print("Failure :: \(upcomingEventRoot.message ?? "Error")")
-                    //self.presentAlert("Failure", upcomingEventRoot.message, nil)
+                let upcomingEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+
+                if upcomingEventRoot.error == true {
+                    print("Upcoming Event Failure :: \(upcomingEventRoot.message ?? "Error")")
+                    self.upcomingEventList = upcomingEventRoot.data ?? []
+                    self.showEventList = self.upcomingEventList
+                    self.tableViewHeightConst.constant = 0
+                    // Optionally show an alert here
+                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                    return
                 }
+
+                if let events = upcomingEventRoot.data, !events.isEmpty {
+                    self.upcomingEventList = events
+                    self.showEventList = self.upcomingEventList
+                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                } else {
+                    print("No Requested events found.")
+                    self.upcomingEventList = []
+                    self.showEventList = self.upcomingEventList
+                    self.tableViewHeightConst.constant = 0
+                }
+
             } catch {
                 self.offsetCount -= 1
-                print("Error:: ", error)
+                print("Upcoming Decoding error: \(error.localizedDescription)")
+                // Optionally show an alert here
+            }
+        }
+    }
+    
+    func fetchRequestedEventData() {
+        let parameters: [String: Any] = ["filter": "requested"]
+        
+        showActivity()
+        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            
+            guard let responseData = response.data else {
+                print("No response data received.")
+                // Optionally show an alert here
+                return
+            }
+
+            do {
+                let jsonDecoder = JSONDecoder()
+                let requestedEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+
+                if requestedEventRoot.error == true {
+                    print("Requested Event Failure :: \(requestedEventRoot.message ?? "Error")")
+                    self.requestedEventList = requestedEventRoot.data ?? []
+                    self.showEventList = self.requestedEventList
+                    self.tableViewHeightConst.constant = 0
+                    // Optionally show an alert here
+                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                    return
+                }
+
+                if let events = requestedEventRoot.data, !events.isEmpty {
+                    self.requestedEventList = events
+                    self.showEventList = self.requestedEventList
+                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                } else {
+                    print("No Requested events found.")
+                    self.requestedEventList = []
+                    self.showEventList = self.requestedEventList
+                    self.tableViewHeightConst.constant = 0
+                }
+
+            } catch {
+                self.offsetCount -= 1
+                print("Requested Decoding error: \(error.localizedDescription)")
+                // Optionally show an alert here
+            }
+        }
+    }
+    
+    func fetchSavedEventData() {
+        let parameters = [ "filter": "saved" ] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            
+            guard let responseData = response.data else {
+                print("No response data received.")
+                // Optionally show an alert here
+                return
+            }
+
+            do {
+                let jsonDecoder = JSONDecoder()
+                let savedEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+
+                if savedEventRoot.error == true {
+                    print("Saved Event Failure :: \(savedEventRoot.message ?? "Error")")
+                    self.savedEventList = savedEventRoot.data ?? []
+                    self.showEventList = self.savedEventList
+                    self.tableViewHeightConst.constant = 0
+                    // Optionally show an alert here
+                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                    return
+                }
+
+                if let events = savedEventRoot.data, !events.isEmpty {
+                    self.savedEventList = events
+                    self.showEventList = self.savedEventList
+                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                } else {
+                    print("No saved events found.")
+                    self.savedEventList = []
+                    self.showEventList = self.savedEventList
+                    self.tableViewHeightConst.constant = 0
+                }
+
+            } catch {
+                self.offsetCount -= 1
+                print("Saved Decoding error: \(error.localizedDescription)")
+                // Optionally show an alert here
+            }
+        }
+
+    }
+    
+    func fetchPassedEventData() {
+        let parameters = [ "filter": "passed" ] as [String: Any]
+        showActivity()
+        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            
+            guard let responseData = response.data else {
+                print("No response data received.")
+                // Optionally show an alert here
+                return
+            }
+
+            do {
+                let jsonDecoder = JSONDecoder()
+                let passedEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+
+                if passedEventRoot.error == true {
+                    print("Passed Event Failure :: \(passedEventRoot.message ?? "Error")")
+                    self.passedEventList = passedEventRoot.data ?? []
+                    self.showEventList = self.passedEventList
+                    self.tableViewHeightConst.constant = 0
+                    // Optionally show an alert here
+                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                    return
+                }
+
+                if let events = passedEventRoot.data, !events.isEmpty {
+                    self.passedEventList = events
+                    self.showEventList = self.passedEventList
+                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
+                } else {
+                    print("No passed events found.")
+                    self.passedEventList = []
+                    self.showEventList = self.passedEventList
+                    self.tableViewHeightConst.constant = 0
+                }
+
+            } catch {
+                self.offsetCount -= 1
+                print("Passed Decoding error: \(error.localizedDescription)")
+                // Optionally show an alert here
             }
         }
     }
@@ -590,23 +784,33 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             self.currentEventList = []
             self.allEventList = []
             self.upcomingEventList = []
-            self.posts = []
+            self.requestedEventList = []
+            self.savedEventList = []
+            self.passedEventList = []
+            self.showEventList = []
             
-            self.currentEventLblHeight.constant = 70.0
-            self.allEventLblHeight.constant = 70.0
+            self.currentEventLbl.text = "Current Event"
+            self.currentEventLblHeight.constant = 0.0
+            self.allEventLblHeight.constant = 0.0
+            self.currentEventListHeight.constant = 0
             if self.selectedHomeFilter == .new {
+                self.currentEventLblHeight.constant = 70.0
+                self.allEventLblHeight.constant = 70.0
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "All Event"
                 self.fetchAllEventData()
             } else if self.selectedHomeFilter == .going {
+                self.currentEventLblHeight.constant = 70.0
+                self.allEventLblHeight.constant = 70.0
                 self.fetchCurrentEventData()
                 self.allEventLbl.text = "Upcoming Event"
                 self.fetchUpcomingEventData()
-            } else {
-                self.currentEventLblHeight.constant = 0
-                self.allEventLblHeight.constant = 0
-                self.currentEventListHeight.constant = 0
-                self.getPosts(offSet: 1, inserted: false)
+            } else if self.selectedHomeFilter == .requested {
+                self.fetchRequestedEventData()
+            } else if self.selectedHomeFilter == .saved {
+                self.fetchSavedEventData()
+            } else if self.selectedHomeFilter == .passed {
+                self.fetchPassedEventData()
             }
         } else if selectedTab == .jobs {
             print(selectedHomeFilter)
@@ -760,13 +964,14 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 return 0//self.jobList.count
             }
             else if selectedTab == .events {
-                if self.selectedHomeFilter == .new {
-                    return self.allEventList.count
-                } else if self.selectedHomeFilter == .going {
-                    return self.upcomingEventList.count
-                } else {
-                    return self.posts.count
-                }
+//                if self.selectedHomeFilter == .new {
+//                    return self.allEventList.count
+//                } else if self.selectedHomeFilter == .going {
+//                    return self.upcomingEventList.count
+//                } else {
+//                    return self.posts.count
+//                }
+                return self.showEventList.count
             }
             else if selectedTab == .posts {
                 return 0//posts.count
@@ -1131,95 +1336,109 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 //                }
             case .events:
                 let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                if self.selectedHomeFilter == .new {
-                    let event = allEventList[indexPath.row]
-                    cell.uiData(event: event)
-                    cell.delegate = self
-                    cell.eventDelegate = self
-                    cell.navigateToDetail.tag = indexPath.row
-                    cell.saveEventBtn.tag = indexPath.row
-                    cell.viewDetailsBtn.tag = indexPath.row
-                    self.objectId = event.id ?? 0
-                    self.type = .event
-                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-                    
-                }
-                else if self.selectedHomeFilter == .going {
-                    let event = upcomingEventList[indexPath.row]
-                    cell.uiData(event: event)
-                    cell.delegate = self
-                    cell.eventDelegate = self
-                    cell.navigateToDetail.tag = indexPath.row
-                    cell.saveEventBtn.tag = indexPath.row
-                    cell.viewDetailsBtn.tag = indexPath.row
-                    self.objectId = event.id ?? 0
-                    self.type = .event
-                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-                }
-                else {
-                    
-                    let event = posts[indexPath.row]
-                    cell.uiData(dataMaper: event)
-                    cell.dashboardItem = event
-                    cell.delegate = self
-                    cell.eventDelegate = self
-//                    cell.interrestedBtn.tag = indexPath.row
-//                    if LoggedUserDetails.shared.user!.id != event.user!.id {
-//                        cell.attendingBtn.isHidden = false
-//                        cell.attendingBtn.tag = indexPath.row
-//                        //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-//                    }
-//                    else {
-//                        cell.attendingBtn.isHidden = true
-//                    }
-//                    if self.selectedTabFilter == 1 {
-//                        cell.BottomViewStack.isHidden = true
-//                    } else {
-//                        cell.BottomViewStack.isHidden = false
-//                    }
-//                    cell.industryUserView.isHidden = true
-//                    cell.indivisualUserView.isHidden = false
-//                    
-//                    cell.sharedBtn.tag = indexPath.row
-                    cell.navigateToDetail.tag = indexPath.row
-                    cell.saveEventBtn.tag = indexPath.row
-                    cell.viewDetailsBtn.tag = indexPath.row
-                    self.objectId = event.id ?? 0
-                    self.type = .event
-                    
-                    
-//                    let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-//                    if eventAttendeesStatus == "accepted" {
-//                        cell.requestJoinBtn.setTitle("View details", for: .normal)
-//                    }
-//                    else if eventAttendeesStatus == "Request_To_Join" {
-//                        cell.requestJoinBtn.setTitle("Requested", for: .normal)
-//                    }
-//                    else if eventAttendeesStatus == "decline" {
-//                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//                    }
-//                    else {
-//                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-//                    }
-//                    
-//                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-//                    cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
-//                    
-//                    cell.intrestedTapped = { [weak self] dashboardItem in
-//                        let vc = StoryboardRouter.intrested()
-//                        vc.dashboardItem = dashboardItem
-//                        self?.navigationController?.pushViewController(vc, animated: true)
-//                    }
-                }
                 
+                let event = showEventList[indexPath.row]
+                cell.uiData(event: event)
+                cell.delegate = self
+                cell.eventDelegate = self
+                cell.navigateToDetail.tag = indexPath.row
+                cell.saveEventBtn.tag = indexPath.row
+                cell.viewDetailsBtn.tag = indexPath.row
+                self.objectId = event.id ?? 0
+                self.type = .event
+                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+                cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+                cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+                
+//                if self.selectedHomeFilter == .new {
+//                    let event = allEventList[indexPath.row]
+//                    cell.uiData(event: event)
+//                    cell.delegate = self
+//                    cell.eventDelegate = self
+//                    cell.navigateToDetail.tag = indexPath.row
+//                    cell.saveEventBtn.tag = indexPath.row
+//                    cell.viewDetailsBtn.tag = indexPath.row
+//                    self.objectId = event.id ?? 0
+//                    self.type = .event
+//                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+//                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+//                    
+//                }
+//                else if self.selectedHomeFilter == .going {
+//                    let event = upcomingEventList[indexPath.row]
+//                    cell.uiData(event: event)
+//                    cell.delegate = self
+//                    cell.eventDelegate = self
+//                    cell.navigateToDetail.tag = indexPath.row
+//                    cell.saveEventBtn.tag = indexPath.row
+//                    cell.viewDetailsBtn.tag = indexPath.row
+//                    self.objectId = event.id ?? 0
+//                    self.type = .event
+//                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+//                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+//                }
+//                else {
+//                    
+//                    let event = posts[indexPath.row]
+//                    cell.uiData(dataMaper: event)
+//                    cell.dashboardItem = event
+//                    cell.delegate = self
+//                    cell.eventDelegate = self
+////                    cell.interrestedBtn.tag = indexPath.row
+////                    if LoggedUserDetails.shared.user!.id != event.user!.id {
+////                        cell.attendingBtn.isHidden = false
+////                        cell.attendingBtn.tag = indexPath.row
+////                        //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+////                    }
+////                    else {
+////                        cell.attendingBtn.isHidden = true
+////                    }
+////                    if self.selectedTabFilter == 1 {
+////                        cell.BottomViewStack.isHidden = true
+////                    } else {
+////                        cell.BottomViewStack.isHidden = false
+////                    }
+////                    cell.industryUserView.isHidden = true
+////                    cell.indivisualUserView.isHidden = false
+////                    
+////                    cell.sharedBtn.tag = indexPath.row
+//                    cell.navigateToDetail.tag = indexPath.row
+//                    cell.saveEventBtn.tag = indexPath.row
+//                    cell.viewDetailsBtn.tag = indexPath.row
+//                    self.objectId = event.id ?? 0
+//                    self.type = .event
+//                    
+//                    
+////                    let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+////                    if eventAttendeesStatus == "accepted" {
+////                        cell.requestJoinBtn.setTitle("View details", for: .normal)
+////                    }
+////                    else if eventAttendeesStatus == "Request_To_Join" {
+////                        cell.requestJoinBtn.setTitle("Requested", for: .normal)
+////                    }
+////                    else if eventAttendeesStatus == "decline" {
+////                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+////                    }
+////                    else {
+////                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+////                    }
+////                    
+////                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+//                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+////                    cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
+////                    
+////                    cell.intrestedTapped = { [weak self] dashboardItem in
+////                        let vc = StoryboardRouter.intrested()
+////                        vc.dashboardItem = dashboardItem
+////                        self?.navigationController?.pushViewController(vc, animated: true)
+////                    }
+//                }
                 return cell
+                
             case .industryEvents:
                 let event = posts[indexPath.row]
                 let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -1591,13 +1810,14 @@ private extension HomeVC {
                     } else if selectedTab == .posts {
                         self.setPostTableHeight()
                     } else if selectedTab == .events {
-                        if self.selectedHomeFilter == .new {
-                            self.postListTblVwHeight.constant = 0.0
-                        } else if self.selectedHomeFilter == .going {
-                            self.postListTblVwHeight.constant = 0.0
-                        } else {
-                            self.setPostTableHeight()
-                        }
+//                        if self.selectedHomeFilter == .new {
+//                            self.postListTblVwHeight.constant = 0.0
+//                        } else if self.selectedHomeFilter == .going {
+//                            self.postListTblVwHeight.constant = 0.0
+//                        } else {
+//                            self.setPostTableHeight()
+//                        }
+                        self.postListTblVwHeight.constant = 0.0
                     }
                     else {
                         self.postListTblVwHeight.constant = 0.0
@@ -1846,20 +2066,35 @@ private extension HomeVC {
 //            self.hideActivity()
             if error == 0 {
                 print("Event saved!!")
+                self.currentEventLblHeight.constant = 0
+                self.allEventLblHeight.constant = 0
+                self.currentEventListHeight.constant = 0
+                
                 if self.selectedHomeFilter == .new {
+                    self.currentEventLblHeight.constant = 70.0
+                    self.allEventLblHeight.constant = 70.0
                     self.fetchCurrentEventData()
                     self.allEventLbl.text = "All Event"
                     self.fetchAllEventData()
                 } else if self.selectedHomeFilter == .going {
+                    self.currentEventLblHeight.constant = 70.0
+                    self.allEventLblHeight.constant = 70.0
                     self.fetchCurrentEventData()
                     self.allEventLbl.text = "Upcoming Event"
                     self.fetchUpcomingEventData()
-                } else {
-                    self.currentEventLblHeight.constant = 0
-                    self.allEventLblHeight.constant = 0
-                    self.currentEventListHeight.constant = 0
-                    self.getPosts(offSet: 1, inserted: false)
+                } else if self.selectedHomeFilter == .requested {
+                    self.fetchRequestedEventData()
+                } else if self.selectedHomeFilter == .saved {
+                    self.fetchSavedEventData()
+                } else if self.selectedHomeFilter == .passed {
+                    self.fetchPassedEventData()
                 }
+//                else {
+//                    self.currentEventLblHeight.constant = 0
+//                    self.allEventLblHeight.constant = 0
+//                    self.currentEventListHeight.constant = 0
+//                    self.getPosts(offSet: 1, inserted: false)
+//                }
 //                self.getPosts(offSet: 1, inserted: false)
 //                self.fetchCurrentEventData()
 //                self.fetchAllEventData()
@@ -2170,7 +2405,7 @@ extension HomeVC {
     
     @objc func openEventVCPost(sender: UIButton) {
         let vc = EventMainVC.instantiate()
-        vc.eventId = posts[sender.tag].id ?? 0
+        vc.eventId = self.showEventList[sender.tag].id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -2532,8 +2767,8 @@ extension HomeVC {
     @objc func saveEventTapped(sender: UIButton) {
         print("saved Event")
         showActivity()
-        let post = self.allEventList[sender.tag]
-        saveEvent(postId: post.id ?? 0, at: sender.tag)
+        let event = self.showEventList[sender.tag]
+        saveEvent(postId: event.id ?? 0, at: sender.tag)
     }
     
 //    @objc func reqToJoinTapped(sender: UIButton) {
@@ -2544,7 +2779,7 @@ extension HomeVC {
 //    }
     @objc func eventViewDetailsTapped(sender: UIButton) {
         print("View Details Event")
-        let obj = self.allEventList[sender.tag]
+        let obj = self.showEventList[sender.tag]
         let vc = EventMainVC.instantiate()
         vc.eventId = obj.id ?? 0
         navigationController?.pushViewController(vc, animated: true)
