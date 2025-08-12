@@ -239,6 +239,8 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
                     self.eventEndDate = selectedEvent.endDate ?? ""
                     self.eventStartTime = selectedEvent.startTime ?? ""
                     self.eventEndTime = selectedEvent.endTime ?? ""
+                    
+                    self.fetchCreateMeetingDetails()
                 }
                 self.navigationController?.present(popupvc, animated: true)
             }
@@ -315,7 +317,13 @@ extension CreateMeetingVC {
     }
     
     func createEventMeeting() {
-        let url = EndPoints.createEventMeetings
+        //date chage :- "dd-mm-yyyy" to "yyyy-mm-dd"
+        let startDoneDate = startDate.text ?? ""
+        var backendSendStartDate = ""
+        if let backendDate = startDoneDate.convertedDate(from: "dd-MM-yyyy", to: "yyyy-MM-dd") {
+            backendSendStartDate = backendDate
+        }
+        
         
         var requestedID = ""
         var invitedUserId:[Int] = []
@@ -331,10 +339,11 @@ extension CreateMeetingVC {
             invitedUserId = self.invitedIds
         }
         
+        let url = EndPoints.createEventMeetings
         let parameters = [
             "event_id": "\(eventID)",
             "title": name.text ?? "",
-            "date": startDate.text ?? "",
+            "date": backendSendStartDate,
             "start_time": startTime.text ?? "",
             "end_time": endTime.text ?? "",
             "description": descriptionTV.text ?? "",
@@ -619,7 +628,9 @@ extension CreateMeetingVC {
         self.startDate.resignFirstResponder()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        startDate.text = formatter.string(from: startDatePicker.date)
+        //startDate.text = formatter.string(from: startDatePicker.date)
+        let startDoneDate = formatter.string(from: startDatePicker.date)
+        startDate.text = startDoneDate.convertedDate(from: "yyyy-MM-dd", to: "dd-MM-yyyy")
         self.view.endEditing(true)
     }
     @objc func doneStartTimePicker() {
