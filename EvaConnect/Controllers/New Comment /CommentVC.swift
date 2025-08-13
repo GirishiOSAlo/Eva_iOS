@@ -473,6 +473,7 @@ extension CommentVC {
                         self.commentTextView.text = ""
                         self.commentTextView.resignFirstResponder()
                         if self.isComeFromNews {
+                            self.commentTextView.text = ""
                             self.getAllComments(id: self.newsId)
                         }
                     }
@@ -503,6 +504,7 @@ extension CommentVC {
                         self.commentTextView.text = ""
                         self.commentTextView.resignFirstResponder()
                         if self.isComeFromNews {
+                            self.commentTextView.text = ""
                             self.getAllComments(id: self.newsId)
                         }
                     }
@@ -576,6 +578,8 @@ extension CommentVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         let cell = self.commentsCollectionVw.dequeueReusableCell(withReuseIdentifier: CommentCVC.ReuseId, for: indexPath) as! CommentCVC
         
         cell.isComeFromNews = self.isComeFromNews
+        cell.treadVwWidth.constant = 0.0
+        cell.treadVericalLine.isHidden = false
         
         let comment = commentData[indexPath.row]
         cell.descLbl.text = comment.content

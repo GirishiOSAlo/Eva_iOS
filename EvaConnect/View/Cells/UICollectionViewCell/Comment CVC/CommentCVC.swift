@@ -20,6 +20,16 @@ protocol CommentsCellDelegate: AnyObject {
 
 class CommentCVC: UICollectionViewCell {
 
+    @IBOutlet weak var treadView: UIView!
+    @IBOutlet weak var treadVwWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var treadVericalLine: UIView!
+    @IBOutlet weak var treadLineVw: UIView!
+    @IBOutlet weak var treadCurveLineVw: UIView!
+    @IBOutlet weak var treadCurveLineBaseVw: UIView!
+    
+    
     @IBOutlet weak var profileImgVw: UIImageView!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
@@ -62,6 +72,9 @@ class CommentCVC: UICollectionViewCell {
     }
 
     func initUI() {
+        roundCorners(view: self.treadCurveLineVw, corners: [.bottomLeft], radius: 12)
+        roundCorners(view: self.treadCurveLineBaseVw, corners: [.bottomLeft], radius: 12)
+        
         self.profileImgVw.layer.cornerRadius = self.profileImgVw.frame.size.width / 2
         nameLbl.font = UIFont(name: Myfonts.bold, size: 12.0)
         timeLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
@@ -131,6 +144,34 @@ extension CommentCVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         let cell = self.insideRepliesCollectionVw.dequeueReusableCell(withReuseIdentifier: CommentCVC.ReuseId, for: indexPath) as! CommentCVC
         
         cell.viewReplyBtnVwHeight.constant = 0.0
+        cell.treadVwWidth.constant = 40.0
+        cell.treadVericalLine.isHidden = false
+        
+//        let isFirst = indexPath.item == 0
+//        let isLast = indexPath.item == collectionView.numberOfItems(inSection: indexPath.section) - 1
+//        if isFirst && isLast {
+//            // Only one item
+//            cell.treadLineVw.isHidden = true
+//        } else if isFirst {
+//            // First item
+//            cell.treadLineVw.isHidden = false
+//        } else if isLast {
+//            // Last item
+//            cell.treadLineVw.isHidden = true
+//        } else {
+//            cell.treadLineVw.isHidden = false
+//        }
+        
+        if replies.count == 1 {
+            cell.treadLineVw.isHidden = true
+        } else {
+            if indexPath.row == replies.count - 1 {
+                cell.treadLineVw.isHidden = true
+            } else {
+                cell.treadLineVw.isHidden = false
+            }
+        }
+        
         
         let reply = replies[indexPath.row]
         cell.descLbl.text = reply.content
