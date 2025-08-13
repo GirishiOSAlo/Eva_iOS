@@ -23,7 +23,8 @@ struct NewsTrendingList: Codable {
     let isPostLike, isPostdisLike, isNewsLike, isNewsDislike: Int?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver, content, title: String?
+    let isReceiver: ReceiverID?
+    let content, title: String?
     let postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?
     let modifiedByID: Int?

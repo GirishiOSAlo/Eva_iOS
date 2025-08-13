@@ -5416,6 +5416,9 @@ Aviation</string>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_linkedin"/>
+                                                                <connections>
+                                                                    <action selector="shareLinkedinBtnTapped:" destination="Ihn-JR-anB" eventType="touchUpInside" id="A6z-CO-MyX"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g75-km-TSX">
                                                                 <rect key="frame" x="43" y="0.0" width="35" height="35"/>
@@ -5426,6 +5429,9 @@ Aviation</string>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_facebook"/>
+                                                                <connections>
+                                                                    <action selector="shareFacebookBtnTapped:" destination="Ihn-JR-anB" eventType="touchUpInside" id="neg-ii-VPm"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYw-SN-lvJ">
                                                                 <rect key="frame" x="86" y="0.0" width="35" height="35"/>
@@ -5436,6 +5442,9 @@ Aviation</string>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_instgram"/>
+                                                                <connections>
+                                                                    <action selector="shareInstagramBtnTapped:" destination="Ihn-JR-anB" eventType="touchUpInside" id="foq-zZ-sOF"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyD-q5-9ie">
                                                                 <rect key="frame" x="129" y="0.0" width="35" height="35"/>
@@ -5446,6 +5455,9 @@ Aviation</string>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_twitter"/>
+                                                                <connections>
+                                                                    <action selector="shareTwitterBtnTapped:" destination="Ihn-JR-anB" eventType="touchUpInside" id="Pyc-Uw-muP"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEo-rN-iZ1">
                                                                 <rect key="frame" x="172" y="0.0" width="35" height="35"/>
@@ -5456,6 +5468,9 @@ Aviation</string>
                                                                 </constraints>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_youtube"/>
+                                                                <connections>
+                                                                    <action selector="shareYouTubeBtnTapped:" destination="Ihn-JR-anB" eventType="touchUpInside" id="tYF-YW-Q4U"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -5793,9 +5808,12 @@ Aviation</string>
                         <outlet property="bottomView" destination="ght-nf-soX" id="gND-hv-ctQ"/>
                         <outlet property="commentCountLbl" destination="6ua-OC-H66" id="8Mu-2k-eGU"/>
                         <outlet property="dateTimeLbl" destination="D0Y-QZ-3oC" id="mJ4-gD-uDk"/>
+                        <outlet property="facebookBtn" destination="g75-km-TSX" id="oeT-KH-mgq"/>
                         <outlet property="headerView" destination="wGb-oD-y0p" id="tDJ-Nl-xGD"/>
+                        <outlet property="instagramBtn" destination="cYw-SN-lvJ" id="91a-o6-PkJ"/>
                         <outlet property="likeCountLbl" destination="Q4A-2W-I7G" id="Loq-eJ-XKl"/>
                         <outlet property="likeNewsImg" destination="Vrk-a0-Y0k" id="wS0-lF-Xog"/>
+                        <outlet property="linkedinBtn" destination="2FY-2c-d6y" id="Bod-00-qTt"/>
                         <outlet property="loadMoreBtn" destination="uBd-7P-lC3" id="ora-yp-2E1"/>
                         <outlet property="navBarImageView" destination="SS3-xE-LfM" id="QqK-a6-UoG"/>
                         <outlet property="navBarTimeLbl" destination="hsf-fb-Naa" id="q7s-NU-DpW"/>
@@ -5812,6 +5830,8 @@ Aviation</string>
                         <outlet property="trendingNewsBaseVw" destination="8Mx-1e-KSM" id="Cx5-s0-xoX"/>
                         <outlet property="trendingNewsBaseVwHeight" destination="XUJ-VY-fde" id="ZKU-9t-rUm"/>
                         <outlet property="trendingNewsCollectionVw" destination="Q1Y-Gm-TxY" id="Epa-1w-C8M"/>
+                        <outlet property="twitterBtn" destination="zyD-q5-9ie" id="ioK-OK-Yg5"/>
+                        <outlet property="youtubeBtn" destination="cEo-rN-iZ1" id="OBW-5g-BSW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0pF-cv-ALd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

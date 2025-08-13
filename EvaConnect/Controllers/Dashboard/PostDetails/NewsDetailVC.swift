@@ -42,6 +42,13 @@ class NewsDetailVC: UIViewController {
     @IBOutlet weak var commentCountLbl: UILabel!
     @IBOutlet weak var shareCountLbl: UILabel!
     
+    
+    @IBOutlet weak var linkedinBtn: UIButton!
+    @IBOutlet weak var facebookBtn: UIButton!
+    @IBOutlet weak var instagramBtn: UIButton!
+    @IBOutlet weak var twitterBtn: UIButton!
+    @IBOutlet weak var youtubeBtn: UIButton!
+    
     @IBOutlet weak var newsTagCollectionVw: UICollectionView!
     @IBOutlet weak var newsTagCollectionVwHeight: NSLayoutConstraint!
     var tagArray: [NewsTag] = []
@@ -220,6 +227,88 @@ class NewsDetailVC: UIViewController {
         if let url = URL(string: sourceLink) {
             UIApplication.shared.open(url)
         }
+    }
+    
+    @IBAction func shareLinkedinBtnTapped(_ sender: UIButton) {
+        let url = self.newsDetails?.href ?? ""
+        self.shareURLToLinkedIn(from: self, urlToShare: url)
+    }
+    @IBAction func shareFacebookBtnTapped(_ sender: UIButton) {
+        let url = self.newsDetails?.href ?? ""
+        shareURLToFacebook(from: self, urlToShare: url)
+    }
+    @IBAction func shareInstagramBtnTapped(_ sender: UIButton) {
+        shareButtonTapped()
+    }
+    @IBAction func shareTwitterBtnTapped(_ sender: UIButton) {
+        let url = self.newsDetails?.href ?? ""
+        let text = "Check this out!"
+        shareURLToTwitter(urlToShare: url, text: text)
+    }
+    @IBAction func shareYouTubeBtnTapped(_ sender: UIButton) {
+        showCustomAlert(title: "Coming Soon.", doneTitle: "OK", on: self.view) {
+            print("Confirmed")
+        }
+    }
+}
+
+//Share Function.....
+extension NewsDetailVC {
+    func shareURLToLinkedIn(from viewController: UIViewController, urlToShare: String) {
+        guard let encodedURL = urlToShare.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let shareURL = URL(string: "https://www.linkedin.com/sharing/share-offsite/?url=\(encodedURL)") else {
+            print("Invalid URL")
+            return
+        }
+
+        UIApplication.shared.open(shareURL, options: [:], completionHandler: nil)
+    }
+    
+    func shareURLToFacebook(from viewController: UIViewController, urlToShare: String) {
+        let urlStr = String(format: "fb-messenger://share/?link=%@", urlToShare)
+        let url  = NSURL(string: urlStr)
+
+        if UIApplication.shared.canOpenURL(url! as URL) {
+            UIApplication.shared.open(url! as URL, options: [:]) { (success) in
+                if success {
+                    print("Messenger accessed successfully")
+                } else {
+                    print("Error accessing Messenger")
+                }
+            }
+        } else {
+            let webURL = URL(string: "https://facebook.com")!
+            UIApplication.shared.open(webURL)
+        }
+    }
+    
+    func shareButtonTapped() {
+        let textToShare = "Sharing news content!"
+        let urlToShare = URL(string: self.newsDetails?.href ?? "")!
+        let imageToShare = self.navBarImageView.image ?? UIImage(named: "ic_navLogo")
+        
+        let activityItems: [Any] = [textToShare, urlToShare, imageToShare!]
+        
+        let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        
+        // Configure for iPad
+        if let popoverController = activityViewController.popoverPresentationController {
+            popoverController.sourceView = self.instagramBtn
+            popoverController.sourceRect = self.instagramBtn.bounds
+        }
+        
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func shareURLToTwitter(urlToShare: String, text: String = "") {
+        guard let encodedURL = urlToShare.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let encodedText = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let twitterURL = URL(string: "https://twitter.com/intent/tweet?url=\(encodedURL)&text=\(encodedText)") else {
+            print("Invalid URL")
+            return
+        }
+
+        UIApplication.shared.open(twitterURL, options: [:], completionHandler: nil)
     }
 }
 
