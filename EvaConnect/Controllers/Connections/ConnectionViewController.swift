@@ -56,6 +56,11 @@ class ConnectionViewController: UIViewController, XIBed {
         self.setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchData()
+    }
+    
     @IBAction func backBtnTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -89,8 +94,6 @@ class ConnectionViewController: UIViewController, XIBed {
         listCollectionVw.registerNib(cellNib: FollowersCVC.self)
         listCollectionVw.delegate = self
         listCollectionVw.dataSource = self
-        
-        self.fetchData()
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
