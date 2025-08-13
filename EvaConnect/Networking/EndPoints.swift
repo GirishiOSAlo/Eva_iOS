@@ -67,7 +67,8 @@ enum EndPoints {
     static let getPostList = baseURL + "post/list"
     static let getAllHomeEvent = baseURL + "dashboard/event"
     static let getAllHomeJob = baseURL + "dashboard/job"
-    static let getAllHomeNews = baseURL + "dashboard/news"
+    //static let getAllHomeNews = baseURL + "dashboard/news"
+    static let getAllHomeNews = baseURL + "news/list" //New
     static let homeFilterPosts = baseURL + "post/filter/"
     static let homeFilterEvents = baseURL + "event/filter"
     static let homeFilterJobs = baseURL + "job/filter"

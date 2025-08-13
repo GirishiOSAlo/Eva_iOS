@@ -574,6 +574,7 @@
 		A6AFF00B2D7ACD4C00F5AFEB /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = A6AFF00A2D7ACD4C00F5AFEB /* SVProgressHUD */; };
 		A6B037062DFAA357000B4E2E /* DashboardPostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B037052DFAA357000B4E2E /* DashboardPostDataModel.swift */; };
 		A6B037082DFAF8A0000B4E2E /* DashboardJobDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B037072DFAF8A0000B4E2E /* DashboardJobDataModel.swift */; };
+		A6B754042E4C413900AB2F79 /* HomeNewsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B754032E4C413900AB2F79 /* HomeNewsDataModel.swift */; };
 		A6B7ADAF2E090EE5009172CD /* DashboardBannerDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADAE2E090EE5009172CD /* DashboardBannerDataModel.swift */; };
 		A6B7ADB12E096377009172CD /* AgendaListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */; };
 		A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B7ADB32E0967BE009172CD /* ConferenceAgendaListCVC.xib */; };
@@ -1198,6 +1199,7 @@
 		A6ADF5992AB0908A00423428 /* EventDelegateSearchPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventDelegateSearchPopupVC.xib; sourceTree = "<group>"; };
 		A6B037052DFAA357000B4E2E /* DashboardPostDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPostDataModel.swift; sourceTree = "<group>"; };
 		A6B037072DFAF8A0000B4E2E /* DashboardJobDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardJobDataModel.swift; sourceTree = "<group>"; };
+		A6B754032E4C413900AB2F79 /* HomeNewsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsDataModel.swift; sourceTree = "<group>"; };
 		A6B7ADAE2E090EE5009172CD /* DashboardBannerDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardBannerDataModel.swift; sourceTree = "<group>"; };
 		A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaListDataModel.swift; sourceTree = "<group>"; };
 		A6B7ADB22E0967BE009172CD /* ConferenceAgendaListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceAgendaListCVC.swift; sourceTree = "<group>"; };
@@ -1743,6 +1745,7 @@
 				500A543D2473F90500095324 /* Chat */,
 				1853109A23D6D4AB00C55FCB /* DashboardModels */,
 				25D40B3D27C3A30100EEF2AA /* Wrapper.swift */,
+				A6B754032E4C413900AB2F79 /* HomeNewsDataModel.swift */,
 				A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */,
 				A611A4442DF6F313006011AD /* UserDetailsModel.swift */,
 				7093BFBB27E9BE0F0045848A /* OneSingalNotification.swift */,
@@ -4089,6 +4092,7 @@
 				254459BF277DBD8000E8371D /* UserSettingsVC.swift in Sources */,
 				5073A855248144FF008F2E7D /* HomeJob.swift in Sources */,
 				505A4B79248B189400DACE07 /* MeetingEventDialogVC.swift in Sources */,
+				A6B754042E4C413900AB2F79 /* HomeNewsDataModel.swift in Sources */,
 				485FC1A42DD75F8300AA05A4 /* ExhibitorsCell.swift in Sources */,
 				5044018724E3F5F1003808D8 /* JobDetailProvider.swift in Sources */,
 				A6ADF59A2AB0908A00423428 /* EventDelegateSearchPopupVC.swift in Sources */,

@@ -202,7 +202,7 @@
                                 <rect key="frame" x="0.0" y="249" width="375" height="563"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FGV-e7-pjc">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1040"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1240"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Event" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1P-wG-DGc">
                                                 <rect key="frame" x="20" y="0.0" width="355" height="70"/>
@@ -299,13 +299,27 @@
                                                     <outlet property="delegate" destination="a94-bP-LBj" id="5I2-wa-VMY"/>
                                                 </connections>
                                             </tableView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="476" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="L8F-jT-APt">
+                                                <rect key="frame" x="0.0" y="940" width="375" height="200"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="ogT-mQ-cbU"/>
+                                                </constraints>
+                                                <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="a94-bP-LBj" id="eaB-jR-4cx"/>
+                                                    <outlet property="delegate" destination="a94-bP-LBj" id="9rr-4q-Wmd"/>
+                                                </connections>
+                                            </tableView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="vbO-0T-JBm" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="5Ji-hT-6ji"/>
                                             <constraint firstItem="DdP-S1-2DX" firstAttribute="top" secondItem="bZh-sp-yC4" secondAttribute="bottom" id="9hL-Yk-4i1"/>
                                             <constraint firstItem="aqj-uT-nF9" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="AZL-Eu-kh2"/>
+                                            <constraint firstItem="L8F-jT-APt" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="Cbm-Kx-w6j"/>
                                             <constraint firstAttribute="trailing" secondItem="vbO-0T-JBm" secondAttribute="trailing" id="ES9-IU-m6s"/>
+                                            <constraint firstAttribute="trailing" secondItem="L8F-jT-APt" secondAttribute="trailing" id="HfC-07-GtD"/>
                                             <constraint firstItem="DdP-S1-2DX" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="Hrl-PM-Haf"/>
                                             <constraint firstItem="aV2-T7-J4q" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" constant="20" id="JB2-rR-5Yw"/>
                                             <constraint firstItem="bZh-sp-yC4" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="Jql-Xj-ggK"/>
@@ -313,10 +327,11 @@
                                             <constraint firstItem="ORB-9X-Q54" firstAttribute="top" secondItem="DdP-S1-2DX" secondAttribute="bottom" id="OAD-DU-Hhq"/>
                                             <constraint firstAttribute="trailing" secondItem="GqR-RV-wD1" secondAttribute="trailing" constant="20" id="Pfg-Pg-KeN"/>
                                             <constraint firstItem="GqR-RV-wD1" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" constant="20" id="QCA-hG-RVF"/>
+                                            <constraint firstItem="L8F-jT-APt" firstAttribute="top" secondItem="ORB-9X-Q54" secondAttribute="bottom" id="Rpl-QF-8sf"/>
+                                            <constraint firstAttribute="bottom" secondItem="L8F-jT-APt" secondAttribute="bottom" constant="100" id="SVx-4X-2h4"/>
                                             <constraint firstAttribute="trailing" secondItem="bZh-sp-yC4" secondAttribute="trailing" id="U87-ea-IEd"/>
                                             <constraint firstItem="aV2-T7-J4q" firstAttribute="top" secondItem="vbO-0T-JBm" secondAttribute="bottom" id="UPr-ZX-5cm"/>
                                             <constraint firstItem="GqR-RV-wD1" firstAttribute="top" secondItem="w1P-wG-DGc" secondAttribute="bottom" id="aT1-ZD-XSS"/>
-                                            <constraint firstAttribute="bottom" secondItem="ORB-9X-Q54" secondAttribute="bottom" constant="100" id="bhx-xL-dGV"/>
                                             <constraint firstItem="ORB-9X-Q54" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" id="dmc-ak-pS3"/>
                                             <constraint firstItem="w1P-wG-DGc" firstAttribute="leading" secondItem="FGV-e7-pjc" secondAttribute="leading" constant="20" id="doM-i1-AfC"/>
                                             <constraint firstItem="vbO-0T-JBm" firstAttribute="top" secondItem="GqR-RV-wD1" secondAttribute="bottom" id="hKY-LS-tUK"/>
@@ -394,6 +409,8 @@
                         <outlet property="indicatorView" destination="BUg-lB-ICN" id="HCX-DB-hmv"/>
                         <outlet property="jobListTblVw" destination="DdP-S1-2DX" id="sjy-rS-mNO"/>
                         <outlet property="jobListTblVwHeight" destination="M8Z-tt-Pe8" id="ghh-No-AEv"/>
+                        <outlet property="newsListTblVw" destination="L8F-jT-APt" id="jgS-TX-KBa"/>
+                        <outlet property="newsListTblVwHeight" destination="ogT-mQ-cbU" id="39S-m9-QAF"/>
                         <outlet property="noCurrentEventLbl" destination="vbO-0T-JBm" id="Whs-UY-vgJ"/>
                         <outlet property="noCurrentEventLblHeight" destination="J4G-aD-fZj" id="xxD-4F-Boq"/>
                         <outlet property="noOtherEventLbl" destination="bZh-sp-yC4" id="GKP-xH-Jnm"/>
@@ -7013,13 +7030,13 @@ Aviation</string>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="j8C-VA-NpO">
                                                                     <rect key="frame" x="83" y="22.333333333333339" width="126" height="35.666666666666657"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daniel Elwell" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1x-wt-wAI" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Daniel Elwell" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1x-wt-wAI" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="101.33333333333333" height="19.333333333333332"/>
                                                                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assistant | Easyjet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tle-pp-hLl" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Assistant | Easyjet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tle-pp-hLl" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="21.333333333333329" width="103.33333333333333" height="14.333333333333336"/>
                                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                                                             <color key="textColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

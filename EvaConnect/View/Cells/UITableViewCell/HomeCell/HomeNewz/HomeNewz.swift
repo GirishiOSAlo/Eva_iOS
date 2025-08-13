@@ -68,7 +68,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         // connectionCompanyLbl.textColor = Constants.AppColorLiteral.loginColor
     }
     
-    func uiData(dataMaper: DashboardItem) {
+    func uiData(dataMaper: HomeNewsData) {
         timeWhenPost.text = dataMaper.createdDatetime
         newzTitle.text = dataMaper.newsSource?.name
         newzName.text = dataMaper.newsSource?.name
@@ -89,15 +89,10 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
             saveNewsImgView.image = #imageLiteral(resourceName: "save")
         }
         
-//        let htmlString = dataMaper.content
-//        let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
+        let htmlString = dataMaper.content
+        let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
         newzShortDetail.text = dataMaper.content
         
-//        if dataMaper.newsSource?.image != nil {
-//            profileImage.sd_setImage(with: URL(string: dataMaper.newsSource?.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
-//        } else {
-//            profileImage.image = UIImage(named: "noPhoto")
-//        }
         if let imageUrl = dataMaper.newsSource?.image,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
@@ -107,11 +102,6 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
             profileImage.image = UIImage(named: "noPhoto")
         }
 
-//        if dataMaper.image != nil {
-//            urlImage.sd_setImage(with: URL(string: dataMaper.image ?? ""), placeholderImage: UIImage(named: "noPhoto"), options: .progressiveLoad, completed: .none)
-//        } else {
-//            urlImage.image = UIImage(named: "noPhoto")
-//        }
         if let imageUrl = dataMaper.newsImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
@@ -119,6 +109,47 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
             profileImage.kf.setImage(with: url, placeholder: UIImage(named: "eventPlaceholder"))
         } else {
             profileImage.image = UIImage(named: "eventPlaceholder")
+        }
+    }
+    
+    func setNewsData(dataMaper: HomeNewsData) {
+        if let imageUrl = dataMaper.newsSource?.image,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            profileImage.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            profileImage.image = UIImage(named: "profile")
+        }
+
+        newzName.text = dataMaper.newsSource?.name ?? "--"
+        timeWhenPost.text = dataMaper.createdDatetime ?? "--"
+        
+        if let imageUrl = dataMaper.newsImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            urlImage.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            urlImage.image = UIImage(named: "profile")
+        }
+        
+        newzShortDetail.text = dataMaper.title ?? "--"
+        
+        likeCountLbl.text = "\(dataMaper.likeCount ?? 0)"
+        commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
+        shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
+
+        if dataMaper.isNewsLike == 1 {
+            likeImage.image = UIImage(named: "like_selected")
+        } else {
+            likeImage.image = UIImage(named: "ic_like")
+        }
+                
+        if dataMaper.isNewsSave == 1 {
+            saveNewsImgView.image = UIImage(named: "save_selected")
+        } else {
+            saveNewsImgView.image = UIImage(named: "save")
         }
     }
     

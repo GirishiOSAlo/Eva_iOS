@@ -516,19 +516,19 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
 //                
                 return cell
             }
-            else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: HomeNewz.id(), for: indexPath) as! HomeNewz
-                cell.uiData(dataMaper: bindModelData)
-                cell.likeBtn.tag = indexPath.row
-                cell.likeBtn.addTarget(self, action:#selector(newsLikePost(sender:)), for: .touchUpInside)
-                cell.commentBtn.tag = indexPath.row
-                cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
-                cell.openURl.tag = indexPath.row
-                cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
-                cell.sharedBtn.tag = indexPath.row
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                return cell
-            }
+//            else {
+//                let cell = tableView.dequeueReusableCell(withIdentifier: HomeNewz.id(), for: indexPath) as! HomeNewz
+//                cell.uiData(dataMaper: bindModelData)
+//                cell.likeBtn.tag = indexPath.row
+//                cell.likeBtn.addTarget(self, action:#selector(newsLikePost(sender:)), for: .touchUpInside)
+//                cell.commentBtn.tag = indexPath.row
+//                cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
+//                cell.openURl.tag = indexPath.row
+//                cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                return cell
+//            }
         }
         
         return UITableViewCell()
