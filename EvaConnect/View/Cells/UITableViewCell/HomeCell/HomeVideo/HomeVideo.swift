@@ -78,10 +78,13 @@ class HomeVideo: BaseCellClass {
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            //followBtn.isHidden = false
+            if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }
         }
-        
-        
         
         
         if dataMaper.user?.userImage != nil {
@@ -111,7 +114,12 @@ class HomeVideo: BaseCellClass {
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            //followBtn.isHidden = false
+            if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }
         }
         
         if let imageUrl = dataMaper.user?.userImage,

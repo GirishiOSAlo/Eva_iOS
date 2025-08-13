@@ -76,7 +76,12 @@ class HomeUrl: BaseCellClass {
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            //followBtn.isHidden = false
+            if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }
         }
         connectionNameLbl.text = homePost.user?.firstName ?? homePost.user?.companyName ?? ""
 
@@ -112,7 +117,12 @@ class HomeUrl: BaseCellClass {
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            //followBtn.isHidden = false
+            if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }
         }
         
         connectionNameLbl.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""

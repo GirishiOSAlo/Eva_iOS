@@ -110,7 +110,12 @@ class HomeImage: BaseCellClass {
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            //followBtn.isHidden = false
+            if data.isConnected == "connected" || data.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }
         }
         
         self.name.text = data.user?.firstName ?? data.user?.companyName ?? ""
@@ -150,8 +155,12 @@ class HomeImage: BaseCellClass {
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
-        }
+            //followBtn.isHidden = false
+            if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }        }
         
         name.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
         dateLbl.text = dataMaper.createdDate
