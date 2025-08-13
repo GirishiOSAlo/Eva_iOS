@@ -32,6 +32,9 @@ class ShareVC: UIViewController {
     var completion: (() -> ())? = nil
     
     var sharedLinks = ""
+    var copiedLink = ""
+    var whatsappLink = ""
+    var facebookLink = ""
         
     let application = UIApplication.shared
     var subIndexPathCustom: IndexPath? = nil
@@ -55,6 +58,7 @@ class ShareVC: UIViewController {
         super.viewWillAppear(animated)
 //        initUI()
         getAllConnection()
+        shareConnection()
 //        createShareView()
     }
     
@@ -63,15 +67,15 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func copyLinkTapped(_ sender: UIButton) {
-        sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
-        UIPasteboard.general.string = sharedLinks
+        //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        UIPasteboard.general.string = self.copiedLink
         showToastWithLogo(message: "Link Copied")
     }
     
     @IBAction func whatsAppTapped(_ sender: UIButton) {
-        sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
         
-        let urlString = "https://api.whatsapp.com/send?text=Hey check this out \(sharedLinks)"
+        let urlString = "https://api.whatsapp.com/send?text=Hey check this out \(self.whatsappLink)"
         let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let URL = NSURL(string: urlStringEncoded!)
         if UIApplication.shared.canOpenURL(URL! as URL){
@@ -99,8 +103,8 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func facebookTapped(_ sender: UIButton) {
-        sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
-        let urlStr = String(format: "fb-messenger://share/?link=%@", sharedLinks)
+        //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        let urlStr = String(format: "fb-messenger://share/?link=%@", facebookLink)
         let url  = NSURL(string: urlStr)
 
         if UIApplication.shared.canOpenURL(url! as URL) {
@@ -168,6 +172,7 @@ class ShareVC: UIViewController {
 private extension ShareVC {
     
     func getAllConnection() {
+        self.connectionUsers = []
         let endPoint = String(format: "?limit=%d&offset=%d", pageSize, offSet)
         getConnections(pagination: endPoint) { (userConnections, error) in
 
@@ -226,14 +231,25 @@ private extension ShareVC {
         }
     }
     
+    
+        
     func shareConnection() {
         
-        if let user = LoggedUserDetails.shared.user {
-//            let ids = connectionUsers.filter({ $0.isSelected }).compactMap { $0.id }
-            let selectedUsers = connectionUsers.filter { $0.isSelected }
-            let selectedUserIds = selectedUsers.map { $0.id }
+//        if let user = LoggedUserDetails.shared.user {
+//            let selectedUsers = connectionUsers.filter { $0.isSelected }
+//            let selectedUserIds = selectedUsers.map { $0.id }
+        var selectedUserIds: [Int] = []
+        for user in connectionUsers {
+            if user.isSelected {
+                if let id = user.id {
+                    selectedUserIds.append(id)
+                }
+            } else {
+                print("Not Selected")
+            }
+        }
             
-            var parameters = [ "user_id":  user.id ?? 0,
+        var parameters = [ "user_id":  myUserDefaults.userId,
                                "share_user_id": selectedUserIds] as [String : Any]
             var endPoint = ""
             if type == .post {
@@ -259,14 +275,23 @@ private extension ShareVC {
                 if response.result.isSuccess {
                     
                     let jsonDecoder = JSONDecoder()
-                    let genericResponse = try! jsonDecoder.decode(GenericResponse.self, from:response.data!)
+                    let genericResponse = try! jsonDecoder.decode(ShareDataModel.self, from:response.data!)
                     
-                    if !genericResponse.error {
+                    if !(genericResponse.error ?? false) {
+                        
+                        self.copiedLink = genericResponse.data?.copyLink ?? ""
+                        self.whatsappLink = genericResponse.data?.whatsappLink ?? ""
+                        self.facebookLink = genericResponse.data?.facebookLink ?? ""
+                        
                         self.connectionUsers.enumerated().forEach { index, user in
                             self.connectionUsers[index].isSelected = false
-                            self.presentAlert("Alert", "Successfully shared with desired connection"){
-                                self.dismiss(animated: true)
-                                self.completion?()
+                            if selectedUserIds.count == 0 {
+                                print("Fetch Share Link....")
+                            } else {
+                                self.presentAlert("Alert", "Successfully shared with desired connection"){
+                                    self.dismiss(animated: true)
+                                    self.completion?()
+                                }
                             }
                         }
                     } else {
@@ -275,7 +300,7 @@ private extension ShareVC {
                 }
                 
             }
-        }
+//        }
         
     }
     

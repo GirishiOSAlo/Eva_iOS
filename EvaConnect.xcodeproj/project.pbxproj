@@ -480,6 +480,7 @@
 		A60CE9322D78345D00E301D6 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = A60CE9312D78345D00E301D6 /* SwiftyJSON */; };
 		A611A4452DF6F313006011AD /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A611A4442DF6F313006011AD /* UserDetailsModel.swift */; };
 		A6158D812E0177F500E43AA1 /* ResumeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */; };
+		A61946922E4CA87600EBE382 /* ShareDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61946912E4CA87600EBE382 /* ShareDataModel.swift */; };
 		A621889D2DEF204E006513D3 /* NewsTrendingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */; };
 		A625F9932E3C8D6000E60035 /* ScheduleMeetingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */; };
 		A625F9972E3C90FA00E60035 /* ScheduleMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A625F9962E3C90FA00E60035 /* ScheduleMeetingCVC.xib */; };
@@ -1107,6 +1108,7 @@
 		A60BF9F42DF1BF0400724A8C /* NewsCommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCommentModel.swift; sourceTree = "<group>"; };
 		A611A4442DF6F313006011AD /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeDataModel.swift; sourceTree = "<group>"; };
+		A61946912E4CA87600EBE382 /* ShareDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDataModel.swift; sourceTree = "<group>"; };
 		A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTrendingModel.swift; sourceTree = "<group>"; };
 		A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingDataModel.swift; sourceTree = "<group>"; };
 		A625F9952E3C90FA00E60035 /* ScheduleMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCVC.swift; sourceTree = "<group>"; };
@@ -1760,6 +1762,7 @@
 				A6508FBF2E2E3A3D007587C3 /* ReportDataModel.swift */,
 				A6AC12742E37340D0039F7B3 /* MeetingListsDataModel.swift */,
 				A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */,
+				A61946912E4CA87600EBE382 /* ShareDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4256,6 +4259,7 @@
 				A6A125972DDDB0B800979389 /* SponsorsCVC.swift in Sources */,
 				485FC17F2DD3793C00AA05A4 /* DelegatesVC.swift in Sources */,
 				502569662496C85B00D66137 /* MediaCVCell.swift in Sources */,
+				A61946922E4CA87600EBE382 /* ShareDataModel.swift in Sources */,
 				259FB1DC278700EA0065CD30 /* CreateNoteVC.swift in Sources */,
 				188A223E24347C3300F99A90 /* CalendarJobCell.swift in Sources */,
 				1837BF942480055700B6A86A /* AllHomeEvent.swift in Sources */,

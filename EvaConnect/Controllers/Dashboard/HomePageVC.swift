@@ -972,16 +972,35 @@ extension HomePageVC {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-    @objc func handleShare(_ sender: UIButton) {
+        
+    @objc func handlePostShare(_ sender: UIButton) {
         tabBarController?.tabBar.isHidden = true
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
-        vc.objectId = self.objectId
-        vc.type = self.type
+        vc.objectId = self.dashboardPostList[sender.tag].id ?? 0 //self.objectId
+        vc.type = .post
+        vc.completion = {
+            // This will run when user finishes in ShareViewController
+            self.viewWillAppear(false)
+        }
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }
+    
+    @objc func handleNewsShare(_ sender: UIButton) {
+        tabBarController?.tabBar.isHidden = true
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+        vc.objectId = self.newsList[sender.tag].id ?? 0 //self.objectId
+        vc.type = .news
+        vc.completion = {
+            // This will run when user finishes in ShareViewController
+            self.viewWillAppear(false)
+        }
+        vc.modalPresentationStyle = .popover
+        self.present(vc, animated: true)
+    }
+    
     
     @objc func reportBtnTapped(_ sender: UIButton) {
         let index = sender.tag
@@ -1069,7 +1088,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.delegate = self
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                 cell.openVideoBtn.tag = indexPath.row
                 cell.videoView.backgroundColor = .black
@@ -1095,7 +1114,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 self.type = .post
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 return cell
             }
             else if homePost.datumPostImage!.count > 0 {
@@ -1117,7 +1136,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 self.type = .post
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 return cell
             }
             else {
@@ -1137,92 +1156,10 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 self.type = .post
                 
                 cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                 return cell
             }
-            
-//            if  homePost.datumPostImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-//                let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                cell.detailsView.layer.cornerRadius = 13
-//                cell.delegate = self
-//                cell.setData(data: homePost)
-//                
-//                cell.likeBtn.tag = indexPath.row
-//                cell.commentBtn.tag = indexPath.row
-//                cell.shareBtn.tag = indexPath.row
-//                cell.goToProfileBtn.tag = indexPath.row
-//                cell.reportBtn.tag = indexPath.row
-//                
-//                self.objectId = homePost.id ?? 0
-//                self.type = .post
-//                
-//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                return cell
-//            }
-//            else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.datumPostImage == [] { //Video Cell
-//                let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                cell.setData(dataMaper: homePost)
-//                
-//                cell.likeBtn.tag = indexPath.row
-//                cell.commentBtn.tag = indexPath.row
-//                cell.sharedBtn.tag = indexPath.row
-//                cell.goToProfileBtn.tag = indexPath.row
-//                cell.reportBtn.tag = indexPath.row
-//                self.objectId = homePost.id ?? 0
-//                self.type = .post
-//                cell.delegate = self
-//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
-//                cell.openVideoBtn.tag = indexPath.row
-//                cell.videoView.backgroundColor = .black
-//                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
-//                cell.videoView.stop()
-//                cell.videoView.isHidden = false
-//                return cell
-//            }
-//            else if homePost.postDocument != "" && homePost.datumPostImage == [] { //document Cell
-//                let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                cell.delegate = self
-//                cell.setData(dataMaper: homePost)
-//                
-//                cell.likeBtn.tag = indexPath.row
-//                cell.commentBtn.tag = indexPath.row
-//                cell.sharedBtn.tag = indexPath.row
-//                cell.openArticleBtn.tag = indexPath.row
-//                cell.goToProfileBtn.tag = indexPath.row
-//                cell.reportBtn.tag = indexPath.row
-//                self.objectId = homePost.id ?? 0
-//                self.type = .post
-//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                return cell
-//            }
-//            else if homePost.datumPostImage!.count > 0 { //Image Cell
-//                let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//                cell.delegate = self
-//                cell.setData(data: homePost)
-//                cell.delegateDidSelect = self
-//                cell.parentViewController = self
-//                
-//                cell.likeButton.tag = indexPath.row
-//                cell.commentButton.tag = indexPath.row
-//                cell.shareButton.tag = indexPath.row
-//                cell.goToProfileBtn.tag = indexPath.row
-//                cell.reportBtn.tag = indexPath.row
-//                
-//                self.objectId = homePost.id ?? 0
-//                self.type = .post
-//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-//                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                return cell
-//            }
             
         case self.newsTableVw:
             let cell: HomeNewz = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -1239,7 +1176,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
             self.type = .news
             cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
             cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
-            cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+            cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
             cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
             cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
             cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)

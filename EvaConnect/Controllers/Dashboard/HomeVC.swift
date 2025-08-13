@@ -1176,7 +1176,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.type = .post
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                     cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                     cell.openVideoBtn.tag = indexPath.row
                     cell.videoView.backgroundColor = .black
@@ -1201,7 +1201,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.type = .post
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 }
                 else if homePost.datumPostImage!.count > 0 {
                     print("Images")
@@ -1221,7 +1221,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.type = .post
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 }
                 else {
                     print("Text")
@@ -1238,7 +1238,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.objectId = homePost.id ?? 0
                     self.type = .post
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     return cell
                 }
@@ -1284,7 +1284,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             self.type = .news
             cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
             cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
-            cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+            cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
             cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
             cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
             cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
@@ -1313,7 +1313,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.type = .post
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                     cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                     cell.openVideoBtn.tag = indexPath.row
                     cell.videoView.backgroundColor = .black
@@ -1338,7 +1338,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.type = .post
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 }
                 else if homePost.datumPostImage!.count > 0 {
                     print("Images")
@@ -1358,7 +1358,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.type = .post
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                 }
                 else {
                     print("Text")
@@ -1375,7 +1375,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     self.objectId = homePost.id ?? 0
                     self.type = .post
                     cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                    cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
                     cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
                     return cell
                 }
@@ -1537,7 +1537,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 self.type = .news
                 cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
                 cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+                cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
                 cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
                 cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
                 cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
@@ -2942,16 +2942,45 @@ extension HomeVC : BottomContentPickerDelegate {
         bottomShareSheet.userId = nil
     }
     
-    @objc func handleShare(_ sender: UIButton) {
+//    @objc func handleShare(_ sender: UIButton) {
+//        tabBarController?.tabBar.isHidden = true
+//        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+//        vc.objectId = self.objectId
+//        vc.type = self.type
+//        vc.modalPresentationStyle = .popover
+////        vc.completion = {
+////            self.showToast(message: "Successfully Shared with desired Connection")
+////        }
+//        self.present(vc, animated: true)
+//    }
+    
+    
+    @objc func handlePostShare(_ sender: UIButton) {
         tabBarController?.tabBar.isHidden = true
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
-        vc.objectId = self.objectId
-        vc.type = self.type
+        vc.objectId = self.posts[sender.tag].id ?? 0 //self.objectId
+        vc.type = .post
         vc.modalPresentationStyle = .popover
-//        vc.completion = {
-//            self.showToast(message: "Successfully Shared with desired Connection")
-//        }
+        vc.completion = {
+            self.viewWillAppear(true)
+            self.showToast(message: "Successfully Shared with desired Connection")
+        }
+        self.present(vc, animated: true)
+    }
+    
+    @objc func handleNewsShare(_ sender: UIButton) {
+        tabBarController?.tabBar.isHidden = true
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+        vc.objectId = self.newsList[sender.tag].id ?? 0 //self.objectId
+        vc.type = .news
+        vc.modalPresentationStyle = .popover
+        vc.completion = {
+            self.viewWillAppear(true)
+            self.showToast(message: "Successfully Shared with desired Connection")
+        }
         self.present(vc, animated: true)
     }
 }
