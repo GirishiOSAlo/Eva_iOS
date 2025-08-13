@@ -72,6 +72,19 @@ class UploadCVVC: UIViewController {
         let resume = self.resumeList[sender.tag]
         self.deleteResume(id: resume.id ?? 0)
     }
+    @objc func downloadResume(sender: UIButton) {
+        print("Delete Resume")
+        let resume = self.resumeList[sender.tag]
+        let urlString = resume.resumeFile ?? ""
+        
+        // Encode the URL to handle spaces and special characters
+        if let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let url = URL(string: encodedURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("Invalid URL")
+        }
+    }
 }
 
 extension UploadCVVC: UIDocumentPickerDelegate {
@@ -199,7 +212,6 @@ extension UploadCVVC {
                 let root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 
                 if !(root.error) {
-                    self.presentAlert("Success", root.message, nil)
                     let alert = UIAlertController(title: "Success",
                                                   message: "Resume has been Uploaded successfully.",
                                                   preferredStyle: .alert
@@ -229,7 +241,6 @@ extension UploadCVVC {
                 let root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 
                 if !(root.error) {
-                    self.presentAlert("Success", root.message, nil)
                     let alert = UIAlertController(title: "Success",
                                                   message: "Resume has been deleted successfully.",
                                                   preferredStyle: .alert
@@ -270,6 +281,7 @@ extension UploadCVVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         }
         
         cell.downloadCVBtn.tag = indexPath.row
+        cell.downloadCVBtn.addTarget(self, action: #selector(downloadResume(sender:)), for: .touchUpInside)
         cell.deleteCVBtn.tag = indexPath.row
         cell.deleteCVBtn.addTarget(self, action: #selector(deleteResume(sender:)), for: .touchUpInside)
         
