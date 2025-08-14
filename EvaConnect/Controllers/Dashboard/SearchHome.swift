@@ -212,45 +212,22 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
                 let homePost = dashBoardModelArray[indexPath.row]
                 if homePost.type == .post {
                     if homePost.postVideo != "" {
-                        print("Video")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 356.0
                         return height
                     } else if homePost.postDocuments?.count ?? 0 > 0 {
-                        print("Document")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 231.0
                         return height
                     } else if homePost.datumPostImage!.count > 0 {
-                        print("Images")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 416.0
                         return height
                     } else {
-                        print("Text")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 195.0
                         return height
                     }
-//                    //image cell with text
-//                    if homePost.postImage!.count > 0  {
-//                        return UITableView.automaticDimension
-//                    }
-//                    
-//                    //document cell with text
-//                    else if homePost.postDocument != nil {
-//                        return  390.0
-//                    }
-//                   
-//                    //video cell with text
-//                    else if homePost.postVideo != nil {
-//                        return UITableView.automaticDimension
-//                    }
-//                    else {
-//                        //Simple Text cell
-//                        return 220.0
-//                        
-//                    }
                 }
             }
         case .events, .industryEvents:
@@ -272,46 +249,22 @@ extension SearchHome: UITableViewDataSource, UITableViewDelegate {
                 let homePost = dashBoardModelArray[indexPath.row]
                 if homePost.type == .post {
                     if homePost.postVideo != "" {
-                        print("Video")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 356.0
                         return height
                     } else if homePost.postDocuments?.count ?? 0 > 0 {
-                        print("Document")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 231.0
                         return height
                     } else if homePost.datumPostImage!.count > 0 {
-                        print("Images")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 430.0
                         return height
                     } else {
-                        print("Text")
                         let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                         let height = lblHeight + 195.0
                         return height
                     }
-//                    //image cell with text
-//                    if homePost.postImage!.count > 0  {
-//                        return UITableView.automaticDimension
-//                    }
-//                    
-//                    //document cell
-//                    else if homePost.postDocument != nil {
-//                        return  390.0
-//                    }
-//                    
-//                    //video cell with text
-//                    else if homePost.postVideo != nil {
-//                        return UITableView.automaticDimension
-//                        
-//                    }
-//                    //Simple Text cell
-//                    else {
-//                        return 220.0
-//                        
-//                    }
                 }
             }
             

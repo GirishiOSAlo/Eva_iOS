@@ -142,40 +142,22 @@ class UserProfileVC: BaseVC {
         var totalHeight = 0.0
         for homePost in self.posts {
             if homePost.postVideo != "" && homePost.postVideo != nil {
-                print("Video")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
                 totalHeight = totalHeight + height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
-                print("Document")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 231.0
                 totalHeight = totalHeight + height
             } else if homePost.datumPostImage!.count > 0 {
-                print("Images")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 430.0
                 totalHeight = totalHeight + height
             } else {
-                print("Text")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 195.0
                 totalHeight = totalHeight + height
             }
-//            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                let height = lblHeight + 195.0
-//                totalHeight = totalHeight + height
-//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
-//                totalHeight = totalHeight + 450
-//            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
-//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                let height = lblHeight + 231.0
-//                totalHeight = totalHeight + height
-//                
-//            } else if homePost.postImage!.count > 0 { //Image Cell
-//                totalHeight = totalHeight + 450
-//            }
         }
         self.reactionTblViewHeight.constant = totalHeight
     }
@@ -1741,45 +1723,22 @@ extension UserProfileVC: UITableViewDataSource {
         } else {
             let homePost = self.posts[indexPath.row]
             if homePost.postVideo != "" && homePost.postVideo != nil {
-                print("Video")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 356.0
                 return height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
-                print("Document")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 231.0
                 return height
             } else if homePost.datumPostImage!.count > 0 {
-                print("Images")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 430.0
                 return height
             } else {
-                print("Text")
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 195.0
                 return height
             }
-            
-//            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" { // text cell
-//                //return 200
-//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                let height = lblHeight + 195.0
-//                return height
-//            } else if homePost.postVideo != "" && homePost.postDocument == "" && homePost.postImage == [] { //Video Cell
-//                return 450
-//            } else if homePost.postDocument != "" && homePost.postImage == [] { //document Cell
-//                
-//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                let height = lblHeight + 231.0
-//                return height
-//                
-//            } else if homePost.postImage!.count > 0 { //Image Cell
-//                return 450
-//            } else {
-//                return UITableView.automaticDimension
-//            }
         }
     }
 }
