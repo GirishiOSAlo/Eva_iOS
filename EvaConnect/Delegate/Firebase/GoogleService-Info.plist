@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>603575791294-9e3dkc4j9e9653bv657v2s8jfg82e9i6.apps.googleusercontent.com</string>
+	<string>466463211660-e9e7lu8nkr3boka6kg7msu2rn9mi5hi5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.603575791294-9e3dkc4j9e9653bv657v2s8jfg82e9i6</string>
+	<string>com.googleusercontent.apps.466463211660-e9e7lu8nkr3boka6kg7msu2rn9mi5hi5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>466463211660-iidl43jpfhhc0s0hkk9q66tese7enf6l.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA-IRprcdJ65_DCHXAZ-8TbGVQXEodf-uY</string>
+	<string>AIzaSyBiQE2slHOD68CLl5g42UogPFAdSW0Yy84</string>
 	<key>GCM_SENDER_ID</key>
-	<string>603575791294</string>
+	<string>466463211660</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hypernym.EvaConnect</string>
+	<string>com.eva.EvaConnect</string>
 	<key>PROJECT_ID</key>
-	<string>evaconnect-df08d</string>
+	<string>aviation-connect-eva</string>
 	<key>STORAGE_BUCKET</key>
-	<string>evaconnect-df08d.appspot.com</string>
+	<string>aviation-connect-eva.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:603575791294:ios:c22d6f6d14f59f7844b8ef</string>
+	<string>1:466463211660:ios:c5831fede2d5aeaca7fba9</string>
 	<key>DATABASE_URL</key>
-	<string>https://evaconnect-df08d.firebaseio.com</string>
+	<string>https://aviation-connect-eva-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

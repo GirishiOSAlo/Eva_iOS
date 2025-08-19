@@ -482,6 +482,7 @@
 		A6158D812E0177F500E43AA1 /* ResumeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */; };
 		A61946922E4CA87600EBE382 /* ShareDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61946912E4CA87600EBE382 /* ShareDataModel.swift */; };
 		A621889D2DEF204E006513D3 /* NewsTrendingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */; };
+		A62347482E5354A20017B1F1 /* Firebase_Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62347472E5354A20017B1F1 /* Firebase_Chat.swift */; };
 		A625F9932E3C8D6000E60035 /* ScheduleMeetingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */; };
 		A625F9972E3C90FA00E60035 /* ScheduleMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A625F9962E3C90FA00E60035 /* ScheduleMeetingCVC.xib */; };
 		A625F9982E3C90FA00E60035 /* ScheduleMeetingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A625F9952E3C90FA00E60035 /* ScheduleMeetingCVC.swift */; };
@@ -601,6 +602,7 @@
 		A6D00EC52AB447E500016672 /* SearchCategoryCollctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D00EC42AB447E500016672 /* SearchCategoryCollctionCell.swift */; };
 		A6D231802E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */; };
 		A6D9F6672AAF4C6D00F604BF /* EventDelegatesTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */; };
+		A6E71F472E52ED2B00DC8F7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */; };
 		A6E754342DD2FF560057B781 /* CommentCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6E754332DD2FF560057B781 /* CommentCVC.xib */; };
 		A6E754352DD2FF560057B781 /* CommentCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E754322DD2FF560057B781 /* CommentCVC.swift */; };
 		A6E8DA7F2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E8DA7E2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift */; };
@@ -1022,8 +1024,6 @@
 		50517659244517CA00544956 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		505A4B76248AF73000DACE07 /* EditPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPasswordVC.swift; sourceTree = "<group>"; };
 		505A4B78248B189400DACE07 /* MeetingEventDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingEventDialogVC.swift; sourceTree = "<group>"; };
-		5067122624C5DFA700539E86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "EvaConnect/Firebase/Prod/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		5067122724C5DFC000539E86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "EvaConnect/Firebase/Dev/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		50674C3424B878A900AE69F5 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		50674C3624BC4D0600AE69F5 /* OnlineStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineStatusManager.swift; sourceTree = "<group>"; };
 		50674C3924BC6B7300AE69F5 /* NetworkStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
@@ -1110,6 +1110,7 @@
 		A6158D802E0177F500E43AA1 /* ResumeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeDataModel.swift; sourceTree = "<group>"; };
 		A61946912E4CA87600EBE382 /* ShareDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDataModel.swift; sourceTree = "<group>"; };
 		A621889C2DEF204E006513D3 /* NewsTrendingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTrendingModel.swift; sourceTree = "<group>"; };
+		A62347472E5354A20017B1F1 /* Firebase_Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase_Chat.swift; sourceTree = "<group>"; };
 		A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingDataModel.swift; sourceTree = "<group>"; };
 		A625F9952E3C90FA00E60035 /* ScheduleMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCVC.swift; sourceTree = "<group>"; };
 		A625F9962E3C90FA00E60035 /* ScheduleMeetingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleMeetingCVC.xib; sourceTree = "<group>"; };
@@ -1227,6 +1228,7 @@
 		A6D00EC42AB447E500016672 /* SearchCategoryCollctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryCollctionCell.swift; sourceTree = "<group>"; };
 		A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateEventMeetingStatusModel.swift; sourceTree = "<group>"; };
 		A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegatesTblCell.swift; sourceTree = "<group>"; };
+		A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A6E754322DD2FF560057B781 /* CommentCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCVC.swift; sourceTree = "<group>"; };
 		A6E754332DD2FF560057B781 /* CommentCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCVC.xib; sourceTree = "<group>"; };
 		A6E8DA7E2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpJobDescriptionVC.swift; sourceTree = "<group>"; };
@@ -1763,6 +1765,7 @@
 				A6AC12742E37340D0039F7B3 /* MeetingListsDataModel.swift */,
 				A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */,
 				A61946912E4CA87600EBE382 /* ShareDataModel.swift */,
+				A62347472E5354A20017B1F1 /* Firebase_Chat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3084,27 +3087,10 @@
 		5067122124C5DD4700539E86 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				5067122324C5DD5A00539E86 /* Dev */,
-				5067122224C5DD5500539E86 /* Prod */,
+				A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */,
 			);
 			name = Firebase;
 			path = Delegate/Firebase;
-			sourceTree = "<group>";
-		};
-		5067122224C5DD5500539E86 /* Prod */ = {
-			isa = PBXGroup;
-			children = (
-				5067122624C5DFA700539E86 /* GoogleService-Info.plist */,
-			);
-			path = Prod;
-			sourceTree = "<group>";
-		};
-		5067122324C5DD5A00539E86 /* Dev */ = {
-			isa = PBXGroup;
-			children = (
-				5067122724C5DFC000539E86 /* GoogleService-Info.plist */,
-			);
-			path = Dev;
 			sourceTree = "<group>";
 		};
 		50674C3824BC6B3D00AE69F5 /* Reachability */ = {
@@ -3834,6 +3820,7 @@
 				A6782F652DDC88B50029443B /* SpeakersViewController.xib in Resources */,
 				505176542445077600544956 /* Chat.storyboard in Resources */,
 				A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */,
+				A6E71F472E52ED2B00DC8F7A /* GoogleService-Info.plist in Resources */,
 				259495F827884A6500C5579B /* UserJobCell.xib in Resources */,
 				A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */,
 				50436BD824917EC3009B18D2 /* NotificationCell.xib in Resources */,
@@ -4328,6 +4315,7 @@
 				50E0AA0D248691D500EFA56D /* UserCheck.swift in Sources */,
 				50674C3E24BC6CC000AE69F5 /* SharedLogger.swift in Sources */,
 				48A4215D2AAB51D000A8D37C /* DashboardTabbarVC.swift in Sources */,
+				A62347482E5354A20017B1F1 /* Firebase_Chat.swift in Sources */,
 				50436BCD248ED1C2009B18D2 /* UIImage.swift in Sources */,
 				50B929B9244A77F500299CC0 /* Constants.swift in Sources */,
 				A6D00EC12AB42AE300016672 /* SearchDetailsVC.swift in Sources */,

@@ -49,6 +49,7 @@ class HomeImage: BaseCellClass {
     @IBOutlet weak var likeShareUiView: UIView!
     @IBOutlet weak var goToProfileBtn: UIButton!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var pageControlHeight: NSLayoutConstraint!
     @IBOutlet weak var pageNoLbl: UILabel!
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var followBtn: UIButton!
@@ -124,7 +125,18 @@ class HomeImage: BaseCellClass {
         self.commentCountLbl.text = "\(data.commentCount ?? 0)"
         self.shareCountLbl.text = "\(data.shareCount ?? 0)"
         
-        if data.datumPostImage?.count ?? 0 > 0 {
+        let count = data.datumPostImage?.count ?? 0
+        if count == 0 {
+            self.pageControlHeight.constant = 0.0
+        } else if count == 1 {
+            self.pageControlHeight.constant = 0.0
+            self.imageArr = data.datumPostImage ?? []
+            pageControl.numberOfPages = self.imageArr.count
+            pageControl.currentPage = 0
+            pageNoLbl.text = "  \((pageControl.currentPage) + 1 )/\(pageControl.numberOfPages)  "
+            imageCollection.reloadData()
+        } else {
+            self.pageControlHeight.constant = 30.0
             self.imageArr = data.datumPostImage ?? []
             pageControl.numberOfPages = self.imageArr.count
             pageControl.currentPage = 0

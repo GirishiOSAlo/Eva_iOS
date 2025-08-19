@@ -13,6 +13,38 @@ import Alamofire
 import IQKeyboardManagerSwift
 import PhotosUI
 import MobileCoreServices
+//import FirebaseDatabase
+
+
+//struct ChatMessage {
+//    let audio_file: String?
+//    let audio_file_url: String?
+//    let chat_time: String?
+//    let document: String?
+//    let document_url: String?
+//    let image: String?
+//    let image_url: String?
+//    let message: String?
+//    let read: Bool?
+//    let receiver_id: String?
+//    let sender_id: Int?
+//    let timestamp: TimeInterval
+//
+//    init?(from dict: [String: Any]) {
+//        self.audio_file = dict["audio_file"] as? String
+//        self.audio_file_url = dict["audio_file_url"] as? String
+//        self.chat_time = dict["chat_time"] as? String
+//        self.document = dict["document"] as? String
+//        self.document_url = dict["document_url"] as? String
+//        self.image = dict["image"] as? String
+//        self.image_url = dict["image_url"] as? String
+//        self.message = dict["message"] as? String
+//        self.read = dict["read"] as? Bool
+//        self.receiver_id = dict["receiver_id"] as? String
+//        self.sender_id = dict["sender_id"] as? Int
+//        self.timestamp = dict["timestamp"] as? TimeInterval ?? 0
+//    }
+//}
 
 class ChatVC: BaseVC {
     
@@ -135,6 +167,10 @@ class ChatVC: BaseVC {
     var timer: Timer?
     var isLongPress = false
     
+//    var messages: [ChatMessage] = []
+//    var databaseRef: DatabaseReference!
+    let chatService = ChatService()
+    
     // MARK: UI Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +179,9 @@ class ChatVC: BaseVC {
         self.isSeparatorHidden = true
         self.navigationController?.isNavigationBarHidden = true
         
-        self.readAllMessages()
+        databaseRef = Database.database().reference()
+        loadMessages()
+        //self.readAllMessages()
         tableView.allowsMultipleSelection = false
         
         // Schedule the timer to call the function every 10 seconds
@@ -791,6 +829,7 @@ extension ChatVC {
                             }
                         } else {
                             print("End of data 2.")
+                            print("Error : ",msgRoot.message ?? "")
                             self.endOfData = true
                             self.offsetCount = 1
                         }
@@ -807,6 +846,40 @@ extension ChatVC {
 
 // MARK: Firebase Chat Observers
 extension ChatVC {
+    // MARK: - Load Messages Function
+    func loadMessages() {
+        let myUserId = "\(myUserDefaults.userId)"
+        let otherUserId = "\(user?.id ?? userId)"
+        let chatRoomId = ChatIdGenerator.makeChatId(user1: myUserId, user2: otherUserId)
+        print("Using chat ID: \(chatId)")
+        
+        chatService.observeMessages(chatId: chatRoomId) { messages in
+            print("Received \(messages.count) messages")
+            for msg in messages {
+                print("↳ \(msg.senderId): \(msg.text)")
+            }
+        }
+
+//        databaseRef.child("messages").child(chatRoomId).observe(.childAdded, andPreviousSiblingKeyWith: { snapshot, previousKey in
+//            print("Snapshot key: \(snapshot.key), Previous key: \(previousKey ?? "none")")
+//            
+//            guard let data = snapshot.value as? [String: Any],
+//                  let chatMessage = ChatMessage(from: data) else {
+//                print("❌ Failed to parse message from snapshot.")
+//                return
+//            }
+//            
+//            self.messages.append(chatMessage)
+//            
+//            // Optional: Sort if needed (though not efficient to do every time)
+//            self.messages.sort(by: { $0.timestamp < $1.timestamp })
+//            
+//            // 🔄 Reload your UI here (e.g. tableView.reloadData())
+//            print("✅ Loaded \(self.messages.count) messages.")
+//        })
+    }
+    
+    
     
 //    func loadFirstMessages() {
 //        print("conversation!.id", conversation!.id)

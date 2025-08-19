@@ -151,8 +151,13 @@ class UserProfileVC: BaseVC {
                 totalHeight = totalHeight + height
             } else if homePost.datumPostImage!.count > 0 {
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 430.0
+                let height = lblHeight + 420.0
                 totalHeight = totalHeight + height
+                if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
+                    totalHeight = totalHeight = - 30.0 //-30 is page control view...
+                } else {
+                    print(totalHeight)
+                }
             } else {
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 195.0
@@ -1732,8 +1737,12 @@ extension UserProfileVC: UITableViewDataSource {
                 return height
             } else if homePost.datumPostImage!.count > 0 {
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 430.0
-                return height
+                let height = lblHeight + 420.0
+                if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
+                    return height - 30.0 //-30 is page control view...
+                } else {
+                    return height
+                }
             } else {
                 let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 let height = lblHeight + 195.0

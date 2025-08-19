@@ -162,26 +162,28 @@
                                 <rect key="frame" x="8" y="210" width="848" height="30"/>
                                 <subviews>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="jjo-We-dY6">
-                                        <rect key="frame" x="387" y="2" width="74" height="26"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="848" height="30"/>
                                         <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="currentPageIndicatorTintColor" red="0.23529411764705882" green="0.24705882352941178" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                     </pageControl>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="jjo-We-dY6" firstAttribute="centerX" secondItem="n1J-tC-Pwp" secondAttribute="centerX" id="OA7-8s-qCK"/>
-                                    <constraint firstItem="jjo-We-dY6" firstAttribute="centerY" secondItem="n1J-tC-Pwp" secondAttribute="centerY" id="dYs-RL-a1m"/>
+                                    <constraint firstItem="jjo-We-dY6" firstAttribute="leading" secondItem="n1J-tC-Pwp" secondAttribute="leading" id="Qb6-Kq-kkT"/>
+                                    <constraint firstAttribute="trailing" secondItem="jjo-We-dY6" secondAttribute="trailing" id="RVG-KN-o7i"/>
                                     <constraint firstAttribute="height" constant="30" id="dwH-v9-TUE"/>
+                                    <constraint firstAttribute="bottom" secondItem="jjo-We-dY6" secondAttribute="bottom" id="fAW-YR-rTg"/>
+                                    <constraint firstItem="jjo-We-dY6" firstAttribute="top" secondItem="n1J-tC-Pwp" secondAttribute="top" id="sgl-bU-a2U"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sa6-Fh-13B">
-                                <rect key="frame" x="20" y="260" width="824" height="22"/>
+                                <rect key="frame" x="20" y="248" width="824" height="22"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dvt-M3-jLw">
-                                <rect key="frame" x="0.0" y="302" width="864" height="40"/>
+                                <rect key="frame" x="0.0" y="282" width="864" height="40"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5OG-oP-1pi" userLabel="Like View">
                                         <rect key="frame" x="20" y="0.0" width="60" height="40"/>
@@ -334,8 +336,8 @@
                             <constraint firstItem="n1J-tC-Pwp" firstAttribute="top" secondItem="AnD-uR-eri" secondAttribute="bottom" id="0iV-ll-NIj"/>
                             <constraint firstItem="ejc-k1-3Ud" firstAttribute="top" secondItem="AnD-uR-eri" secondAttribute="top" id="9rO-SX-xRa"/>
                             <constraint firstItem="AnD-uR-eri" firstAttribute="top" secondItem="1n4-oW-Uct" secondAttribute="top" id="EWJ-sN-zRC"/>
-                            <constraint firstItem="sa6-Fh-13B" firstAttribute="top" secondItem="n1J-tC-Pwp" secondAttribute="bottom" constant="20" id="ICW-iJ-T2y"/>
-                            <constraint firstItem="Dvt-M3-jLw" firstAttribute="top" secondItem="sa6-Fh-13B" secondAttribute="bottom" constant="20" id="O9a-eb-Zju"/>
+                            <constraint firstItem="sa6-Fh-13B" firstAttribute="top" secondItem="n1J-tC-Pwp" secondAttribute="bottom" constant="8" id="ICW-iJ-T2y"/>
+                            <constraint firstItem="Dvt-M3-jLw" firstAttribute="top" secondItem="sa6-Fh-13B" secondAttribute="bottom" constant="12" id="O9a-eb-Zju"/>
                             <constraint firstItem="ivx-Ss-DsE" firstAttribute="top" secondItem="ejc-k1-3Ud" secondAttribute="top" constant="10" id="Q2e-Zs-910"/>
                             <constraint firstItem="AnD-uR-eri" firstAttribute="leading" secondItem="1n4-oW-Uct" secondAttribute="leading" id="RL7-tg-SFD"/>
                             <constraint firstItem="ejc-k1-3Ud" firstAttribute="bottom" secondItem="AnD-uR-eri" secondAttribute="bottom" id="Ucp-iT-7Hd"/>
@@ -381,6 +383,7 @@
                 <outlet property="name" destination="lgy-rt-bmb" id="OuD-4P-yF1"/>
                 <outlet property="openProfile" destination="zXR-aS-ybI" id="eKg-Zc-qHW"/>
                 <outlet property="pageControl" destination="jjo-We-dY6" id="Hq7-dV-Inh"/>
+                <outlet property="pageControlHeight" destination="dwH-v9-TUE" id="xtW-EI-Yyt"/>
                 <outlet property="pageNoLbl" destination="ivx-Ss-DsE" id="BG4-ln-5pb"/>
                 <outlet property="postMsgLbl" destination="sa6-Fh-13B" id="hjK-AG-hOf"/>
                 <outlet property="profileImage" destination="GYO-eh-T8W" id="hh2-fg-0QE"/>
