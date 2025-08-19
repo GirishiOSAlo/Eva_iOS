@@ -154,7 +154,7 @@ class UserProfileVC: BaseVC {
                 let height = lblHeight + 420.0
                 totalHeight = totalHeight + height
                 if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
-                    totalHeight = totalHeight = - 30.0 //-30 is page control view...
+                    totalHeight = totalHeight - 30.0 //-30 is page control view...
                 } else {
                     print(totalHeight)
                 }
