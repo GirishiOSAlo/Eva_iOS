@@ -16,7 +16,6 @@ import IQKeyboardManagerSwift
 import IQKeyboardToolbarManager
 import FirebaseMessaging
 import FirebaseCore
-import FirebaseDatabase
 //import netfox
 //import GooglePlaces
 

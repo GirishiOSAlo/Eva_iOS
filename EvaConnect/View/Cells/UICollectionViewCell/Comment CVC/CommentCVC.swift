@@ -145,7 +145,7 @@ extension CommentCVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         
         cell.viewReplyBtnVwHeight.constant = 0.0
         cell.treadVwWidth.constant = 40.0
-        cell.treadVericalLine.isHidden = false
+        cell.treadVericalLine.isHidden = true
         
 //        let isFirst = indexPath.item == 0
 //        let isLast = indexPath.item == collectionView.numberOfItems(inSection: indexPath.section) - 1
