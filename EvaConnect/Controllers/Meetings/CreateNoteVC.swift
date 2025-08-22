@@ -33,6 +33,8 @@ class CreateNoteVC: UIViewController {
         datePicker.datePickerMode = .time
         datePicker.minuteInterval = 5
         if #available(iOS 13.4, *) { datePicker.preferredDatePickerStyle = .wheels }
+        // Force 24-hour format
+        datePicker.locale = Locale(identifier: "en_GB")
         datePicker.addTarget(self, action: #selector(timePickerValueChanged(_:)), for: .valueChanged)
         return datePicker
     }()

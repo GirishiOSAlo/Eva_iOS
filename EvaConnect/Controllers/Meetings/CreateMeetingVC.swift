@@ -524,7 +524,9 @@ extension CreateMeetingVC {
         if #available(iOS 13.4, *) {
             startTimePicker.preferredDatePickerStyle = .wheels
         }
-
+        // Force 24-hour format
+        startTimePicker.locale = Locale(identifier: "en_GB")
+        
         // Apply min and max time (as full Date objects)
         if let min = minTime {
             startTimePicker.minimumDate = min
@@ -599,6 +601,8 @@ extension CreateMeetingVC {
         if #available(iOS 13.4, *) {
             endTimePicker.preferredDatePickerStyle = .wheels
         }
+        // Force 24-hour format
+        startTimePicker.locale = Locale(identifier: "en_GB")
 
         // Set min and max time
         if let min = minTime {
