@@ -191,7 +191,12 @@ class HomeImage: BaseCellClass {
             imageCollection.reloadData()
         }
         
-        
+        if dataMaper.datumPostImage!.count == 0 || dataMaper.datumPostImage!.count == 1 {
+            self.pageControlHeight.constant = 0.0
+        } else {
+            self.pageControlHeight.constant = 30.0 //30 is page control view...
+        }
+
         
         likeImage.image = dataMaper.isPostLike == 1 ? #imageLiteral(resourceName: "like_selected") : #imageLiteral(resourceName: "Like")
         
