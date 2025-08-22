@@ -404,18 +404,19 @@ class ChatVC: BaseVC {
     }
     
     @IBAction func deleteBtnTapped(_ sender: UIButton) {
-        if let selectedRows = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedRows {
-                let selectedRow = indexPath.row
-                let id = Int(chats[selectedRow].id ?? 0)
-                self.deleteMsgId.append(id)
-                print("Selected Row: \(selectedRow)")
-            }
-            
-            deleteAllMessages()
-        } else {
-            print("No rows selected")
-        }
+        print("Delete Message...")
+//        if let selectedRows = tableView.indexPathsForSelectedRows {
+//            for indexPath in selectedRows {
+//                let selectedRow = indexPath.row
+//                let id = Int(chats[selectedRow].id ?? 0)
+//                self.deleteMsgId.append(id)
+//                print("Selected Row: \(selectedRow)")
+//            }
+//            
+//            deleteAllMessages()
+//        } else {
+//            print("No rows selected")
+//        }
     }
     
     @IBAction func copyBtnTapped(_ sender: UIButton) {
@@ -423,7 +424,8 @@ class ChatVC: BaseVC {
         if let selectedRows = tableView.indexPathsForSelectedRows {
             let indexPath = selectedRows[0].row
             let selectedRow = indexPath
-            let msg = chats[selectedRow].message ?? ""
+            //let msg = chats[selectedRow].message ?? ""
+            let msg = messages[selectedRow].message ?? ""
             UIPasteboard.general.string = msg
             print("Copied to clipboard: \(msg)")
         } else {
@@ -432,21 +434,21 @@ class ChatVC: BaseVC {
     }
     
     @IBAction func forwardBtnTapped(_ sender: UIButton) {
-        
-        if let selectedRows = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedRows {
-                let selectedRow = indexPath.row
-                let id = Int(chats[selectedRow].id ?? 0)
-                self.FwdMsgId.append(id)
-                print("Selected Row: \(selectedRow)")
-            }
-            
-            let vc = StoryboardRouter.forwardChatVC()
-            vc.msgIdArr = self.FwdMsgId
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            print("No rows selected")
-        }
+        print("Forward Message...")
+//        if let selectedRows = tableView.indexPathsForSelectedRows {
+//            for indexPath in selectedRows {
+//                let selectedRow = indexPath.row
+//                let id = Int(chats[selectedRow].id ?? 0)
+//                self.FwdMsgId.append(id)
+//                print("Selected Row: \(selectedRow)")
+//            }
+//            
+//            let vc = StoryboardRouter.forwardChatVC()
+//            vc.msgIdArr = self.FwdMsgId
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        } else {
+//            print("No rows selected")
+//        }
         
         
     }
@@ -652,8 +654,8 @@ extension ChatVC {
                 
                 if (meetingRoot.error == false) {
                     self.resetMSGfields()
-                    self.showActivity()
-                    self.FetchMsgList(id: self.user?.id ?? self.userId, offset: 1, autoReload: false)
+                    //self.showActivity()
+                    //self.FetchMsgList(id: self.user?.id ?? self.userId, offset: 1, autoReload: false)
                     print("msg sent")
                 } else {
                     self.presentAlert("Failure", meetingRoot.message, nil)
@@ -1694,8 +1696,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
 //                self.chats = self.tempChats
 //                self.tableView.reloadData()
 //                self.scrollToBottom(atRow: 10, animated: false)
-                showActivity()
-                FetchMsgList(id: user?.id ?? userId, offset: self.offsetCount, autoReload: false)
+                //showActivity()
+                //FetchMsgList(id: user?.id ?? userId, offset: self.offsetCount, autoReload: false)
             } else {
                 print("Chats is empty.")
             }
