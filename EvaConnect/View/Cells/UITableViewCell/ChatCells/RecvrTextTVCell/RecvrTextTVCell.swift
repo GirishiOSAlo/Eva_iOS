@@ -34,7 +34,7 @@ class RecvrTextTVCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setData(obj: Message, screenWidth: CGFloat) {
+    func setData(obj: ChatMessage, screenWidth: CGFloat) {
         recvrMsgLbl.text = obj.message
         recvrTimeLbl.text = DateUtils.formatTo24Hour(timestamp: obj.timestamp ?? 0.0)
         

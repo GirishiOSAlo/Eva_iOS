@@ -34,11 +34,10 @@ class DownloadChatImgVC: UIViewController, XIBed {
     func setupUI(){
         downloadButton.isHidden = isFromHomeVc
         mainImage.contentMode = .scaleAspectFit
-        
-//        mainImage.sd_setImage(with: URL(string: imageString))
-        
-        mainImage.sd_setImage(with: URL(string: imageString))
-//        
+                
+        //mainImage.sd_setImage(with: URL(string: imageString))
+        mainImage.kf.setImage(with: URL(string: imageString), placeholder: UIImage(named: "noPhoto"))
+//
         self.scrollView.minimumZoomScale = 1.0
         self.scrollView.maximumZoomScale = 10.0
         scrollView.delegate = self

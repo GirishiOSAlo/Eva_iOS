@@ -115,7 +115,7 @@ class ChatVC: BaseVC {
     var chats: [ChatList] = []
     
     var conversationDetails: Conversation?
-    var messages: [Message] = []
+    var messages: [ChatMessage] = []
     
     var articleContent: String?
     var tempChats : [ChatList] = []
@@ -827,6 +827,7 @@ extension ChatVC {
         let loggedInUserId = myUserDefaults.userId
         let otherUserID = userId
         let chatId = makeChatId(user1Id: loggedInUserId, user2Id: otherUserID)
+        print("Chat Id : \(chatId)")
         
         // ✅ messages list updated
         observeMessages(chatId: chatId) { [weak self] msgs in
@@ -851,69 +852,29 @@ extension ChatVC {
             return "\(user2Id)_\(user1Id)"
         }
     }
-    
-//    func observeMessages(chatId: String,
-//                         onUpdate: @escaping ([Message]) -> Void,
-//                         onError: @escaping (Error) -> Void) {
-//        
-//        let messagesRef = Database.database().reference().child("messages").child(chatId)
-//        
-//        messagesRef.observe(.value, with: { snapshot in
-//            var messages: [Message] = []
-//            
-//            for case let child as DataSnapshot in snapshot.children {
-//                if let messageMap = child.value as? [String: Any] {
-//                    
-//                    let messageText = messageMap["message"] as? String ?? ""
-//                    let senderId = messageMap["sender_id"] as? Int64 ?? 0
-//                    let image = messageMap["image_url"] as? String ?? ""
-//                    let document = messageMap["document_url"] as? String ?? ""
-//                    let audioFile = messageMap["audio_file_url"] as? String ?? ""
-//                    let read = messageMap["read"] as? Bool ?? false
-//                    let timestamp = messageMap["timestamp"] as? Int64 ?? 0
-//                    
-//                    let message = Message(
-//                        id: child.key,
-//                        text: messageText,
-//                        senderId: String(senderId),
-//                        timestamp: Double(timestamp) / 1000.0, // ✅ convert ms → seconds
-//                        imageUrl: image.isEmpty ? nil : image,
-//                        documentUrl: document.isEmpty ? nil : document,
-//                        audioUrl: audioFile.isEmpty ? nil : audioFile,
-//                        isRead: read
-//                    )
-//                    
-//                    messages.append(message)
-//                }
-//            }
-//            
-//            // sort by time
-//            let sorted = messages.sorted { $0.timestamp < $1.timestamp }
-//            onUpdate(sorted)
-//            
-//        }, withCancel: { error in
-//            onError(error)
-//        })
-//    }
+
     func observeMessages(chatId: String,
-                         onUpdate: @escaping ([Message]) -> Void,
+                         onUpdate: @escaping ([ChatMessage]) -> Void,
                          onError: @escaping (Error) -> Void) {
         
         let messagesRef = Database.database().reference().child("messages").child(chatId)
         
         messagesRef.observe(.value, with: { snapshot in
-            var messages: [Message] = []
+            var messages: [ChatMessage] = []
             
             for case let child as DataSnapshot in snapshot.children {
                 if let dict = child.value as? [String: Any] {
                     
-                    let message = Message(
+                    let message = ChatMessage(
                         audio_file: dict["audio_file"] as? String,
+                        audio_file_url: dict["audio_file_url"] as? String,
                         chat_time: dict["chat_time"] as? String,
                         document: dict["document"] as? String,
+                        document_url: dict["document_url"] as? String,
                         firebase_receiver_id: dict["firebase_receiver_id"] as? String,
                         firebase_sender_id: dict["firebase_sender_id"] as? String,
                         image: dict["image"] as? String,
+                        image_url: dict["image_url"] as? String,
                         message: dict["message"] as? String,
                         read: dict["read"] as? Bool,
                         receiver_id: dict["receiver_id"] as? Int,
@@ -1175,43 +1136,55 @@ extension ChatVC {
     }
     
     @objc func SendImgDidTap(_ Sender: UIButton){
-        let obj = chats[Sender.tag]
-        if obj.imageURL != nil {
-            let imgString = obj.imageURL ?? ""
+        //let obj = chats[Sender.tag]
+        let obj = messages[Sender.tag]
+        if obj.image_url != "" {
+            let imgString = obj.image_url ?? ""
             let vc = DownloadChatImgVC.instantiate(imageString: imgString)
             vc.completion = {
                 self.showToast(message: "Image Saved!!")
             }
             self.navigationController?.present(vc, animated: true)
-            print("Selected:", obj.imageURL ?? "")
+            print("Selected:", obj.image ?? "")
         }
     }
     
     @objc func RcvImgDidTap(_ Sender: UIButton){
-        let obj = chats[Sender.tag]
-        if obj.imageURL != nil {
-            let imgString = obj.imageURL ?? ""
+        //let obj = chats[Sender.tag]
+        let obj = messages[Sender.tag]
+        if obj.image_url != "" {
+            let imgString = obj.image_url ?? ""
             let vc = DownloadChatImgVC.instantiate(imageString: imgString)
             vc.completion = {
                 self.showToast(message: "Image Saved!!")
             }
             self.navigationController?.present(vc, animated: true)
-            print("Selected:", obj.imageURL ?? "")
+            print("Selected:", obj.image ?? "")
         }
     }
     
     @objc func AudioMsgDidTap(_ Sender: UIButton){
-        let obj = chats[Sender.tag]
-        if obj.audioFileURL != nil {
-            articleContent = obj.audioFileURL
+//        let obj = chats[Sender.tag]
+//        if obj.audioFileURL != nil {
+//            articleContent = obj.audioFileURL
+//            openArticle()
+//        }
+        let obj = messages[Sender.tag]
+        if obj.audio_file_url != nil {
+            articleContent = obj.audio_file_url
             openArticle()
         }
     }
     
     @objc func DocMsgDidTap(_ Sender: UIButton){
-        let obj = chats[Sender.tag]
-        if obj.documentURL != nil {
-            articleContent = obj.documentURL
+//        let obj = chats[Sender.tag]
+//        if obj.documentURL != nil {
+//            articleContent = obj.documentURL
+//            openArticle()
+//        }
+        let obj = messages[Sender.tag]
+        if obj.document_url != nil {
+            articleContent = obj.document_url
             openArticle()
         }
     }
@@ -1332,27 +1305,124 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let msg = messages[indexPath.row]
-        if msg.sender_id == myUserDefaults.userId {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
+        if msg.image != "" { //Image
+            if msg.sender_id == myUserDefaults.userId {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: SenderImgTVCell.id(), for: indexPath) as? SenderImgTVCell {
+                    cell.selectionStyle = .default
+                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                    longPressGesture.delegate = self  // Set the delegate
+                    cell.addGestureRecognizer(longPressGesture)
+                    cell.singleImgUIView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
+                    cell.multiImgView.isHidden = true
+                    cell.singleImgUIView.isHidden = false
+                    cell.mainImageView.kf.setImage(with: URL(string: msg.image_url ?? ""), placeholder: UIImage(named: "noPhoto"))
+                    cell.singleTimeLabel.text = DateUtils.formatTo24Hour(timestamp: msg.timestamp ?? 0.0)
+                    cell.showDetailsBtn.tag = indexPath.row
+                    cell.showDetailsBtn.addTarget(self, action: #selector(SendImgDidTap(_:)), for: .touchUpInside)
+                    return cell
+                }
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: ReceiverImgTVCell.id(), for: indexPath) as? ReceiverImgTVCell {
+                    cell.selectionStyle = .default
+                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                    longPressGesture.delegate = self  // Set the delegate
+                    cell.addGestureRecognizer(longPressGesture)
+                    cell.multiImgView.isHidden = true
+                    cell.singleImgUIView.isHidden = false
+                    cell.singleImgUIView.backgroundColor = .white
+                    cell.mainImageView.kf.setImage(with: URL(string: msg.image_url ?? ""), placeholder: UIImage(named: "noPhoto"))
+                    cell.singleTimeLabel.text = DateUtils.formatTo24Hour(timestamp: msg.timestamp ?? 0.0)
+                    cell.showDetailsBtn.tag = indexPath.row
+                    cell.showDetailsBtn.addTarget(self, action: #selector(RcvImgDidTap(_:)), for: .touchUpInside)
+                    return cell
+                }
+            }
+        }
+        else if msg.document != "" { //Document
+            if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
                 cell.selectionStyle = .default
-                // Add long press gesture recognizer to the cell
                 let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
                 longPressGesture.delegate = self  // Set the delegate
                 cell.addGestureRecognizer(longPressGesture)
-                cell.setData(obj: msg, screenWidth: self.view.frame.size.width - 100)
-                
+                if msg.document != nil {
+                    if msg.sender_id == myUserDefaults.userId {
+                        cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
+                        cell.mainBaseViewLeading.constant = 70.0
+                        cell.mainBaseViewTralling.constant = 20.0
+                    } else {
+                        cell.mainBaseView.backgroundColor = .white
+                        cell.mainBaseViewLeading.constant = 20.0
+                        cell.mainBaseViewTralling.constant = 70.0
+                    }
+                    
+                    cell.audioMainView.isHidden = true
+                    cell.documentStackVw.isHidden = false
+                    cell.docNameLbl.text = msg.document
+                    cell.docSizeLbl.text = "0 KB"
+                    cell.timeLabel.text = DateUtils.formatTo24Hour(timestamp: msg.timestamp ?? 0.0)
+                    cell.imgVw.image = UIImage(named: "document")
+                    cell.dowmloadBtn.tag = indexPath.row
+                    cell.showDeatilsBtn.tag = indexPath.row
+                    cell.showDeatilsBtn.addTarget(self, action: #selector(DocMsgDidTap(_:)), for: .touchUpInside)
+                    cell.dowmloadBtn.addTarget(self, action: #selector(downloadDocTapped(_:)), for: .touchUpInside)
+                }
                 return cell
             }
-        } else {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: RecvrTextTVCell.id(), for: indexPath) as? RecvrTextTVCell {
+        }
+        else if msg.audio_file != "" { //Audio
+            if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
                 cell.selectionStyle = .default
-                // Add long press gesture recognizer to the cell
                 let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
                 longPressGesture.delegate = self  // Set the delegate
                 cell.addGestureRecognizer(longPressGesture)
-                cell.setData(obj: msg, screenWidth: self.view.frame.size.width - 100)
-                
+                if msg.document != nil {
+                    if msg.sender_id == myUserDefaults.userId {
+                        cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
+                        cell.mainBaseViewLeading.constant = 70.0
+                        cell.mainBaseViewTralling.constant = 20.0
+                    } else {
+                        cell.mainBaseView.backgroundColor = .white
+                        cell.mainBaseViewLeading.constant = 20.0
+                        cell.mainBaseViewTralling.constant = 70.0
+                    }
+                    
+                    cell.audioMainView.isHidden = false
+                    cell.documentStackVw.isHidden = true
+                    cell.docNameLbl.text = msg.audio_file
+                    cell.docSizeLbl.text = "0 KB"
+                    cell.timeLabel.text = DateUtils.formatTo24Hour(timestamp: msg.timestamp ?? 0.0)
+                    cell.imgVw.image = UIImage(named: "ic_chatAudio")
+                    cell.dowmloadBtn.tag = indexPath.row
+                    cell.showDeatilsBtn.tag = indexPath.row
+                    cell.showDeatilsBtn.addTarget(self, action: #selector(AudioMsgDidTap(_:)), for: .touchUpInside)
+                    cell.dowmloadBtn.addTarget(self, action: #selector(downloadAudioTapped(_:)), for: .touchUpInside)
+                }
                 return cell
+            }
+        }
+        else if msg.message != "" { //Text
+            if msg.sender_id == myUserDefaults.userId {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
+                    cell.selectionStyle = .default
+                    // Add long press gesture recognizer to the cell
+                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                    longPressGesture.delegate = self  // Set the delegate
+                    cell.addGestureRecognizer(longPressGesture)
+                    cell.setData(obj: msg, screenWidth: self.view.frame.size.width - 100)
+                    
+                    return cell
+                }
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: RecvrTextTVCell.id(), for: indexPath) as? RecvrTextTVCell {
+                    cell.selectionStyle = .default
+                    // Add long press gesture recognizer to the cell
+                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                    longPressGesture.delegate = self  // Set the delegate
+                    cell.addGestureRecognizer(longPressGesture)
+                    cell.setData(obj: msg, screenWidth: self.view.frame.size.width - 100)
+                    
+                    return cell
+                }
             }
         }
     
@@ -1633,18 +1703,18 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     @objc func downloadDocTapped(_ sender: UIButton) {
-        if let docURL = chats[sender.tag].documentURL {
+        //if let docURL = chats[sender.tag].documentURL {
+        if let docURL = messages[sender.tag].document_url {
             self.showActivity()
             download(url: URL(string: docURL)!, type: "pdf")
-        } else {
-            presentAlert("Error", "File Missing.")
-        }
+        } else { presentAlert("Error", "File Missing.") }
     }
     
     @objc func downloadAudioTapped(_ sender: UIButton) {
-        if let audURL = chats[sender.tag].audioFileURL {
+        //if let audURL = chats[sender.tag].audioFileURL {
+        if let audURL = messages[sender.tag].audio_file_url {
             download(url: URL(string: audURL)!, type: "mp3")
-        }
+        } else { presentAlert("Error", "File Missing.") }
     }
     
     @objc func openArticle() {

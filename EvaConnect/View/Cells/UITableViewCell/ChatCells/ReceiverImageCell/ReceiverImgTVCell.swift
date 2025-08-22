@@ -14,6 +14,7 @@ class ReceiverImgTVCell: UITableViewCell {
     @IBOutlet weak var singleImgUIView: UIView!
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var singleTimeLabel: UILabel!
+    @IBOutlet weak var timeBaseVw: UIView!
     
     @IBOutlet weak var multiImgView: UIView!
     @IBOutlet weak var Image1: UIImageView!
@@ -32,6 +33,7 @@ class ReceiverImgTVCell: UITableViewCell {
     func setupUI(){
         singleImgUIView.layer.cornerRadius = 15
         mainImageView.layer.cornerRadius = 15
+        timeBaseVw.layer.cornerRadius = 15
         
         multiImgView.layer.cornerRadius = 15
         Image1.layer.cornerRadius = 15

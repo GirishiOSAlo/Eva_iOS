@@ -217,11 +217,14 @@ extension ChatListVC {
                     if let dict = msgSnap.value as? [String: Any] {
                         let message = ChatMessage(
                             audio_file: dict["audio_file"] as? String,
+                            audio_file_url: dict["audio_file_url"] as? String,
                             chat_time: dict["chat_time"] as? String,
                             document: dict["document"] as? String,
+                            document_url: dict["document_url"] as? String,
                             firebase_receiver_id: dict["firebase_receiver_id"] as? String,
                             firebase_sender_id: dict["firebase_sender_id"] as? String,
                             image: dict["image"] as? String,
+                            image_url: dict["image_url"] as? String,
                             message: dict["message"] as? String,
                             read: dict["read"] as? Bool,
                             receiver_id: dict["receiver_id"] as? Int,

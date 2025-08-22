@@ -43,7 +43,7 @@ class TextMsgTVCell: UITableViewCell {
 //        mainBaseViewWidth.constant = 0
     }
     
-    func setData(obj: Message, screenWidth: CGFloat) {
+    func setData(obj: ChatMessage, screenWidth: CGFloat) {
         messageLbl.text = obj.message
         timeLabel.text = DateUtils.formatTo24Hour(timestamp: obj.timestamp ?? 0.0)
         

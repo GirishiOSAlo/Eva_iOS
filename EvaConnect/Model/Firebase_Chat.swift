@@ -9,20 +9,6 @@
 import Foundation
 import FirebaseDatabase
 
-struct ChatMessage: Codable {
-    var audio_file: String?
-    var chat_time: String?
-    var document: String?
-    var firebase_receiver_id: String?
-    var firebase_sender_id: String?
-    var image: String?
-    var message: String?
-    var read: Bool?
-    var receiver_id: Int?
-    var sender_id: Int?
-    var timestamp: Double?
-}
-
 struct FirebaseUser: Codable {
     var avatar: String?
     var created_at: String?
@@ -46,13 +32,16 @@ struct Conversation {
     let lastMessage: ChatMessage?
 }
 
-struct Message {
+struct ChatMessage {
     var audio_file: String?
+    var audio_file_url: String?
     var chat_time: String?
     var document: String?
+    var document_url: String?
     var firebase_receiver_id: String?
     var firebase_sender_id: String?
     var image: String?
+    var image_url: String?
     var message: String?
     var read: Bool?
     var receiver_id: Int?
@@ -62,13 +51,15 @@ struct Message {
 }
 
 //audio_file:""
-//chat_time:"2025-08-21T12:54:33.420044Z"
+//audio_file_url:""
+//chat_time:"2025-08-21T13:40:33.286938Z"
 //document:""
+//document_url:""
 //firebase_receiver_id:"-OYBbISTF-jtew0tLsd1"
-//firebase_sender_id:"-OYBcMt-5KjUYHEIV0E5"
-//image:""
-//message:"hey"
+//firebase_sender_id:"-OYBacBHJky7LRMQU3vz"
+//image:"xPrLZ45RHx.jpeg"
+//image_url:"https://demo.aviationconnect.com/storage/assets/messages/images/xPrLZ45RHx.jpeg"
 //read:true
 //receiver_id:10
-//sender_id:23
-//timestamp:1755780873
+//sender_id:2
+//timestamp:1755783633
