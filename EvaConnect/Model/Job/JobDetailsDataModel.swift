@@ -23,6 +23,7 @@ struct JobDetailsData: Codable {
     let userID: Int?
     let user: JobDetailsUser?
     let jobTitle: String?
+    let sectorID: Int?
     let jobNature: String?
     let jobtype, jobDescription: String?
     let listingDuration: Int?
@@ -50,6 +51,7 @@ struct JobDetailsData: Codable {
     enum CodingKeys: String, CodingKey {
 //        case comments
         case id, userID, user, jobTitle, jobNature, jobtype
+        case sectorID = "sector_id"
         case jobDescription = "job_description"
         case listingDuration = "listing_duration"
         case jobSector, position, weeklyHours, location, salary, content, jobImage, attendees, commentCount, applicantCount, isJobLike, isApplied, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, type, os, status, isURL, postVideo, isConnected
