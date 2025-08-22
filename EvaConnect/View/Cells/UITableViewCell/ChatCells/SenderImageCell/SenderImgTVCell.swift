@@ -32,7 +32,7 @@ class SenderImgTVCell: UITableViewCell {
     func setupUI(){
         singleImgUIView.layer.cornerRadius = 15
         mainImageView.layer.cornerRadius = 15
-        timeBaseVw.layer.cornerRadius = 15
+        timeBaseVw.roundCorners([.bottomLeft, .bottomRight], radius: 15.0)
         
         multiImgView.layer.cornerRadius = 15
         Image1.layer.cornerRadius = 15
