@@ -162,6 +162,7 @@ extension UploadCVVC: UIDocumentPickerDelegate {
                                                       preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             self.navigationController?.popViewController(animated: true)
+                            self.fetchResumeData()
                         })
                         self.present(alert, animated: true)
                     } else {
@@ -221,6 +222,7 @@ extension UploadCVVC {
                     }
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
+                    self.fetchResumeData()
                 } else {
                     self.presentAlert("Failure", root.message, nil)
                 }
@@ -247,6 +249,7 @@ extension UploadCVVC {
                     )
                     let okButton = UIAlertAction(title: "OK", style: .default) { _ in
                         self.navigationController?.popViewController(animated: true)
+                        self.fetchResumeData()
                     }
                     alert.addAction(okButton)
                     self.present(alert, animated: true, completion: nil)
