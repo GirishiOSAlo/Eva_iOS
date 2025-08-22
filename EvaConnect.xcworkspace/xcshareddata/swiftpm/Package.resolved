@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
       "state" : {
-        "revision" : "42e0d94355eba5448fd250f7229d150d268dc3ab",
-        "version" : "8.0.0"
+        "revision" : "555472fdb20a96127643d48d101ef981a40993b6",
+        "version" : "8.0.1"
       }
     },
     {
@@ -168,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "4c6b067f96953ee19526e49e4189403a2be21fb3",
-        "version" : "8.3.1"
+        "revision" : "2015fda791daa72c8058619545a593bf8c1dd59f",
+        "version" : "8.5.0"
       }
     },
     {
@@ -186,8 +186,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "8c6edf4f0fa84fe9c058600a4295eb0c01661c69",
-        "version" : "4.5.1"
+        "revision" : "04f2fd18cc9404a0a0917265a449002674f24ec9",
+        "version" : "4.5.2"
       }
     },
     {
@@ -240,8 +240,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
-        "revision" : "d72aed98f8253ec1aa9ea1141e28150f408cf17f",
-        "version" : "1.29.0"
+        "revision" : "e3f69fd321d0c9fcdc16fb576a0cdd956675face",
+        "version" : "1.31.0"
       }
     },
     {

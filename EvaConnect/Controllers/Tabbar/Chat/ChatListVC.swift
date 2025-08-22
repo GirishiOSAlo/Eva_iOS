@@ -11,7 +11,7 @@ import Alamofire
 //import IHProgressHUD
 import ImageSlideshow
 import Kingfisher
-//import FirebaseDatabase
+import FirebaseDatabase
 
 enum ChatListDataType {
     case chatList, notifications
@@ -34,6 +34,8 @@ class ChatListVC: BaseVC {
     @IBOutlet weak var messagesBtn: UIButton!
     @IBOutlet weak var notificationsBtn: UIButton!
     @IBOutlet weak var noDataLabel: UILabel!
+    
+    var conversations: [Conversation] = []
     
     // MARK: Properties
     var dataType: ChatListDataType = .chatList {
@@ -163,7 +165,15 @@ class ChatListVC: BaseVC {
             self.notificationsBtn.titleLabel?.font = UIFont(name: "SFProText-Regular", size: 14.0)
             
             dataType = .chatList
-            loadMessage()
+            //loadMessage()
+            let loggedInUserId = myUserDefaults.userId
+            observeConversations(loggedInUserId: loggedInUserId) { [weak self] conversations in
+                DispatchQueue.main.async {
+                    self?.conversations = conversations
+                    self?.tableView.reloadData()
+                    print("Conversations updated: \(conversations.count)")
+                }
+            }
         } else {
             presentAlert("Alert", "This action has been disabled, Please contact admin.")
         }
@@ -181,6 +191,79 @@ class ChatListVC: BaseVC {
         dataType = .notifications
         loadNotifications()
     }
+}
+
+extension ChatListVC {
+    func observeConversations(loggedInUserId: Int, onUpdate: @escaping ([Conversation]) -> Void) {
+        let messagesRef = Database.database().reference().child("messages")
+        let usersRef = Database.database().reference().child("users")
+        
+        messagesRef.observe(.value) { snapshot, _ in
+
+                for case let chatNode as DataSnapshot in snapshot.children {
+                    // Example chatNode.key: "2_23"
+                    guard let key = chatNode.key as String?,
+                          key.contains("_") else { continue }
+                    
+                    let participants = key.split(separator: "_").map { String($0) }
+                    guard participants.contains(String(loggedInUserId)) else { continue }
+
+                    // Collect all messages in this chat node
+                    var messages: [ChatMessage] = []
+                    for case let msgSnap as DataSnapshot in chatNode.children {
+                        if let dict = msgSnap.value as? [String: Any],
+                           let timestamp = dict["timestamp"] as? Double {
+                            
+                            let message = ChatMessage(
+                                messageId: msgSnap.key,
+                                senderId: dict["senderId"] as? Int,
+                                text: dict["text"] as? String,
+                                timestamp: timestamp
+                            )
+                            messages.append(message)
+                        }
+                    }
+
+                    // Get last message
+                    guard let lastMessage = messages.max(by: { $0.timestamp ?? 0.0 < $1.timestamp ?? 0.0 }) else { continue }
+
+                    // Determine other participant
+                    let otherUserId: Int
+                    if participants[0] == String(loggedInUserId) {
+                        otherUserId = Int(participants[1]) ?? -1
+                    } else {
+                        otherUserId = Int(participants[0]) ?? -1
+                    }
+
+                    // Fetch user data
+                    usersRef
+                        .queryOrdered(byChild: "user_id")
+                        .queryEqual(toValue: Double(otherUserId))
+                        .observeSingleEvent(of: .value) { userSnap, _  in
+                            
+                            for case let child as DataSnapshot in userSnap.children {
+                                if let dict = child.value as? [String: Any],
+                                   let userId = dict["user_id"] as? Int {
+                                    
+                                    let user = FirebaseUser(
+                                        user_id: userId,
+                                        name: dict["name"] as? String,
+                                        profileImage: dict["profileImage"] as? String
+                                    )
+                                    
+                                    self.conversations.append(Conversation(user: user, lastMessage: lastMessage))
+                                    let sorted = self.conversations.sorted { $0.lastMessage?.timestamp ?? 0.0 > $1.lastMessage?.timestamp ?? 0.0 }
+                                    onUpdate(sorted)
+                                }
+                            }
+                        }
+                }
+
+            let sorted = self.conversations.sorted { $0.lastMessage?.timestamp ?? 0.0 > $1.lastMessage?.timestamp ?? 0.0 }
+                onUpdate(sorted)
+            }
+    }
+
 }
 
 extension ChatListVC {
@@ -697,8 +780,18 @@ extension ChatListVC {
 extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataType == .notifications ? notifications.count : messages.count
-//        notifications.count : conversations.count
+//        dataType == .notifications ? notifications.count : messages.count
+////        notifications.count : conversations.count
+        
+        if dataType == .notifications {
+            return notifications.count
+        } else if dataType == .chatList {
+            //return messages.count
+            return conversations.count
+        } else {
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -717,8 +810,11 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             }
         default:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as? ChatListCell {
-                let conversation = messages[indexPath.row]
-                cell.conversation = conversation
+//                let conversation = messages[indexPath.row]
+//                cell.conversation = conversation
+                
+                cell.configure(item: self.conversations[indexPath.row])
+                
                 return cell
             }
         }
@@ -850,9 +946,17 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 //            }
             
         default:
-            let conversation = messages[indexPath.row]
-            openConversation(id: conversation.userid ?? 0)
+//            let conversation = messages[indexPath.row]
+//            openConversation(id: conversation.userid ?? 0)
             
+//            let chatItem = chatList[indexPath.row]
+//            let otherUser = chatItem.user
+//            let chatVC = StoryboardRouter.chat()
+//            chatVC.otherUser = otherUser
+//            navigationController?.pushViewController(chatVC, animated: true)
+            
+            let obj = self.conversations[indexPath.row]
+            print(obj.user?.name ?? "")
         }
     }
     

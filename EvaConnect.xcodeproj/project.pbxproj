@@ -259,7 +259,6 @@
 		48A421642AAB56DC00A8D37C /* Nibbed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A421632AAB56DC00A8D37C /* Nibbed.swift */; };
 		48A421662AB0533200A8D37C /* XIBed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A421652AB0533200A8D37C /* XIBed.swift */; };
 		48A421682AB08CC400A8D37C /* NoteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A421672AB08CC300A8D37C /* NoteDetailVC.swift */; };
-		48ACD6562C41444500DDE14A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48ACD6552C41444500DDE14A /* GoogleService-Info.plist */; };
 		48B285712AB319660086CA61 /* SenderImgTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B2856F2AB319660086CA61 /* SenderImgTVCell.swift */; };
 		48B285722AB319660086CA61 /* SenderImgTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48B285702AB319660086CA61 /* SenderImgTVCell.xib */; };
 		48B285762AB3216A0086CA61 /* ReceiverImgTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B285742AB3216A0086CA61 /* ReceiverImgTVCell.swift */; };
@@ -607,8 +606,6 @@
 		A6E754352DD2FF560057B781 /* CommentCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E754322DD2FF560057B781 /* CommentCVC.swift */; };
 		A6E8DA7F2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E8DA7E2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift */; };
 		A6F1CD042D78279300131C05 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD032D78279300131C05 /* IQKeyboardManagerSwift */; };
-		A6F1CD0A2D78282600131C05 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD092D78282600131C05 /* SDWebImage */; };
-		A6F1CD0C2D78282600131C05 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD0B2D78282600131C05 /* SDWebImageMapKit */; };
 		A6F1CD162D7828B100131C05 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD152D7828B100131C05 /* FSCalendar */; };
 		A6F1CD1E2D7828FC00131C05 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD1D2D7828FC00131C05 /* Reachability */; };
 		A6F1CD202D78292600131C05 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD1F2D78292600131C05 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -895,7 +892,6 @@
 		48A421632AAB56DC00A8D37C /* Nibbed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nibbed.swift; sourceTree = "<group>"; };
 		48A421652AB0533200A8D37C /* XIBed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XIBed.swift; sourceTree = "<group>"; };
 		48A421672AB08CC300A8D37C /* NoteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailVC.swift; sourceTree = "<group>"; };
-		48ACD6552C41444500DDE14A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		48B2856F2AB319660086CA61 /* SenderImgTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderImgTVCell.swift; sourceTree = "<group>"; };
 		48B285702AB319660086CA61 /* SenderImgTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgTVCell.xib; sourceTree = "<group>"; };
 		48B285742AB3216A0086CA61 /* ReceiverImgTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverImgTVCell.swift; sourceTree = "<group>"; };
@@ -1244,7 +1240,6 @@
 			files = (
 				48DB1DF72B8315CE00980279 /* FirebaseMessaging in Frameworks */,
 				A6AFF00B2D7ACD4C00F5AFEB /* SVProgressHUD in Frameworks */,
-				A6F1CD0C2D78282600131C05 /* SDWebImageMapKit in Frameworks */,
 				48DB1DF12B8315CE00980279 /* FirebaseDatabase in Frameworks */,
 				48DB1DF92B8315CE00980279 /* FirebaseStorage in Frameworks */,
 				851B3AA2DDBD9F7E08E5FEF4 /* Pods_EvaConnect.framework in Frameworks */,
@@ -1252,7 +1247,6 @@
 				A6F1CD162D7828B100131C05 /* FSCalendar in Frameworks */,
 				A6F1CD202D78292600131C05 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				A6AFF0082D7AC80D00F5AFEB /* Kingfisher in Frameworks */,
-				A6F1CD0A2D78282600131C05 /* SDWebImage in Frameworks */,
 				A6F1CD042D78279300131C05 /* IQKeyboardManagerSwift in Frameworks */,
 				48DB1DEF2B8315CE00980279 /* FirebaseCrashlytics in Frameworks */,
 				A6F1CD222D78292600131C05 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -1707,6 +1701,7 @@
 			isa = PBXGroup;
 			children = (
 				186B4A9424371BEA0001B935 /* EvaConnect.entitlements */,
+				A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */,
 				5067122124C5DD4700539E86 /* Firebase */,
 				50C5F38724A61B7A00905C90 /* Delegate */,
 				500A54432473FF6100095324 /* Protocols */,
@@ -1723,7 +1718,6 @@
 				5086BDC1246CC0D2006DA502 /* HelpingFiles */,
 				18665CDA23C596D00089EF69 /* Assets.xcassets */,
 				18665CDF23C596D00089EF69 /* Info.plist */,
-				48ACD6552C41444500DDE14A /* GoogleService-Info.plist */,
 			);
 			path = EvaConnect;
 			sourceTree = "<group>";
@@ -3087,7 +3081,6 @@
 		5067122124C5DD4700539E86 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */,
 			);
 			name = Firebase;
 			path = Delegate/Firebase;
@@ -3742,8 +3735,6 @@
 				48DB1DF62B8315CE00980279 /* FirebaseMessaging */,
 				48DB1DF82B8315CE00980279 /* FirebaseStorage */,
 				A6F1CD032D78279300131C05 /* IQKeyboardManagerSwift */,
-				A6F1CD092D78282600131C05 /* SDWebImage */,
-				A6F1CD0B2D78282600131C05 /* SDWebImageMapKit */,
 				A6F1CD152D7828B100131C05 /* FSCalendar */,
 				A6F1CD1D2D7828FC00131C05 /* Reachability */,
 				A6F1CD1F2D78292600131C05 /* FirebaseAnalyticsOnDeviceConversion */,
@@ -3788,12 +3779,12 @@
 				48B758622B74BFD8001E7C06 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				48DB1DEB2B8315CE00980279 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A6F1CD022D78279300131C05 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
-				A6F1CD082D78282600131C05 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				A6F1CD142D7828B100131C05 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				A6F1CD1C2D7828FC00131C05 /* XCRemoteSwiftPackageReference "Reachability" */,
 				A60CE9302D78345D00E301D6 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				A6AFF0062D7AC80D00F5AFEB /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				A6AFF0092D7ACD4C00F5AFEB /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
+				A63D9D532E570D3300BDC6EC /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 18665CCF23C596CE0089EF69 /* Products */;
 			projectDirPath = "";
@@ -3897,7 +3888,6 @@
 				4867C2DF2B6BC610002A38A6 /* CompanyListPopupVC.xib in Resources */,
 				184BC00823D0333000D0AA2E /* Dashboard.storyboard in Resources */,
 				A60117492E1FE9DB00B4DCE2 /* VenueCVC.xib in Resources */,
-				48ACD6562C41444500DDE14A /* GoogleService-Info.plist in Resources */,
 				502569672496C85B00D66137 /* MediaCVCell.xib in Resources */,
 				A6A125912DDDB01600979389 /* SponsorsVC.xib in Resources */,
 				1849985E2546CEDE000D7845 /* NoInternetVC.xib in Resources */,
@@ -4029,7 +4019,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_DEV=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Dev/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_PROD=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Prod/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_DEV}\"\nif [ ! -f $GOOGLESERVICE_INFO_DEV ]\nthen\n    echo \"No Development GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_PROD}\"\nif [ ! -f $GOOGLESERVICE_INFO_PROD ]\nthen\n    echo \"No Production GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n    echo \"Using ${GOOGLESERVICE_INFO_PROD}\"\n    cp \"${GOOGLESERVICE_INFO_PROD}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"Using ${GOOGLESERVICE_INFO_DEV}\"\n    cp \"${GOOGLESERVICE_INFO_DEV}\" \"${PLIST_DESTINATION}\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_DEV=${PROJECT_DIR}/${TARGET_NAME}/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_PROD=${PROJECT_DIR}/${TARGET_NAME}/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_DEV}\"\nif [ ! -f $GOOGLESERVICE_INFO_DEV ]\nthen\n    echo \"No Development GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_PROD}\"\nif [ ! -f $GOOGLESERVICE_INFO_PROD ]\nthen\n    echo \"No Production GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n    echo \"Using ${GOOGLESERVICE_INFO_PROD}\"\n    cp \"${GOOGLESERVICE_INFO_PROD}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"Using ${GOOGLESERVICE_INFO_DEV}\"\n    cp \"${GOOGLESERVICE_INFO_DEV}\" \"${PLIST_DESTINATION}\"\nfi\n";
 		};
 		633BA10D54590910CFC0A851 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4643,7 +4633,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7.9;
+				CURRENT_PROJECT_VERSION = 8.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
@@ -4705,7 +4695,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7.9;
+				CURRENT_PROJECT_VERSION = 8.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
@@ -4801,6 +4791,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		A63D9D532E570D3300BDC6EC /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
 		A6AFF0062D7AC80D00F5AFEB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -4823,14 +4821,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 8.0.0;
-			};
-		};
-		A6F1CD082D78282600131C05 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.21.0;
 			};
 		};
 		A6F1CD142D7828B100131C05 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
@@ -4911,16 +4901,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A6F1CD022D78279300131C05 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
-		};
-		A6F1CD092D78282600131C05 /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A6F1CD082D78282600131C05 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
-		A6F1CD0B2D78282600131C05 /* SDWebImageMapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A6F1CD082D78282600131C05 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImageMapKit;
 		};
 		A6F1CD152D7828B100131C05 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;

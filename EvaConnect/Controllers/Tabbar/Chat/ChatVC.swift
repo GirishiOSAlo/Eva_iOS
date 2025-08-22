@@ -13,38 +13,7 @@ import Alamofire
 import IQKeyboardManagerSwift
 import PhotosUI
 import MobileCoreServices
-//import FirebaseDatabase
-
-
-//struct ChatMessage {
-//    let audio_file: String?
-//    let audio_file_url: String?
-//    let chat_time: String?
-//    let document: String?
-//    let document_url: String?
-//    let image: String?
-//    let image_url: String?
-//    let message: String?
-//    let read: Bool?
-//    let receiver_id: String?
-//    let sender_id: Int?
-//    let timestamp: TimeInterval
-//
-//    init?(from dict: [String: Any]) {
-//        self.audio_file = dict["audio_file"] as? String
-//        self.audio_file_url = dict["audio_file_url"] as? String
-//        self.chat_time = dict["chat_time"] as? String
-//        self.document = dict["document"] as? String
-//        self.document_url = dict["document_url"] as? String
-//        self.image = dict["image"] as? String
-//        self.image_url = dict["image_url"] as? String
-//        self.message = dict["message"] as? String
-//        self.read = dict["read"] as? Bool
-//        self.receiver_id = dict["receiver_id"] as? String
-//        self.sender_id = dict["sender_id"] as? Int
-//        self.timestamp = dict["timestamp"] as? TimeInterval ?? 0
-//    }
-//}
+import FirebaseDatabase
 
 class ChatVC: BaseVC {
     
@@ -169,7 +138,9 @@ class ChatVC: BaseVC {
     
 //    var messages: [ChatMessage] = []
 //    var databaseRef: DatabaseReference!
-    let chatService = ChatService()
+    var otherUser: ChatUserModel!
+    var messages: [ChatMessageModel] = []
+    let dbRef = Database.database().reference()
     
     // MARK: UI Life Cycle
     override func viewDidLoad() {
@@ -179,13 +150,13 @@ class ChatVC: BaseVC {
         self.isSeparatorHidden = true
         self.navigationController?.isNavigationBarHidden = true
         
-        databaseRef = Database.database().reference()
-        loadMessages()
+//        databaseRef = Database.database().reference()
+        self.fetchConversation()
         //self.readAllMessages()
         tableView.allowsMultipleSelection = false
         
         // Schedule the timer to call the function every 10 seconds
-        timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+//        timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
 
         //Keyboard Show Hide managed...
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -846,37 +817,42 @@ extension ChatVC {
 
 // MARK: Firebase Chat Observers
 extension ChatVC {
-    // MARK: - Load Messages Function
-    func loadMessages() {
-        let myUserId = "\(myUserDefaults.userId)"
-        let otherUserId = "\(user?.id ?? userId)"
-        let chatRoomId = ChatIdGenerator.makeChatId(user1: myUserId, user2: otherUserId)
-        print("Using chat ID: \(chatId)")
+    // MARK: - Load Messages Firebase
+    func fetchConversation() {
+        //guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        let currentUserId = "\(myUserDefaults.userId)"
+        let chatId = getChatId(user1: currentUserId, user2: otherUser.userId)
         
-        chatService.observeMessages(chatId: chatRoomId) { messages in
-            print("Received \(messages.count) messages")
-            for msg in messages {
-                print("↳ \(msg.senderId): \(msg.text)")
+        dbRef.child("messages").child(chatId).observe(.value) { snapshot in
+            var newMessages: [ChatMessageModel] = []
+            
+            for case let msgSnap as DataSnapshot in snapshot.children {
+                if let dict = msgSnap.value as? [String: Any] {
+                    let message = ChatMessageModel(dict: dict, messageId: msgSnap.key)
+                    newMessages.append(message)
+                }
+            }
+            
+            // Sort by timestamp
+            newMessages.sort { $0.timestamp < $1.timestamp }
+            self.messages = newMessages
+            print("Message Count : \(self.messages.count)")
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.scrollToBottom()
             }
         }
-
-//        databaseRef.child("messages").child(chatRoomId).observe(.childAdded, andPreviousSiblingKeyWith: { snapshot, previousKey in
-//            print("Snapshot key: \(snapshot.key), Previous key: \(previousKey ?? "none")")
-//            
-//            guard let data = snapshot.value as? [String: Any],
-//                  let chatMessage = ChatMessage(from: data) else {
-//                print("❌ Failed to parse message from snapshot.")
-//                return
-//            }
-//            
-//            self.messages.append(chatMessage)
-//            
-//            // Optional: Sort if needed (though not efficient to do every time)
-//            self.messages.sort(by: { $0.timestamp < $1.timestamp })
-//            
-//            // 🔄 Reload your UI here (e.g. tableView.reloadData())
-//            print("✅ Loaded \(self.messages.count) messages.")
-//        })
+    }
+    
+    func getChatId(user1: String, user2: String) -> String {
+        return user1 < user2 ? "\(user1)_\(user2)" : "\(user2)_\(user1)"
+    }
+    
+    func scrollToBottom() {
+        if messages.count > 0 {
+            let indexPath = IndexPath(row: messages.count - 1, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     
@@ -1345,216 +1321,260 @@ extension ChatVC: PHPickerViewControllerDelegate {
             }
         }
     }
+    
+    func formatLastSeen(_ timestamp: TimeInterval?) -> String {
+        guard let timestamp = timestamp else { return "Unknown" }
+        
+        // Firebase gives ms → convert to seconds
+        let seconds = timestamp / 1000
+        let date = Date(timeIntervalSince1970: seconds)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"   // 24-hour format
+        return formatter.string(from: date)
+    }
 }
 
 extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        chats.count
-//        return 5
+        //chats.count
+        return self.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = UITableViewCell()
-        if chats.count > 0 {
-            let chat = chats[indexPath.row]
-            if chat.type == .message {
-                //MARK: Text Message Cell...
-                if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
-                {
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
-                        cell.selectionStyle = .default
-                        // Add long press gesture recognizer to the cell
-                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                        longPressGesture.delegate = self  // Set the delegate
-                        cell.addGestureRecognizer(longPressGesture)
-                        cell.messageLbl.text = chat.message
-                        cell.timeLabel.text = chat.chatTime
-//                        cell.mainBaseViewWidth.constant = 0
-//                        cell.configure(with: chat.message ?? "")
-                        
-                        var rect: CGRect = cell.messageLbl.frame //get frame of label
-                        rect.size = (cell.messageLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.messageLbl.font.fontName , size: cell.messageLbl.font.pointSize)!]))! //Calculate as per label font
-                        var width = rect.width // set width to Constraint outlet
-                        print("Width of", width)
-//                        cell.mainBaseViewWidth.constant = width + 20 + 32
-                        print("Actual screenWidth: ",self.view.frame.size.width)
-                        let screenWidth = self.view.frame.size.width - 52
-                        if width >= screenWidth {
-                            cell.mainBaseViewWidth.constant = screenWidth - 50
-                            print("case 1")
-                        }
-                        else if width <= 54.0 {
-                            width = width + 54.0
-                            cell.mainBaseViewWidth.constant = width //+ 35.0
-                            print("case 2")
-                        }
-                        else {
-                            cell.mainBaseViewWidth.constant = width //+ 35.0
-                            print("case 3")
-                        }
-                        return cell
-                    }
-                } else {
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: RecvrTextTVCell.id(), for: indexPath) as? RecvrTextTVCell {
-                        cell.selectionStyle = .default
-                        // Add long press gesture recognizer to the cell
-                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                        longPressGesture.delegate = self  // Set the delegate
-                        cell.addGestureRecognizer(longPressGesture)
-                        cell.recvrMsgLbl.text = chat.message
-                        cell.recvrTimeLbl.text = chat.chatTime
-//                        cell.recvrMsgWidthConst.constant = 0
-//                        cell.configure(with: chat.message ?? "")
-                        
-                        var rect: CGRect = cell.recvrMsgLbl.frame //get frame of label
-                        rect.size = (cell.recvrMsgLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.recvrMsgLbl.font.fontName , size: cell.recvrMsgLbl.font.pointSize)!]))! //Calculate as per label font
-                        var width = rect.width // set width to Constraint outlet
-                        print("Width of", width)
-//                        cell.mainBaseViewWidth.constant = width + 20 + 32
-                        let screenWidth = self.view.frame.size.width - 52
-                        if width >= screenWidth {
-                            cell.recvrMsgWidthConst.constant = screenWidth - 50
-                        }
-                        else if width <= 54.0 {
-                            width = width + 54.0
-                            cell.recvrMsgWidthConst.constant = width // + 35.0
-                        }
-                        else {
-                            cell.recvrMsgWidthConst.constant = width + 35.0
-                        }
-                        return cell
-                    }
-                }
-                
-            } else if chat.type == .image {
-                // MARK: Image - Send Image Cell...
-                if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
-                {
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: SenderImgTVCell.id(), for: indexPath) as? SenderImgTVCell {
-                        cell.selectionStyle = .default
-                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                        longPressGesture.delegate = self  // Set the delegate
-                        cell.addGestureRecognizer(longPressGesture)
-                        cell.singleImgUIView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
-                        cell.multiImgView.isHidden = true
-                        cell.singleImgUIView.isHidden = false
-                        cell.mainImageView.sd_setImage(with: URL(string: chat.imageURL ?? ""))
-                        cell.singleTimeLabel.text = chat.chatTime
-                        cell.showDetailsBtn.tag = indexPath.row
-                        cell.showDetailsBtn.addTarget(self, action: #selector(SendImgDidTap(_:)), for: .touchUpInside)
-                        return cell
-                    }
-                } else {
-                    // MARK: Image - Receive Image Cell...
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: ReceiverImgTVCell.id(), for: indexPath) as? ReceiverImgTVCell {
-                        cell.selectionStyle = .default
-                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                        longPressGesture.delegate = self  // Set the delegate
-                        cell.addGestureRecognizer(longPressGesture)
-                        cell.multiImgView.isHidden = true
-                        cell.singleImgUIView.isHidden = false
-                        cell.singleImgUIView.backgroundColor = .white
-                        cell.mainImageView.sd_setImage(with: URL(string: chat.imageURL ?? ""))
-                        cell.singleTimeLabel.text = chat.chatTime
-                        cell.showDetailsBtn.tag = indexPath.row
-                        cell.showDetailsBtn.addTarget(self, action: #selector(RcvImgDidTap(_:)), for: .touchUpInside)
-                        return cell
-                    }
-                }
-            } else if chat.type == .audio {
-                //MARK: Audio - Document Cell...
-                if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
-                    cell.selectionStyle = .default
-                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                    longPressGesture.delegate = self  // Set the delegate
-                    cell.addGestureRecognizer(longPressGesture)
-                    if chat.audioFileURL != nil {
-                        if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
-                        {
-                            cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
-                            cell.mainBaseViewLeading.constant = 70.0
-                            cell.mainBaseViewTralling.constant = 20.0
-                            
-                        } else {
-                            cell.mainBaseView.backgroundColor = .white
-                            cell.mainBaseViewLeading.constant = 20.0
-                            cell.mainBaseViewTralling.constant = 70.0
-                            
-                        }
-                        
-                        cell.audioMainView.isHidden = false
-                        cell.documentStackVw.isHidden = true
-                        cell.docNameLbl.text = chat.actualDocumentName
-                        cell.docSizeLbl.text = chat.documentSize
-                        cell.timeLabel.text = chat.chatTime
-                        cell.imgVw.image = UIImage(named: "ic_chatAudio")
-                        cell.dowmloadBtn.tag = indexPath.row
-                        cell.showDeatilsBtn.tag = indexPath.row
-                        cell.showDeatilsBtn.addTarget(self, action: #selector(AudioMsgDidTap(_:)), for: .touchUpInside)
-                        cell.dowmloadBtn.addTarget(self, action: #selector(downloadAudioTapped(_:)), for: .touchUpInside)
-                    }
-                    return cell
-                }
-                
-                
-            } else if chat.type == .reply {
-                //MARK: Audio - Reply Cell...
-                if let cell = tableView.dequeueReusableCell(withIdentifier: ReplyTVCell.id(), for: indexPath) as? ReplyTVCell {
-                    cell.selectionStyle = .default
-                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                    longPressGesture.delegate = self  // Set the delegate
-                    cell.addGestureRecognizer(longPressGesture)
-                    if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
-                    {
-                        cell.wholeBGVWleadingConst.constant = 70.0
-                        cell.wholeBGVWtrailingConst.constant = 20.0
-                        
-                    } else {
-                        cell.wholeBGVWleadingConst.constant = 20.0
-                        cell.wholeBGVWtrailingConst.constant = 70.0
-                        
-                    }
-                    
-                    cell.chat = chat
-                    
-                    return cell
-                }
-            } else {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
-                    cell.selectionStyle = .default
-                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                    longPressGesture.delegate = self  // Set the delegate
-                    cell.addGestureRecognizer(longPressGesture)
-                    if chat.documentURL != nil {
-                        if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
-                        {
-                            cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
-                            cell.mainBaseViewLeading.constant = 70.0
-                            cell.mainBaseViewTralling.constant = 20.0
-                            
-                        } else {
-                            cell.mainBaseView.backgroundColor = .white
-                            cell.mainBaseViewLeading.constant = 20.0
-                            cell.mainBaseViewTralling.constant = 70.0
-                        }
-                        
-                        cell.audioMainView.isHidden = true
-                        cell.documentStackVw.isHidden = false
-                        cell.docNameLbl.text = chat.actualDocumentName
-                        cell.docSizeLbl.text = chat.documentSize
-                        cell.timeLabel.text = chat.chatTime
-                        cell.imgVw.image = UIImage(named: "document")
-                        cell.dowmloadBtn.tag = indexPath.row
-                        cell.showDeatilsBtn.tag = indexPath.row
-                        cell.showDeatilsBtn.addTarget(self, action: #selector(DocMsgDidTap(_:)), for: .touchUpInside)
-                        cell.dowmloadBtn.addTarget(self, action: #selector(downloadDocTapped(_:)), for: .touchUpInside)
-                    }
-                    return cell
-                }
+
+        if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
+            let msg = messages[indexPath.row]
+            cell.selectionStyle = .default
+            // Add long press gesture recognizer to the cell
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+            longPressGesture.delegate = self  // Set the delegate
+            cell.addGestureRecognizer(longPressGesture)
+            cell.messageLbl.text = msg.message
+            cell.timeLabel.text = formatLastSeen(msg.timestamp)
+            
+            var rect: CGRect = cell.messageLbl.frame //get frame of label
+            rect.size = (cell.messageLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.messageLbl.font.fontName , size: cell.messageLbl.font.pointSize)!]))! //Calculate as per label font
+            var width = rect.width // set width to Constraint outlet
+            print("Width of", width)
+            //                        cell.mainBaseViewWidth.constant = width + 20 + 32
+            print("Actual screenWidth: ",self.view.frame.size.width)
+            let screenWidth = self.view.frame.size.width - 52
+            if width >= screenWidth {
+                cell.mainBaseViewWidth.constant = screenWidth - 50
+                print("case 1")
             }
+            else if width <= 54.0 {
+                width = width + 54.0
+                cell.mainBaseViewWidth.constant = width //+ 35.0
+                print("case 2")
+            }
+            else {
+                cell.mainBaseViewWidth.constant = width //+ 35.0
+                print("case 3")
+            }
+            return cell
         }
+//        if chats.count > 0 {
+//            let chat = chats[indexPath.row]
+//            if chat.type == .message {
+//                //MARK: Text Message Cell...
+//                if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+//                {
+//                    if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
+//                        cell.selectionStyle = .default
+//                        // Add long press gesture recognizer to the cell
+//                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                        longPressGesture.delegate = self  // Set the delegate
+//                        cell.addGestureRecognizer(longPressGesture)
+//                        cell.messageLbl.text = chat.message
+//                        cell.timeLabel.text = chat.chatTime
+////                        cell.mainBaseViewWidth.constant = 0
+////                        cell.configure(with: chat.message ?? "")
+//                        
+//                        var rect: CGRect = cell.messageLbl.frame //get frame of label
+//                        rect.size = (cell.messageLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.messageLbl.font.fontName , size: cell.messageLbl.font.pointSize)!]))! //Calculate as per label font
+//                        var width = rect.width // set width to Constraint outlet
+//                        print("Width of", width)
+////                        cell.mainBaseViewWidth.constant = width + 20 + 32
+//                        print("Actual screenWidth: ",self.view.frame.size.width)
+//                        let screenWidth = self.view.frame.size.width - 52
+//                        if width >= screenWidth {
+//                            cell.mainBaseViewWidth.constant = screenWidth - 50
+//                            print("case 1")
+//                        }
+//                        else if width <= 54.0 {
+//                            width = width + 54.0
+//                            cell.mainBaseViewWidth.constant = width //+ 35.0
+//                            print("case 2")
+//                        }
+//                        else {
+//                            cell.mainBaseViewWidth.constant = width //+ 35.0
+//                            print("case 3")
+//                        }
+//                        return cell
+//                    }
+//                } else {
+//                    if let cell = tableView.dequeueReusableCell(withIdentifier: RecvrTextTVCell.id(), for: indexPath) as? RecvrTextTVCell {
+//                        cell.selectionStyle = .default
+//                        // Add long press gesture recognizer to the cell
+//                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                        longPressGesture.delegate = self  // Set the delegate
+//                        cell.addGestureRecognizer(longPressGesture)
+//                        cell.recvrMsgLbl.text = chat.message
+//                        cell.recvrTimeLbl.text = chat.chatTime
+////                        cell.recvrMsgWidthConst.constant = 0
+////                        cell.configure(with: chat.message ?? "")
+//                        
+//                        var rect: CGRect = cell.recvrMsgLbl.frame //get frame of label
+//                        rect.size = (cell.recvrMsgLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.recvrMsgLbl.font.fontName , size: cell.recvrMsgLbl.font.pointSize)!]))! //Calculate as per label font
+//                        var width = rect.width // set width to Constraint outlet
+//                        print("Width of", width)
+////                        cell.mainBaseViewWidth.constant = width + 20 + 32
+//                        let screenWidth = self.view.frame.size.width - 52
+//                        if width >= screenWidth {
+//                            cell.recvrMsgWidthConst.constant = screenWidth - 50
+//                        }
+//                        else if width <= 54.0 {
+//                            width = width + 54.0
+//                            cell.recvrMsgWidthConst.constant = width // + 35.0
+//                        }
+//                        else {
+//                            cell.recvrMsgWidthConst.constant = width + 35.0
+//                        }
+//                        return cell
+//                    }
+//                }
+//                
+//            } else if chat.type == .image {
+//                // MARK: Image - Send Image Cell...
+//                if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+//                {
+//                    if let cell = tableView.dequeueReusableCell(withIdentifier: SenderImgTVCell.id(), for: indexPath) as? SenderImgTVCell {
+//                        cell.selectionStyle = .default
+//                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                        longPressGesture.delegate = self  // Set the delegate
+//                        cell.addGestureRecognizer(longPressGesture)
+//                        cell.singleImgUIView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
+//                        cell.multiImgView.isHidden = true
+//                        cell.singleImgUIView.isHidden = false
+//                        cell.mainImageView.sd_setImage(with: URL(string: chat.imageURL ?? ""))
+//                        cell.singleTimeLabel.text = chat.chatTime
+//                        cell.showDetailsBtn.tag = indexPath.row
+//                        cell.showDetailsBtn.addTarget(self, action: #selector(SendImgDidTap(_:)), for: .touchUpInside)
+//                        return cell
+//                    }
+//                } else {
+//                    // MARK: Image - Receive Image Cell...
+//                    if let cell = tableView.dequeueReusableCell(withIdentifier: ReceiverImgTVCell.id(), for: indexPath) as? ReceiverImgTVCell {
+//                        cell.selectionStyle = .default
+//                        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                        longPressGesture.delegate = self  // Set the delegate
+//                        cell.addGestureRecognizer(longPressGesture)
+//                        cell.multiImgView.isHidden = true
+//                        cell.singleImgUIView.isHidden = false
+//                        cell.singleImgUIView.backgroundColor = .white
+//                        cell.mainImageView.sd_setImage(with: URL(string: chat.imageURL ?? ""))
+//                        cell.singleTimeLabel.text = chat.chatTime
+//                        cell.showDetailsBtn.tag = indexPath.row
+//                        cell.showDetailsBtn.addTarget(self, action: #selector(RcvImgDidTap(_:)), for: .touchUpInside)
+//                        return cell
+//                    }
+//                }
+//            } else if chat.type == .audio {
+//                //MARK: Audio - Document Cell...
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
+//                    cell.selectionStyle = .default
+//                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                    longPressGesture.delegate = self  // Set the delegate
+//                    cell.addGestureRecognizer(longPressGesture)
+//                    if chat.audioFileURL != nil {
+//                        if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+//                        {
+//                            cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
+//                            cell.mainBaseViewLeading.constant = 70.0
+//                            cell.mainBaseViewTralling.constant = 20.0
+//                            
+//                        } else {
+//                            cell.mainBaseView.backgroundColor = .white
+//                            cell.mainBaseViewLeading.constant = 20.0
+//                            cell.mainBaseViewTralling.constant = 70.0
+//                            
+//                        }
+//                        
+//                        cell.audioMainView.isHidden = false
+//                        cell.documentStackVw.isHidden = true
+//                        cell.docNameLbl.text = chat.actualDocumentName
+//                        cell.docSizeLbl.text = chat.documentSize
+//                        cell.timeLabel.text = chat.chatTime
+//                        cell.imgVw.image = UIImage(named: "ic_chatAudio")
+//                        cell.dowmloadBtn.tag = indexPath.row
+//                        cell.showDeatilsBtn.tag = indexPath.row
+//                        cell.showDeatilsBtn.addTarget(self, action: #selector(AudioMsgDidTap(_:)), for: .touchUpInside)
+//                        cell.dowmloadBtn.addTarget(self, action: #selector(downloadAudioTapped(_:)), for: .touchUpInside)
+//                    }
+//                    return cell
+//                }
+//                
+//                
+//            } else if chat.type == .reply {
+//                //MARK: Audio - Reply Cell...
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: ReplyTVCell.id(), for: indexPath) as? ReplyTVCell {
+//                    cell.selectionStyle = .default
+//                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                    longPressGesture.delegate = self  // Set the delegate
+//                    cell.addGestureRecognizer(longPressGesture)
+//                    if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+//                    {
+//                        cell.wholeBGVWleadingConst.constant = 70.0
+//                        cell.wholeBGVWtrailingConst.constant = 20.0
+//                        
+//                    } else {
+//                        cell.wholeBGVWleadingConst.constant = 20.0
+//                        cell.wholeBGVWtrailingConst.constant = 70.0
+//                        
+//                    }
+//                    
+//                    cell.chat = chat
+//                    
+//                    return cell
+//                }
+//            } else {
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
+//                    cell.selectionStyle = .default
+//                    let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//                    longPressGesture.delegate = self  // Set the delegate
+//                    cell.addGestureRecognizer(longPressGesture)
+//                    if chat.documentURL != nil {
+//                        if (chat.senderID) ==  myUserDefaults.userId //LoggedUserDetails.shared.user?.id
+//                        {
+//                            cell.mainBaseView.backgroundColor = AppColors.appBlue.withAlphaComponent(0.1)
+//                            cell.mainBaseViewLeading.constant = 70.0
+//                            cell.mainBaseViewTralling.constant = 20.0
+//                            
+//                        } else {
+//                            cell.mainBaseView.backgroundColor = .white
+//                            cell.mainBaseViewLeading.constant = 20.0
+//                            cell.mainBaseViewTralling.constant = 70.0
+//                        }
+//                        
+//                        cell.audioMainView.isHidden = true
+//                        cell.documentStackVw.isHidden = false
+//                        cell.docNameLbl.text = chat.actualDocumentName
+//                        cell.docSizeLbl.text = chat.documentSize
+//                        cell.timeLabel.text = chat.chatTime
+//                        cell.imgVw.image = UIImage(named: "document")
+//                        cell.dowmloadBtn.tag = indexPath.row
+//                        cell.showDeatilsBtn.tag = indexPath.row
+//                        cell.showDeatilsBtn.addTarget(self, action: #selector(DocMsgDidTap(_:)), for: .touchUpInside)
+//                        cell.dowmloadBtn.addTarget(self, action: #selector(downloadDocTapped(_:)), for: .touchUpInside)
+//                    }
+//                    return cell
+//                }
+//            }
+//        }
         print("Last return")
         return cell
     }
