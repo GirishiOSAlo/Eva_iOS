@@ -114,6 +114,9 @@ class ChatVC: BaseVC {
     
     var chats: [ChatList] = []
     
+    var conversationDetails: Conversation?
+    var messages: [Message] = []
+    
     var articleContent: String?
     var tempChats : [ChatList] = []
     var userId = 0
@@ -136,11 +139,6 @@ class ChatVC: BaseVC {
     var timer: Timer?
     var isLongPress = false
     
-//    var messages: [ChatMessage] = []
-//    var databaseRef: DatabaseReference!
-    var otherUser: ChatUserModel!
-    var messages: [ChatMessageModel] = []
-    let dbRef = Database.database().reference()
     
     // MARK: UI Life Cycle
     override func viewDidLoad() {
@@ -150,8 +148,6 @@ class ChatVC: BaseVC {
         self.isSeparatorHidden = true
         self.navigationController?.isNavigationBarHidden = true
         
-//        databaseRef = Database.database().reference()
-        self.fetchConversation()
         //self.readAllMessages()
         tableView.allowsMultipleSelection = false
         
@@ -181,10 +177,11 @@ class ChatVC: BaseVC {
 //        initChat()
         self.replyViewHeightConst.constant = 0
         self.attachmentBtnWidthConst.constant = 37.3
-        showActivity()
-        FetchMsgList(id: user?.id ?? userId, offset: self.offsetCount, autoReload: false)
+        //showActivity()
+        //FetchMsgList(id: user?.id ?? userId, offset: self.offsetCount, autoReload: false)
         self.isFeatureOpen = false
         self.msgFeatureTopVw.isHidden = true
+        self.fetchMessages()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -252,14 +249,11 @@ class ChatVC: BaseVC {
         // Show/hide placeholder as needed
         self.placeholderLabel.isHidden = !self.messageTextView.text.isEmpty
         
-//        if let conversation = conversation {
-//            if let imageName = conversation.imageName,
-//                let url = URL(string: imageName) {
-//
-//                chatMemberImage.kf.setImage(with: url)
-//            }
-//            chatMemberName.text = conversation.title
-//        }
+        if let conversation = conversationDetails {
+            chatMemberImage.kf.setImage(with: URL(string: conversation.user?.profileImage ?? ""), placeholder: UIImage(named: "profile"))
+            chatMemberName.text = conversation.user?.name
+            lstOnlineLbl.text = formatTimeIntervalLastSeen(conversation.lastMessage?.timestamp)
+        }
         
 //        if let user = user {
 //            if let imageName = user.userImage,
@@ -305,6 +299,18 @@ class ChatVC: BaseVC {
         self.attachmentMainVwTopConstraints.constant = self.view.frame.size.height
     }
 
+    func formatTimeIntervalLastSeen(_ timestamp: TimeInterval?) -> String {
+        guard let timestamp = timestamp else { return "Unknown" }
+        
+        // Firebase gives ms → convert to seconds
+        let seconds = timestamp / 1000
+        let date = Date(timeIntervalSince1970: seconds)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"   // 24-hour format
+        return formatter.string(from: date)
+    }
+    
     private func setSendMessageView() {
 //        sendMessageView = SendMessgeView()
 //        sendMessageView.addButton.addTarget(self, action: #selector(browseFiles_touchUpInside(_:)), for: .touchUpInside)
@@ -817,125 +823,79 @@ extension ChatVC {
 
 // MARK: Firebase Chat Observers
 extension ChatVC {
-    // MARK: - Load Messages Firebase
-    func fetchConversation() {
-        //guard let currentUserId = Auth.auth().currentUser?.uid else { return }
-        let currentUserId = "\(myUserDefaults.userId)"
-        let chatId = getChatId(user1: currentUserId, user2: otherUser.userId)
+    
+    func fetchMessages() {
+        let loggedInUserId = myUserDefaults.userId
+        let otherUserID = userId
+        let chatId = makeChatId(user1Id: loggedInUserId, user2Id: otherUserID)
         
-        dbRef.child("messages").child(chatId).observe(.value) { snapshot in
-            var newMessages: [ChatMessageModel] = []
+        // ✅ messages list updated
+        observeMessages(chatId: chatId) { [weak self] msgs in
+            DispatchQueue.main.async {
+                self?.messages = msgs.sorted(by: { $0.timestamp < $1.timestamp })
+                self?.tableView.reloadData()
+                // Auto scroll to bottom
+                if let count = self?.messages.count, count > 0 {
+                    let indexPath = IndexPath(row: count - 1, section: 0)
+                    self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
+            }
+        } onError: { error in
+            print("Error loading messages: \(error.localizedDescription)")
+        }
+    }
+    
+    func makeChatId(user1Id: Int, user2Id: Int) -> String {
+        if user1Id < user2Id {
+            return "\(user1Id)_\(user2Id)"
+        } else {
+            return "\(user2Id)_\(user1Id)"
+        }
+    }
+    
+    func observeMessages(chatId: String,
+                         onUpdate: @escaping ([Message]) -> Void,
+                         onError: @escaping (Error) -> Void) {
+        
+        let messagesRef = Database.database().reference().child("messages").child(chatId)
+        
+        messagesRef.observe(.value, with: { snapshot in
+            var messages: [Message] = []
             
-            for case let msgSnap as DataSnapshot in snapshot.children {
-                if let dict = msgSnap.value as? [String: Any] {
-                    let message = ChatMessageModel(dict: dict, messageId: msgSnap.key)
-                    newMessages.append(message)
+            for case let child as DataSnapshot in snapshot.children {
+                if let messageMap = child.value as? [String: Any] {
+                    
+                    let messageText = messageMap["message"] as? String ?? ""
+                    let senderId = messageMap["sender_id"] as? Int64 ?? 0
+                    let image = messageMap["image_url"] as? String ?? ""
+                    let document = messageMap["document_url"] as? String ?? ""
+                    let audioFile = messageMap["audio_file_url"] as? String ?? ""
+                    let read = messageMap["read"] as? Bool ?? false
+                    let timestamp = messageMap["timestamp"] as? Int64 ?? 0
+                    
+                    let message = Message(
+                        id: child.key,
+                        text: messageText,
+                        senderId: String(senderId),
+                        timestamp: Double(timestamp) / 1000.0, // ✅ convert ms → seconds
+                        imageUrl: image.isEmpty ? nil : image,
+                        documentUrl: document.isEmpty ? nil : document,
+                        audioUrl: audioFile.isEmpty ? nil : audioFile,
+                        isRead: read
+                    )
+                    
+                    messages.append(message)
                 }
             }
             
-            // Sort by timestamp
-            newMessages.sort { $0.timestamp < $1.timestamp }
-            self.messages = newMessages
-            print("Message Count : \(self.messages.count)")
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.scrollToBottom()
-            }
-        }
+            // sort by time
+            let sorted = messages.sorted { $0.timestamp < $1.timestamp }
+            onUpdate(sorted)
+            
+        }, withCancel: { error in
+            onError(error)
+        })
     }
-    
-    func getChatId(user1: String, user2: String) -> String {
-        return user1 < user2 ? "\(user1)_\(user2)" : "\(user2)_\(user1)"
-    }
-    
-    func scrollToBottom() {
-        if messages.count > 0 {
-            let indexPath = IndexPath(row: messages.count - 1, section: 0)
-            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        }
-    }
-    
-    
-    
-//    func loadFirstMessages() {
-//        print("conversation!.id", conversation!.id)
-//        showActivity()
-//        let messagesRef = fb.handler.ref.child("messages/\(conversation!.id)")
-//        messagesRef.queryOrderedByKey().queryLimited(toLast: 30).observeSingleEvent(of: .value) { [weak self] (snapshot) in
-//            self?.hideActivity()
-//            self?.messages = snapshot.children.compactMap ({ (snapshot) -> Message? in
-//                if let snapshot = snapshot as? DataSnapshot,
-//                    let _ = snapshot.value as? [String: Any] {
-//                    let message = Message(snapshot: snapshot)
-//                    return message
-//                }
-//                return nil
-//            })
-//
-//            self?.messages.enumerated().forEach({ (index, message) in
-//                self?.sameSender(row: index)
-//            })
-//
-//            self?.tableView.reloadData()
-//            self?.scrollToBottom()
-//        }
-//    }
-    
-//    private func addNewMessagesObserver() {
-//        if let conversation = conversation {
-//            fb.handler.ref.child("messages/\(conversation.id)").queryOrderedByKey().queryLimited(toLast: 1).observeSingleEvent(of: .value) { [weak self] (snapshot) in
-//                if snapshot.childrenCount == 0 {
-//                    fb.handler.ref.child("messages/\(conversation.id)").observe(.childAdded) { [weak self] (snapshot) in
-//                        let message = Message(snapshot: snapshot)
-//                        if self?.messages.firstIndex(of: message) == nil {
-//                            self?.insertMessage(message)
-//                        }
-//                        fb.handler.ref.child("users/\(LoggedUserDetails.shared.user!.id)/chats/\(conversation.id)/unread").setValue(false)
-//                    }
-//                } else {
-//                    let messageId = snapshot.children.map { ($0 as! DataSnapshot).key }.first!
-//                    fb.handler.ref.child("messages/\(conversation.id)").queryOrderedByKey().queryStarting(atValue: messageId).observe(.childAdded) { [weak self] (snapshot) in
-//                        let message = Message(snapshot: snapshot)
-//                        if self?.messages.firstIndex(of: message) == nil {
-//                            self?.insertMessage(message)
-//                        }
-//                        fb.handler.ref.child("users/\(LoggedUserDetails.shared.user!.id)/chats/\(conversation.id)/unread").setValue(false)
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-//    func insertMessage(_ message: Message) {
-//
-//        messages.append(message)
-//
-//        // Reload last section to update header/footer labels and insert a new one
-//        tableView.performBatchUpdates({
-//            tableView.insertRows(at: [IndexPath(row: messages.count - 1, section: 0)], with: .automatic)
-//            if messages.count >= 2 {
-//                tableView.reloadRows(at: [IndexPath(row: messages.count - 2, section: 0)], with: .automatic)
-//            }
-//        }, completion: { [weak self] _ in
-//            guard let self = self else { return }
-//            if self.isLastSectionVisible() {
-//                self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
-//            }
-//        })
-//    }
-    
-//    func isLastSectionVisible() -> Bool {
-//
-//        guard !messages.isEmpty else { return false }
-//
-//        let last = IndexPath(row: messages.count - 2, section: 0)
-//
-//        return tableView.indexPathsForVisibleRows!.contains(last)
-//    }
-    
-//    func currentSender() -> Sender {
-//        Sender(id: LoggedUserDetails.shared.user?.id ?? 0, name: LoggedUserDetails.shared.user?.fullName ?? "")
-//    }
     
     func scrollToBottom(atRow: Int, animated: Bool) {
 //        if !messages.isEmpty {
@@ -1322,15 +1282,13 @@ extension ChatVC: PHPickerViewControllerDelegate {
         }
     }
     
-    func formatLastSeen(_ timestamp: TimeInterval?) -> String {
-        guard let timestamp = timestamp else { return "Unknown" }
-        
-        // Firebase gives ms → convert to seconds
-        let seconds = timestamp / 1000
+    func formatInt64LastSeen(_ timestampMs: Int64) -> String {
+        // Convert ms → seconds
+        let seconds = Double(timestampMs) / 1000.0
         let date = Date(timeIntervalSince1970: seconds)
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"   // 24-hour format
+        formatter.dateFormat = "HH:mm"   // or "MMM d, HH:mm"
         return formatter.string(from: date)
     }
 }
@@ -1339,7 +1297,7 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //chats.count
-        return self.messages.count
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -1352,8 +1310,8 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
             let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
             longPressGesture.delegate = self  // Set the delegate
             cell.addGestureRecognizer(longPressGesture)
-            cell.messageLbl.text = msg.message
-            cell.timeLabel.text = formatLastSeen(msg.timestamp)
+            cell.messageLbl.text = msg.text
+            cell.timeLabel.text = formatInt64LastSeen(Int64(msg.timestamp))
             
             var rect: CGRect = cell.messageLbl.frame //get frame of label
             rect.size = (cell.messageLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.messageLbl.font.fontName , size: cell.messageLbl.font.pointSize)!]))! //Calculate as per label font

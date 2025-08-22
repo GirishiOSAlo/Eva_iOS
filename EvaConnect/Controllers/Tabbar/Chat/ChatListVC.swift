@@ -167,8 +167,10 @@ class ChatListVC: BaseVC {
             dataType = .chatList
             //loadMessage()
             let loggedInUserId = myUserDefaults.userId
+            
             observeConversations(loggedInUserId: loggedInUserId) { [weak self] conversations in
                 DispatchQueue.main.async {
+                    self?.conversations = []
                     self?.conversations = conversations
                     self?.tableView.reloadData()
                     print("Conversations updated: \(conversations.count)")
@@ -949,14 +951,11 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 //            let conversation = messages[indexPath.row]
 //            openConversation(id: conversation.userid ?? 0)
             
-//            let chatItem = chatList[indexPath.row]
-//            let otherUser = chatItem.user
-//            let chatVC = StoryboardRouter.chat()
-//            chatVC.otherUser = otherUser
-//            navigationController?.pushViewController(chatVC, animated: true)
-            
-            let obj = self.conversations[indexPath.row]
-            print(obj.user?.name ?? "")
+            let conversation = self.conversations[indexPath.row]
+            let chatVC = StoryboardRouter.chat()
+            chatVC.userId = conversation.user?.user_id ?? 0
+            chatVC.conversationDetails = conversation
+            navigationController?.pushViewController(chatVC, animated: true)
         }
     }
     
