@@ -34,4 +34,17 @@ struct DateUtils {
         }
         return nil
     }
+    
+    static func formatTo24Hour(timestamp: Double) -> String {
+        // If timestamp is in seconds (10 digits), convert to ms
+        let ts = (String(Int64(timestamp)).count == 10) ? timestamp * 1000 : timestamp
+        
+        let date = Date(timeIntervalSince1970: ts / 1000) // convert ms → seconds
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB") // 24-hour format
+        formatter.dateFormat = "HH:mm"
+        
+        return formatter.string(from: date)
+    }
 }

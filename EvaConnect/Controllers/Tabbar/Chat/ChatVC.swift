@@ -250,9 +250,9 @@ class ChatVC: BaseVC {
         self.placeholderLabel.isHidden = !self.messageTextView.text.isEmpty
         
         if let conversation = conversationDetails {
-            chatMemberImage.kf.setImage(with: URL(string: conversation.user?.profileImage ?? ""), placeholder: UIImage(named: "profile"))
+            chatMemberImage.kf.setImage(with: URL(string: conversation.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
             chatMemberName.text = conversation.user?.name
-            lstOnlineLbl.text = formatTimeIntervalLastSeen(conversation.lastMessage?.timestamp)
+            lstOnlineLbl.text = DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
         }
         
 //        if let user = user {
@@ -295,20 +295,19 @@ class ChatVC: BaseVC {
         view.bringSubviewToFront(attachments)
     }
     
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
+    
     @objc func dismissDidTap() {
         self.attachmentMainVwTopConstraints.constant = self.view.frame.size.height
-    }
-
-    func formatTimeIntervalLastSeen(_ timestamp: TimeInterval?) -> String {
-        guard let timestamp = timestamp else { return "Unknown" }
-        
-        // Firebase gives ms → convert to seconds
-        let seconds = timestamp / 1000
-        let date = Date(timeIntervalSince1970: seconds)
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"   // 24-hour format
-        return formatter.string(from: date)
     }
     
     private func setSendMessageView() {
@@ -832,7 +831,7 @@ extension ChatVC {
         // ✅ messages list updated
         observeMessages(chatId: chatId) { [weak self] msgs in
             DispatchQueue.main.async {
-                self?.messages = msgs.sorted(by: { $0.timestamp < $1.timestamp })
+                self?.messages = msgs.sorted(by: { $0.timestamp ?? 0.0 < $1.timestamp ?? 0.0 })
                 self?.tableView.reloadData()
                 // Auto scroll to bottom
                 if let count = self?.messages.count, count > 0 {
@@ -853,6 +852,49 @@ extension ChatVC {
         }
     }
     
+//    func observeMessages(chatId: String,
+//                         onUpdate: @escaping ([Message]) -> Void,
+//                         onError: @escaping (Error) -> Void) {
+//        
+//        let messagesRef = Database.database().reference().child("messages").child(chatId)
+//        
+//        messagesRef.observe(.value, with: { snapshot in
+//            var messages: [Message] = []
+//            
+//            for case let child as DataSnapshot in snapshot.children {
+//                if let messageMap = child.value as? [String: Any] {
+//                    
+//                    let messageText = messageMap["message"] as? String ?? ""
+//                    let senderId = messageMap["sender_id"] as? Int64 ?? 0
+//                    let image = messageMap["image_url"] as? String ?? ""
+//                    let document = messageMap["document_url"] as? String ?? ""
+//                    let audioFile = messageMap["audio_file_url"] as? String ?? ""
+//                    let read = messageMap["read"] as? Bool ?? false
+//                    let timestamp = messageMap["timestamp"] as? Int64 ?? 0
+//                    
+//                    let message = Message(
+//                        id: child.key,
+//                        text: messageText,
+//                        senderId: String(senderId),
+//                        timestamp: Double(timestamp) / 1000.0, // ✅ convert ms → seconds
+//                        imageUrl: image.isEmpty ? nil : image,
+//                        documentUrl: document.isEmpty ? nil : document,
+//                        audioUrl: audioFile.isEmpty ? nil : audioFile,
+//                        isRead: read
+//                    )
+//                    
+//                    messages.append(message)
+//                }
+//            }
+//            
+//            // sort by time
+//            let sorted = messages.sorted { $0.timestamp < $1.timestamp }
+//            onUpdate(sorted)
+//            
+//        }, withCancel: { error in
+//            onError(error)
+//        })
+//    }
     func observeMessages(chatId: String,
                          onUpdate: @escaping ([Message]) -> Void,
                          onError: @escaping (Error) -> Void) {
@@ -863,39 +905,35 @@ extension ChatVC {
             var messages: [Message] = []
             
             for case let child as DataSnapshot in snapshot.children {
-                if let messageMap = child.value as? [String: Any] {
-                    
-                    let messageText = messageMap["message"] as? String ?? ""
-                    let senderId = messageMap["sender_id"] as? Int64 ?? 0
-                    let image = messageMap["image_url"] as? String ?? ""
-                    let document = messageMap["document_url"] as? String ?? ""
-                    let audioFile = messageMap["audio_file_url"] as? String ?? ""
-                    let read = messageMap["read"] as? Bool ?? false
-                    let timestamp = messageMap["timestamp"] as? Int64 ?? 0
+                if let dict = child.value as? [String: Any] {
                     
                     let message = Message(
-                        id: child.key,
-                        text: messageText,
-                        senderId: String(senderId),
-                        timestamp: Double(timestamp) / 1000.0, // ✅ convert ms → seconds
-                        imageUrl: image.isEmpty ? nil : image,
-                        documentUrl: document.isEmpty ? nil : document,
-                        audioUrl: audioFile.isEmpty ? nil : audioFile,
-                        isRead: read
+                        audio_file: dict["audio_file"] as? String,
+                        chat_time: dict["chat_time"] as? String,
+                        document: dict["document"] as? String,
+                        firebase_receiver_id: dict["firebase_receiver_id"] as? String,
+                        firebase_sender_id: dict["firebase_sender_id"] as? String,
+                        image: dict["image"] as? String,
+                        message: dict["message"] as? String,
+                        read: dict["read"] as? Bool,
+                        receiver_id: dict["receiver_id"] as? Int,
+                        sender_id: dict["sender_id"] as? Int,
+                        timestamp: dict["timestamp"] as? Double
                     )
                     
                     messages.append(message)
                 }
             }
             
-            // sort by time
-            let sorted = messages.sorted { $0.timestamp < $1.timestamp }
+            // ✅ Sort messages chronologically by timestamp
+            let sorted = messages.sorted { ($0.timestamp ?? 0) < ($1.timestamp ?? 0) }
             onUpdate(sorted)
             
         }, withCancel: { error in
             onError(error)
         })
     }
+
     
     func scrollToBottom(atRow: Int, animated: Bool) {
 //        if !messages.isEmpty {
@@ -1282,15 +1320,6 @@ extension ChatVC: PHPickerViewControllerDelegate {
         }
     }
     
-    func formatInt64LastSeen(_ timestampMs: Int64) -> String {
-        // Convert ms → seconds
-        let seconds = Double(timestampMs) / 1000.0
-        let date = Date(timeIntervalSince1970: seconds)
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"   // or "MMM d, HH:mm"
-        return formatter.string(from: date)
-    }
 }
 
 extension ChatVC: UITableViewDataSource, UITableViewDelegate {
@@ -1302,39 +1331,32 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-
-        if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
-            let msg = messages[indexPath.row]
-            cell.selectionStyle = .default
-            // Add long press gesture recognizer to the cell
-            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-            longPressGesture.delegate = self  // Set the delegate
-            cell.addGestureRecognizer(longPressGesture)
-            cell.messageLbl.text = msg.text
-            cell.timeLabel.text = formatInt64LastSeen(Int64(msg.timestamp))
-            
-            var rect: CGRect = cell.messageLbl.frame //get frame of label
-            rect.size = (cell.messageLbl.text?.size(withAttributes: [NSAttributedString.Key.font: UIFont(name: cell.messageLbl.font.fontName , size: cell.messageLbl.font.pointSize)!]))! //Calculate as per label font
-            var width = rect.width // set width to Constraint outlet
-            print("Width of", width)
-            //                        cell.mainBaseViewWidth.constant = width + 20 + 32
-            print("Actual screenWidth: ",self.view.frame.size.width)
-            let screenWidth = self.view.frame.size.width - 52
-            if width >= screenWidth {
-                cell.mainBaseViewWidth.constant = screenWidth - 50
-                print("case 1")
+        let msg = messages[indexPath.row]
+        if msg.sender_id == myUserDefaults.userId {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
+                cell.selectionStyle = .default
+                // Add long press gesture recognizer to the cell
+                let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                longPressGesture.delegate = self  // Set the delegate
+                cell.addGestureRecognizer(longPressGesture)
+                cell.setData(obj: msg, screenWidth: self.view.frame.size.width - 100)
+                
+                return cell
             }
-            else if width <= 54.0 {
-                width = width + 54.0
-                cell.mainBaseViewWidth.constant = width //+ 35.0
-                print("case 2")
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: RecvrTextTVCell.id(), for: indexPath) as? RecvrTextTVCell {
+                cell.selectionStyle = .default
+                // Add long press gesture recognizer to the cell
+                let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                longPressGesture.delegate = self  // Set the delegate
+                cell.addGestureRecognizer(longPressGesture)
+                cell.setData(obj: msg, screenWidth: self.view.frame.size.width - 100)
+                
+                return cell
             }
-            else {
-                cell.mainBaseViewWidth.constant = width //+ 35.0
-                print("case 3")
-            }
-            return cell
         }
+    
+        
 //        if chats.count > 0 {
 //            let chat = chats[indexPath.row]
 //            if chat.type == .message {
@@ -1566,7 +1588,6 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-        
     }
     
 //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

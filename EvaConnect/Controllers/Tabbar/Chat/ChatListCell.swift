@@ -66,30 +66,18 @@ class ChatListCell: UITableViewCell {
 
     
     func configure(item: Conversation) {
-        conversationImageView.kf.setImage(with: URL(string: item.user?.profileImage ?? ""), placeholder: UIImage(named: "profile"))
+        conversationImageView.kf.setImage(with: URL(string: item.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
         nameLabel.text = item.user?.name
-        latestMessageLabel.text = item.lastMessage?.text
-        timeLabel.text = formatLastSeen(item.lastMessage?.timestamp)
+        latestMessageLabel.text = item.lastMessage?.message
+        timeLabel.text = DateUtils.formatTo24Hour(timestamp: item.lastMessage?.timestamp ?? 0.0)
+        onlineStatusView.isHidden = item.user?.status?.lowercased() == "online" ? false : true
         
-//        if item.unreadCount > 0 {
-//            unreadCount.isHidden = false
-//            unreadCount.text = "\(item.unreadCount)"
-//        } else {
-//            unreadCount.isHidden = true
-//        }
-    }
-    
-    
-    func formatLastSeen(_ timestamp: TimeInterval?) -> String {
-        guard let timestamp = timestamp else { return "Unknown" }
-        
-        // Firebase gives ms → convert to seconds
-        let seconds = timestamp / 1000
-        let date = Date(timeIntervalSince1970: seconds)
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"   // 24-hour format
-        return formatter.string(from: date)
+        if item.lastMessage?.read == true {
+            unreadCount.isHidden = true
+        } else {
+            unreadCount.isHidden = false
+            unreadCount.text = "\(1)"
+        }
     }
 }
 

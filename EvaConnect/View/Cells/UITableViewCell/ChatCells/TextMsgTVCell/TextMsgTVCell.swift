@@ -28,6 +28,8 @@ class TextMsgTVCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.mainBaseView.layer.cornerRadius = 13.0
+        self.messageLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        self.timeLabel.font = UIFont(name: Myfonts.regular, size: 8.0)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -39,6 +41,30 @@ class TextMsgTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 //        mainBaseViewWidth.constant = 0
+    }
+    
+    func setData(obj: Message, screenWidth: CGFloat) {
+        messageLbl.text = obj.message
+        timeLabel.text = DateUtils.formatTo24Hour(timestamp: obj.timestamp ?? 0.0)
+        
+        let label = UILabel()
+        label.text = obj.message ?? ""
+        label.font = UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)
+
+        if let text = label.text {
+            let lblWidth = (text as NSString).size(withAttributes: [.font: label.font!]).width
+            let finalLblWidth = lblWidth + 44.0
+            
+            if finalLblWidth < 30.0 {
+                mainBaseViewWidth.constant = 30.0
+            } else {
+                if finalLblWidth > screenWidth {
+                    mainBaseViewWidth.constant = screenWidth
+                } else {
+                    mainBaseViewWidth.constant = finalLblWidth
+                }
+            }
+        }
     }
     
 //    func configure(with message: String) {

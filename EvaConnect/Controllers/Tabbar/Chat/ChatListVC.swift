@@ -128,13 +128,13 @@ class ChatListVC: BaseVC {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
 //        getSettings()
-//        if self.dataType == .chatList {
-//            print("Tapped Messages.")
-//            self.onMessageBtnTapped(self.messagesBtn)
-//        } else {
-//            print("Tapped Notifications.")
-//            self.onNotificationsBtnTapped(self.notificationsBtn)
-//        }
+        if self.dataType == .chatList {
+            print("Tapped Messages.")
+            self.onMessageBtnTapped(self.messagesBtn)
+        } else {
+            print("Tapped Notifications.")
+            self.onNotificationsBtnTapped(self.notificationsBtn)
+        }
 
 //        if let newMessage = self.newMessageNotification {
 //            let filterConversation = conversations.filter { return $0.id == newMessage.chatID }
@@ -201,69 +201,81 @@ extension ChatListVC {
         let usersRef = Database.database().reference().child("users")
         
         messagesRef.observe(.value) { snapshot, _ in
-
-                for case let chatNode as DataSnapshot in snapshot.children {
-                    // Example chatNode.key: "2_23"
-                    guard let key = chatNode.key as String?,
-                          key.contains("_") else { continue }
-                    
-                    let participants = key.split(separator: "_").map { String($0) }
-                    guard participants.contains(String(loggedInUserId)) else { continue }
-
-                    // Collect all messages in this chat node
-                    var messages: [ChatMessage] = []
-                    for case let msgSnap as DataSnapshot in chatNode.children {
-                        if let dict = msgSnap.value as? [String: Any],
-                           let timestamp = dict["timestamp"] as? Double {
-                            
-                            let message = ChatMessage(
-                                messageId: msgSnap.key,
-                                senderId: dict["senderId"] as? Int,
-                                text: dict["text"] as? String,
-                                timestamp: timestamp
-                            )
-                            messages.append(message)
-                        }
+            var updatedConversations: [Conversation] = []
+            
+            for case let chatNode as DataSnapshot in snapshot.children {
+                // Example chatNode.key: "2_23"
+                guard let key = chatNode.key as String?,
+                      key.contains("_") else { continue }
+                
+                let participants = key.split(separator: "_").map { String($0) }
+                guard participants.contains(String(loggedInUserId)) else { continue }
+                
+                // Collect all messages in this chat node
+                var messages: [ChatMessage] = []
+                for case let msgSnap as DataSnapshot in chatNode.children {
+                    if let dict = msgSnap.value as? [String: Any] {
+                        let message = ChatMessage(
+                            audio_file: dict["audio_file"] as? String,
+                            chat_time: dict["chat_time"] as? String,
+                            document: dict["document"] as? String,
+                            firebase_receiver_id: dict["firebase_receiver_id"] as? String,
+                            firebase_sender_id: dict["firebase_sender_id"] as? String,
+                            image: dict["image"] as? String,
+                            message: dict["message"] as? String,
+                            read: dict["read"] as? Bool,
+                            receiver_id: dict["receiver_id"] as? Int,
+                            sender_id: dict["sender_id"] as? Int,
+                            timestamp: dict["timestamp"] as? Double
+                        )
+                        messages.append(message)
                     }
-
-                    // Get last message
-                    guard let lastMessage = messages.max(by: { $0.timestamp ?? 0.0 < $1.timestamp ?? 0.0 }) else { continue }
-
-                    // Determine other participant
-                    let otherUserId: Int
-                    if participants[0] == String(loggedInUserId) {
-                        otherUserId = Int(participants[1]) ?? -1
-                    } else {
-                        otherUserId = Int(participants[0]) ?? -1
-                    }
-
-                    // Fetch user data
-                    usersRef
-                        .queryOrdered(byChild: "user_id")
-                        .queryEqual(toValue: Double(otherUserId))
-                        .observeSingleEvent(of: .value) { userSnap, _  in
-                            
-                            for case let child as DataSnapshot in userSnap.children {
-                                if let dict = child.value as? [String: Any],
-                                   let userId = dict["user_id"] as? Int {
-                                    
-                                    let user = FirebaseUser(
-                                        user_id: userId,
-                                        name: dict["name"] as? String,
-                                        profileImage: dict["profileImage"] as? String
-                                    )
-                                    
-                                    self.conversations.append(Conversation(user: user, lastMessage: lastMessage))
-                                    let sorted = self.conversations.sorted { $0.lastMessage?.timestamp ?? 0.0 > $1.lastMessage?.timestamp ?? 0.0 }
-                                    onUpdate(sorted)
+                }
+                
+                // Get last message by timestamp
+                guard let lastMessage = messages.max(by: { ($0.timestamp ?? 0.0) < ($1.timestamp ?? 0.0) }) else { continue }
+                
+                // Determine the other participant
+                let otherUserId: Int
+                if participants[0] == String(loggedInUserId) {
+                    otherUserId = Int(participants[1]) ?? -1
+                } else {
+                    otherUserId = Int(participants[0]) ?? -1
+                }
+                guard otherUserId != -1 else { continue }
+                
+                // Fetch user data
+                usersRef
+                    .queryOrdered(byChild: "user_id")
+                    .queryEqual(toValue: Double(otherUserId)) // Firebase numeric fields are Double
+                    .observeSingleEvent(of: .value) { userSnap, _  in
+                        
+                        for case let child as DataSnapshot in userSnap.children {
+                            if let dict = child.value as? [String: Any] {
+                                let user = FirebaseUser(
+                                    avatar: dict["avatar"] as? String,
+                                    created_at: dict["created_at"] as? String,
+                                    email: dict["email"] as? String,
+                                    last_changed: dict["last_changed"] as? Double,
+                                    name: dict["name"] as? String,
+                                    status: dict["status"] as? String,
+                                    user_id: dict["user_id"] as? Int
+                                )
+                                
+                                updatedConversations.append(
+                                    Conversation(user: user, lastMessage: lastMessage)
+                                )
+                                
+                                // Always return conversations sorted by latest message
+                                let sorted = updatedConversations.sorted {
+                                    ($0.lastMessage?.timestamp ?? 0.0) > ($1.lastMessage?.timestamp ?? 0.0)
                                 }
+                                onUpdate(sorted)
                             }
                         }
-                }
-
-            let sorted = self.conversations.sorted { $0.lastMessage?.timestamp ?? 0.0 > $1.lastMessage?.timestamp ?? 0.0 }
-                onUpdate(sorted)
+                    }
             }
+        }
     }
 
 }
