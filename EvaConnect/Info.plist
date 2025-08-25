@@ -92,6 +92,16 @@
 	<string>This app will require Microphone For Video making</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the Photo Library</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-Regular.otf</string>
+		<string>SFProText-Semibold</string>
+		<string>SF-Pro-Text-Medium.otf</string>
+		<string>SFProText-Light.otf</string>
+		<string>SF-Pro-Text-Heavy.otf</string>
+		<string>NunitoSans-Black.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -119,7 +129,7 @@
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
+	<string>VideoCustomView.xib</string>
 	<key>UIMainStoryboardFile</key>
 	<string>AuthenticationVC</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -141,15 +151,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-Pro-Text-Bold.otf</string>
-		<string>SF-Pro-Text-Regular.otf</string>
-		<string>SFProText-Semibold</string>
-		<string>SF-Pro-Text-Medium.otf</string>
-		<string>SFProText-Light.otf</string>
-		<string>SF-Pro-Text-Heavy.otf</string>
-		<string>NunitoSans-Black.ttf</string>
-	</array>
 </dict>
 </plist>

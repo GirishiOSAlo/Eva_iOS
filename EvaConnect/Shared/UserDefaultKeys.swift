@@ -88,6 +88,14 @@ class myUserDefaults {
         }
     }
     
+    public static var countryDialCode: String {
+        get {
+            UserDefaults.standard.string(forKey: "countryDialCode") ?? ""
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "countryDialCode")
+        }
+    }
+    
     public static var linkedIn: String {
         get {
             UserDefaults.standard.string(forKey: "linkedIn") ?? ""

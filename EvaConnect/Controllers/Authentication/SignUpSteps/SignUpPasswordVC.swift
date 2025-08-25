@@ -196,7 +196,7 @@ extension SignUpPasswordVC {
                 "fullname": myUserDefaults.fullName,
                 "email": myUserDefaults.emailAdd,
                 "mobile": myUserDefaults.mobileNo,
-                "country_code": "91",
+                "country_code": myUserDefaults.countryDialCode,
                 "is_linkedin": 0,
                 "linkedin_url": myUserDefaults.linkedIn,
                 "password": passwordTxt.text!,

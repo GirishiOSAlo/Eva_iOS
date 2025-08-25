@@ -600,6 +600,9 @@
 		A6D00EC12AB42AE300016672 /* SearchDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D00EC02AB42AE300016672 /* SearchDetailsVC.swift */; };
 		A6D00EC52AB447E500016672 /* SearchCategoryCollctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D00EC42AB447E500016672 /* SearchCategoryCollctionCell.swift */; };
 		A6D231802E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */; };
+		A6D4F5662E58977600F9230E /* CountryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D4F5652E58977600F9230E /* CountryData.swift */; };
+		A6D4F5692E589B9B00F9230E /* CountryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6D4F5682E589B9B00F9230E /* CountryListVC.xib */; };
+		A6D4F56A2E589B9B00F9230E /* CountryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D4F5672E589B9B00F9230E /* CountryListVC.swift */; };
 		A6D9F6672AAF4C6D00F604BF /* EventDelegatesTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */; };
 		A6E71F472E52ED2B00DC8F7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */; };
 		A6E754342DD2FF560057B781 /* CommentCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6E754332DD2FF560057B781 /* CommentCVC.xib */; };
@@ -1223,6 +1226,9 @@
 		A6D00EC02AB42AE300016672 /* SearchDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsVC.swift; sourceTree = "<group>"; };
 		A6D00EC42AB447E500016672 /* SearchCategoryCollctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryCollctionCell.swift; sourceTree = "<group>"; };
 		A6D2317F2E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateEventMeetingStatusModel.swift; sourceTree = "<group>"; };
+		A6D4F5652E58977600F9230E /* CountryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryData.swift; sourceTree = "<group>"; };
+		A6D4F5672E589B9B00F9230E /* CountryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListVC.swift; sourceTree = "<group>"; };
+		A6D4F5682E589B9B00F9230E /* CountryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListVC.xib; sourceTree = "<group>"; };
 		A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDelegatesTblCell.swift; sourceTree = "<group>"; };
 		A6E71F462E52ED2B00DC8F7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A6E754322DD2FF560057B781 /* CommentCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCVC.swift; sourceTree = "<group>"; };
@@ -1398,6 +1404,7 @@
 		1822975323C5E0480077769D /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				A6D4F5642E58936200F9230E /* Country List */,
 				182C039C23C5E6E900E42B1A /* Login */,
 				18770956244337140046AA56 /* LoginByLinkedinVC */,
 				18BDD65A23C7336600AF2243 /* ForgotPasswordVC */,
@@ -3678,6 +3685,16 @@
 			path = SearchNewsCell;
 			sourceTree = "<group>";
 		};
+		A6D4F5642E58936200F9230E /* Country List */ = {
+			isa = PBXGroup;
+			children = (
+				A6D4F5652E58977600F9230E /* CountryData.swift */,
+				A6D4F5672E589B9B00F9230E /* CountryListVC.swift */,
+				A6D4F5682E589B9B00F9230E /* CountryListVC.xib */,
+			);
+			path = "Country List";
+			sourceTree = "<group>";
+		};
 		A6E754312DD2FF350057B781 /* Comment CVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -3823,6 +3840,7 @@
 				A6A458E12AB31137005418F6 /* DocAudioTVCell.xib in Resources */,
 				488BC3AA2DD1E0A200A361ED /* EventDetailsVC.xib in Resources */,
 				5073A854248144FF008F2E7D /* HomeJob.xib in Resources */,
+				A6D4F5692E589B9B00F9230E /* CountryListVC.xib in Resources */,
 				48703A922B29A1C2008B2409 /* NewsDetailsTVC.xib in Resources */,
 				A689509B2DD7499300ACC16F /* MeetingListVC.xib in Resources */,
 				48496E3A2BBECFB80002C3CC /* PostImageCVC.xib in Resources */,
@@ -4052,6 +4070,7 @@
 				180A570923D9A94500BD473D /* OtherCommentVC.swift in Sources */,
 				489CB3CB2DCBA59100A0C77B /* PreviousCVCell.swift in Sources */,
 				50B929BB244A784300299CC0 /* UIColor.swift in Sources */,
+				A6D4F56A2E589B9B00F9230E /* CountryListVC.swift in Sources */,
 				259495F727884A6500C5579B /* UserJobCell.swift in Sources */,
 				A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */,
 				187A4384241A137E00176922 /* AllShowJobDetail.swift in Sources */,
@@ -4120,6 +4139,7 @@
 				A64C49882E1BFADE00F9D3F9 /* ConnectionViewController.swift in Sources */,
 				485FC1952DD4CE6600AA05A4 /* ConferrenceAgendaCell.swift in Sources */,
 				A6C5F57C2B3019C00077B6BD /* InviteTVC.swift in Sources */,
+				A6D4F5662E58977600F9230E /* CountryData.swift in Sources */,
 				A661453A2B4448B5009221B5 /* EventDelegateFilter.swift in Sources */,
 				48E0C0D02B3C34EE006EBEF0 /* AttachmentPopupVC.swift in Sources */,
 				50436BCB248E9386009B18D2 /* UserAvatarView.swift in Sources */,

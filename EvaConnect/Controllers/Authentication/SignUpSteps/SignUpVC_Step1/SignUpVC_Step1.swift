@@ -28,14 +28,15 @@ class SignUpVC_Step1: BaseForAuthentication {
     @IBOutlet weak var alreadyRegisterBtn: UIButton!
     @IBOutlet weak var uploadBtn: UIButton!
     @IBOutlet weak var imageOutlet: UIImageView!
-    @IBOutlet var boderView: UIView!
+    //@IBOutlet var boderView: UIView!
     
     @IBOutlet weak var baseView_1: UIView!
     @IBOutlet weak var baseView_2: UIView!
     @IBOutlet weak var baseView_3: UIView!
     @IBOutlet weak var baseView_4: UIView!
-    @IBOutlet weak var mapIconImgVw: UIImageView!
+    @IBOutlet weak var countryFlagLbl: UILabel!
     @IBOutlet weak var dropDownImgVw: UIImageView!
+    @IBOutlet weak var countryPhnCodeTxtField: UITextField!
     @IBOutlet weak var mobileNoTextField: UITextField!
     @IBOutlet weak var baseView_5: UIView!
     @IBOutlet weak var linkedInTextField: UITextField!
@@ -47,6 +48,8 @@ class SignUpVC_Step1: BaseForAuthentication {
     var emailValid = false
     var validURL = false
     var mobileNoValid = false
+    
+    var countries: [Country] = []
     
     //MARK: LifeCycle
     
@@ -64,6 +67,64 @@ class SignUpVC_Step1: BaseForAuthentication {
         
         if let destination = segue.destination as? SignUpVC_Location, let signUpDetails = sender as? SignUpDetails? {
             destination.signUpDetails = signUpDetails
+        }
+    }
+    
+    
+    @IBAction func onCountrySelectBtnTap(_ sender: UIButton) {
+        if  self.countries.count == 0 {
+            makeAlert(messageData: "Country data not available")
+        } else {
+            let popupvc = CountryListVC(nibName: "CountryListVC", bundle: nil)
+            popupvc.modalPresentationStyle = .overFullScreen
+            popupvc.countries = self.countries
+            popupvc.completion = { country in
+                self.countryFlagLbl.text = country.flag
+                self.countryPhnCodeTxtField.text = country.dialCode
+            }
+            self.navigationController?.present(popupvc, animated: true)
+        }
+    }
+}
+
+extension SignUpVC_Step1: UITextFieldDelegate {
+    // Restrict input only to numbers and limit to 10 digits
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            if textField == mobileNoTextField {
+                // Allow only numbers
+                let allowedCharacters = CharacterSet.decimalDigits
+                let characterSet = CharacterSet(charactersIn: string)
+                if !allowedCharacters.isSuperset(of: characterSet) {
+                    return false
+                }
+                
+                // Limit length to 10 digits
+                let currentText = textField.text ?? ""
+                guard let stringRange = Range(range, in: currentText) else { return false }
+                let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+                return updatedText.count <= 10
+            }
+            return true
+        }
+}
+
+//Fetch Country List....
+extension SignUpVC_Step1 {
+    func loadCountries(){
+        // Decode JSON into Swift objects
+        if let jsonData = jsonString.data(using: .utf8) {
+            do {
+                self.countries = try JSONDecoder().decode([Country].self, from: jsonData)
+                if self.countries.count == 0 {
+                    self.countryFlagLbl.text = "🇮🇳"
+                    self.countryPhnCodeTxtField.text = "+91"
+                } else {
+                    self.countryFlagLbl.text = "\(countries[0].flag)"
+                    self.countryPhnCodeTxtField.text = "\(countries[0].dialCode)"
+                }
+            } catch {
+                print("❌ Decoding error:", error)
+            }
         }
     }
 }
@@ -108,8 +169,14 @@ extension SignUpVC_Step1 {
         companyBtn.borderColor = UIColor(hex: "#707070",alpha: 0.20)
         companyBtn.backgroundColor = UIColor.clear
         self.baseView_2.isHidden = true
-
-
+        
+        mobileNoTextField.delegate = self
+        mobileNoTextField.keyboardType = .numberPad  // show only numbers keyboard
+        
+        //country data from json string....
+        self.loadCountries()
+        self.countryFlagLbl.text = "🇮🇳"
+        self.countryPhnCodeTxtField.text = "+91"
         
         self.baseView_1.applyBorderWithRadius()
         self.baseView_2.applyBorderWithRadius()
@@ -241,7 +308,7 @@ extension SignUpVC_Step1 {
                         //                        signUpDetails = SignUpDetails(email: "some@co.co")
                         //                    }
                     } else {
-                        presentAlert("Invalid Mobile No", "Please Enter Valid Mobile No.", nil)
+                        presentAlert("Invalid Mobile No", "Please Enter 10 digit Mobile Number", nil)
                     }
                 } else {
                     presentAlert("Invalid Email", "Please Enter Valid Email Address", nil)
@@ -272,9 +339,9 @@ extension SignUpVC_Step1 {
 
         } else {
             if isIndivisualUser {
-                makeAlert(messageData: "Please Enter Full Name")
+                makeAlert(messageData: "Please Fill Full Name")
             } else {
-                makeAlert(messageData: "Please Enter Company Name")
+                makeAlert(messageData: "Please Fill Company Name")
             }
         }
     }
@@ -442,6 +509,7 @@ extension SignUpVC_Step1{
         myUserDefaults.emailAdd = email.text ?? ""
         myUserDefaults.websiteUrl = WebsiteName.text ?? ""
         myUserDefaults.mobileNo = mobileNoTextField.text ?? ""
+        myUserDefaults.countryDialCode = countryPhnCodeTxtField.text ?? ""
         myUserDefaults.linkedIn = linkedInTextField.text ?? ""
         guard let vc = storyboard?.instantiateViewController(withIdentifier: SignUpLocationDOBVC.storyboardIdentifier) as? SignUpLocationDOBVC else { return }
         vc.signUpDetails = signUpDetails
