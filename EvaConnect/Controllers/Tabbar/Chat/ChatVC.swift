@@ -597,9 +597,13 @@ extension ChatVC {
             case .image :
                 if self.postImages.count > 0 {
                     self.postImages.enumerated().forEach { (index, mediaImage) in
-                        if let imageData = mediaImage.jpegData(compressionQuality: 0.20) {
-                            let base64ImageString = imageData.base64EncodedString(options: [])
-                            self.imageArray.append("data:image/png;base64,\(base64ImageString)")
+//                        if let imageData = mediaImage.jpegData(compressionQuality: 0.20) {
+//                            let base64ImageString = imageData.base64EncodedString(options: [])
+//                            self.imageArray.append("data:image/png;base64,\(base64ImageString)")
+//                        }
+                        if let compressedData = compressImageToMax5MB(mediaImage) {
+                            let base64 = compressedData.base64EncodedString()
+                            self.imageArray.append("data:image/jpeg;base64,\(base64)")
                         }
                     }
                 }
@@ -608,9 +612,13 @@ extension ChatVC {
             case .camera:
                 if self.postImages.count > 0 {
                     self.postImages.enumerated().forEach { (index, mediaImage) in
-                        if let imageData = mediaImage.jpegData(compressionQuality: 0.20) {
-                            let base64ImageString = imageData.base64EncodedString(options: [])
-                            self.imageArray.append("data:image/png;base64,\(base64ImageString)")
+//                        if let imageData = mediaImage.jpegData(compressionQuality: 0.20) {
+//                            let base64ImageString = imageData.base64EncodedString(options: [])
+//                            self.imageArray.append("data:image/png;base64,\(base64ImageString)")
+//                        }
+                        if let compressedData = compressImageToMax5MB(mediaImage) {
+                            let base64 = compressedData.base64EncodedString()
+                            self.imageArray.append("data:image/jpeg;base64,\(base64)")
                         }
                     }
                 }
@@ -618,25 +626,72 @@ extension ChatVC {
                 break
             case .audio:
                 if audioURL != nil {
-                    if let myAudUrl = audioURL {
-                        let base64Doc = encodeToBase64(reqURL: myAudUrl)
-                        params["audio"] = "data:application/mp3;base64,\(base64Doc ?? "")"
-                        params["audio_file_name"] = fileName
+//                    if let myAudUrl = audioURL {
+//                        let base64Doc = encodeToBase64(reqURL: myAudUrl)
+//                        params["audio"] = "data:application/mp3;base64,\(base64Doc ?? "")"
+//                        params["audio_file_name"] = fileName
+//                    }
+                    if let audioURL = audioURL {
+                        let sizeMB = fileSizeInMB(url: audioURL)
+                        if sizeMB > 5 {
+                            compressAudio(inputURL: audioURL) { compressedURL in
+                                if let url = compressedURL, self.fileSizeInMB(url: url) <= 5 {
+                                    let base64Doc = self.encodeToBase64(reqURL: url)
+                                    params["audio"] = "data:audio/m4a;base64,\(base64Doc ?? "")"
+                                    params["audio_file_name"] = self.fileName
+                                } else {
+                                    print("❌ Audio too large after compression")
+                                    self.presentAlert("File Too Large", "Your audio is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
+                                }
+                            }
+                        } else {
+                            let base64Doc = self.encodeToBase64(reqURL: audioURL)
+                            params["audio"] = "data:audio/mp3;base64,\(base64Doc ?? "")"
+                            params["audio_file_name"] = fileName
+                        }
                     }
                 }
                 break
             case .video:
-                if let myVideoUrl = videoURL {
-                    let base64Video = encodeVideoToBase64(videoURL: myVideoUrl)
-                    params["post_video"] = "data:application/mp4;base64,\(base64Video ?? "")"
+//                if let myVideoUrl = videoURL {
+//                    let base64Video = encodeVideoToBase64(videoURL: myVideoUrl)
+//                    params["post_video"] = "data:application/mp4;base64,\(base64Video ?? "")"
+//                }
+                if let videoURL = videoURL {
+                    let sizeMB = fileSizeInMB(url: videoURL)
+                    if sizeMB > 5 {
+                        compressVideo(inputURL: videoURL) { compressedURL in
+                            if let url = compressedURL, self.fileSizeInMB(url: url) <= 5 {
+                                let base64 = self.encodeVideoToBase64(videoURL: url)
+                                params["post_video"] = "data:video/mp4;base64,\(base64 ?? "")"
+                            } else {
+                                print("❌ Video too large after compression")
+                                self.presentAlert("File Too Large", "Your video is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
+                            }
+                        }
+                    } else {
+                        let base64 = encodeVideoToBase64(videoURL: videoURL)
+                        params["post_video"] = "data:video/mp4;base64,\(base64 ?? "")"
+                    }
                 }
                 break
             case .doc:
                 if documentURL != nil {
-                    if let myDocUrl = documentURL {
-                        let base64Doc = encodeToBase64(reqURL: myDocUrl)
-                        params["document"] = "data:application/pdf;base64,\(base64Doc ?? "")"
-                        params["document_name"] = fileName
+//                    if let myDocUrl = documentURL {
+//                        let base64Doc = encodeToBase64(reqURL: myDocUrl)
+//                        params["document"] = "data:application/pdf;base64,\(base64Doc ?? "")"
+//                        params["document_name"] = fileName
+//                    }
+                    if let docURL = documentURL {
+                        let sizeMB = fileSizeInMB(url: docURL)
+                        if sizeMB > 5 {
+                            let base64Doc = encodeToBase64(reqURL: docURL)
+                            params["document"] = "data:application/pdf;base64,\(base64Doc ?? "")"
+                            params["document_name"] = fileName
+                        } else {
+                            print("❌ Document is larger than 5MB")
+                            self.presentAlert("File Too Large", "Your document is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
+                        }
                     }
                 }
                 break
@@ -2119,4 +2174,78 @@ extension ChatVC {
 //            }
 //        }
 //    }
+}
+
+//--> File COmpression....
+extension ChatVC {
+    func fileSizeInMB(url: URL) -> Double {
+        do {
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let fileSize = fileAttributes[.size] as? NSNumber {
+                return fileSize.doubleValue / (1024.0 * 1024.0) // Convert to MB
+            }
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        return 0.0
+    }
+    
+    func compressImageToMax5MB(_ image: UIImage) -> Data? {
+        var compression: CGFloat = 0.8
+        let maxFileSize = 5.0 * 1024 * 1024 // 5MB
+        
+        guard var imageData = image.jpegData(compressionQuality: compression) else { return nil }
+        
+        while Double(imageData.count) > maxFileSize && compression > 0.05 {
+            compression -= 0.1
+            if let data = image.jpegData(compressionQuality: compression) {
+                imageData = data
+            }
+        }
+        
+        return imageData
+    }
+    
+    func compressVideo(inputURL: URL, completion: @escaping (URL?) -> Void) {
+        let asset = AVURLAsset(url: inputURL)
+        guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetMediumQuality) else {
+            completion(nil)
+            return
+        }
+        
+        let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("compressed.mp4")
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = .mp4
+        
+        exportSession.exportAsynchronously {
+            if exportSession.status == .completed {
+                completion(outputURL)
+            } else {
+                print("Video compression failed: \(String(describing: exportSession.error))")
+                completion(nil)
+            }
+        }
+    }
+        
+    func compressAudio(inputURL: URL, completion: @escaping (URL?) -> Void) {
+        let asset = AVURLAsset(url: inputURL)
+        guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
+            completion(nil)
+            return
+        }
+        
+        let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("compressed.m4a")
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = .m4a
+        
+        exportSession.exportAsynchronously {
+            if exportSession.status == .completed {
+                completion(outputURL)
+            } else {
+                print("Audio compression failed: \(String(describing: exportSession.error))")
+                completion(nil)
+            }
+        }
+    }
+
 }
