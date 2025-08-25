@@ -51,14 +51,14 @@
                         <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Yw4-Pt-g3e">
                             <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
                             <subviews>
-                                <view clipsSubviews="YES" tag="4" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgJ-II-zrp" userLabel="BizView" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
+                                <view clipsSubviews="YES" tag="4" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgJ-II-zrp" userLabel="HomeView" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="78" height="56"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="homeSelectedTab"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view clipsSubviews="YES" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYk-dR-5z3" userLabel="Transaction" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
+                                <view clipsSubviews="YES" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYk-dR-5z3" userLabel="Notifation View" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
                                     <rect key="frame" x="78" y="0.0" width="78" height="56"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
@@ -82,14 +82,14 @@
                                         <constraint firstItem="TQe-dS-lPr" firstAttribute="leading" secondItem="6Zv-LD-Ucr" secondAttribute="leading" id="oYH-EY-sp6"/>
                                     </constraints>
                                 </view>
-                                <view clipsSubviews="YES" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXT-Pn-bkk" userLabel="Credit" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
+                                <view clipsSubviews="YES" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXT-Pn-bkk" userLabel="Message View" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
                                     <rect key="frame" x="234" y="0.0" width="78" height="56"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="msgSelectedTab"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view clipsSubviews="YES" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpy-fO-6oO" userLabel="More" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
+                                <view clipsSubviews="YES" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpy-fO-6oO" userLabel="Profile View" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
                                     <rect key="frame" x="312" y="0.0" width="78" height="56"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>

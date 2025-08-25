@@ -64,11 +64,24 @@ class ChatListCell: UITableViewCell {
     }
     
 
-    
     func configure(item: Conversation) {
         conversationImageView.kf.setImage(with: URL(string: item.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
         nameLabel.text = item.user?.name
-        latestMessageLabel.text = item.lastMessage?.message
+        
+        let lastMessage = item.lastMessage
+        if lastMessage?.image != "" {
+            latestMessageLabel.text = "📷 Photo" //"🎥 Video"
+        }
+        else if lastMessage?.document != "" {
+            latestMessageLabel.text = "📄 Document"
+        }
+        else if lastMessage?.audio_file != "" {
+            latestMessageLabel.text = "🎵 Audio"
+        }
+        else if lastMessage?.message != "" {
+            latestMessageLabel.text = lastMessage?.message
+        }
+        
         timeLabel.text = DateUtils.formatTo24Hour(timestamp: item.lastMessage?.timestamp ?? 0.0)
         onlineStatusView.isHidden = item.user?.status?.lowercased() == "online" ? false : true
         
