@@ -36,6 +36,7 @@ class ChatListVC: BaseVC {
     @IBOutlet weak var noDataLabel: UILabel!
     
     var conversations: [Conversation] = []
+    var notificationList: [FirebaseNotification] = []
     
     // MARK: Properties
     var dataType: ChatListDataType = .chatList {
@@ -167,7 +168,6 @@ class ChatListVC: BaseVC {
             dataType = .chatList
             //loadMessage()
             let loggedInUserId = myUserDefaults.userId
-            
             observeConversations(loggedInUserId: loggedInUserId) { [weak self] conversations in
                 DispatchQueue.main.async {
                     self?.conversations = []
@@ -191,7 +191,16 @@ class ChatListVC: BaseVC {
         self.messagesBtn.titleLabel?.font = UIFont(name: "SFProText-Regular", size: 14.0)
         
         dataType = .notifications
-        loadNotifications()
+        //loadNotifications()
+        let loggedInUserId = myUserDefaults.userId
+        observeNotifications(loggedInUserId: loggedInUserId) { [weak self] notifications in
+            DispatchQueue.main.async {
+                self?.notificationList = []
+                self?.notificationList = notifications
+                self?.tableView.reloadData()
+                print("Notifications updated: \(notifications.count)")
+            }
+        }
     }
 }
 
@@ -281,6 +290,43 @@ extension ChatListVC {
         }
     }
 
+    func observeNotifications(loggedInUserId: Int, onUpdate: @escaping ([FirebaseNotification]) -> Void) {
+        let notificationsRef = Database.database().reference().child("notifications")
+        
+        notificationsRef.observe(.value) { snapshot in
+            var updatedNotifications: [FirebaseNotification] = []
+            
+            for case let notifSnap as DataSnapshot in snapshot.children {
+                if let dict = notifSnap.value as? [String: Any] {
+                    let notification = FirebaseNotification(
+                        audio_file: dict["audio_file"] as? String,
+                        body: dict["body"] as? String,
+                        created_at: dict["created_at"] as? Double,
+                        document: dict["document"] as? String,
+                        image: dict["image"] as? String,
+                        message: dict["message"] as? String,
+                        read: dict["read"] as? Bool,
+                        receiver_id: (dict["receiver_id"] as? Double).map { Int($0) },
+                        sender_id: (dict["sender_id"] as? Double).map { Int($0) },
+                        title: dict["title"] as? String,
+                        type: dict["type"] as? String
+                    )
+                    
+                    // Only include notifications related to logged-in user
+                    if notification.receiver_id == loggedInUserId || notification.sender_id == loggedInUserId {
+                        updatedNotifications.append(notification)
+                    }
+                }
+            }
+            
+            // Sort latest first
+            let sorted = updatedNotifications.sorted {
+                ($0.created_at ?? 0.0) > ($1.created_at ?? 0.0)
+            }
+            
+            onUpdate(sorted)
+        }
+    }
 }
 
 extension ChatListVC {
@@ -321,13 +367,13 @@ extension ChatListVC {
         self.messagesBtn.layer.cornerRadius = 8.0
         self.notificationsBtn.layer.cornerRadius = 8.0
         
-        if self.dataType == .chatList {
-            print("Tapped Messages.")
-            self.onMessageBtnTapped(self.messagesBtn)
-        } else {
-            print("Tapped Notifications.")
-            self.onNotificationsBtnTapped(self.notificationsBtn)
-        }
+//        if self.dataType == .chatList {
+//            print("Tapped Messages.")
+//            self.onMessageBtnTapped(self.messagesBtn)
+//        } else {
+//            print("Tapped Notifications.")
+//            self.onNotificationsBtnTapped(self.notificationsBtn)
+//        }
         
     }
     
@@ -801,7 +847,8 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 ////        notifications.count : conversations.count
         
         if dataType == .notifications {
-            return notifications.count
+            //return notifications.count
+            return notificationList.count
         } else if dataType == .chatList {
             //return messages.count
             return conversations.count
@@ -816,20 +863,20 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
         switch dataType {
         case .notifications:
             if let cell = tableView.dequeueReusableCell(withIdentifier: NotificationCell.id()) as? NotificationCell {
-                let notification = notifications[indexPath.row]
                 cell.delegate = self
                 cell.notificationDelegate = self
-                cell.userAvatar.image = nil
-//                cell.actionButton.tag = indexPath.row
-//                cell.isMyActivity = isMyActivity
-                cell.notification = notification
+//                let notification = notifications[indexPath.row]
+//                cell.userAvatar.image = nil
+////                cell.actionButton.tag = indexPath.row
+////                cell.isMyActivity = isMyActivity
+//                cell.notification = notification
+                cell.configure(item: self.notificationList[indexPath.row])
                 return cell
             }
         default:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as? ChatListCell {
 //                let conversation = messages[indexPath.row]
 //                cell.conversation = conversation
-                
                 cell.configure(item: self.conversations[indexPath.row])
                 
                 return cell

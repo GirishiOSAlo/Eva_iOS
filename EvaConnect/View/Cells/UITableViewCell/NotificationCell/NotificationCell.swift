@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Kingfisher
+
 
 protocol NotificationCellDelegate: NSObject {
     func didSelect(notification: EvaNotification)
@@ -70,6 +72,14 @@ class NotificationCell: UITableViewCell {
                 userAvatar.kf.setImage(with: url)
             }
         }
+    }
+    
+    
+    func configure(item: FirebaseNotification) {
+        content.text = item.body ?? "--"
+        dateTime.text = DateUtils.formatTo24Hour(timestamp: item.created_at ?? 0.0)
+        
+        userAvatar.kf.setImage(with: URL(string: item.image ?? ""), placeholder: UIImage(named: "profile"))
     }
     
     @IBAction func action_touchUpInside(_ sender: UIButton) {

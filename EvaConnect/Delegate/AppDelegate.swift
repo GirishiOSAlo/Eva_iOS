@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)
           UNUserNotificationCenter.current().delegate = self
+        scheduleTestNotification()
 
           let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
           UNUserNotificationCenter.current().requestAuthorization(
@@ -79,15 +80,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
 //        print("firebase database url", FirebaseHandler.handler.ref)
 //        Messaging.messaging().delegate = self
         
-//        let center = UNUserNotificationCenter.current()
-//        center.delegate = self
-//        center.requestAuthorization(options: [.alert,.sound,.badge]) { (granted, error) in
-//            if granted {
-//                DispatchQueue.main.async {
-//                    UIApplication.shared.registerForRemoteNotifications()
-//                }
-//            }
-//        }
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        center.requestAuthorization(options: [.alert,.sound,.badge]) { (granted, error) in
+            if granted {
+                print("Permission granted ✅")
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            } else {
+                print("Permission denied ❌")
+                self.showNotificationSettingsAlert()
+            }
+        }
         
 //MARK: To print all the available fonts
 //        for family in UIFont.familyNames {
@@ -98,6 +103,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
 //        }
 
         return true
+    }
+    
+    func showNotificationSettingsAlert() {
+        let alert = UIAlertController(
+            title: "Notifications Disabled",
+            message: "Please enable notifications in Settings to stay updated.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default, handler: { _ in
+            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                if UIApplication.shared.canOpenURL(appSettings) {
+                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                }
+            }
+        }))
+
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func scheduleTestNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Welcome"
+        content.body = "Thanks for opening the app!"
+        content.sound = .default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let request = UNNotificationRequest(identifier: "welcome", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
 
@@ -191,7 +227,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter,
                               didReceive response: UNNotificationResponse) async {
     let userInfo = response.notification.request.content.userInfo
-
+      print("User tapped notification with info: \(userInfo)")
     // ...
 
     // With swizzling disabled you must let Messaging know about the message, for Analytics
@@ -213,8 +249,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
       } else {
           print("Redirect URL not found")
       }
-      
-      
       
     print(userInfo)
   }
@@ -267,7 +301,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                   print(endPoints)
                   self.deepLinkNavigation(endPoints: endPoints)
               }
-
           } else {
               print("Redirect URL not found")
           }

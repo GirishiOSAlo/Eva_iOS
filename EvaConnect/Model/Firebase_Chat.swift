@@ -63,3 +63,29 @@ struct ChatMessage {
 //receiver_id:10
 //sender_id:2
 //timestamp:1755783633
+
+struct FirebaseNotification: Codable {
+    var audio_file: String?
+    var body: String?
+    var created_at: Double?
+    var document: String?
+    var image: String?
+    var message: String?
+    var read: Bool?
+    var receiver_id: Int?
+    var sender_id: Int?
+    var title: String?
+    var type: String?
+}
+
+//audio_file:""
+//body:"HEY"
+//created_at:1755756963
+//document:""
+//image:""
+//message:"HEY"
+//read:false
+//receiver_id:2
+//sender_id:24
+//title:"Kingfisher Airlines"
+//type:"chat"
