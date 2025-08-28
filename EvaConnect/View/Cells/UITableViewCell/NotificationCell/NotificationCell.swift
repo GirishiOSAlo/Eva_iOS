@@ -44,6 +44,7 @@ class NotificationCell: UITableViewCell {
         imageContainer.layer.borderWidth = 2.0
         imageContainer.roundOnly()
         userAvatar.roundOnly()
+        unreadView.roundOnly()
         actionButton.isHidden = true
         actionButton.titleLabel?.font = UIFont(defaultFontStyle: .regular, size: 12.0)
         actionButton.makeRoundView(backGroundColor: .clear, boderColor: AppColors.evaBlue, boderValue: 1.0)
@@ -82,7 +83,7 @@ class NotificationCell: UITableViewCell {
         userAvatar.image = UIImage(named: "profile")
         content.text = "\(item.title)\n\(item.body)"
         dateTime.text = item.created_at.formattedCreatedAt()
-        unreadView.backgroundColor = item.read == false ? AppColors.solidBlue : .clear
+        unreadView.backgroundColor = item.read == false ? UIColor(hex: "#4D76CD") : .clear
     }
     
     @IBAction func action_touchUpInside(_ sender: UIButton) {

@@ -369,7 +369,7 @@ extension ChatListVC {
         tableView.registerCell(withType: NotificationCell.self)
         tableView.tableFooterView = UIView()
         isSeparatorHidden = true
-        tableView.refreshControl = refresher
+        //tableView.refreshControl = refresher
 //        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 //        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(hex: "707070")]
 //        segmentControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
@@ -1042,6 +1042,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             let notification = self.notificationList[indexPath.row]
             let type = notification.type.lowercased()
             let notificationID = notification.id
+            print("Notification Type :: \(type)")
             if type == "chat" {
 //                let chatVC = StoryboardRouter.chat()
 //                chatVC.userId = notificationID
