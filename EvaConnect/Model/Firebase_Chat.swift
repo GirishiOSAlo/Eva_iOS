@@ -64,28 +64,23 @@ struct ChatMessage {
 //sender_id:2
 //timestamp:1755783633
 
-struct FirebaseNotification: Codable {
-    var audio_file: String?
-    var body: String?
-    var created_at: Double?
-    var document: String?
-    var image: String?
-    var message: String?
-    var read: Bool?
-    var receiver_id: Int?
-    var sender_id: Int?
-    var title: String?
-    var type: String?
+struct FirebaseNotification {
+    let body: String
+    let created_at: String
+    let expire_at: String
+    let id: Int
+    let read: Bool
+    let redirect_url: String
+    let title: String
+    let type: String
 }
-
-//audio_file:""
-//body:"HEY"
-//created_at:1755756963
-//document:""
-//image:""
-//message:"HEY"
-//read:false
-//receiver_id:2
-//sender_id:24
-//title:"Kingfisher Airlines"
-//type:"chat"
+//2
+//-OYbHMGdFE5pNeGJWsbY
+//    body:"final test"
+//    created_at:"2025-08-26 16:50:07"
+//    expire_at:"2025-08-28 16:50:07"
+//    id:10
+//    read:false
+//    redirect_url:"http://127.0.0.1:8000/events/message/10"
+//    title:"Satyam Tripathi"
+//    type:"chat" // follower, meeting, event, post, job

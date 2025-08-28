@@ -287,4 +287,34 @@ extension String {
         formatter.dateFormat = outputFormat
         return formatter.string(from: date)
     }
+    
+    func formattedCreatedAt() -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            guard let date = formatter.date(from: self) else {
+                return ""
+            }
+            
+            let calendar = Calendar.current
+            let today = Date()
+            
+            if calendar.isDate(date, inSameDayAs: today) {
+                return "Now"
+            }
+            
+            if let tomorrow = calendar.date(byAdding: .day, value: 1, to: today),
+               calendar.isDate(date, inSameDayAs: tomorrow) {
+                return "Tomorrow"
+            }
+            
+            if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+               calendar.isDate(date, inSameDayAs: yesterday) {
+                return "Yesterday"
+            }
+            
+            formatter.dateFormat = "MMM d, h:mm a"
+            return formatter.string(from: date)
+        }
 }

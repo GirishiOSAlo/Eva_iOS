@@ -36,7 +36,7 @@ class NotificationCell: UITableViewCell {
     }
 
     func initUI() {
-        unreadView.isHidden = true
+        //unreadView.isHidden = true
         
         baseview.layer.cornerRadius = 8.0
         contentView.backgroundColor = AppColors.lightGrayBG
@@ -47,6 +47,9 @@ class NotificationCell: UITableViewCell {
         actionButton.isHidden = true
         actionButton.titleLabel?.font = UIFont(defaultFontStyle: .regular, size: 12.0)
         actionButton.makeRoundView(backGroundColor: .clear, boderColor: AppColors.evaBlue, boderValue: 1.0)
+        
+        content.font = UIFont(name: Myfonts.medium, size: 14.0)
+        dateTime.font = UIFont(name: Myfonts.regular, size: 10.0)
     }
     
     var notification: EvaNotification! {
@@ -76,10 +79,10 @@ class NotificationCell: UITableViewCell {
     
     
     func configure(item: FirebaseNotification) {
-        content.text = item.body ?? "--"
-        dateTime.text = DateUtils.formatTo24Hour(timestamp: item.created_at ?? 0.0)
-        
-        userAvatar.kf.setImage(with: URL(string: item.image ?? ""), placeholder: UIImage(named: "profile"))
+        userAvatar.image = UIImage(named: "profile")
+        content.text = "\(item.title)\n\(item.body)"
+        dateTime.text = item.created_at.formattedCreatedAt()
+        unreadView.backgroundColor = item.read == false ? AppColors.solidBlue : .clear
     }
     
     @IBAction func action_touchUpInside(_ sender: UIButton) {

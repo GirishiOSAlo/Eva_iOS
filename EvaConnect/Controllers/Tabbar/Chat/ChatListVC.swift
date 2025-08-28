@@ -193,14 +193,37 @@ class ChatListVC: BaseVC {
         dataType = .notifications
         //loadNotifications()
         let loggedInUserId = myUserDefaults.userId
-        observeNotifications(loggedInUserId: loggedInUserId) { [weak self] notifications in
+        observeNotifications(for: loggedInUserId) { notifications in
+            print("👉 Notifications for user Id \(loggedInUserId) : \(notifications.count)")
             DispatchQueue.main.async {
-                self?.notificationList = []
-                self?.notificationList = notifications
-                self?.tableView.reloadData()
-                print("Notifications updated: \(notifications.count)")
+                self.notificationList = []
+                self.notificationList = notifications
+                self.tableView.reloadData()
             }
         }
+    }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
+    func widthForLabel(text: String, font: UIFont, height: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        
+        let boundingBox = text.boundingRect(
+            with: constraintRect,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: font],
+            context: nil
+        )
+        
+        return ceil(boundingBox.width)
     }
 }
 
@@ -290,41 +313,31 @@ extension ChatListVC {
         }
     }
 
-    func observeNotifications(loggedInUserId: Int, onUpdate: @escaping ([FirebaseNotification]) -> Void) {
-        let notificationsRef = Database.database().reference().child("notifications")
-        
+    func observeNotifications(for userId: Int, onUpdate: @escaping ([FirebaseNotification]) -> Void) {
+        let notificationsRef = Database.database().reference()
+            .child("notifications")
+            .child("\(userId)")   // ✅ Go directly into userId branch
+
         notificationsRef.observe(.value) { snapshot in
             var updatedNotifications: [FirebaseNotification] = []
-            
+
             for case let notifSnap as DataSnapshot in snapshot.children {
                 if let dict = notifSnap.value as? [String: Any] {
                     let notification = FirebaseNotification(
-                        audio_file: dict["audio_file"] as? String,
-                        body: dict["body"] as? String,
-                        created_at: dict["created_at"] as? Double,
-                        document: dict["document"] as? String,
-                        image: dict["image"] as? String,
-                        message: dict["message"] as? String,
-                        read: dict["read"] as? Bool,
-                        receiver_id: (dict["receiver_id"] as? Double).map { Int($0) },
-                        sender_id: (dict["sender_id"] as? Double).map { Int($0) },
-                        title: dict["title"] as? String,
-                        type: dict["type"] as? String
+                        body: dict["body"] as? String ?? "",
+                        created_at: dict["created_at"] as? String ?? "",
+                        expire_at: dict["expire_at"] as? String ?? "",
+                        id: (dict["id"] as? NSNumber)?.intValue ?? 0,
+                        read: dict["read"] as? Bool ?? false,
+                        redirect_url: dict["redirect_url"] as? String ?? "",
+                        title: dict["title"] as? String ?? "",
+                        type: dict["type"] as? String ?? ""
                     )
-                    
-                    // Only include notifications related to logged-in user
-                    if notification.receiver_id == loggedInUserId || notification.sender_id == loggedInUserId {
-                        updatedNotifications.append(notification)
-                    }
+                    updatedNotifications.append(notification)
                 }
             }
-            
-            // Sort latest first
-            let sorted = updatedNotifications.sorted {
-                ($0.created_at ?? 0.0) > ($1.created_at ?? 0.0)
-            }
-            
-            onUpdate(sorted)
+
+            onUpdate(updatedNotifications)
         }
     }
 }
@@ -889,125 +902,166 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
     //func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { dataType == .chatList ? 105 : UITableView.automaticDimension }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if dataType == .notifications {
-            return UITableView.automaticDimension
-        } else {
+            //return UITableView.automaticDimension
+            
+            let notification = self.notificationList[indexPath.row]
+            let txt = "\(notification.title)\n\(notification.body)"
+            
+            let date = notification.created_at.formattedCreatedAt()
+            let dateLblWidth = widthForLabel(text: date, font: UIFont(name: Myfonts.regular, size: 10.0) ?? UIFont.systemFont(ofSize: 10.0), height: 12)
+            let widthMargin = self.view.frame.width - dateLblWidth - 143.0
+            
+            let lblHeight = self.heightForView(text: txt, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - widthMargin)
+            
+            let totalHeight = lblHeight + 25.0
+            
+            if totalHeight > 80.0 {
+                return totalHeight
+            } else {
+                return 80.0
+            }
+        }
+        else {
             return 80
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch dataType {
         case .notifications:
-            let notification = notifications[indexPath.row]
-            switch notification.objectType {
-            case "news":
-                let vc = StoryboardRouter.openNewsDetail() //openURLVC()
-                vc.selectedNewsId = notification.objectID
-                navigationController?.pushViewController(vc, animated: true)
-                break
-            case "post":
-                let vc = StoryboardRouter.textPostDetailVC()
-                vc.postId = notification.objectID
-                navigationController?.pushViewController(vc, animated: true)
-                break
-            case "job":
-                let jobListing = StoryboardRouter.userJobListing()
-                jobListing.jobId = notification.objectID
-                navigationController?.pushViewController(jobListing, animated: true)
-                break
-            case "meeting cancel":
-                let popupvc = NotificationPopupVC(nibName: "NotificationPopupVC", bundle: nil)
-//                popupvc.tag = 1
-//                popupvc.content = notification.content ?? ""
-//                popupvc.notificationId = notification.objectID
-//                self.navigationController?.present(popupvc, animated: true)
-                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let vc = storyBoard.instantiateViewController(withIdentifier: "MeetingDetailVC") as! MeetingDetailVC
-                vc.meetingId = notification.objectID
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-            case "meeting created":
-//                let vc = NotificationPopupVC(nibName: "NotificationPopupVC", bundle: nil)
-//                vc.tag = 2
-//                vc.content = notification.content ?? ""
-//                vc.notificationId = notification.objectID
-//                vc.completion = {
-//                    let vc = DeclinePopupVC.instantiate()
-//                    vc.meetingID = notification.objectID
-//                    self.navigationController?.present(vc, animated: true)
-//                }
-//                self.navigationController?.present(vc, animated: true)
-                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let vc = storyBoard.instantiateViewController(withIdentifier: "MeetingDetailVC") as! MeetingDetailVC
-                vc.meetingId = notification.objectID
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-            case "connection":
-                let vc = StoryboardRouter.othersProfileVC()
-                vc.isFrom = 1
-                vc.profileID = notification.userID
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-            case "event":
-//                let vc = StoryboardRouter.eventCommentVC()
-//                vc.eventId = notification.objectID
-//                vc.isGalleryEnable = true
-//                navigationController?.pushViewController(vc, animated: true)
-                break
-            case "eventPassed":
-//                let vc = StoryboardRouter.eventCommentVC()
-//                vc.eventId = notification.objectID
-//                vc.isGalleryEnable = false
-//                navigationController?.pushViewController(vc, animated: true)
-                break
-            default:
-                break
-            }
-//            let popupvc = NotificationPopupVC(nibName: "NotificationPopupVC", bundle: nil)
-//            if (indexPath.row == 0) {
-//                popupvc.tag = 1
-//            }
-//            else if (indexPath.row == 1) {
-//                popupvc.tag = 2
-//            }
-//            else if (indexPath.row == 2) {
-//                popupvc.tag = 3
-//            }
-//            else if (indexPath.row == 3) {
-//                popupvc.tag = 4
-//            }
-//            else {
-//                print("Other")
-//            }
-//            self.navigationController?.present(popupvc, animated: true)
-            
-//            let type = notifications[indexPath.row].objectType
-//            switch type {
-//            case "meeting":
-//                performSegue(withIdentifier: Constants.Segues.meetingDetails, sender: notifications[indexPath.row].objectID)
-//            case "event":
-//                let vc = StoryboardRouter.eventCommentVC()
-//                vc.eventId = notifications[indexPath.row].objectID
-//                vc.userId = notifications[indexPath.row].userID
-//                navigationController?.pushViewController(vc, animated: true)
-//                //performSegue(withIdentifier: Constants.Segues.eventDetails, sender: notifications[indexPath.row].objectID)
+//            let notification = notifications[indexPath.row]
+//            switch notification.objectType {
 //            case "news":
-//                let newsVC = StoryboardRouter.newsVC()
-//                newsVC.newId = notifications[indexPath.row].objectID
-//                NavigationManager.shared.pushNotificationController(controller: newsVC)
-//            case "post":
-//                NavigationManager.shared.openController(objectID: notifications[indexPath.row].objectID, objectType: notifications[indexPath.row].objectType)
-//            case "profile":
-//                print("i am called profile")
-//                didSelect(notification: notifications[indexPath.row])
-//            case "connection":
+//                let vc = StoryboardRouter.openNewsDetail() //openURLVC()
+//                vc.selectedNewsId = notification.objectID
+//                navigationController?.pushViewController(vc, animated: true)
 //                break
-//
+//            case "post":
+//                let vc = StoryboardRouter.textPostDetailVC()
+//                vc.postId = notification.objectID
+//                navigationController?.pushViewController(vc, animated: true)
+//                break
+//            case "job":
+//                let jobListing = StoryboardRouter.userJobListing()
+//                jobListing.jobId = notification.objectID
+//                navigationController?.pushViewController(jobListing, animated: true)
+//                break
+//            case "meeting cancel":
+//                let popupvc = NotificationPopupVC(nibName: "NotificationPopupVC", bundle: nil)
+////                popupvc.tag = 1
+////                popupvc.content = notification.content ?? ""
+////                popupvc.notificationId = notification.objectID
+////                self.navigationController?.present(popupvc, animated: true)
+//                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+//                let vc = storyBoard.instantiateViewController(withIdentifier: "MeetingDetailVC") as! MeetingDetailVC
+//                vc.meetingId = notification.objectID
+//                self.navigationController?.pushViewController(vc, animated: true)
+//                break
+//            case "meeting created":
+////                let vc = NotificationPopupVC(nibName: "NotificationPopupVC", bundle: nil)
+////                vc.tag = 2
+////                vc.content = notification.content ?? ""
+////                vc.notificationId = notification.objectID
+////                vc.completion = {
+////                    let vc = DeclinePopupVC.instantiate()
+////                    vc.meetingID = notification.objectID
+////                    self.navigationController?.present(vc, animated: true)
+////                }
+////                self.navigationController?.present(vc, animated: true)
+//                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+//                let vc = storyBoard.instantiateViewController(withIdentifier: "MeetingDetailVC") as! MeetingDetailVC
+//                vc.meetingId = notification.objectID
+//                self.navigationController?.pushViewController(vc, animated: true)
+//                break
+//            case "connection":
+//                let vc = StoryboardRouter.othersProfileVC()
+//                vc.isFrom = 1
+//                vc.profileID = notification.userID
+//                self.navigationController?.pushViewController(vc, animated: true)
+//                break
+//            case "event":
+////                let vc = StoryboardRouter.eventCommentVC()
+////                vc.eventId = notification.objectID
+////                vc.isGalleryEnable = true
+////                navigationController?.pushViewController(vc, animated: true)
+//                break
+//            case "eventPassed":
+////                let vc = StoryboardRouter.eventCommentVC()
+////                vc.eventId = notification.objectID
+////                vc.isGalleryEnable = false
+////                navigationController?.pushViewController(vc, animated: true)
+//                break
 //            default:
-//                let jobVC = StoryboardRouter.userJobListing()
-//                jobVC.jobId = notifications[indexPath.row].objectID
-//                navigationController?.pushViewController(jobVC, animated: true)
+//                break
 //            }
+////            let popupvc = NotificationPopupVC(nibName: "NotificationPopupVC", bundle: nil)
+////            if (indexPath.row == 0) {
+////                popupvc.tag = 1
+////            }
+////            else if (indexPath.row == 1) {
+////                popupvc.tag = 2
+////            }
+////            else if (indexPath.row == 2) {
+////                popupvc.tag = 3
+////            }
+////            else if (indexPath.row == 3) {
+////                popupvc.tag = 4
+////            }
+////            else {
+////                print("Other")
+////            }
+////            self.navigationController?.present(popupvc, animated: true)
+//            
+////            let type = notifications[indexPath.row].objectType
+////            switch type {
+////            case "meeting":
+////                performSegue(withIdentifier: Constants.Segues.meetingDetails, sender: notifications[indexPath.row].objectID)
+////            case "event":
+////                let vc = StoryboardRouter.eventCommentVC()
+////                vc.eventId = notifications[indexPath.row].objectID
+////                vc.userId = notifications[indexPath.row].userID
+////                navigationController?.pushViewController(vc, animated: true)
+////                //performSegue(withIdentifier: Constants.Segues.eventDetails, sender: notifications[indexPath.row].objectID)
+////            case "news":
+////                let newsVC = StoryboardRouter.newsVC()
+////                newsVC.newId = notifications[indexPath.row].objectID
+////                NavigationManager.shared.pushNotificationController(controller: newsVC)
+////            case "post":
+////                NavigationManager.shared.openController(objectID: notifications[indexPath.row].objectID, objectType: notifications[indexPath.row].objectType)
+////            case "profile":
+////                print("i am called profile")
+////                didSelect(notification: notifications[indexPath.row])
+////            case "connection":
+////                break
+////
+////            default:
+////                let jobVC = StoryboardRouter.userJobListing()
+////                jobVC.jobId = notifications[indexPath.row].objectID
+////                navigationController?.pushViewController(jobVC, animated: true)
+////            }
+            let notification = self.notificationList[indexPath.row]
+            let type = notification.type.lowercased()
+            let notificationID = notification.id
+            if type == "chat" {
+//                let chatVC = StoryboardRouter.chat()
+//                chatVC.userId = notificationID
+//                navigationController?.pushViewController(chatVC, animated: true)
+            }
+            else if type == "follower" {
+                
+            }
+            else if type == "meeting" {
+                
+            }
+            else if type == "event" {
+                
+            }
+            else if type == "post" {
+                
+            }
+            else if type == "job" {
+                
+            }
             
         default:
 //            let conversation = messages[indexPath.row]
@@ -1021,19 +1075,19 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if dataType == .notifications {
-            print("Indexpath: \(indexPath.row)")
-            print("Notification: \(notifications.count)")
-            print("paginatedNotifications: \(paginatedNotifications.count)")
-            if ((indexPath.row + 1) == notifications.count) && (paginatedNotifications.count > 9) {
-                self.offSet += 1
-                getNotifications(offset: self.offSet, paginationCalled: true) {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if dataType == .notifications {
+//            print("Indexpath: \(indexPath.row)")
+//            print("Notification: \(notifications.count)")
+//            print("paginatedNotifications: \(paginatedNotifications.count)")
+//            if ((indexPath.row + 1) == notifications.count) && (paginatedNotifications.count > 9) {
+//                self.offSet += 1
+//                getNotifications(offset: self.offSet, paginationCalled: true) {
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
+//    }
     
     func addConnection(connectionId: Int, completion: @escaping () -> Void) {
         let parameters: AFParameters = [ "modified_datetime" : "2020-08-12 12:30:35",
