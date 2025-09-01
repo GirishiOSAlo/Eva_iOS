@@ -25,7 +25,8 @@
                 <outlet property="eventDateHeadingLabel" destination="woM-f3-jbo" id="KYS-oy-Kl4"/>
                 <outlet property="eventDateLabel" destination="vp7-9B-D4B" id="KKc-X5-n0U"/>
                 <outlet property="eventHeadingLabel" destination="SBC-wx-4ks" id="iug-6Q-3kh"/>
-                <outlet property="eventImgView" destination="eHb-Q9-9fB" id="Ka4-Q6-Pv2"/>
+                <outlet property="eventImgView" destination="eHb-Q9-9fB" id="mX2-P6-120"/>
+                <outlet property="eventImgVwHeight" destination="RBT-GR-UKZ" id="a9y-xg-7ts"/>
                 <outlet property="eventLocationHeadingLabel" destination="hNj-Np-oLv" id="z7r-3h-o88"/>
                 <outlet property="eventLocationLabel" destination="E1J-xX-QIE" id="ktU-gE-WnB"/>
                 <outlet property="eventNameHeadingLabel" destination="Xl1-no-wKV" id="LNr-dU-ItZ"/>
@@ -66,7 +67,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybr-97-Xf4" userLabel="View A">
                                     <rect key="frame" x="20" y="0.0" width="400" height="200"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="demoNewsImg" translatesAutoresizingMaskIntoConstraints="NO" id="eHb-Q9-9fB">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eventPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="eHb-Q9-9fB">
                                             <rect key="frame" x="0.0" y="0.0" width="400" height="200"/>
                                         </imageView>
                                     </subviews>
@@ -523,7 +524,7 @@
         </view>
     </objects>
     <resources>
-        <image name="demoNewsImg" width="339" height="254.33332824707031"/>
+        <image name="eventPlaceholder" width="111.66666412353516" height="58.666667938232422"/>
         <image name="ic_info" width="20" height="20"/>
         <image name="profile" width="111" height="111"/>
         <systemColor name="systemBackgroundColor">

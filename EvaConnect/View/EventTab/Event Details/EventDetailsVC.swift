@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class EventDetailsVC: UIViewController, XIBed {
     
@@ -21,6 +22,7 @@ class EventDetailsVC: UIViewController, XIBed {
     @IBOutlet weak var mainContainerView: UIView!
     
     @IBOutlet weak var eventImgView: UIImageView!
+    @IBOutlet weak var eventImgVwHeight: NSLayoutConstraint!
     
     @IBOutlet weak var eventHeadingLabel: UILabel!
     @IBOutlet weak var createdByLabel: UILabel!
@@ -143,12 +145,20 @@ class EventDetailsVC: UIViewController, XIBed {
     }
     
     func setUIData(eventDetail: NewEventDetailsData) {
+//        if  eventDetail.tempImage != nil {
+//            eventImgView.sd_setImage(with: URL(string: (eventDetail.tempImage)!), placeholderImage: #imageLiteral(resourceName: "eventPlaceholder"), options: .progressiveLoad, completed: .none)
+//        } else {
+//            eventImgView.image = #imageLiteral(resourceName: "eventPlaceholder")
+//        }
         
-        if  eventDetail.tempImage != nil {
-            eventImgView.sd_setImage(with: URL(string: (eventDetail.tempImage)!), placeholderImage: #imageLiteral(resourceName: "eventPlaceholder"), options: .progressiveLoad, completed: .none)
-        } else {
-            eventImgView.image = #imageLiteral(resourceName: "eventPlaceholder")
-        }
+        eventImgView.kf.setImage(with: URL(string: eventDetail.tempImage ?? ""), placeholder: UIImage(named: "eventPlaceholder"))
+        
+//        //Set image Height base on original image size.....
+//        let originalSize = eventImgView.image?.size
+//        let screenWidth = UIScreen.main.bounds.width - 40
+//        let ratio = (originalSize?.height ?? 0.0) / (originalSize?.width ?? 0.0)
+//        let newHeight = screenWidth * ratio
+//        self.eventImgVwHeight.constant = newHeight
         
         eventHeadingLabel.text = "\(eventDetail.name ?? "")"
         
