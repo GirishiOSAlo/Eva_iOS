@@ -307,6 +307,7 @@ class OthersProfileVC: UIViewController {
         self.bioViewHeight.constant = lblHeight + 64.0
         
         self.followerLabel.text = "\(user.followers ?? 0)"
+        self.followingLabel.text = "\(user.following ?? 0)"
 //        self.companyId = user.companyID ?? 0
         
 //        self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
