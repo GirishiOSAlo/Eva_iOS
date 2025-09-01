@@ -173,7 +173,7 @@ class ChatListVC: BaseVC {
                     self?.conversations = []
                     self?.conversations = conversations
                     self?.tableView.reloadData()
-                    print("Conversations updated: \(conversations.count)")
+                    print("Conversations Count: \(self?.conversations.count ?? 0)")
                 }
             }
         } else {

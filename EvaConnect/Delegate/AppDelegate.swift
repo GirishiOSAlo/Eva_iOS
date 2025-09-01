@@ -80,20 +80,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
 //        print("firebase database url", FirebaseHandler.handler.ref)
 //        Messaging.messaging().delegate = self
         
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-            if granted {
-                print("Permission granted ✅")
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            } else {
-                print("Permission denied ❌")
-                DispatchQueue.main.async { // 👈 Run on main thread
-                    self.showNotificationSettingsAlert()
-                }
-            }
+        if isFirstAppLaunch() {
+            // First time launch – ask for notification permission
+            requestNotificationPermission()
+        } else {
+            // Not first time – check if notifications are denied, and show alert if so
+            checkNotificationPermissionAndShowAlert()
         }
         
 //MARK: To print all the available fonts
@@ -107,24 +99,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
         return true
     }
     
+    // MARK: - First Launch Check
+    func isFirstAppLaunch() -> Bool {
+        let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
+        if hasLaunchedBefore {
+            return false
+        } else {
+            UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+            return true
+        }
+    }
+    
+    // MARK: - Request Notification Permission
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("❌ Notification permission error: \(error)")
+            } else {
+                print("✅ Notification permission granted: \(granted)")
+            }
+        }
+    }
+    
+    // MARK: - Check Notification Status
+    func checkNotificationPermissionAndShowAlert() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                if settings.authorizationStatus == .denied {
+                    self.showNotificationSettingsAlert()
+                }
+            }
+        }
+    }
+    
+    // MARK: - Show Custom Alert to Open Settings
     func showNotificationSettingsAlert() {
+        guard let rootVC = window?.rootViewController else { return }
+        
         let alert = UIAlertController(
             title: "Notifications Disabled",
             message: "Please enable notifications in Settings to stay updated.",
             preferredStyle: .alert
         )
-
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
+        
         alert.addAction(UIAlertAction(title: "Open Settings", style: .default, handler: { _ in
-            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                if UIApplication.shared.canOpenURL(appSettings) {
-                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-                }
+            if let appSettings = URL(string: UIApplication.openSettingsURLString),
+               UIApplication.shared.canOpenURL(appSettings) {
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
             }
         }))
-
-        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+        
+        rootVC.present(alert, animated: true, completion: nil)
     }
     
     func scheduleTestNotification() {
