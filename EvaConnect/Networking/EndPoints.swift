@@ -11,7 +11,7 @@ import UIKit
 enum EndPoints {
             
 //    static let baseURL = "https://aviationconnect.com/api/v1/"  //Live
-    static let baseURL = "http://18.168.230.15:2200/api/v2/"  //UAT
+    static let baseURL = "http://18.168.230.15:2300/api/v2/"  //UAT
     
 
 //     static let baseURL = "https://aviation-connect.loca.lt/api/v1/"
