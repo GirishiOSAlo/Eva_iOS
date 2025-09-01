@@ -272,6 +272,10 @@ extension SignUpPasswordVC {
                         myUserDefaults.userImage = response?.userImage ?? ""
                         myUserDefaults.token = response?.token ?? ""
                         myUserDefaults.isPrivate = false
+                        
+                        //Send Token in Backend...
+                        self.saveFCMToken(token: response?.token ?? "")
+                        
                         userDefaults.setValue(response?.token, forKeyPath: "UserToken")
                         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: NewsSourceVC.storyboardIdentifier) else { return }
                         self.navigationController?.pushViewController(vc, animated: true)
@@ -308,6 +312,21 @@ extension SignUpPasswordVC {
 //        }
     }
     
+    func saveFCMToken(token: String) {
+        let parameters = ["fcm_token": token] as [String : Any]
+        
+        NetworkManagerr.request(EndPoints.saveFCMtoken, method: .post, parameters: parameters) { (response) in
+            if response.result.isSuccess {
+                let jsonDecoder = JSONDecoder()
+                do {
+                    let root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                    print(root.message )
+                } catch {
+                    print(response.result.error ?? "Error")
+                }
+            }
+        }
+    }
 //    private func uploadMultiformData(_ parameters: Parameters, completion: @escaping () -> Void) {
 //
 //        var defaultHeaders = [

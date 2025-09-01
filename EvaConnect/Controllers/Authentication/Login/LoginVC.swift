@@ -281,6 +281,9 @@ extension LoginVC {
                         myUserDefaults.isPrivate = false
                     }
                     
+                    //Send Token in Backend...
+                    self.saveFCMToken(token: user.token ?? "")
+                    
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
                     self.gotoDashboard()
                 }
@@ -356,6 +359,22 @@ extension LoginVC {
 //
 //        }
 //    }
+    
+    func saveFCMToken(token: String) {
+        let parameters = ["fcm_token": token] as [String : Any]
+        
+        NetworkManagerr.request(EndPoints.saveFCMtoken, method: .post, parameters: parameters) { (response) in
+            if response.result.isSuccess {
+                let jsonDecoder = JSONDecoder()
+                do {
+                    let root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                    print(root.message )
+                } catch {
+                    print(response.result.error ?? "Error")
+                }
+            }
+        }
+    }
     
     func checkIfUserExists(email: String, completion:@escaping (Bool?) -> Void) {
         
