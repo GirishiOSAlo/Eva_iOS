@@ -911,7 +911,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             let dateLblWidth = widthForLabel(text: date, font: UIFont(name: Myfonts.regular, size: 10.0) ?? UIFont.systemFont(ofSize: 10.0), height: 12)
             let widthMargin = self.view.frame.width - dateLblWidth - 143.0
             
-            let lblHeight = self.heightForView(text: txt, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - widthMargin)
+            let lblHeight = self.heightForView(text: txt, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: widthMargin)
             
             let totalHeight = lblHeight + 25.0
             
@@ -1044,24 +1044,35 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             let notificationID = notification.id
             print("Notification Type :: \(type)")
             if type == "chat" {
-//                let chatVC = StoryboardRouter.chat()
-//                chatVC.userId = notificationID
-//                navigationController?.pushViewController(chatVC, animated: true)
+                let chatVC = StoryboardRouter.chat()
+                chatVC.userId = notificationID
+                chatVC.notificationChat = notification
+                chatVC.isComeFromNotification = true
+                navigationController?.pushViewController(chatVC, animated: true)
             }
             else if type == "follower" {
-                
+                let vc = StoryboardRouter.othersProfileVC()
+                vc.profileID = notificationID
+                self.navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "meeting" {
                 
             }
             else if type == "event" {
-                
+                let vc = EventMainVC.instantiate()
+                vc.eventId = notificationID
+                navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "post" {
-                
+                let vc = StoryboardRouter.textPostDetailVC()
+                //vc.postType = .video
+                vc.postId = notificationID
+                navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "job" {
-                
+                let jobListing = StoryboardRouter.userJobListing()
+                jobListing.jobId = notificationID
+                navigationController?.pushViewController(jobListing, animated: true)
             }
             
         default:

@@ -53,7 +53,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cmF-g6-KAk">
-                                <rect key="frame" x="287.5" y="32" width="20" height="20"/>
+                                <rect key="frame" x="282" y="32" width="20" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9pv-Uo-jJo">
                                         <rect key="frame" x="1" y="1" width="18" height="18"/>
@@ -103,7 +103,7 @@
                             <constraint firstItem="DhW-Hy-NUp" firstAttribute="leading" secondItem="Rh0-1k-vvo" secondAttribute="leading" constant="12" id="O5o-Yo-Juj"/>
                             <constraint firstAttribute="trailing" secondItem="AG3-xy-4dg" secondAttribute="trailing" constant="12" id="TOZ-m9-O4Y"/>
                             <constraint firstItem="g6p-dC-JT7" firstAttribute="leading" secondItem="DhW-Hy-NUp" secondAttribute="trailing" constant="12" id="cUA-Nb-vos"/>
-                            <constraint firstItem="cmF-g6-KAk" firstAttribute="centerX" secondItem="AG3-xy-4dg" secondAttribute="centerX" id="oGg-qo-XFI"/>
+                            <constraint firstItem="cmF-g6-KAk" firstAttribute="trailing" secondItem="AG3-xy-4dg" secondAttribute="trailing" id="nXB-G0-sbb"/>
                             <constraint firstItem="g6p-dC-JT7" firstAttribute="top" secondItem="DhW-Hy-NUp" secondAttribute="top" id="pQg-xx-xZk"/>
                             <constraint firstItem="cmF-g6-KAk" firstAttribute="top" secondItem="AG3-xy-4dg" secondAttribute="bottom" constant="10" id="qug-yg-cmo"/>
                             <constraint firstItem="AG3-xy-4dg" firstAttribute="leading" secondItem="g6p-dC-JT7" secondAttribute="trailing" constant="12" id="sOP-Ei-8sG"/>

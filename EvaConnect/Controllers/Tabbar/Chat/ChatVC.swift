@@ -117,6 +117,9 @@ class ChatVC: BaseVC {
     var conversationDetails: Conversation?
     var messages: [ChatMessage] = []
     
+    var isComeFromNotification = false
+    var notificationChat: FirebaseNotification?
+    
     var articleContent: String?
     var tempChats : [ChatList] = []
     var userId = 0
@@ -249,10 +252,17 @@ class ChatVC: BaseVC {
         // Show/hide placeholder as needed
         self.placeholderLabel.isHidden = !self.messageTextView.text.isEmpty
         
-        if let conversation = conversationDetails {
-            chatMemberImage.kf.setImage(with: URL(string: conversation.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
-            chatMemberName.text = conversation.user?.name
-            lstOnlineLbl.text = DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
+        if self.isComeFromNotification {
+            chatMemberImage.image = UIImage(named: "profile")
+            chatMemberName.text = notificationChat?.title
+            lstOnlineLbl.text = DateUtils.formatTo24Hour(timestamp: 0.0)
+        }
+        else {
+            if let conversation = conversationDetails {
+                chatMemberImage.kf.setImage(with: URL(string: conversation.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
+                chatMemberName.text = conversation.user?.name
+                lstOnlineLbl.text = DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
+            }
         }
         
 //        if let user = user {

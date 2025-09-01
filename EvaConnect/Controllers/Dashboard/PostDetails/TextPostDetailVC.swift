@@ -384,7 +384,12 @@ extension TextPostDetailVC {
     }
     
     func updateUI(post: PostDetail) {
-        
+        let userid = post.user?.id ?? 0
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         
         if post.user?.userImage != nil {
             userAvatar.sd_setImage(with: URL(string: (post.user?.userImage)!), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
@@ -439,6 +444,12 @@ extension TextPostDetailVC {
     }
 
     func setVideoData(videoPost: PostDetail) {
+        let userid = videoPost.user?.id ?? 0
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         
         if videoPost.user?.userImage != nil {
             userAvatar.sd_setImage(with: URL(string: (videoPost.user?.userImage)!), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
@@ -472,6 +483,12 @@ extension TextPostDetailVC {
     }
     
     func setImageData(imagePost: PostDetail) {
+        let userid = imagePost.user?.id ?? 0
+        if userid == myUserDefaults.userId {
+           followBtn.isHidden = true
+        } else {
+            followBtn.isHidden = false
+        }
         
         if imagePost.user?.userImage != nil {
             userAvatar.sd_setImage(with: URL(string: (imagePost.user?.userImage)!), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)
