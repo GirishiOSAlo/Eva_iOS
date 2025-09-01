@@ -253,15 +253,28 @@ class ChatVC: BaseVC {
         self.placeholderLabel.isHidden = !self.messageTextView.text.isEmpty
         
         if self.isComeFromNotification {
-            chatMemberImage.image = UIImage(named: "profile")
-            chatMemberName.text = notificationChat?.title
-            lstOnlineLbl.text = DateUtils.formatTo24Hour(timestamp: 0.0)
+            let loggedInUserId = myUserDefaults.userId
+            let otherUserID = userId
+            let chatId = makeChatId(user1Id: loggedInUserId, user2Id: otherUserID)
+            print("Notification Chat Id : \(chatId)")
+            fetchUserForChat(chatId: chatId, loggedInUserId: loggedInUserId) { user in
+                if let user = user {
+                    print("Other user name: \(user.name ?? "N/A")")
+                    self.chatMemberImage.kf.setImage(with: URL(string: user.avatar ?? ""), placeholder: UIImage(named: "profile"))
+                    self.chatMemberName.text = user.name
+                    self.lstOnlineLbl.text = user.status
+                } else {
+                    print("Notification User not found")
+                }
+            }
         }
         else {
             if let conversation = conversationDetails {
                 chatMemberImage.kf.setImage(with: URL(string: conversation.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
                 chatMemberName.text = conversation.user?.name
-                lstOnlineLbl.text = DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
+                lstOnlineLbl.text = conversation.user?.status//DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
+            } else {
+                print("User not found")
             }
         }
         
@@ -968,6 +981,49 @@ extension ChatVC {
             let lastIndex = IndexPath(row: atRow, section: 0)
             tableView.scrollToRow(at: lastIndex, at: .bottom, animated: animated)
 //        }
+    }
+
+    
+    //Fetch User Details by User ID from Firebase...
+    func fetchUserForChat(chatId: String, loggedInUserId: Int, onComplete: @escaping (FirebaseUser?) -> Void) {
+        let usersRef = Database.database().reference().child("users")
+        
+        // Example chatId: "10_23"
+        let participants = chatId.split(separator: "_").compactMap { Int($0) }
+        guard participants.count == 2 else {
+            onComplete(nil)
+            return
+        }
+        
+        // Find the other participant
+        let otherUserId = participants.first { $0 != loggedInUserId } ?? -1
+        guard otherUserId != -1 else {
+            onComplete(nil)
+            return
+        }
+        
+        // Fetch the static user details
+        usersRef
+            .queryOrdered(byChild: "user_id")
+            .queryEqual(toValue: Double(otherUserId)) // Firebase numeric fields stored as Double
+            .observeSingleEvent(of: .value) { snapshot in
+                for case let child as DataSnapshot in snapshot.children {
+                    if let dict = child.value as? [String: Any] {
+                        let user = FirebaseUser(
+                            avatar: dict["avatar"] as? String,
+                            created_at: dict["created_at"] as? String,
+                            email: dict["email"] as? String,
+                            last_changed: dict["last_changed"] as? Double,
+                            name: dict["name"] as? String,
+                            status: dict["status"] as? String,
+                            user_id: dict["user_id"] as? Int
+                        )
+                        onComplete(user)
+                        return
+                    }
+                }
+                onComplete(nil) // no user found
+            }
     }
 
 }
