@@ -23,7 +23,7 @@ struct EventListData: Codable {
     let createdDate: String?
     let isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let content, title: String?
     let isPrivate: Int?
     let datumCreatedDatetime, datumModifiedDatetime: String?
@@ -93,7 +93,7 @@ struct EventUser: Codable {
     let lastName: String?
     let email: String?
     let isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData: String?
     let uniqueCode: String?

@@ -65,7 +65,7 @@ struct DataClass: Codable {
     let firstName: String?
     let lastName: String?
     let email, isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

@@ -24,7 +24,7 @@ struct HomeNewsData: Codable {
     let newsImage: String?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let content, title: String?
     let postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?
@@ -99,7 +99,7 @@ struct HomeNewsSourceData: Codable {
 struct HomeNewsSourceUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

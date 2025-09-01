@@ -55,7 +55,7 @@ struct Receiver: Codable {
     let email: String?
     let facebookImageURL, field, isConnected: String?
     let isFacebook, isLinkedin, isNotifications: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let language: String?
     let linkedinImageURL, os, otherSector: String?
     let sector: Sector?

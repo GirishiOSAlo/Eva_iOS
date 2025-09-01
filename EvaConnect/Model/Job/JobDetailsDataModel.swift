@@ -41,7 +41,7 @@ struct JobDetailsData: Codable {
     let isURL: Bool?
     let postVideo, isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let saved: Int?
     let createdOn: String?
     let tempImage: String?
@@ -68,7 +68,7 @@ struct JobDetailsData: Codable {
 struct JobDetailsUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID, bioData, uniqueCode: String?
     let dateOfBirth, status: String?
     let userImage: String?

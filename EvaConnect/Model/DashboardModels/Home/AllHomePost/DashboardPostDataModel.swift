@@ -45,7 +45,7 @@ struct DashboardPostData: Codable {
     var isPostLike, isPostdisLike, isNewsLike, isNewsDislike: Int?
     let newsImage, createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let content, title: String?
     var postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?
@@ -111,7 +111,7 @@ struct PostNewsSource: Codable {
 struct DashboardPostUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

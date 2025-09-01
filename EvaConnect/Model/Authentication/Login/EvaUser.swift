@@ -20,7 +20,7 @@ struct EvaUser: Codable {
     let firstName: String?
     let lastName: String?
     let isConnected: String?//IsConnected?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID
     let city, country, region: String?
     let connectionID: Int?
     let bioData: String?
@@ -128,7 +128,7 @@ struct OtherUserDataModel: Codable {
 struct OtherUserData: Codable {
     let id, firstName, lastName, email: String?
     let isConnected: IsConnected
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

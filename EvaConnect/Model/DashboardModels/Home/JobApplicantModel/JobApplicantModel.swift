@@ -44,7 +44,7 @@ struct applicantUser: Codable {
     let id: Int?
     let firstName: String?
     let isConnected, connectionID, lastName: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let bioData, email, uniqueCode, username: String?
     let dateOfBirth: String?
     let verificationPin: Int?

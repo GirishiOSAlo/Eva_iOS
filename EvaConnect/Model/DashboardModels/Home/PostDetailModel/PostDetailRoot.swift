@@ -45,7 +45,7 @@ struct PostDetail: Codable {
     var isPostLike: Int?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: String?
+    let isReceiver: ReceiverID?
     let content, postTitle: String?
     let postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?

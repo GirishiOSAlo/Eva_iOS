@@ -162,7 +162,7 @@ struct ReactionData: Codable {
     let isPostLike, isNewsLike: Int?
     let createdDate, isConnected: String?
     let connectionID: Int?
-    let isReceiver: String?
+    let isReceiver: ReceiverID?
     let content: String?
     let title: String?
     let postImage, commentCount, likeCount, createdByID: Int?
@@ -253,7 +253,7 @@ struct Userdetails: Codable {
 struct ReactionUser: Codable {
     let id: Int?
     let firstName, lastName, email, isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?

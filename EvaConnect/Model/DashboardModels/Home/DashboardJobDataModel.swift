@@ -52,7 +52,7 @@ struct DashboardJob: Codable {
     let isURL: Bool?
     let postVideo, isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let saved: Int?
     let createdOn: String?
 

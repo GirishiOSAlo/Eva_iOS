@@ -187,7 +187,7 @@ class UserProfileVC: BaseVC {
     @IBAction func connectBtnTapped(_ sender: Any) {
         if userDetail?.isConnected == "active" { return }
         guard let userId = connectionDetail?.userID ?? userDetail?.id else { return }
-        if userDetail?.isConnected == "pending" && userDetail?.isReceiver == false {
+        if userDetail?.isConnected == "pending" && ((userDetail?.isReceiver) != nil) == false {
             updateConnection()
         } else if userDetail?.isConnected != "pending" {
             addConnection(id: userId)
@@ -446,7 +446,7 @@ extension UserProfileVC {
     }
     
     func setLayoutForPending() {
-        let title = userDetail?.isReceiver == false ? Constants.Label.accept : Constants.Label.pending
+        let title = ((userDetail?.isReceiver) != nil) == false ? Constants.Label.accept : Constants.Label.pending
         for i in 2..<6 { profileViews[i].isHidden = true }
 //        tableView.isHidden = true
         connectedBtn.setTitle(title, for: .normal)
@@ -546,18 +546,18 @@ extension UserProfileVC {
                 connectedBtn.isUserInteractionEnabled = true
                 connectedBtn.setTitle(isCompanyUser ? Constants.Label.inviteToFollow : Constants.Label.connect, for: .normal)
             }
-            else if bindData.isConnected == "pending" && bindData.isReceiver == true {
+            else if bindData.isConnected == "pending" && (bindData.isReceiver != nil) == false {
                 connectedBtn.setTitle(isCompanyUser ? "  \(Constants.Label.invited)" : Constants.Label.pending, for: .normal)
                 connectedBtn.backgroundColor = isCompanyUser ? Constants.AppColorLiteral.nextButtonColor : .clear
                 connectedBtn.setTitleColor(isCompanyUser ? .white : Constants.AppColorLiteral.nextButtonColor, for: .normal)
                 connectedBtn.setImage(isCompanyUser ? UIImage(named: "ic_intersted") : nil, for: .normal)
                 connectedBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == "pending" && bindData.isReceiver == true {
+            else if bindData.isConnected == "pending" && (bindData.isReceiver != nil) == false {
                 connectedBtn.setTitle(Constants.Label.pending, for: .normal)
                 connectedBtn.isUserInteractionEnabled = false
             }
-            else if bindData.isConnected == "pending" && bindData.isReceiver == false {
+            else if bindData.isConnected == "pending" && (bindData.isReceiver != nil) == false {
                 connectedBtn.setTitle(Constants.Label.accept, for: .normal)
                 connectedBtn.isUserInteractionEnabled = true
             }

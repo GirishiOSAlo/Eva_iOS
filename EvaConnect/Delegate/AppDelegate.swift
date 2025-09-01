@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
         
         let center = UNUserNotificationCenter.current()
         center.delegate = self
-        center.requestAuthorization(options: [.alert,.sound,.badge]) { (granted, error) in
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
             if granted {
                 print("Permission granted ✅")
                 DispatchQueue.main.async {
@@ -90,7 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
                 }
             } else {
                 print("Permission denied ❌")
-                self.showNotificationSettingsAlert()
+                DispatchQueue.main.async { // 👈 Run on main thread
+                    self.showNotificationSettingsAlert()
+                }
             }
         }
         

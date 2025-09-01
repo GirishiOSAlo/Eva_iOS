@@ -22,7 +22,7 @@ struct DashboardEventData: Codable {
     let createdDate: String?
     let isConnected: String?
     let connectionID: Int?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let content, title, filename: String?
     let isPrivate: Int?
     let datumCreatedDatetime, datumModifiedDatetime: String?
@@ -98,7 +98,7 @@ struct DashboardEvent: Codable {
     let lastName: String?
     let email: String?
     let isConnected: String?
-    let isReceiver: Bool?
+    let isReceiver: ReceiverID?
     let connectionID: Int?
     let bioData: String?
     let uniqueCode: String?
