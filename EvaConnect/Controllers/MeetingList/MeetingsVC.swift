@@ -55,6 +55,11 @@ class MeetingsVC: UIViewController, XIBed {
         self.searchBaseVw.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
         self.searchTF.delegate = self
         self.searchTF.addTarget(self, action: #selector(self.searchTextFieldDidChange(_:)), for: .editingChanged)
+        self.fromDateTF.delegate = self
+        self.fromDateTF.addTarget(self, action: #selector(self.fromDateTextFieldDidChange(_:)), for: .editingChanged)
+        self.toDateTF.delegate = self
+        self.toDateTF.addTarget(self, action: #selector(self.toDateTextFieldDidChange(_:)), for: .editingChanged)
+        
         self.selectDateBaseVw.layer.cornerRadius = 8.0
         
         self.registerCell()
@@ -131,6 +136,26 @@ extension MeetingsVC: UITextFieldDelegate {
     @objc func searchTextFieldDidChange(_ textField: UITextField) {
         let searchStr = self.searchTF.text ?? ""
          print("Search Text :: \(searchStr)")
+    }
+    
+    @objc func fromDateTextFieldDidChange(_ textField: UITextField) {
+        let fromDateStr = self.fromDateTF.text ?? ""
+         print("From Text :: \(fromDateStr)")
+        if fromDateStr == "" {
+            print("From Date nil")
+            self.fromDateTF.resignFirstResponder()
+        }
+        self.fetchMeetingLists()
+    }
+    
+    @objc func toDateTextFieldDidChange(_ textField: UITextField) {
+        let toDateStr = self.toDateTF.text ?? ""
+         print("To Text :: \(toDateStr)")
+        if toDateStr == "" {
+            print("To Date nil")
+            self.toDateTF.resignFirstResponder()
+        }
+        self.fetchMeetingLists()
     }
 }
 
