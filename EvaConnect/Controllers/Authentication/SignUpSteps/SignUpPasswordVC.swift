@@ -274,7 +274,7 @@ extension SignUpPasswordVC {
                         myUserDefaults.isPrivate = false
                         
                         //Send Token in Backend...
-                        self.saveFCMToken(token: response?.token ?? "")
+                        self.saveFCMToken(token: myUserDefaults.deviceToken)
                         
                         userDefaults.setValue(response?.token, forKeyPath: "UserToken")
                         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: NewsSourceVC.storyboardIdentifier) else { return }
