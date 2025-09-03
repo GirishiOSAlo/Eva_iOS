@@ -12,6 +12,8 @@ import Alamofire
 import ImageSlideshow
 import Kingfisher
 import FirebaseDatabase
+import FirebaseCore
+import FirebaseFirestore
 
 enum ChatListDataType {
     case chatList, notifications
@@ -236,15 +238,15 @@ extension ChatListVC {
             var updatedConversations: [Conversation] = []
             
             for case let chatNode as DataSnapshot in snapshot.children {
-                // Example chatNode.key: "2_23"
-                guard let key = chatNode.key as String?,
-                      key.contains("_") else { continue }
+                guard let key = chatNode.key as String?, key.contains("_") else { continue }
                 
                 let participants = key.split(separator: "_").map { String($0) }
                 guard participants.contains(String(loggedInUserId)) else { continue }
                 
-                // Collect all messages in this chat node
+                // Collect messages
                 var messages: [ChatMessage] = []
+                var unreadCount = 0
+                
                 for case let msgSnap as DataSnapshot in chatNode.children {
                     if let dict = msgSnap.value as? [String: Any] {
                         let message = ChatMessage(
@@ -264,13 +266,19 @@ extension ChatListVC {
                             timestamp: dict["timestamp"] as? Double
                         )
                         messages.append(message)
+                        
+                        // Count unread messages not sent by me
+                        if let senderId = dict["firebase_sender_id"] as? String,
+                           senderId != String(loggedInUserId),
+                           dict["read"] as? Bool == false {
+                            unreadCount += 1
+                        }
                     }
                 }
                 
-                // Get last message by timestamp
                 guard let lastMessage = messages.max(by: { ($0.timestamp ?? 0.0) < ($1.timestamp ?? 0.0) }) else { continue }
                 
-                // Determine the other participant
+                // Determine other participant
                 let otherUserId: Int
                 if participants[0] == String(loggedInUserId) {
                     otherUserId = Int(participants[1]) ?? -1
@@ -279,12 +287,11 @@ extension ChatListVC {
                 }
                 guard otherUserId != -1 else { continue }
                 
-                // Fetch user data
+                // Fetch user info
                 usersRef
                     .queryOrdered(byChild: "user_id")
-                    .queryEqual(toValue: Double(otherUserId)) // Firebase numeric fields are Double
+                    .queryEqual(toValue: Double(otherUserId))
                     .observeSingleEvent(of: .value) { userSnap, _  in
-                        
                         for case let child as DataSnapshot in userSnap.children {
                             if let dict = child.value as? [String: Any] {
                                 let user = FirebaseUser(
@@ -298,10 +305,9 @@ extension ChatListVC {
                                 )
                                 
                                 updatedConversations.append(
-                                    Conversation(user: user, lastMessage: lastMessage)
+                                    Conversation(user: user, lastMessage: lastMessage, chatId: key, unreadCount: unreadCount)
                                 )
                                 
-                                // Always return conversations sorted by latest message
                                 let sorted = updatedConversations.sorted {
                                     ($0.lastMessage?.timestamp ?? 0.0) > ($1.lastMessage?.timestamp ?? 0.0)
                                 }
@@ -313,10 +319,11 @@ extension ChatListVC {
         }
     }
 
+
     func observeNotifications(for userId: Int, onUpdate: @escaping ([FirebaseNotification]) -> Void) {
         let notificationsRef = Database.database().reference()
             .child("notifications")
-            .child("\(userId)")   // ✅ Go directly into userId branch
+            .child("\(userId)")   // ✅ user-specific branch
 
         notificationsRef.observe(.value) { snapshot in
             var updatedNotifications: [FirebaseNotification] = []
@@ -331,13 +338,18 @@ extension ChatListVC {
                         read: dict["read"] as? Bool ?? false,
                         redirect_url: dict["redirect_url"] as? String ?? "",
                         title: dict["title"] as? String ?? "",
-                        type: dict["type"] as? String ?? ""
+                        type: dict["type"] as? String ?? "",
+                        subtype: dict["subtype"] as? String ?? "",
+                        notificationId: notifSnap.key   // ✅ store Firebase key
                     )
                     updatedNotifications.append(notification)
                 }
             }
 
-            onUpdate(updatedNotifications)
+            // ✅ Sort notifications by created_at or expire_at if needed
+            let sorted = updatedNotifications.sorted { $0.created_at > $1.created_at }
+
+            onUpdate(sorted)
         }
     }
 }
@@ -883,15 +895,16 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 ////                cell.actionButton.tag = indexPath.row
 ////                cell.isMyActivity = isMyActivity
 //                cell.notification = notification
-                cell.configure(item: self.notificationList[indexPath.row])
+                let notification = self.notificationList[indexPath.row]
+                cell.configure(item: notification)
                 return cell
             }
         default:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as? ChatListCell {
 //                let conversation = messages[indexPath.row]
 //                cell.conversation = conversation
-                cell.configure(item: self.conversations[indexPath.row])
-                
+                let conversation = self.conversations[indexPath.row]
+                cell.configure(item: conversation)
                 return cell
             }
         }
@@ -1042,6 +1055,10 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             let notification = self.notificationList[indexPath.row]
             let type = notification.type.lowercased()
             let notificationID = notification.id
+            
+            // ✅ Mark as read in Realtime Database
+            self.markNotificationAsRead(userId: myUserDefaults.userId, notificationId: notification.notificationId)
+            
             print("Notification Type :: \(type)")
             if type == "chat" {
                 let chatVC = StoryboardRouter.chat()
@@ -1056,7 +1073,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "meeting" {
-                
+                print("Meeting Subtype : \(notification.subtype)")
             }
             else if type == "event" {
                 let vc = EventMainVC.instantiate()
@@ -1080,8 +1097,15 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 //            openConversation(id: conversation.userid ?? 0)
             
             let conversation = self.conversations[indexPath.row]
+            guard let chatPartner = conversation.user else { return }
+            
+            // ✅ Mark unread messages as read
+            self.markMessagesAsRead(chatId: conversation.chatId ?? "",
+                                    currentUserId: "\(myUserDefaults.userId)")
+            
+            // ✅ Navigate to ChatVC
             let chatVC = StoryboardRouter.chat()
-            chatVC.userId = conversation.user?.user_id ?? 0
+            chatVC.userId = chatPartner.user_id ?? 0
             chatVC.conversationDetails = conversation
             navigationController?.pushViewController(chatVC, animated: true)
         }
@@ -1100,6 +1124,50 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 //            }
 //        }
 //    }
+    
+    func markMessagesAsRead(chatId: String, currentUserId: String) {
+        let dbRef = Database.database().reference()
+            .child("messages")
+            .child(chatId)
+
+        dbRef.observeSingleEvent(of: .value) { snapshot in
+            for case let msgSnap as DataSnapshot in snapshot.children {
+                if let dict = msgSnap.value as? [String: Any] {
+                    let senderId = dict["firebase_sender_id"] as? String ?? ""
+                    let isRead = dict["read"] as? Bool ?? false
+
+                    if senderId != currentUserId && !isRead {
+                        dbRef.child(msgSnap.key).updateChildValues([
+                            "read": true
+                        ]) { error, _ in
+                            if let error = error {
+                                print("❌ Error marking message as read: \(error)")
+                            } else {
+                                print("✅ Message \(msgSnap.key) marked as read")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+    func markNotificationAsRead(userId: Int, notificationId: String) {
+        let dbRef = Database.database().reference()
+            .child("notifications")
+            .child("\(userId)")
+            .child(notificationId)
+        
+        dbRef.updateChildValues(["read": true]) { error, _ in
+            if let error = error {
+                print("❌ Error marking notification as read: \(error)")
+            } else {
+                print("✅ Notification marked as read (ID: \(notificationId))")
+            }
+        }
+    }
+
     
     func addConnection(connectionId: Int, completion: @escaping () -> Void) {
         let parameters: AFParameters = [ "modified_datetime" : "2020-08-12 12:30:35",

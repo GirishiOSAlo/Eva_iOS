@@ -591,6 +591,8 @@
 		A6C5F57A2B30154B0077B6BD /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5F5792B30154B0077B6BD /* InviteVC.swift */; };
 		A6C5F57C2B3019C00077B6BD /* InviteTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5F57B2B3019C00077B6BD /* InviteTVC.swift */; };
 		A6C5FA5C2E4B5D4E00C502EF /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5FA5B2E4B5D4E00C502EF /* DateUtils.swift */; };
+		A6C983CA2E68118B00371CFD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A6C983C92E68118B00371CFD /* FirebaseAuth */; };
+		A6C983CC2E68118B00371CFD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A6C983CB2E68118B00371CFD /* FirebaseFirestore */; };
 		A6CDBDE52DD1E1D2009B65CD /* HelpPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CDBDE32DD1E1D2009B65CD /* HelpPageVC.swift */; };
 		A6CDBDE62DD1E1D2009B65CD /* HelpPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6CDBDE42DD1E1D2009B65CD /* HelpPageVC.xib */; };
 		A6CDBDEA2DD21070009B65CD /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CDBDE82DD21070009B65CD /* CommentVC.swift */; };
@@ -1255,6 +1257,7 @@
 				A6AFF0082D7AC80D00F5AFEB /* Kingfisher in Frameworks */,
 				A6F1CD042D78279300131C05 /* IQKeyboardManagerSwift in Frameworks */,
 				48DB1DEF2B8315CE00980279 /* FirebaseCrashlytics in Frameworks */,
+				A6C983CA2E68118B00371CFD /* FirebaseAuth in Frameworks */,
 				A6F1CD222D78292600131C05 /* FirebaseAnalyticsSwift in Frameworks */,
 				48B758642B74BFD8001E7C06 /* Lottie in Frameworks */,
 				A6F1CD262D78292600131C05 /* FirebaseAppCheck in Frameworks */,
@@ -1263,6 +1266,7 @@
 				48DB1DF32B8315CE00980279 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				A6F1CD1E2D7828FC00131C05 /* Reachability in Frameworks */,
 				A60CE9322D78345D00E301D6 /* SwiftyJSON in Frameworks */,
+				A6C983CC2E68118B00371CFD /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3761,6 +3765,8 @@
 				A60CE9312D78345D00E301D6 /* SwiftyJSON */,
 				A6AFF0072D7AC80D00F5AFEB /* Kingfisher */,
 				A6AFF00A2D7ACD4C00F5AFEB /* SVProgressHUD */,
+				A6C983C92E68118B00371CFD /* FirebaseAuth */,
+				A6C983CB2E68118B00371CFD /* FirebaseFirestore */,
 			);
 			productName = EvaConnect;
 			productReference = 18665CCE23C596CE0089EF69 /* AviationConnect.app */;
@@ -4916,6 +4922,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A6AFF0092D7ACD4C00F5AFEB /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
 			productName = SVProgressHUD;
+		};
+		A6C983C92E68118B00371CFD /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 48DB1DEB2B8315CE00980279 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A6C983CB2E68118B00371CFD /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 48DB1DEB2B8315CE00980279 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		A6F1CD032D78279300131C05 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;

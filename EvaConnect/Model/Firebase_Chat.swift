@@ -30,6 +30,8 @@ struct FirebaseUser: Codable {
 struct Conversation {
     let user: FirebaseUser?
     let lastMessage: ChatMessage?
+    let chatId: String?        // ✅ key like "2_23"
+    let unreadCount: Int?      // ✅ optional unread messages count
 }
 
 struct ChatMessage {
@@ -73,6 +75,8 @@ struct FirebaseNotification {
     let redirect_url: String
     let title: String
     let type: String
+    let subtype: String
+    let notificationId: String   // ✅ Add Firebase key (snapshot.key)
 }
 //2
 //-OYbHMGdFE5pNeGJWsbY
