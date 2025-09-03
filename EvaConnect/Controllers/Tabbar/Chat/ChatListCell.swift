@@ -89,7 +89,7 @@ class ChatListCell: UITableViewCell {
             unreadCount.isHidden = true
         } else {
             unreadCount.isHidden = false
-            unreadCount.text = "\(1)"
+            unreadCount.text = "\(item.unreadCount ?? 0)"
         }
     }
 }
