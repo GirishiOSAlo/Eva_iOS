@@ -206,16 +206,22 @@ extension MeetingListDetailsVC {
                     self.list = []
                     if self.isComeFromNotification {
                         print(self.notificationType)
-                        if self.notificationType.lowercased() == "request" {
+                        if self.notificationType.lowercased() == "accepted" {
+                            self.type = .approved
+                            self.list = self.acceptedMeetingsList
+                            self.categorySelectedIndex = 0
+                        } else if self.notificationType.lowercased() == "request" {
                             self.type = .pending
                             self.list = self.pendingMeetingsList
                             self.categorySelectedIndex = 1
-                        } else if self.notificationType.lowercased() == "" {
-                            
-                        } else if self.notificationType.lowercased() == "" {
-                            
-                        } else if self.notificationType.lowercased() == "" {
-                            
+                        } else if self.notificationType.lowercased() == "cancelled" {
+                            self.type = .cancelled
+                            self.list = self.cancelledMeetingsList
+                            self.categorySelectedIndex = 2
+                        } else if self.notificationType.lowercased() == "reschedule" {
+                            self.type = .rescheduled
+                            self.list = self.rescheduledMeetingsList
+                            self.categorySelectedIndex = 3
                         }
                         
                         self.categoryCollectionVw.reloadData()
