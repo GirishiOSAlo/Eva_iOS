@@ -654,20 +654,36 @@ extension TextPostDetailVC {
            self.hideActivity()
             if let post = postModel {
                 self.postDetail = post
-
-                self.postType = postType ?? .simpleText
-                switch self.postType {
-                case .simpleText:
-                    self.updateUI(post: post)
-                case .image:
-                    self.setImageData(imagePost: post)
-                case .video:
+                
+                if post.postVideo != "" && post.postVideo != nil {
+                    self.postType = .video
                     self.setVideoData(videoPost: post)
-                case .article:
+                }
+                else if (post.postDocuments?.count ?? 0) > 0 {
+                    self.postType = .article
                     self.setDocData(docPost: post)
                 }
-//                self.updateUI(post: post)
-//                self.postDetail = post
+                else if post.datumPostImage!.count > 0 {
+                    self.postType = .image
+                    self.setImageData(imagePost: post)
+                }
+                else {
+                    self.postType = .simpleText
+                    self.updateUI(post: post)
+                }
+//                self.postType = postType ?? .simpleText
+//                switch self.postType {
+//                case .simpleText:
+//                    self.updateUI(post: post)
+//                case .image:
+//                    self.setImageData(imagePost: post)
+//                case .video:
+//                    self.setVideoData(videoPost: post)
+//                case .article:
+//                    self.setDocData(docPost: post)
+//                }
+//                //self.updateUI(post: post)
+//                //self.postDetail = post
             }
             
             if let error = error {
