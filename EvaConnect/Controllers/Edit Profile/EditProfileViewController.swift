@@ -33,6 +33,9 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet weak var resumeTitleLbl: UILabel!
     @IBOutlet weak var resumeSubLbl: UILabel!
     
+    @IBOutlet weak var countryFlagLbl: UILabel!
+    @IBOutlet weak var dropDownImgVw: UIImageView!
+    @IBOutlet weak var countryPhnCodeTxtField: UITextField!
     @IBOutlet weak var mobileTxtField: UITextField!
     @IBOutlet weak var emailTxtField: UITextField!
     @IBOutlet weak var websiteTxtField: UITextField!
@@ -76,6 +79,7 @@ class EditProfileViewController: UIViewController, XIBed {
     var categoryId = 0
     var businessSectorId = 0
     var base64String: String = ""
+    var countries: [Country] = []
     
     var languageList = ["English", "Hindi", "Marathi"]
     var regionList = ["Africa", "Asia", "Central Asia", "Europe", "Latin America", "Middle East", "North America", "Oceania", "South Asia", "Southest Asia", "Western Asia"]
@@ -103,6 +107,9 @@ class EditProfileViewController: UIViewController, XIBed {
         for baseVwTitleLbl in baseViewTitleLblCollection {
             baseVwTitleLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
         }
+        
+        //country data from json string....
+        self.loadCountries()
         
         profileView.applyBorderWithRadius(color: UIColor(hex: "#5894DD"), value: 2.0, radius: profileView.frame.size.width/2)
         profileImageView.cornerRadius = profileImageView.frame.size.width/2
@@ -183,6 +190,7 @@ class EditProfileViewController: UIViewController, XIBed {
         self.categoryId = user.categoryID ?? 0
         self.businessSectorId = user.sectorID ?? 0
         
+        self.countryPhnCodeTxtField.text = user.countryCode ?? ""
         self.mobileTxtField.text = user.phoneNumber ?? ""
         self.emailTxtField.text = user.email ?? ""
         self.websiteTxtField.text = user.companyURL ?? ""
@@ -213,6 +221,24 @@ class EditProfileViewController: UIViewController, XIBed {
 
         label.sizeToFit()
         return label.frame.height
+    }
+    
+    func loadCountries(){
+        // Decode JSON into Swift objects
+        if let jsonData = jsonString.data(using: .utf8) {
+            do {
+                self.countries = try JSONDecoder().decode([Country].self, from: jsonData)
+                if self.countries.count == 0 {
+                    self.countryFlagLbl.text = "🇮🇳"
+                    self.countryPhnCodeTxtField.text = "+91"
+                } else {
+                    self.countryFlagLbl.text = "\(countries[0].flag)"
+                    self.countryPhnCodeTxtField.text = "\(countries[0].dialCode)"
+                }
+            } catch {
+                print("❌ Decoding error:", error)
+            }
+        }
     }
     
     func addAnimation(){
@@ -288,6 +314,23 @@ class EditProfileViewController: UIViewController, XIBed {
                 self.categoryId = id
             }
             self.navigationController?.present(vc, animated: true)
+        } else { print("Not Editable.") }
+    }
+    
+    @IBAction func onCountrySelectBtnTap(_ sender: UIButton) {
+        if self.isContactInfoEdit {
+            if  self.countries.count == 0 {
+                self.presentAlert("Country data not available")
+            } else {
+                let popupvc = CountryListVC(nibName: "CountryListVC", bundle: nil)
+                popupvc.modalPresentationStyle = .overFullScreen
+                popupvc.countries = self.countries
+                popupvc.completion = { country in
+                    self.countryFlagLbl.text = country.flag
+                    self.countryPhnCodeTxtField.text = country.dialCode
+                }
+                self.navigationController?.present(popupvc, animated: true)
+            }
         } else { print("Not Editable.") }
     }
     
@@ -542,7 +585,7 @@ extension EditProfileViewController {
                       "is_public": "\(self.userDetails?.isPublic ?? 0)"] as [String: Any]
         }
         else if self.isContactInfoEdit {
-            params = ["country_phonecode": "+91",
+            params = ["country_phonecode": self.countryPhnCodeTxtField.text ?? "",
                       "phone_number": self.mobileTxtField.text ?? "",
                       "company_url": self.websiteTxtField.text ?? "",
                       "linkedin_image_url": self.linkedinTxtField.text ?? ""] as [String: Any]
@@ -651,6 +694,8 @@ extension EditProfileViewController {
             self.contactInfoEditBtn.setTitle("Save", for: .normal)
             self.contactInfoEditBtn.setTitleColor(UIColor(hex: "#FFFFFF"), for: .normal)
 
+            self.countryPhnCodeTxtField.textColor = UIColor(hex: "#000000")
+            self.countryPhnCodeTxtField.isUserInteractionEnabled = true
             self.mobileTxtField.textColor = UIColor(hex: "#000000")
             self.mobileTxtField.isUserInteractionEnabled = true
             self.emailTxtField.textColor = UIColor(hex: "#000000")
@@ -664,6 +709,8 @@ extension EditProfileViewController {
             self.contactInfoEditBtn.setTitle("Edit", for: .normal)
             self.contactInfoEditBtn.setTitleColor(UIColor(hex: "#000000"), for: .normal)
             
+            self.countryPhnCodeTxtField.textColor = UIColor(hex: "#707070")
+            self.countryPhnCodeTxtField.isUserInteractionEnabled = false
             self.mobileTxtField.textColor = UIColor(hex: "#707070")
             self.mobileTxtField.isUserInteractionEnabled = false
             self.emailTxtField.textColor = UIColor(hex: "#707070")

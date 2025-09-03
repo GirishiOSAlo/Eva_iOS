@@ -43,7 +43,7 @@ struct UserDetailsData: Codable {
     let sectorID: Int?
     let sectorName: String?
     let description: String?
-    let companyURL, phoneNumber: String?
+    let companyURL, countryCode, phoneNumber: String?
     let linkedinURL: String?
     let connectionStatus, city: String?
     let followers, following: Int?
@@ -91,6 +91,7 @@ struct UserDetailsData: Codable {
         case sectorName = "sector_name"
         case description
         case companyURL = "company_url"
+        case countryCode = "country_code"
         case phoneNumber = "phone_number"
         case linkedinURL = "linkedin_url"
         case connectionStatus = "connection_status"
