@@ -352,7 +352,11 @@ extension TextPostDetailVC {
         if self.dashboardItem?.user?.id == myUserDefaults.userId {
            followBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            if self.dashboardItem?.isConnected == "connected" || self.dashboardItem?.isConnected == "active" {
+                followBtn.isHidden = true
+            } else {
+                followBtn.isHidden = false
+            }
         }
         
         switch postType {
