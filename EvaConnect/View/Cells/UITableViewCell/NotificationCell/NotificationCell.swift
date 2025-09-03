@@ -81,8 +81,8 @@ class NotificationCell: UITableViewCell {
     
     func configure(item: FirebaseNotification) {
         userAvatar.image = UIImage(named: "profile")
-        content.text = "\(item.title)\n\(item.body)"
-        dateTime.text = item.created_at.formattedCreatedAt()
+        content.text = "\(item.title ?? "")\n\(item.body ?? "")"
+        dateTime.text = item.created_at?.formattedCreatedAt()
         unreadView.backgroundColor = item.read == false ? UIColor(hex: "#4D76CD") : .clear
     }
     

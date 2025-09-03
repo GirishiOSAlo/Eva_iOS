@@ -330,11 +330,20 @@ extension ChatListVC {
 
             for case let notifSnap as DataSnapshot in snapshot.children {
                 if let dict = notifSnap.value as? [String: Any] {
+                    
+                    // ✅ Handle "id" as Int or String
+                    var notificationIdInt: Int = 0
+                    if let idValue = dict["id"] as? Int {
+                        notificationIdInt = idValue
+                    } else if let idString = dict["id"] as? String, let idValue = Int(idString) {
+                        notificationIdInt = idValue
+                    }
+                    
                     let notification = FirebaseNotification(
                         body: dict["body"] as? String ?? "",
                         created_at: dict["created_at"] as? String ?? "",
                         expire_at: dict["expire_at"] as? String ?? "",
-                        id: (dict["id"] as? NSNumber)?.intValue ?? 0,
+                        id: notificationIdInt,  // ✅ fixed parsing
                         read: dict["read"] as? Bool ?? false,
                         redirect_url: dict["redirect_url"] as? String ?? "",
                         title: dict["title"] as? String ?? "",
@@ -347,7 +356,7 @@ extension ChatListVC {
             }
 
             // ✅ Sort notifications by created_at or expire_at if needed
-            let sorted = updatedNotifications.sorted { $0.created_at > $1.created_at }
+            let sorted = updatedNotifications.sorted { $0.created_at ?? "" > $1.created_at ?? "" }
 
             onUpdate(sorted)
         }
@@ -918,9 +927,9 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             //return UITableView.automaticDimension
             
             let notification = self.notificationList[indexPath.row]
-            let txt = "\(notification.title)\n\(notification.body)"
+            let txt = "\(notification.title ?? "")\n\(notification.body ?? "")"
             
-            let date = notification.created_at.formattedCreatedAt()
+            guard let date = notification.created_at?.formattedCreatedAt() else { return 0.0 }
             let dateLblWidth = widthForLabel(text: date, font: UIFont(name: Myfonts.regular, size: 10.0) ?? UIFont.systemFont(ofSize: 10.0), height: 12)
             let widthMargin = self.view.frame.width - dateLblWidth - 143.0
             
@@ -1053,42 +1062,53 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
 ////                navigationController?.pushViewController(jobVC, animated: true)
 ////            }
             let notification = self.notificationList[indexPath.row]
-            let type = notification.type.lowercased()
+            let type = notification.type?.lowercased()
             let notificationID = notification.id
             
             // ✅ Mark as read in Realtime Database
-            self.markNotificationAsRead(userId: myUserDefaults.userId, notificationId: notification.notificationId)
+            self.markNotificationAsRead(userId: myUserDefaults.userId, notificationId: notification.notificationId ?? "")
             
-            print("Notification Type :: \(type)")
+            print("Notification Type :: \(type ?? "--")")
             if type == "chat" {
                 let chatVC = StoryboardRouter.chat()
-                chatVC.userId = notificationID
+                chatVC.userId = notificationID ?? 0
                 chatVC.notificationChat = notification
                 chatVC.isComeFromNotification = true
                 navigationController?.pushViewController(chatVC, animated: true)
             }
             else if type == "follower" {
                 let vc = StoryboardRouter.othersProfileVC()
-                vc.profileID = notificationID
+                vc.profileID = notificationID ?? 0
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "meeting" {
-                print("Meeting Subtype : \(notification.subtype)")
+                print("Meeting Subtype : \(notification.subtype ?? "")")
+                if notification.subtype == "" {
+                    print("Notification Meeting Subtype is nil")
+                } else if notificationID == 0 {
+                    print("Notification Event Meeting Id is 0")
+                } else {
+                    let vc = MeetingListDetailsVC.instantiate()
+                    vc.eventId = notificationID ?? 0
+                    vc.isComeFromNotification = true
+                    vc.notificationType = notification.subtype ?? ""
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             else if type == "event" {
                 let vc = EventMainVC.instantiate()
-                vc.eventId = notificationID
+                vc.eventId = notificationID ?? 0
                 navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "post" {
                 let vc = StoryboardRouter.textPostDetailVC()
                 //vc.postType = .video
-                vc.postId = notificationID
+                vc.postId = notificationID ?? 0
                 navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "job" {
                 let jobListing = StoryboardRouter.userJobListing()
-                jobListing.jobId = notificationID
+                jobListing.jobId = notificationID ?? 0
                 navigationController?.pushViewController(jobListing, animated: true)
             }
             

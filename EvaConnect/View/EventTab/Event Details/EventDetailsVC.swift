@@ -278,7 +278,7 @@ extension EventDetailsVC {
         
         let param: AFParameters = [ "event_id": eventId,
                                     "type": type]
-        
+        print(param)
         view.isUserInteractionEnabled = false
         
         ApiCallerClass.reqToJoinFunc(usertoken: myUserDefaults.token, para: param) { (dataRespose) in

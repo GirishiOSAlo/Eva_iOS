@@ -67,16 +67,16 @@ struct ChatMessage {
 //timestamp:1755783633
 
 struct FirebaseNotification {
-    let body: String
-    let created_at: String
-    let expire_at: String
-    let id: Int
-    let read: Bool
-    let redirect_url: String
-    let title: String
-    let type: String
-    let subtype: String
-    let notificationId: String   // ✅ Add Firebase key (snapshot.key)
+    let body: String?
+    let created_at: String?
+    let expire_at: String?
+    let id: Int?
+    let read: Bool?
+    let redirect_url: String?
+    let title: String?
+    let type: String?
+    let subtype: String?
+    let notificationId: String?   // ✅ Add Firebase key (snapshot.key)
 }
 //2
 //-OYbHMGdFE5pNeGJWsbY

@@ -45,6 +45,9 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     var dashboardEvent: DashboardEventData?
     var isComeFromDashboard = false
     
+    var isComeFromNotification = false
+    var notificationType = ""
+    
     var list: [EventMeeting] = [] {
         didSet {
             if list.count > 0 {
@@ -199,16 +202,36 @@ extension MeetingListDetailsVC {
                     self.rescheduledMeetingsList = meetingsRoot.data?.rescheduledMeetings ?? []
                     
                     self.updateCategoryCollectionHeader()
-                    self.expandedIndexPath = nil
                     
-                    if self.type == .approved {
-                        self.list = self.acceptedMeetingsList
-                    } else if self.type == .pending {
-                        self.list = self.pendingMeetingsList
-                    } else if self.type == .cancelled {
-                        self.list = self.cancelledMeetingsList
-                    } else if self.type == .rescheduled {
-                        self.list = self.rescheduledMeetingsList
+                    self.list = []
+                    if self.isComeFromNotification {
+                        print(self.notificationType)
+                        if self.notificationType.lowercased() == "request" {
+                            self.type = .pending
+                            self.list = self.pendingMeetingsList
+                            self.categorySelectedIndex = 1
+                        } else if self.notificationType.lowercased() == "" {
+                            
+                        } else if self.notificationType.lowercased() == "" {
+                            
+                        } else if self.notificationType.lowercased() == "" {
+                            
+                        }
+                        
+                        self.categoryCollectionVw.reloadData()
+                        self.expandedIndexPath = nil
+                        self.listCollectionVw.setContentOffset(.zero, animated: true)
+                        
+                    } else {
+                        if self.type == .approved {
+                            self.list = self.acceptedMeetingsList
+                        } else if self.type == .pending {
+                            self.list = self.pendingMeetingsList
+                        } else if self.type == .cancelled {
+                            self.list = self.cancelledMeetingsList
+                        } else if self.type == .rescheduled {
+                            self.list = self.rescheduledMeetingsList
+                        }
                     }
                 } else {
                     print("Error :: \(meetingsRoot.message ?? "")")
