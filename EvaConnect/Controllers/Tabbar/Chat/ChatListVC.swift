@@ -349,7 +349,8 @@ extension ChatListVC {
                         title: dict["title"] as? String ?? "",
                         type: dict["type"] as? String ?? "",
                         subtype: dict["subtype"] as? String ?? "",
-                        notificationId: notifSnap.key   // ✅ store Firebase key
+                        notificationId: notifSnap.key,   // ✅ store Firebase key
+                        meetingid: dict["meetingid"] as? Int ?? 0
                     )
                     updatedNotifications.append(notification)
                 }
@@ -1090,6 +1091,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     let vc = MeetingListDetailsVC.instantiate()
                     vc.eventId = notificationID ?? 0
+                    vc.notificationMeetingId = notification.meetingid ?? 0
                     vc.isComeFromNotification = true
                     vc.notificationType = notification.subtype ?? ""
                     self.navigationController?.pushViewController(vc, animated: true)

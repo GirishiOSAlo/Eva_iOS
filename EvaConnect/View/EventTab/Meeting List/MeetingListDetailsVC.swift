@@ -47,6 +47,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     
     var isComeFromNotification = false
     var notificationType = ""
+    var notificationMeetingId = 0
     
     var list: [EventMeeting] = [] {
         didSet {
@@ -224,8 +225,18 @@ extension MeetingListDetailsVC {
                             self.categorySelectedIndex = 3
                         }
                         
+                        
+                        // Expand first match automatically from select notification...
+                        if let firstIndex = self.list.firstIndex(where: { $0.id == self.notificationMeetingId }) {
+                            let indexPath = IndexPath(row: firstIndex, section: 0)
+                            self.expandedIndexPath = indexPath
+                            self.listCollectionVw.scrollToItem(at: indexPath, at: .top, animated: true)
+                        } else {
+                            self.expandedIndexPath = nil
+                        }
+                        
                         self.categoryCollectionVw.reloadData()
-                        self.expandedIndexPath = nil
+                        self.listCollectionVw.reloadData()
                         self.listCollectionVw.setContentOffset(.zero, animated: true)
                         
                     } else {

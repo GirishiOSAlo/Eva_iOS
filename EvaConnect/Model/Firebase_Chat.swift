@@ -77,6 +77,7 @@ struct FirebaseNotification {
     let type: String?
     let subtype: String?
     let notificationId: String?   // ✅ Add Firebase key (snapshot.key)
+    let meetingid: Int?
 }
 //2
 //-OYbHMGdFE5pNeGJWsbY
