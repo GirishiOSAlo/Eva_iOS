@@ -50,7 +50,7 @@ class myUserDefaults {
     
     public static var user: String {
         get {
-            UserDefaults.standard.string(forKey: "user") ?? "user"
+            UserDefaults.standard.string(forKey: "user") ?? ""
         } set {
             UserDefaults.standard.set(newValue, forKey: "user")
         }

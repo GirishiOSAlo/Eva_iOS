@@ -53,6 +53,14 @@ class LoginManagerr {
 //
 //                    }
                     (user.type == "company") ? (isIndivisualUser = false ): (isIndivisualUser = true)
+                    myUserDefaults.user = user.type ?? ""
+                    if user.type == "company" {
+                        isIndivisualUser = false
+                    } else {
+                        isIndivisualUser = true
+                    }
+                    
+                    
                     LoggedUserDetails.shared.updateUser(userModel: user)
                     LoggedUserDetails.shared.updateToken(tokenString: user.token!)
                     

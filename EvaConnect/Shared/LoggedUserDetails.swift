@@ -33,6 +33,7 @@ class LoggedUserDetails {
     }
     
     func logoutUser() {
+        myUserDefaults.user = ""
         user = nil
         resetDefaults()
     }

@@ -165,13 +165,19 @@ class HomeVC: BaseVC {
         isSeparatorHidden = true
         setLayOut()
         addObservers()
-        if selectedTab == .events {
-            self.selectedHomeFilter = .new
-        } else if selectedTab == .jobs {
-            selectedHomeFilter = .all
-        } else if selectedTab == .news {
-            selectedHomeFilter = .none
+        
+        if isIndivisualUser {
+            if selectedTab == .events {
+                self.selectedHomeFilter = .new
+            } else if selectedTab == .jobs {
+                selectedHomeFilter = .all
+            } else if selectedTab == .news {
+                selectedHomeFilter = .none
+            }
+        } else {
+            Constants.saveEnumToUserDefaults(.industryEvents)
         }
+        
         //getPosts(offSet: 0)
     }
     
@@ -191,11 +197,11 @@ class HomeVC: BaseVC {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.isHidden = false
         isSeparatorHidden = true
-//        if isIndivisualUser {
+        if isIndivisualUser {
             self.selectedTab = Constants.getEnumFromUserDefaults() ?? .news
-//        } else {
-//            self.selectedTab = Constants.getEnumFromUserDefaults() ?? .news
-//        }
+        } else {
+            self.selectedTab = Constants.getEnumFromUserDefaults() ?? .news
+        }
         
         self.noCurrentEventLblHeight.constant = 0
         self.noOtherEventLblHeight.constant = 0
