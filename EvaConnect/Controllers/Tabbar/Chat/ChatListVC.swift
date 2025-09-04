@@ -1068,7 +1068,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
             
             // ✅ Mark as read in Realtime Database
             self.markNotificationAsRead(userId: myUserDefaults.userId, notificationId: notification.notificationId ?? "")
-            
+            //--> chat,follower,meeting,event,post,job
             print("Notification Type :: \(type ?? "--")")
             if type == "chat" {
                 let chatVC = StoryboardRouter.chat()
@@ -1112,6 +1112,11 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 let jobListing = StoryboardRouter.userJobListing()
                 jobListing.jobId = notificationID ?? 0
                 navigationController?.pushViewController(jobListing, animated: true)
+            }
+            else if type == "news" {
+                let vc = StoryboardRouter.openNewsDetail()
+                vc.selectedNewsId = notificationID ?? 0
+                navigationController?.pushViewController(vc, animated: true)
             }
             
         default:

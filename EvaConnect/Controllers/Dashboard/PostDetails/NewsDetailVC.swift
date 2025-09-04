@@ -69,7 +69,6 @@ class NewsDetailVC: UIViewController {
     var newsDetails: NewsDetailData?
     
     //var newsID = 0
-    var categoryID = 0
     var offsetCount = 1
     
     var newsList: [RelatedNewsData] = [] {
@@ -109,7 +108,7 @@ class NewsDetailVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         fetchNewsDetails()
-        fetchRelatedNewsDetails(offset: 1)
+        //fetchRelatedNewsDetails(offset: 1)
         fetchTrendingNews()
     }
     
@@ -437,6 +436,7 @@ extension NewsDetailVC {
                             self.newsDetails = data
                             self.updateUI(data: data)
                             self.otherNewsTableView.reloadData()
+                            self.fetchRelatedNewsDetails(offset: 1)
                         }
                     } else {
                         //self.presentAlert("Alert", "No more news", nil)
@@ -487,8 +487,9 @@ extension NewsDetailVC {
     }
     
     func fetchRelatedNewsDetails(offset: Int){
+        let categoryID = self.newsDetails?.categoryID ?? 0
         let parameters = [
-            "category_id": self.categoryID
+            "category_id": categoryID
            ] as [String: Any]
         
         let url = "\(EndPoints.relatedNewsDetails)?limit=10&offset=\(offset)"

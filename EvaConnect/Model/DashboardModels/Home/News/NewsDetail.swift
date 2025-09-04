@@ -53,28 +53,29 @@ struct NewsDetailsDataModel: Codable {
 }
 
 struct NewsDetailData: Codable {
-    let id: Int?
-        let title, content: String?
-        let href: String?
-        let newsSource: String?
-        let newsTags: [NewsTag]?
-        let sourceImage, newsImage: String?
-        let published, relativeTime: String?
-        let likesCount, commentsCount, sharesCount, isNewsSave: Int?
-        let isNewsLike, isNewsdisLike: Int?
-
+    let id, categoryID : Int?
+    let title, content: String?
+    let href: String?
+    let newsSource: String?
+    let newsTags: [NewsTag]?
+    let sourceImage, newsImage: String?
+    let published, relativeTime: String?
+    let likesCount, commentsCount, sharesCount, isNewsSave: Int?
+    let isNewsLike, isNewsdisLike: Int?
+    
     enum CodingKeys: String, CodingKey {
         case id, title, content, href
-                case newsSource = "news_source"
-                case newsTags = "news_tags"
-                case sourceImage = "source_image"
-                case newsImage = "news_image"
-                case published
-                case relativeTime = "relative_time"
-                case likesCount = "likes_count"
-                case commentsCount = "comments_count"
-                case sharesCount = "shares_count"
-                case isNewsSave, isNewsLike, isNewsdisLike
+        case categoryID = "category_id"
+        case newsSource = "news_source"
+        case newsTags = "news_tags"
+        case sourceImage = "source_image"
+        case newsImage = "news_image"
+        case published
+        case relativeTime = "relative_time"
+        case likesCount = "likes_count"
+        case commentsCount = "comments_count"
+        case sharesCount = "shares_count"
+        case isNewsSave, isNewsLike, isNewsdisLike
     }
 }
 

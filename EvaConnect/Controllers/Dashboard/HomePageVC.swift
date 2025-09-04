@@ -1018,7 +1018,6 @@ extension HomePageVC {
         let vc = StoryboardRouter.openNewsDetail() //openURLVC()
         let news = newsList[index]
         vc.selectedNewsId = news.id ?? 0
-        vc.categoryID = news.evaNewsCategory?[0].id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
