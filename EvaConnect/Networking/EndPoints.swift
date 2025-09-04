@@ -43,6 +43,7 @@ enum EndPoints {
     static let settingsOptions = baseURL + "user/adminSettingsView"
     
     static let saveFCMtoken = baseURL + "save-fcm-token"
+    static let logout = baseURL + "logout"
      
     //MARK: Dashboard URL
     static let dashboard =  baseURL + "dashboard/android/"

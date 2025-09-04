@@ -602,11 +602,34 @@ extension BaseVC {
     }
     
     @objc func logOut() {
-        
-        UserDefaults.standard.removeObject(forKey: "UserToken")
-        LoggedUserDetails.shared.logoutUser()
-        UIApplication.shared.keyWindow?.rootViewController = UINavigationController(rootViewController: StoryboardRouter.login())
-        UIApplication.shared.keyWindow?.makeKeyAndVisible()
+        userLogout()
+//        UserDefaults.standard.removeObject(forKey: "UserToken")
+//        LoggedUserDetails.shared.logoutUser()
+//        UIApplication.shared.keyWindow?.rootViewController = UINavigationController(rootViewController: StoryboardRouter.login())
+//        UIApplication.shared.keyWindow?.makeKeyAndVisible()
+    }
+    
+    func userLogout() {
+        let url = EndPoints.logout
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: nil) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let rescheduleRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(rescheduleRoot.error) {
+                    print("Success Logout :: \(rescheduleRoot.message)")
+                    UserDefaults.standard.removeObject(forKey: "UserToken")
+                    LoggedUserDetails.shared.logoutUser()
+                    UIApplication.shared.keyWindow?.rootViewController = UINavigationController(rootViewController: StoryboardRouter.login())
+                    UIApplication.shared.keyWindow?.makeKeyAndVisible()
+                } else {
+                    print("Error :: \(rescheduleRoot.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
     
     func handleWhatsup(shareValue: String) {
