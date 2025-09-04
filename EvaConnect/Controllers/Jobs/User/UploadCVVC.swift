@@ -96,18 +96,60 @@ extension UploadCVVC: UIDocumentPickerDelegate {
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        let cvDocumentURL = url
-        let fileName = url.lastPathComponent
-        uploadResume(fileURL: url)
+//        let cvDocumentURL = url
+//        let fileName = url.lastPathComponent
+        self.uploadResume(fileURL: url)
     }
     
     func uploadResume(fileURL: URL) {
         do {
-            let fileData = try Data(contentsOf: fileURL)
-            let fileName = fileURL.lastPathComponent
-            uploadResumeWithFile(fileData: fileData, fileName: fileName)
+            let fileData = try Data(contentsOf: fileURL) // <-- throwable
+            let sizeMB = Double(fileData.count) / (1024.0 * 1024.0)
+            
+            if sizeMB > 5 {
+                if let base64Doc = encodeToBase64(reqURL: fileURL),
+                   let decodedData = Data(base64Encoded: base64Doc) {
+                    
+                    let fileName = fileURL.lastPathComponent
+                    uploadResumeWithFile(fileData: decodedData, fileName: fileName)
+                } else {
+                    print("❌ Failed to encode/convert document")
+                    self.presentAlert("File Too Large",
+                        "Your document is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
+                }
+            }
         } catch {
             print("Error loading file data: \(error)")
+        }
+    }
+
+    
+    func fileSizeInMB(url: URL) -> Double {
+        do {
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let fileSize = fileAttributes[.size] as? NSNumber {
+                return fileSize.doubleValue / (1024.0 * 1024.0) // Convert to MB
+            }
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        return 0.0
+    }
+    func encodeToBase64(reqURL: URL) -> String? {
+        showActivity()
+        if FileManager.default.fileExists(atPath: reqURL.path) {
+            // The file exists, proceed with encoding
+            do {
+                let myData = try Data(contentsOf: reqURL)
+                let base64String = myData.base64EncodedString()
+                return base64String
+            } catch {
+                print("Error encoding video to base64: \(error)")
+                return nil
+            }
+        } else {
+            print("File does not exist at: \(reqURL.path)")
+            return nil
         }
     }
     
