@@ -142,17 +142,17 @@ class EventMainVC: UIViewController, XIBed {
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
-        self.openDropDown()
-//        if self.eventDetail?.isPrivate == 0 { //Public...
-//            self.openDropDown()
-//        } else { //Private...
-//            print(self.eventDetail?.eventAttendeesStatus)
-//            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
-//                self.openDropDown()
-//            } else {
-//                print("user did not requested for event")
-//            }
-//        }
+        //self.openDropDown()
+        if self.eventDetail?.isPrivate == 0 { //Public...
+            self.openDropDown()
+        } else { //Private...
+            print(self.eventDetail?.eventAttendeesStatus)
+            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+                self.openDropDown()
+            } else {
+                print("user did not requested for event")
+            }
+        }
     }
     
     func openDropDown() {
