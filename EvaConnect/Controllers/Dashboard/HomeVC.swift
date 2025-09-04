@@ -166,16 +166,16 @@ class HomeVC: BaseVC {
         setLayOut()
         addObservers()
         
-        if isIndivisualUser {
-            if selectedTab == .events {
-                self.selectedHomeFilter = .new
-            } else if selectedTab == .jobs {
+        if selectedTab == .events {
+            self.selectedHomeFilter = .new
+        } else if selectedTab == .jobs {
+            if isIndivisualUser {
                 selectedHomeFilter = .all
-            } else if selectedTab == .news {
-                selectedHomeFilter = .none
+            } else {
+                selectedHomeFilter = .active
             }
-        } else {
-            Constants.saveEnumToUserDefaults(.industryEvents)
+        } else if selectedTab == .news {
+            selectedHomeFilter = .none
         }
         
         //getPosts(offSet: 0)
@@ -215,7 +215,11 @@ class HomeVC: BaseVC {
         self.emptyListMessageLbl.text = ""
         
         if selectedTab == .jobs {
-            homeTabFilter = HomeTabFilter.job
+            if isIndivisualUser {
+                homeTabFilter = HomeTabFilter.job
+            } else {
+                homeTabFilter = HomeTabFilter.industryJobs
+            }
             height = 32
             searchHeight = 40
             //selectedHomeFilter = .all
@@ -223,7 +227,11 @@ class HomeVC: BaseVC {
         } else if selectedTab == .events {
             height = 32
             searchHeight = 0
-            homeTabFilter = HomeTabFilter.userEvent
+            if isIndivisualUser {
+                homeTabFilter = HomeTabFilter.userEvent
+            } else {
+                homeTabFilter = HomeTabFilter.industryEvents
+            }
             
             self.currentEventLbl.text = "Current Event"
             self.noCurrentEventLblHeight.constant = 0.0
@@ -1108,7 +1116,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //            }
             
         case self.jobListTblVw:
-            if selectedTab == .jobs {
+            if selectedTab == .jobs || selectedTab == .industryJobs {
                 return self.jobList.count
             } else { return 0 }
             
@@ -2563,15 +2571,17 @@ extension HomeVC {
             self.passedEventList = []
             self.showEventList = []
             
-//            if isIndivisualUser {
-                selectedTab = .events
-                Constants.saveEnumToUserDefaults(.events)
-                selectedHomeFilter = .all
-                homeTabFilter = HomeTabFilter.userEvent
-                //homeTabFilter = jobListingBtn.isHidden ? HomeTabFilter.userEvent : HomeTabFilter.companyEvent
+            //            if isIndivisualUser {
+            selectedTab = .events
+            Constants.saveEnumToUserDefaults(.events)
+            selectedHomeFilter = .all
+            //homeTabFilter = HomeTabFilter.userEvent
+            //homeTabFilter = jobListingBtn.isHidden ? HomeTabFilter.userEvent : HomeTabFilter.companyEvent
+            
             height = 32
             searchHeight = 0
-            homeTabFilter = HomeTabFilter.userEvent
+            //homeTabFilter = HomeTabFilter.userEvent
+            homeTabFilter = isIndivisualUser ? HomeTabFilter.userEvent : HomeTabFilter.industryEvents
             self.currentEventLblHeight.constant = 70.0
             self.allEventLblHeight.constant = 70.0
             
@@ -2593,12 +2603,23 @@ extension HomeVC {
             print("Job Tab Select")
             self.jobList = []
             
-//            if isIndivisualUser {
+//                selectedTab = .jobs
+//                Constants.saveEnumToUserDefaults(.jobs)
+//                selectedHomeFilter = .all
+            
+//            if jobListingBtn.isHidden {
+               // homeTabFilter = HomeTabFilter.job
+            if isIndivisualUser {
                 selectedTab = .jobs
                 Constants.saveEnumToUserDefaults(.jobs)
                 selectedHomeFilter = .all
-//            if jobListingBtn.isHidden {
                 homeTabFilter = HomeTabFilter.job
+            } else {
+                selectedTab = .industryJobs
+                Constants.saveEnumToUserDefaults(.industryJobs)
+                selectedHomeFilter = .active
+                homeTabFilter = HomeTabFilter.industryJobs
+            }
                 height = 32
                 searchHeight = 40
                 //            } else {

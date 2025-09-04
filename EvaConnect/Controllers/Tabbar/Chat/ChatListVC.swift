@@ -1118,6 +1118,14 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 vc.selectedNewsId = notificationID ?? 0
                 navigationController?.pushViewController(vc, animated: true)
             }
+            else if type == "post_like" {
+            }
+            else if type == "post_comment" {
+            }
+            else if type == "news_like" {
+            }
+            else if type == "news_comment" {
+            }
             
         default:
 //            let conversation = messages[indexPath.row]

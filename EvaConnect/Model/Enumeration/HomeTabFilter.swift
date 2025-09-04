@@ -40,7 +40,7 @@ enum HomeTabFilter: String {
     }
     
     static var industryEvents: [HomeTabFilter] {
-        return [.all, .previous]
+        return [.new, .saved, .passed]
     }
     
     static var industryJobs: [HomeTabFilter] {

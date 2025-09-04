@@ -22,6 +22,7 @@ class UserJobCell: UITableViewCell {
     
     @IBOutlet weak var grayDotView: UIView!
     @IBOutlet weak var saveJobBtn: UIButton!
+    @IBOutlet weak var indivisualVw: UIView!
     @IBOutlet weak var industryView: UIView!
     @IBOutlet weak var industryJobDescLbl: UILabel!
     @IBOutlet weak var jobActiveTimeLbl: UILabel!
@@ -67,7 +68,6 @@ class UserJobCell: UITableViewCell {
         } else {
             saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
         }
-//        data.saved == 1 ? saveJobBtn.setImage(UIImage(named: "save_selected"), for: .normal) : saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
         grayDotView.isHidden = false
         if !isIndivisualUser {
             grayDotView.isHidden = true
