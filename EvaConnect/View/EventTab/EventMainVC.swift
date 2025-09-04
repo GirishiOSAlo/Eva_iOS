@@ -146,7 +146,7 @@ class EventMainVC: UIViewController, XIBed {
         if self.eventDetail?.isPrivate == 0 { //Public...
             self.openDropDown()
         } else { //Private...
-            print(self.eventDetail?.eventAttendeesStatus)
+            print(self.eventDetail?.eventAttendeesStatus ?? "")
             if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
                 self.openDropDown()
             } else {

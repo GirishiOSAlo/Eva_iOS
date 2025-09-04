@@ -68,6 +68,7 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet weak var titlePopupLbl: UILabel!
     @IBOutlet weak var okPopupBtn: UIButton!
 
+    var arrivalTimePicker = UIDatePicker()
     var animationView: LottieAnimationView!
     var isPersionalDetailsEdit: Bool = false
     var isContactInfoEdit: Bool = false
@@ -388,6 +389,13 @@ class EditProfileViewController: UIViewController, XIBed {
         } else { print("Not Editable.") }
     }
     
+    @IBAction func onArrivalTimeBtnTap(_ sender: UIButton) {
+        if self.isOtherTransferEdit {
+            self.openTimePicker()
+            self.arrivalTimeTxtField.becomeFirstResponder()
+        } else { print("Not Editable.") }
+    }
+    
     @IBAction func onPersionalInfoEditBtnTap(_ sender: UIButton) {
         if self.isPersionalDetailsEdit {
             self.updateInfo()
@@ -559,6 +567,51 @@ extension EditProfileViewController {
             }
         }
         present(pickerVC, animated: true)
+    }
+        
+    func openTimePicker() {
+        // Setup picker
+        arrivalTimePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            arrivalTimePicker.preferredDatePickerStyle = .wheels
+        }
+        arrivalTimePicker.locale = Locale(identifier: "en_GB") // force 24-hour mode
+        
+        // Default selected time
+        let now = Date()
+        arrivalTimePicker.date = now
+        
+        // Toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartTimePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+        toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolbar.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        toolbar.tintColor = .black
+        
+        // Attach picker to textfield
+        self.arrivalTimeTxtField.inputView = arrivalTimePicker
+        self.arrivalTimeTxtField.inputAccessoryView = toolbar
+        
+//        // Set initial value
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "HH:mm"
+//        formatter.locale = Locale(identifier: "en_GB")
+//        self.arrivalTimeTxtField.text = formatter.string(from: now)
+    }
+    
+    @objc func doneStartTimePicker() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"  // 24-hour format
+        formatter.locale = Locale(identifier: "en_GB")
+        self.arrivalTimeTxtField.text = formatter.string(from: arrivalTimePicker.date)
+        self.view.endEditing(true)
+    }
+
+    @objc func cancelPicker() {
+        self.view.endEditing(true)
     }
 }
 
@@ -766,16 +819,16 @@ extension EditProfileViewController {
     }
     
     func otherTransferTextFieldUpdate() {
-        self.arrivalDateTxtField.isUserInteractionEnabled = false
-        self.arrivalTimeTxtField.isUserInteractionEnabled = false
-        
         if self.isOtherTransferEdit {
             self.otherTransferEditBtn.backgroundColor = UIColor(hex: "#4D76CD")
             self.otherTransferEditBtn.setTitle("Save", for: .normal)
             self.otherTransferEditBtn.setTitleColor(UIColor(hex: "#FFFFFF"), for: .normal)
             
+            self.arrivalDateTxtField.isUserInteractionEnabled = true
             self.arrivalDateTxtField.textColor = UIColor(hex: "#000000")
+            self.arrivalTimeTxtField.isUserInteractionEnabled = true
             self.arrivalTimeTxtField.textColor = UIColor(hex: "#000000")
+            self.airportLocationTxtField.isUserInteractionEnabled = true
             self.airportLocationTxtField.textColor = UIColor(hex: "#000000")
             self.airportLocationTxtField.isUserInteractionEnabled = true
             self.flightNumberTxtField.textColor = UIColor(hex: "#000000")
@@ -787,8 +840,11 @@ extension EditProfileViewController {
             self.otherTransferEditBtn.setTitle("Edit", for: .normal)
             self.otherTransferEditBtn.setTitleColor(UIColor(hex: "#000000"), for: .normal)
             
+            self.arrivalDateTxtField.isUserInteractionEnabled = false
             self.arrivalDateTxtField.textColor = UIColor(hex: "#707070")
+            self.arrivalTimeTxtField.isUserInteractionEnabled = false
             self.arrivalTimeTxtField.textColor = UIColor(hex: "#707070")
+            self.airportLocationTxtField.isUserInteractionEnabled = false
             self.airportLocationTxtField.textColor = UIColor(hex: "#707070")
             self.airportLocationTxtField.isUserInteractionEnabled = false
             self.flightNumberTxtField.textColor = UIColor(hex: "#707070")

@@ -1353,18 +1353,25 @@
                                                                                             </constraints>
                                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                             <state key="normal" image="ic_calendar"/>
+                                                                                        </button>
+                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vx-xB-Yz6">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="321" height="40"/>
+                                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                             <connections>
-                                                                                                <action selector="onArrivalDateBtnTap:" destination="-1" eventType="touchUpInside" id="3Em-pw-Eq4"/>
-                                                                                                <action selector="onCalenderBtnTap:" destination="-1" eventType="touchUpInside" id="vAF-uO-dbO"/>
+                                                                                                <action selector="onArrivalDateBtnTap:" destination="-1" eventType="touchUpInside" id="jVN-i5-T9h"/>
                                                                                             </connections>
                                                                                         </button>
                                                                                     </subviews>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="trailing" secondItem="gfG-1F-wXl" secondAttribute="trailing" id="3DL-ij-FmD"/>
+                                                                                        <constraint firstItem="5vx-xB-Yz6" firstAttribute="leading" secondItem="Lun-xb-66m" secondAttribute="leading" id="4Wf-qw-e3a"/>
+                                                                                        <constraint firstItem="5vx-xB-Yz6" firstAttribute="top" secondItem="Lun-xb-66m" secondAttribute="top" id="AJE-hN-MsZ"/>
                                                                                         <constraint firstAttribute="bottom" secondItem="BmL-w5-vH2" secondAttribute="bottom" id="BPY-DB-u55"/>
                                                                                         <constraint firstItem="gfG-1F-wXl" firstAttribute="leading" secondItem="BmL-w5-vH2" secondAttribute="trailing" id="Gba-p0-3Bj"/>
+                                                                                        <constraint firstAttribute="bottom" secondItem="5vx-xB-Yz6" secondAttribute="bottom" id="HDc-cW-WBb"/>
                                                                                         <constraint firstAttribute="bottom" secondItem="gfG-1F-wXl" secondAttribute="bottom" id="Zhs-wQ-g0d"/>
+                                                                                        <constraint firstAttribute="trailing" secondItem="5vx-xB-Yz6" secondAttribute="trailing" id="bAg-Fv-qeZ"/>
                                                                                         <constraint firstItem="gfG-1F-wXl" firstAttribute="top" secondItem="Lun-xb-66m" secondAttribute="top" id="ez9-QZ-bj2"/>
                                                                                         <constraint firstItem="BmL-w5-vH2" firstAttribute="leading" secondItem="Lun-xb-66m" secondAttribute="leading" constant="16" id="t30-sY-I7q"/>
                                                                                         <constraint firstAttribute="height" constant="40" id="vCv-TO-yYW"/>
@@ -1401,6 +1408,13 @@
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <textInputTraits key="textInputTraits"/>
                                                                                         </textField>
+                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQd-r0-pu5">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="321" height="40"/>
+                                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                            <connections>
+                                                                                                <action selector="onArrivalTimeBtnTap:" destination="-1" eventType="touchUpInside" id="DEm-PC-Z9N"/>
+                                                                                            </connections>
+                                                                                        </button>
                                                                                     </subviews>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <constraints>
@@ -1408,7 +1422,11 @@
                                                                                         <constraint firstItem="p0I-Oy-Pia" firstAttribute="leading" secondItem="OcC-jK-W06" secondAttribute="leading" constant="16" id="6kJ-cS-2AX"/>
                                                                                         <constraint firstAttribute="height" constant="40" id="80e-U0-0uq"/>
                                                                                         <constraint firstAttribute="bottom" secondItem="p0I-Oy-Pia" secondAttribute="bottom" id="HOb-bu-YWi"/>
+                                                                                        <constraint firstAttribute="bottom" secondItem="eQd-r0-pu5" secondAttribute="bottom" id="KDf-hP-3mY"/>
+                                                                                        <constraint firstItem="eQd-r0-pu5" firstAttribute="leading" secondItem="OcC-jK-W06" secondAttribute="leading" id="PaV-kK-fUK"/>
+                                                                                        <constraint firstItem="eQd-r0-pu5" firstAttribute="top" secondItem="OcC-jK-W06" secondAttribute="top" id="fjR-a2-Mlt"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="p0I-Oy-Pia" secondAttribute="trailing" constant="10" id="g7z-gk-Y8H"/>
+                                                                                        <constraint firstAttribute="trailing" secondItem="eQd-r0-pu5" secondAttribute="trailing" id="sfi-ST-P8D"/>
                                                                                     </constraints>
                                                                                 </view>
                                                                             </subviews>
@@ -1708,6 +1726,11 @@
                 <constraint firstItem="0VV-ko-IKd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gxy-jt-efr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AKB-zI-hfO" secondAttribute="trailing" id="jOj-OZ-5it"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="8ZQ-Rq-3Yk"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="49.618320610687022" y="-1.4084507042253522"/>
         </view>
     </objects>
