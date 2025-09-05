@@ -710,6 +710,7 @@ class HomeVC: BaseVC {
 
         NetworkManagerr.request(finalURL, method: .get) { (response) in
             self.hideActivity()
+            self.indicatorView.stopAnimating()
             self.filterCollectionView.isUserInteractionEnabled = true
             let jsonDecoder = JSONDecoder()
             
