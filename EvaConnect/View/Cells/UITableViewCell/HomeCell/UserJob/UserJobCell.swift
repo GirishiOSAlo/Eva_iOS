@@ -60,7 +60,7 @@ class UserJobCell: UITableViewCell {
         positionNameLbl.text = data.jobTitle ?? ""
         companyNameLbl.text = data.position ?? ""
         jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-        salaryLbl.text = "\(data.currencySymbol ?? "£")\(data.salary ?? 0)"
+        salaryLbl.text = "\(data.currencySymbol ?? "£") \(data.salary ?? 0)"
         locationLbl.text = data.location ?? ""
         contractLbl.text = data.jobtype ?? ""
         if data.saved == 1 {
@@ -72,14 +72,13 @@ class UserJobCell: UITableViewCell {
         if isIndivisualUser {
             print("Indivisual User")
         } else {
-            //jobActiveTimeLbl.text = data.createdDatetime
-            applicantBtn.setTitle("\(data.applicantCount ?? 0) Applicants", for: .normal)
-            industryJobDescLbl.text = data.content
+            applicantBtn.setTitle("\(data.applicationsCount ?? 0) Applicants", for: .normal)
+            industryJobDescLbl.text = data.description ?? ""
             
             let status = data.isConnected ?? ""
             if status.lowercased() == "active" {
                 grayDotView.isHidden = false
-                jobActiveTimeLbl.text = data.createdDatetime
+                jobActiveTimeLbl.text = data.value ?? ""
             } else {
                 grayDotView.isHidden = true
                 jobActiveTimeLbl.text = ""

@@ -57,6 +57,10 @@ struct DashboardJob: Codable {
     let saved: Int?
     let createdOn: String?
     
+    let description: String?
+    let applicationsCount: Int?
+    let image, value: String?
+    
     enum CodingKeys: String, CodingKey {
         case id, userID, user, jobTitle, jobNature
         case jobtype = "jobtype "
@@ -65,5 +69,9 @@ struct DashboardJob: Codable {
         case connectionID = "connectionId"
         case isReceiver, saved
         case createdOn = "created_on"
+        
+        case description
+        case applicationsCount = "applications_count"
+        case image, value
     }
 }

@@ -715,6 +715,18 @@ extension HomePageVC {
         jobListing.jobId = jobID
         navigationController?.pushViewController(jobListing, animated: true)
     }
+    @objc func tapEditJob(sender: UIButton){
+        let vc = StoryboardRouter.createEditJobPost()
+        vc.roleType = .edit
+        //vc.jobStatus = selectedHomeFilter.getFilter(tab: selectedTab)
+        vc.jobId = jobList[sender.tag].id ?? 0
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func tapApplicantsList(sender: UIButton){
+        let vc = StoryboardRouter.applicantList()
+        vc.jobId = jobList[sender.tag].id ?? 0
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 //MARK: UICollection Delegate....
@@ -856,27 +868,7 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             let cell = self.jobCollectionVw.dequeueReusableCell(withReuseIdentifier: HomeJobCVC.ReuseId, for: indexPath) as! HomeJobCVC
             
             let job = self.jobList[indexPath.row]
-            if let imageUrl = job.jobImage,
-               !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
-               let url = URL(string: imageUrl),
-               UIApplication.shared.canOpenURL(url) {
-                cell.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "jobLogoPlaceholder"))
-            } else {
-                cell.profileImgVw.image = UIImage(named: "jobLogoPlaceholder")
-            }
-
-            cell.titleLbl.text = job.jobTitle ?? ""
-            cell.subTitleLbl_1.text = job.position ?? ""
-            cell.subTitleLbl_2.text = job.location ?? ""
-            cell.salaryLbl.text = "£\(job.salary ?? 0)"
-            cell.jobTimeLbl.text = job.jobtype ?? ""
-            
-            let jobSaved = job.saved ?? 0
-            if jobSaved == 0 {
-                cell.saveImgVw.image = UIImage(named: "save")
-            } else {
-                cell.saveImgVw.image = UIImage(named: "save_selected")
-            }
+            cell.setData(job: job)
             
             cell.saveBtn.tag = indexPath.row
             cell.saveBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
@@ -884,6 +876,10 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             cell.applyNowBtn.addTarget(self, action: #selector(applyJobTapped(sender:)), for: .touchUpInside)
             cell.viewDetailBtn.tag = indexPath.row
             cell.viewDetailBtn.addTarget(self, action: #selector(detailJobTapped(sender:)), for: .touchUpInside)
+            cell.editBtn.tag = indexPath.row
+            cell.editBtn.addTarget(self, action: #selector(tapEditJob(sender:)), for: .touchUpInside)
+            cell.applicantBtn.tag = indexPath.row
+            cell.applicantBtn.addTarget(self, action:  #selector(tapApplicantsList(sender:)), for: .touchUpInside)
             
             return cell
             
