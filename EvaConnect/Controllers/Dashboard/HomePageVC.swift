@@ -469,7 +469,13 @@ extension HomePageVC {
     
     func fetchDashboardJob() {
         let url = "\(EndPoints.getAllHomeJob)?limit=\(2)&offset=\(1)"
-        let parameters = ["filter":"all"] as [String: Any]
+        
+        var parameters: [String: Any]? = nil
+        if isIndivisualUser {
+            parameters = ["filter":"all"] as [String: Any]
+        } else {
+            parameters = ["filter":"Active"] as [String: Any]
+        }
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()

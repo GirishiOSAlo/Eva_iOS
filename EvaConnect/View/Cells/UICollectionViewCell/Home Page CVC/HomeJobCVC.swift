@@ -91,15 +91,13 @@ class HomeJobCVC: UICollectionViewCell {
             self.industryVw.isHidden = false
             self.saveBtn.isHidden = true
             self.saveImgVw.isHidden = true
-            applicantBtn.setTitle("\(job.applicationsCount ?? 0) Applicants", for: .normal)
-            
-            let status = job.isConnected ?? ""
-            if status.lowercased() == "active" {
-                grayDotView.isHidden = false
-                jobActiveTimeLbl.text = job.value ?? ""
-            } else {
+            applicantBtn.setTitle("\(job.applicationsCount ?? "") Applicants", for: .normal)
+            jobActiveTimeLbl.text = job.value ?? ""
+            let value = job.value ?? ""
+            if value == "" {
                 grayDotView.isHidden = true
-                jobActiveTimeLbl.text = ""
+            } else {
+                grayDotView.isHidden = false
             }
         }
     }

@@ -58,7 +58,7 @@ struct DashboardJob: Codable {
     let createdOn: String?
     
     let description: String?
-    let applicationsCount: Int?
+    let applicationsCount: String?
     let image, value: String?
     
     enum CodingKeys: String, CodingKey {

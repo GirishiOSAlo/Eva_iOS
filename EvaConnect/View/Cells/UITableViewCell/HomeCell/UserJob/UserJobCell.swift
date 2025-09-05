@@ -72,16 +72,14 @@ class UserJobCell: UITableViewCell {
         if isIndivisualUser {
             print("Indivisual User")
         } else {
-            applicantBtn.setTitle("\(data.applicationsCount ?? 0) Applicants", for: .normal)
+            applicantBtn.setTitle("\(data.applicationsCount ?? "") Applicants", for: .normal)
             industryJobDescLbl.text = data.description ?? ""
-            
-            let status = data.isConnected ?? ""
-            if status.lowercased() == "active" {
-                grayDotView.isHidden = false
-                jobActiveTimeLbl.text = data.value ?? ""
-            } else {
+            jobActiveTimeLbl.text = data.value ?? ""
+            let value = data.value ?? ""
+            if value == "" {
                 grayDotView.isHidden = true
-                jobActiveTimeLbl.text = ""
+            } else {
+                grayDotView.isHidden = false
             }
         }
     }
