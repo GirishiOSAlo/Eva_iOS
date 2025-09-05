@@ -25,7 +25,7 @@ class HomeJobCVC: UICollectionViewCell {
     @IBOutlet weak var viewDetailBtn: UIButton!
     
     @IBOutlet weak var industryVw: UIView!
-    @IBOutlet weak var indivisualVw: UIView!
+    @IBOutlet weak var individualVw: UIView!
     
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var grayDotView: UIView!
@@ -69,7 +69,7 @@ class HomeJobCVC: UICollectionViewCell {
         self.titleLbl.text = job.jobTitle ?? ""
         self.subTitleLbl_1.text = job.position ?? ""
         self.subTitleLbl_2.text = job.location ?? ""
-        self.salaryLbl.text = "£\(job.salary ?? 0)"
+        self.salaryLbl.text = "\(job.currencySymbol ?? "£") \(job.salary ?? 0)"
         self.jobTimeLbl.text = job.jobtype ?? ""
         
         let jobSaved = job.saved ?? 0
@@ -80,13 +80,17 @@ class HomeJobCVC: UICollectionViewCell {
         }
         
         self.industryVw.isHidden = true
-        self.indivisualVw.isHidden = true
+        self.individualVw.isHidden = true
         
         if isIndivisualUser {
             print("Indivisual User")
-            self.indivisualVw.isHidden = false
+            self.individualVw.isHidden = false
+            self.saveBtn.isHidden = false
+            self.saveImgVw.isHidden = false
         } else {
             self.industryVw.isHidden = false
+            self.saveBtn.isHidden = true
+            self.saveImgVw.isHidden = true
             applicantBtn.setTitle("\(job.applicationsCount ?? 0) Applicants", for: .normal)
             
             let status = job.isConnected ?? ""

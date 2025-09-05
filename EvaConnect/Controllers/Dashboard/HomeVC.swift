@@ -1161,6 +1161,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             
             if isIndivisualUser {
                 cell.indivisualVw.isHidden = false
+                cell.saveJobBtn.isHidden = false
                 if selectedHomeFilter == .applied {
                     cell.applyNowBtnHeight.constant = 0
                 } else {
@@ -1168,6 +1169,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 }
             } else {
                 cell.industryView.isHidden = false
+                cell.saveJobBtn.isHidden = true
             }
             
             

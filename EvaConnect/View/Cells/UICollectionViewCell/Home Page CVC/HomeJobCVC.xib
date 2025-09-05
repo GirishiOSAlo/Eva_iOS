@@ -206,7 +206,7 @@
                                             <constraint firstItem="vCd-4X-QR2" firstAttribute="top" secondItem="s3d-Sx-h25" secondAttribute="bottom" constant="15" id="xf6-QI-z5W"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90P-11-bQu" userLabel="IndivisualView">
+                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90P-11-bQu" userLabel="IndividualView">
                                         <rect key="frame" x="0.0" y="0.0" width="312" height="0.0"/>
                                         <subviews>
                                             <button verifyAmbiguity="off" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQF-7r-SXs">
@@ -306,7 +306,7 @@
                 <outlet property="baseView" destination="cAj-Kj-ni8" id="Jht-ds-bvp"/>
                 <outlet property="editBtn" destination="g5H-kf-cQ4" id="WZn-Na-ASC"/>
                 <outlet property="grayDotView" destination="6Mi-2u-Nc2" id="xY4-rD-AQn"/>
-                <outlet property="indivisualVw" destination="90P-11-bQu" id="KcH-Dz-OW6"/>
+                <outlet property="individualVw" destination="90P-11-bQu" id="ZDn-cC-T3i"/>
                 <outlet property="industryVw" destination="57C-K5-tbj" id="sC6-uW-8uD"/>
                 <outlet property="jobActiveTimeLbl" destination="DP7-xk-cJx" id="pR2-tF-end"/>
                 <outlet property="jobTimeLbl" destination="whR-Wa-IzZ" id="lz7-NQ-h7T"/>
@@ -319,7 +319,7 @@
                 <outlet property="titleLbl" destination="I68-Fv-G9R" id="6Br-Lz-fQH"/>
                 <outlet property="viewDetailBtn" destination="BQF-7r-SXs" id="7eE-y0-SQ4"/>
             </connections>
-            <point key="canvasLocation" x="-419.84732824427482" y="-130.28169014084509"/>
+            <point key="canvasLocation" x="-420" y="-93"/>
         </collectionViewCell>
     </objects>
     <resources>
