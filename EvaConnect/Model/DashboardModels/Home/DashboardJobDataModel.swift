@@ -37,11 +37,12 @@ struct DashboardJob: Codable {
     let id, userID, user: Int?
     let jobTitle: String?
     let jobNature: String?
-    let jobtype, jobSector, position: String?
+    let jobtype, jobSector, companyName, companylogo: String?
+    let userimage, position: String?
     let weeklyHours: String?
     let location: String?
     let salary: Int?
-    let content: String?
+    let currencyName, currencySymbol, content: String?
     let jobImage: String?
     let attendees, commentCount, applicantCount, isJobLike: Int?
     let isApplied, likeCount, createdByID: Int?
@@ -52,15 +53,15 @@ struct DashboardJob: Codable {
     let isURL: Bool?
     let postVideo, isConnected: String?
     let connectionID: Int?
-    let isReceiver: ReceiverID?
+    let isReceiver: Bool?
     let saved: Int?
     let createdOn: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, userID, user, jobTitle, jobNature
         case jobtype = "jobtype "
         case jobSector = "jobSector "
-        case position, weeklyHours, location, salary, content, jobImage, attendees, commentCount, applicantCount, isJobLike, isApplied, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, type, os, status, isURL, postVideo, isConnected
+        case companyName, companylogo, userimage, position, weeklyHours, location, salary, currencyName, currencySymbol, content, jobImage, attendees, commentCount, applicantCount, isJobLike, isApplied, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, type, os, status, isURL, postVideo, isConnected
         case connectionID = "connectionId"
         case isReceiver, saved
         case createdOn = "created_on"

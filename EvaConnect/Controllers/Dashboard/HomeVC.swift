@@ -698,7 +698,7 @@ class HomeVC: BaseVC {
     func fetchJobListData(filter: String, currentPage: Int, searchStr: String) {
         showActivity()
         let params = [
-            "filter": filter, // applied,all,saved,industry,my_jobs'
+            "filter": filter, // applied,all,saved,industry,my_jobs' 'Active & Inactive'
             "search": searchStr
         ]
         let url = "\(EndPoints.getJobList)?limit=10&offset=\(currentPage)"
@@ -1044,14 +1044,18 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             case .industryEvents:
                 return 398
             case .industryJobs:
-                return 282 //UITableView.automaticDimension
+                return 0 //UITableView.automaticDimension
             case .industryPost:
                 return UITableView.automaticDimension
             }
             
         case jobListTblVw:
-            if selectedHomeFilter == .applied {
-                return 234
+            if isIndivisualUser {
+                if selectedHomeFilter == .applied {
+                    return 234
+                } else {
+                    return 284
+                }
             } else {
                 return 284
             }
@@ -1142,9 +1146,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
             cell.baseMainView.layer.cornerRadius = 12
             cell.indivisualViewStack.isHidden = false
+            cell.indivisualVw.isHidden = true
             cell.industryView.isHidden = true
             cell.saveJobBtn.isHidden = false
-            //                cell.job = self.jobList[indexPath.row]
+            //cell.job = self.jobList[indexPath.row]
             let job = self.jobList[indexPath.row]
             cell.setData(data: job)
             cell.viewDetailsBtn.tag = indexPath.row
@@ -1152,17 +1157,25 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             cell.editBtn.tag = indexPath.row
             cell.applicantBtn.tag = indexPath.row
             cell.applyNowBtn.tag = indexPath.row
-            //                cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
+            //cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
             
-            if selectedHomeFilter == .applied {
-                cell.applyNowBtnHeight.constant = 0
+            if isIndivisualUser {
+                cell.indivisualVw.isHidden = false
+                if selectedHomeFilter == .applied {
+                    cell.applyNowBtnHeight.constant = 0
+                } else {
+                    cell.applyNowBtnHeight.constant = 50.0
+                }
             } else {
-                cell.applyNowBtnHeight.constant = 50.0
+                cell.industryView.isHidden = false
             }
+            
             
             cell.viewDetailsBtn.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
             cell.applyNowBtn.addTarget(self, action: #selector(tapJobApply(sender:)), for: .touchUpInside)
             cell.saveJobBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
+            cell.editBtn.addTarget(self, action:  #selector(tapEditJob(sender:)), for: .touchUpInside)
+            cell.applicantBtn.addTarget(self, action:  #selector(tapApplicantsList(sender:)), for: .touchUpInside)
             return cell
             //            } else {
             //                let cell: CompanyJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -1555,6 +1568,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.baseMainView.layer.cornerRadius = 12
                 cell.indivisualViewStack.isHidden = false
                 cell.industryView.isHidden = true
+                cell.indivisualVw.isHidden = false
                 cell.saveJobBtn.isHidden = false
                 //                cell.job = self.jobList[indexPath.row]
                 let job = self.jobList[indexPath.row]
@@ -1631,19 +1645,16 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
     }
     
     @objc func tapApplicantsList(sender: UIButton){
-        
         let vc = StoryboardRouter.applicantList()
-        vc.jobId = posts[sender.tag].id ?? 0
-//        vc.job = posts[sender.tag]
+        vc.jobId = jobList[sender.tag].id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func tapEditJob(sender: UIButton){
-        
         let vc = StoryboardRouter.createEditJobPost()
         vc.roleType = .edit
         vc.jobStatus = selectedHomeFilter.getFilter(tab: selectedTab)
-        vc.jobId = posts[sender.tag].id
+        vc.jobId = jobList[sender.tag].id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -2439,15 +2450,20 @@ extension HomeVC {
     }
     
     @objc func reloadData(inserted: Bool = true) {
-        if let updateSpecificPost = updateSpecificPost {
-            fetchSpecificPost(updateSpecificPost)
-            return
+        selectedTab = Constants.getEnumFromUserDefaults() ?? .news
+        if selectedTab == .posts {
+            if let updateSpecificPost = updateSpecificPost {
+                fetchSpecificPost(updateSpecificPost)
+                return
+            }
+            emptyListMessageLbl.isHidden = true
+            emptyListMessageLbl.text = ""
+            
+            if !inserted { refreshControl.programaticallyBeginRefreshing(in: postListTblVw) }
+            if !(refreshControl.isRefreshing) { indicatorView.startAnimating() }
+            
+            getPosts(offSet: 1, inserted: inserted)
         }
-        if !inserted { refreshControl.programaticallyBeginRefreshing(in: postListTblVw) }
-        if !(refreshControl.isRefreshing) { indicatorView.startAnimating() }
-        emptyListMessageLbl.isHidden = true
-        emptyListMessageLbl.text = ""
-        getPosts(offSet: 1, inserted: inserted)
     }
     
     @objc func likeByDoubleClick(gesture: UIGestureRecognizer) {

@@ -60,7 +60,7 @@ class UserJobCell: UITableViewCell {
         positionNameLbl.text = data.jobTitle ?? ""
         companyNameLbl.text = data.position ?? ""
         jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-        salaryLbl.text = "£\(data.salary ?? 0)"
+        salaryLbl.text = "\(data.currencySymbol ?? "£")\(data.salary ?? 0)"
         locationLbl.text = data.location ?? ""
         contractLbl.text = data.jobtype ?? ""
         if data.saved == 1 {
@@ -68,13 +68,22 @@ class UserJobCell: UITableViewCell {
         } else {
             saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
         }
-        grayDotView.isHidden = false
-        if !isIndivisualUser {
-            grayDotView.isHidden = true
-            jobActiveTimeLbl.text = data.createdDatetime
+        
+        if isIndivisualUser {
+            print("Indivisual User")
+        } else {
+            //jobActiveTimeLbl.text = data.createdDatetime
             applicantBtn.setTitle("\(data.applicantCount ?? 0) Applicants", for: .normal)
             industryJobDescLbl.text = data.content
-            jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
+            
+            let status = data.isConnected ?? ""
+            if status.lowercased() == "active" {
+                grayDotView.isHidden = false
+                jobActiveTimeLbl.text = data.createdDatetime
+            } else {
+                grayDotView.isHidden = true
+                jobActiveTimeLbl.text = ""
+            }
         }
     }
     
@@ -83,16 +92,17 @@ class UserJobCell: UITableViewCell {
         baseMainView.dropShadow()
         applyNowBtn.layer.cornerRadius = 14
         applyNowBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
+        editBtn.layer.cornerRadius = 14
+        editBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
         viewDetailsBtn.layer.cornerRadius = 14
         viewDetailsBtn.layer.borderWidth = 1
         viewDetailsBtn.layer.borderColor = AppColors.appBlue.cgColor
         viewDetailsBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
-    }
-    
-    @IBAction func applicantsTapped(_ sender: UIButton) {
         
+        jobActiveTimeLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        applicantBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 14.0)
     }
-    
+        
     @IBAction func addBtnTapped(_ sender: Any) {
         if let goToAd = goToAd { goToAd(job) }
     }
