@@ -59,7 +59,7 @@ class UserJobCell: UITableViewCell {
     func setData(data: DashboardJob) {
         positionNameLbl.text = data.jobTitle ?? ""
         companyNameLbl.text = data.position ?? ""
-        jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
+        
         salaryLbl.text = "\(data.currencySymbol ?? "Rs") \(data.salary ?? 0)"
         locationLbl.text = data.location ?? ""
         contractLbl.text = data.jobtype ?? ""
@@ -71,7 +71,9 @@ class UserJobCell: UITableViewCell {
         
         if isIndivisualUser {
             print("Indivisual User")
+            jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
         } else {
+            jobImageView.sd_setImage(with: URL(string: data.image ?? ""), placeholderImage: UIImage(named: "profile")!)
             applicantBtn.setTitle("\(data.applicationsCount ?? "") Applicants", for: .normal)
             industryJobDescLbl.text = data.description ?? ""
             jobActiveTimeLbl.text = data.value ?? ""

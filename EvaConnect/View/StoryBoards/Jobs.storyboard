@@ -38,7 +38,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1y7-b6-b6l" userLabel="topView">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="129"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Job Listing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbq-l6-D8X" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Job Listing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbq-l6-D8X">
                                         <rect key="frame" x="45" y="84.333333333333329" width="91" height="14.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                         <nil key="textColor"/>
@@ -58,53 +58,43 @@
                                             <action selector="backBtnTapped:" destination="okq-ks-aUs" eventType="touchUpInside" id="CBj-t4-lCR"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gab-Pj-eGT" customClass="LabelSwitch" customModule="LabelSwitch">
-                                        <rect key="frame" x="320" y="76.666666666666671" width="90" height="30"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iyH-Yr-2GW">
+                                        <rect key="frame" x="288" y="75.666666666666671" width="95" height="32"/>
+                                        <color key="backgroundColor" red="0.30196078431372547" green="0.46274509803921571" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="90" id="Esv-I7-G4g"/>
-                                            <constraint firstAttribute="height" constant="30" id="pOc-DS-kEL"/>
+                                            <constraint firstAttribute="height" constant="32" id="D2y-P3-JxE"/>
+                                            <constraint firstAttribute="width" constant="95" id="RIk-rl-BTF"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="rBackColor">
-                                                <color key="value" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="rTextColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lBackColor">
-                                                <color key="value" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lTextColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="lText" value="Inactive"/>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="rText" value="Active"/>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                                <real key="value" value="14"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="24"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Active">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onToggleBtnTap:" destination="okq-ks-aUs" eventType="touchUpInside" id="Gd8-XI-Ajg"/>
+                                        </connections>
+                                    </button>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uUg-QQ-x0C">
+                                        <rect key="frame" x="288" y="79.666666666666671" width="24" height="24"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="IGW-Lt-ht9"/>
+                                            <constraint firstAttribute="width" constant="24" id="hS3-j7-vu8"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <viewLayoutGuide key="safeArea" id="0Gv-LP-djL"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="0Gv-LP-djL" firstAttribute="trailing" secondItem="gab-Pj-eGT" secondAttribute="trailing" constant="20" id="2Qz-JD-O41"/>
                                     <constraint firstItem="Mps-ft-Snb" firstAttribute="trailing" secondItem="Tbq-l6-D8X" secondAttribute="leading" constant="50" id="4UM-2i-kS5"/>
-                                    <constraint firstItem="gab-Pj-eGT" firstAttribute="centerY" secondItem="Tbq-l6-D8X" secondAttribute="centerY" id="U8Z-ah-1g0"/>
+                                    <constraint firstItem="uUg-QQ-x0C" firstAttribute="centerY" secondItem="iyH-Yr-2GW" secondAttribute="centerY" id="EHS-E0-xPZ"/>
+                                    <constraint firstItem="uUg-QQ-x0C" firstAttribute="leading" secondItem="iyH-Yr-2GW" secondAttribute="leading" id="KL6-iW-hTQ"/>
+                                    <constraint firstItem="0Gv-LP-djL" firstAttribute="trailing" secondItem="iyH-Yr-2GW" secondAttribute="trailing" constant="10" id="akD-E6-1WM"/>
                                     <constraint firstItem="Mps-ft-Snb" firstAttribute="leading" secondItem="1y7-b6-b6l" secondAttribute="leading" id="cFF-i1-xX5"/>
                                     <constraint firstItem="Mps-ft-Snb" firstAttribute="width" secondItem="1y7-b6-b6l" secondAttribute="width" multiplier="0.241546" id="coZ-CR-VqN"/>
                                     <constraint firstAttribute="bottom" secondItem="Mps-ft-Snb" secondAttribute="bottom" constant="20" id="faH-fD-hvB"/>
+                                    <constraint firstItem="iyH-Yr-2GW" firstAttribute="centerY" secondItem="Mps-ft-Snb" secondAttribute="centerY" id="mHI-vb-AZh"/>
                                     <constraint firstItem="Tbq-l6-D8X" firstAttribute="centerY" secondItem="Mps-ft-Snb" secondAttribute="centerY" id="s8Q-ja-uDW"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="gab-Pj-eGT"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NcW-ET-K1J">
                                 <rect key="frame" x="36" y="149" width="320" height="599"/>
@@ -1205,6 +1195,8 @@
                         <outlet property="animationContainerView" destination="jaH-gr-OHP" id="xwZ-NR-KR7"/>
                         <outlet property="applyJobSuccessPopupVw" destination="wrt-yw-OLS" id="DG1-ZR-tIL"/>
                         <outlet property="browseBtn" destination="CIk-Q7-dln" id="NFq-eg-0a6"/>
+                        <outlet property="circleLeadingConstraint" destination="KL6-iW-hTQ" id="ysr-6E-BBf"/>
+                        <outlet property="circleView" destination="uUg-QQ-x0C" id="xag-Rn-BEq"/>
                         <outlet property="companyTF" destination="atO-zW-a54" id="88L-Bs-yZJ"/>
                         <outlet property="descriptionTF" destination="yPm-Jo-mQr" id="Qdj-hK-bFR"/>
                         <outlet property="designationTF" destination="7NK-iS-mGD" id="olY-3h-W6y"/>
@@ -1226,7 +1218,7 @@
                         <outlet property="enterSalaryView" destination="yBm-Xb-7g4" id="vQb-eY-ZMX"/>
                         <outlet property="enterTitleTF" destination="pGj-AO-Ea7" id="HfR-aE-aO7"/>
                         <outlet property="enterTitleView" destination="Dd7-R2-fv2" id="Jse-hL-NBG"/>
-                        <outlet property="headerTitleLbl" destination="Tbq-l6-D8X" id="4KO-gS-2lH"/>
+                        <outlet property="headerTitleLbl" destination="Tbq-l6-D8X" id="0SR-sf-SIq"/>
                         <outlet property="imageContainerView" destination="5z3-za-BZr" id="y2b-0M-o0K"/>
                         <outlet property="jobTitleTF" destination="fsg-pm-PyX" id="6Tk-4O-gqk"/>
                         <outlet property="listingDurationTF" destination="YhW-dO-WLP" id="cin-Pi-csv"/>
@@ -1238,12 +1230,13 @@
                         <outlet property="subPopupView" destination="FyD-cv-zvU" id="pQT-aA-CGb"/>
                         <outlet property="successfulDescLbl" destination="U0y-of-A6P" id="qsa-rz-gwv"/>
                         <outlet property="successfulLabel" destination="YGW-Sr-0bS" id="5Pu-kF-v3V"/>
+                        <outlet property="toggleButton" destination="iyH-Yr-2GW" id="fSj-9E-8Y5"/>
                         <outlet property="updateJobBtn" destination="QZu-RT-1Wn" id="5OS-zo-Zke"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ppy-wb-JBK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="870.69767441860461" y="2059.4420600858371"/>
+            <point key="canvasLocation" x="869.46564885496184" y="2059.1549295774648"/>
         </scene>
         <!--Applicant ListVC-->
         <scene sceneID="qBP-lg-AeA">

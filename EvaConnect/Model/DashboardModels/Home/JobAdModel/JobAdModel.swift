@@ -26,7 +26,7 @@ struct JobDetail: Codable {
     let jobVideo: String?
     let commentCount, applicantCount, likeCount, createdByID: Int?
     let createdDatetime: String?
-    let  modifiedDatetime: String?
+    let modifiedDatetime: String?
     let os, status: String?
 
     enum CodingKeys: String, CodingKey {

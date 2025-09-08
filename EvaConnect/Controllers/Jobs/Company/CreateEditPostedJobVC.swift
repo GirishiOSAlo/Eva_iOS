@@ -24,7 +24,10 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     
     //MARK: OUTLETS
     @IBOutlet weak var listingDurationTF: UITextField!
-    @IBOutlet weak var headerTitleLbl: HeadingLabel!
+    @IBOutlet weak var headerTitleLbl: UILabel!
+    @IBOutlet weak var toggleButton: UIButton!
+    @IBOutlet weak var circleView: UIView!
+    @IBOutlet weak var circleLeadingConstraint: NSLayoutConstraint!
     //@IBOutlet weak var JobSwitch: LabelSwitch!
     @IBOutlet weak var sectorTF: UITextField!
     @IBOutlet weak var companyTF: UITextField!
@@ -96,6 +99,7 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     var jobType = ""
     var listingDuration = 0
     var jobStatus = ""
+    var isActive = false
     
     var jobSectorList: [Sectors] = []
     var durationArr: [Sectors] = [
@@ -143,6 +147,40 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
         super.viewWillDisappear(animated)
         jobSuccessAlert?.removeFromSuperview()
     }
+    
+    func toggleInactiveBtn() {
+        self.jobType = "deactive"
+        toggleButton.setTitle("Inactive", for: .normal)
+        toggleButton.setTitleColor(UIColor.white, for: .normal)
+        toggleButton.backgroundColor = UIColor(hex: "#DCDCDC")
+        toggleButton.contentHorizontalAlignment = .left
+        toggleButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 0)
+        self.circleLeadingConstraint.constant = 4
+    }
+    
+    func toggleActiveBtn() {
+        self.jobType = "active"
+        toggleButton.setTitle("Active", for: .normal)
+        toggleButton.setTitleColor(UIColor.white, for: .normal)
+        toggleButton.backgroundColor = UIColor(hex: "#4D76CD")
+        toggleButton.contentHorizontalAlignment = .right
+        toggleButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 35)
+        self.circleLeadingConstraint.constant = self.toggleButton.frame.width - self.circleView.frame.width - 4
+    }
+    
+    @IBAction func onToggleBtnTap(_ sender: UIButton) {
+        isActive.toggle()
+        
+        UIView.animate(withDuration: 0.3) {
+            if self.isActive {
+                self.toggleActiveBtn()
+            } else {
+                self.toggleInactiveBtn()
+            }
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     
     @IBAction func update_touchUpInside(_ sender: Any) { //!jobTimings.text!.isEmpty &&
         if !enterTitleTF.text!.isEmpty &&
@@ -248,7 +286,7 @@ extension CreateEditPostedJobVC {
         showActivity()
         let endPoint = EndPoints.showJobDetailById + "\(jobId)"
         let parameters: AFParameters = ["user_id": myUserDefaults.userId]
-        NetworkManagerr.request(endPoint, method: .post, parameters: parameters) { [weak self] (result: Result<Wrapper<[DashboardItem]>>) in
+        NetworkManagerr.request(endPoint, method: .post, parameters: parameters) { [weak self] (result: Result<Wrapper<[EditJobDetailsData]>>) in
             guard let self = self else { return }
             self.hideActivity()
             switch result {
@@ -261,7 +299,8 @@ extension CreateEditPostedJobVC {
 //                    self.objectId = self.jobId ?? 0
 //                    self.jobId = nil
 //                    self.job = job
-                    self.initUI(job: job)
+                    //self.initUI(job: job)
+                    self.setData(job: job)
                 } else {
                     self.presentAlert("Error", "Unable to fetch job details") { [weak self] in
                         self?.navigationController?.popViewController(animated: true)
@@ -271,6 +310,8 @@ extension CreateEditPostedJobVC {
                 self.presentAlert("Error", error.localizedDescription) { [weak self] in
                     self?.navigationController?.popViewController(animated: true)
                 }
+            default:
+                break
             }
         }
     }
@@ -450,8 +491,8 @@ extension CreateEditPostedJobVC: UITextFieldDelegate {
 extension CreateEditPostedJobVC {
     
     func setLayOut() {
-        
-        headerTitleLbl.text = "\(roleType == .add ? "Create" : "Update") Job listing"
+        headerTitleLbl.font = UIFont(name: Myfonts.bold, size: 14.0)
+        headerTitleLbl.text = "\(roleType == .add ? "Create" : "Edit") Job listing"
         updateJobBtn.setTitle(roleType == .add ? "Post" : "Submit Changes", for: .normal)
         updateJobBtn.layer.cornerRadius = 24
 //        getSectors()
@@ -474,6 +515,11 @@ extension CreateEditPostedJobVC {
         setCornerRadius(view: enterSalaryView)
         setCornerRadius(view: enterDurationView)
         setCornerRadius(view: enterDesView)
+        
+        toggleButton.layer.cornerRadius = 16
+        circleView.layer.cornerRadius = circleView.frame.height / 2
+        circleView.isUserInteractionEnabled = false
+        self.toggleActiveBtn()
         
 //        JobSwitch.isHidden = roleType == .add
         
@@ -549,6 +595,23 @@ extension CreateEditPostedJobVC {
 //        enterDurationTF.text = "\(job.listingDuration ?? "") Days"
 //        self.listingDuration = Int(job.listingDuration ?? "") ?? 0
 //        enterDesTextView.text = job.jobDescription
+    }
+    
+    func setData(job: EditJobDetailsData) {
+        if job.status?.lowercased() == "active" {
+            self.toggleActiveBtn()
+        } else {
+            self.toggleInactiveBtn()
+        }
+        
+        enterTitleTF.text = job.jobTitle ?? ""
+        enterJobSecTF.text = job.jobSector ?? ""
+        enterLocationTF.text = job.location ?? ""
+        enterSalaryTF.text = "\(job.salary ?? 0)"
+        enterJobTypeTF.text = job.jobtype ?? ""
+        enterDurationTF.text = "\(job.listingDuration ?? 0) Days"
+        listingDuration = job.listingDuration ?? 0
+        enterDesTextView.text = job.jobDescription ?? ""
     }
     
     func updateUI(jobDetail: JobDetail) {
