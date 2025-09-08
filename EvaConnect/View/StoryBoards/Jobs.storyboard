@@ -1256,7 +1256,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuZ-Zx-mmZ" userLabel="topView">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="129"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Applicants" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-B0-5WJ" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Applicants" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-B0-5WJ">
                                         <rect key="frame" x="45" y="84.333333333333329" width="63" height="14.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                         <nil key="textColor"/>
@@ -1399,19 +1399,19 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="cYO-Jb-T1z">
-                                <rect key="frame" x="18.666666666666657" y="368" width="356" height="440"/>
+                                <rect key="frame" x="0.0" y="368" width="393" height="440"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TJw-ez-kNc"/>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="cYO-Jb-T1z" firstAttribute="leading" secondItem="TJw-ez-kNc" secondAttribute="leading" id="36F-hk-4WQ"/>
                             <constraint firstItem="zuZ-Zx-mmZ" firstAttribute="top" secondItem="lu3-GZ-vIV" secondAttribute="top" id="7Fv-zS-btY"/>
                             <constraint firstItem="TJw-ez-kNc" firstAttribute="trailing" secondItem="fbR-3c-H7p" secondAttribute="trailing" constant="18.5" id="D1g-Qc-0yn"/>
-                            <constraint firstItem="cYO-Jb-T1z" firstAttribute="leading" secondItem="fbR-3c-H7p" secondAttribute="leading" id="FWf-Oa-cet"/>
                             <constraint firstItem="zuZ-Zx-mmZ" firstAttribute="trailing" secondItem="TJw-ez-kNc" secondAttribute="trailing" id="JaV-Cl-TEo"/>
                             <constraint firstItem="TJw-ez-kNc" firstAttribute="bottom" secondItem="cYO-Jb-T1z" secondAttribute="bottom" constant="10" id="Ngi-qE-MpV"/>
-                            <constraint firstItem="cYO-Jb-T1z" firstAttribute="trailing" secondItem="fbR-3c-H7p" secondAttribute="trailing" id="SLR-4z-38z"/>
+                            <constraint firstItem="TJw-ez-kNc" firstAttribute="trailing" secondItem="cYO-Jb-T1z" secondAttribute="trailing" id="WfZ-8x-N5p"/>
                             <constraint firstItem="fbR-3c-H7p" firstAttribute="leading" secondItem="TJw-ez-kNc" secondAttribute="leading" constant="18.5" id="i61-od-ZuD"/>
                             <constraint firstItem="zuZ-Zx-mmZ" firstAttribute="leading" secondItem="TJw-ez-kNc" secondAttribute="leading" id="jUJ-FL-1Oh"/>
                             <constraint firstItem="fbR-3c-H7p" firstAttribute="top" secondItem="zuZ-Zx-mmZ" secondAttribute="bottom" constant="30" id="k6G-0v-hun"/>
@@ -1427,7 +1427,7 @@
                         <outlet property="jobCardView" destination="fbR-3c-H7p" id="H9K-Ib-yfw"/>
                         <outlet property="jobImageView" destination="2J7-8Q-Yo9" id="kJw-pT-82X"/>
                         <outlet property="locationLbl" destination="1fU-eh-TyO" id="7AW-hg-jhL"/>
-                        <outlet property="navBarTitle" destination="fq0-B0-5WJ" id="z6v-FH-7jI"/>
+                        <outlet property="navBarTitle" destination="fq0-B0-5WJ" id="i2W-Y2-KBg"/>
                         <outlet property="positionNameLbl" destination="wlU-bz-MX8" id="BTf-9o-LMl"/>
                         <outlet property="tableView" destination="cYO-Jb-T1z" id="M5R-ZD-s9S"/>
                     </connections>

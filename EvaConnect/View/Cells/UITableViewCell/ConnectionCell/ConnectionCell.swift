@@ -126,7 +126,7 @@ class ConnectionCell: BaseCellClass {
         }
     }
     
-    var applicants: Application! {
+    var applicants: ApplicationList! {
 
         didSet {
             userName.text = applicants.firstName
@@ -188,6 +188,33 @@ class ConnectionCell: BaseCellClass {
 //        connect.roundOnly()
         
     }
+    
+    func setData(obj: ApplicationList) {
+        if let imageUrl = obj.userImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            self.userImage.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            self.userImage.image = UIImage(named: "profile")
+        }
+        
+        userName.text = "\(obj.firstName ?? "") \(obj.lastName ?? "")"
+        
+        let company = !obj.companyName.isNilOrEmpty ? "\(obj.companyName ?? "")" : "\(obj.designation ?? "")"
+        userDesignation.text = company
+        
+        onlineStatusVw.isHidden = obj.onlineStatus == "Online" ? false : true
+        
+        //ConnectionType == Followers
+        self.blockedView.isHidden = true
+        self.pendingView.isHidden = true
+        self.connectedView.isHidden = false
+        self.addFriendView.isHidden = true
+        self.sentReqView.isHidden = true
+        self.addFriendView.isHidden = true
+    }
+    
     
     @IBAction func sendBtnTapped(_ sender: UIButton) {
         connectionDelegate?.sendBtn(connection: connection)

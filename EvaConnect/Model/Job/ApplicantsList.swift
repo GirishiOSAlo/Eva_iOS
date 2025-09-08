@@ -19,10 +19,11 @@ struct ApplicantListModel: Codable {
 struct ApplicantListData: Codable {
     let id: Int?
     let jobTitle, position, location, description: String?
-    let applicationsCount: String?
+    let applicationsCount: Int?
     let image: String?
     let value: String?
-    let application: [UserConnection]?
+    let application: [ApplicationList]?
+    //let application: [UserConnection]?
 
     enum CodingKeys: String, CodingKey {
         case id, jobTitle, position, location, description
@@ -32,17 +33,18 @@ struct ApplicantListData: Codable {
 }
 
 // MARK: - Application
-struct Application: Codable {
+struct ApplicationList: Codable {
     let id: Int?
-    let content, applicationAttachment, applicationAttachmentURL: String?
+    let content: String?
+    let applicationAttachment, applicationAttachmentURL: String?
     let userID: Int?
-    let firstName, lastName, companyName: String?
-    let username: String?
+    let firstName, lastName: String?
+    let username, designation: String?
     let userImage: String?
-    let isOnline: Bool?
-    let createdDate: String?
+    let companyName, onlineStatus, createdDate: String?
     let createdByID: Int?
-
+    let resume: String?
+    
     enum CodingKeys: String, CodingKey {
         case id, content
         case applicationAttachment = "application_attachment"
@@ -50,12 +52,13 @@ struct Application: Codable {
         case userID = "user_id"
         case firstName = "first_name"
         case lastName = "last_name"
-        case companyName = "company_name"
-        case username
+        case username, designation
         case userImage = "user_image"
-        case isOnline = "is_online"
+        case companyName = "company_name"
+        case onlineStatus = "online_status"
         case createdDate = "created_date"
         case createdByID = "created_by_id"
+        case resume
     }
 }
 

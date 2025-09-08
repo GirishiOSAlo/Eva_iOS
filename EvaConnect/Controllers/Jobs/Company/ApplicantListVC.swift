@@ -11,7 +11,7 @@ import SDWebImage
 
 class ApplicantListVC: UIViewController {
     
-    @IBOutlet weak var navBarTitle: HeadingLabel!
+    @IBOutlet weak var navBarTitle: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var jobCardView: UIView!
     @IBOutlet weak var jobImageView: UIImageView!
@@ -28,11 +28,17 @@ class ApplicantListVC: UIViewController {
     
     var jobId = 0
     var jobDetails: ApplicantListData?
-    var applicantsList: [UserConnection] = [] {
+//    var applicantsList: [UserConnection] = [] {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
+    var applicantsList: [ApplicationList] = [] {
         didSet {
             tableView.reloadData()
         }
     }
+    
     
     var isChatEnable = true
     
@@ -52,6 +58,7 @@ class ApplicantListVC: UIViewController {
     
     func setLayout() {
         navBarTitle.text = "Applicants"
+        navBarTitle.font = UIFont(name: Myfonts.bold, size: 16.0)
         jobCardView.layer.cornerRadius = 15
         tableView.delegate = self
         tableView.dataSource = self
@@ -71,7 +78,7 @@ extension ApplicantListVC {
         locationLbl.text = details.location
         industryJobDescLbl.text = details.description
         activeForLbl.text = details.value
-        applicantBtn.setTitle("\(details.applicationsCount ?? "") Applicants", for: .normal)
+        applicantBtn.setTitle("\(details.applicationsCount ?? 0) Applicants", for: .normal)
         applicantsList = details.application ?? []
         tableView.reloadData()
     }
@@ -96,13 +103,29 @@ extension ApplicantListVC {
         
         showActivity()
         
-        //let url = EndPoints.getAllJobApplicant
-        let url = "http://18.168.230.15:2300/Jobs/14/applicantlist"
+        let url = EndPoints.getAllJobApplicant
         
         let parameters: AFParameters = ["job_id": self.jobId]
         
         NetworkManagerr.request(url, method: .post, parameters: parameters) { [weak self] (response) in
             self?.hideActivity()
+            
+//            if response.result.isSuccess {
+//                
+//                do {
+//                    let decoder = JSONDecoder()
+//                    let applicantDetail = try decoder.decode(ApplicantListModel.self, from: response.data!)
+//                    
+//                    if !(applicantDetail.error ?? false), ((applicantDetail.data?.count ?? 0) > 0) {
+//                        self?.jobDetails = applicantDetail.data?[0]
+//                        self?.setupUI(details: self?.jobDetails)
+//                    }
+//                } catch {
+//                    print(error)
+//                }
+//            }
+            
+            
             do {
                 let jsonDecoder = JSONDecoder()
                 let root = try jsonDecoder.decode(ApplicantListModel.self, from: response.data!)
@@ -159,7 +182,8 @@ extension ApplicantListVC : UITableViewDelegate, UITableViewDataSource {
         cell.accept.tag = indexPath.row
         cell.decline.tag = indexPath.row
         cell.sendButton.tag = indexPath.row
-        cell.connection = applicantsList[indexPath.row]
+        //cell.connection = applicantsList[indexPath.row]
+        cell.setData(obj: applicantsList[indexPath.row])
         cell.sendButton.addTarget(self, action: #selector(sendTapped(_:)), for: .touchUpInside)
 //        cell.delegate = self
 //        cell.connectionDelegate = self

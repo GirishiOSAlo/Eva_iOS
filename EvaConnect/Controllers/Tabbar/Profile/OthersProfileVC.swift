@@ -278,6 +278,8 @@ class OthersProfileVC: UIViewController {
         
         nameLbl.text = "\(user.firstName ?? "") \(user.lastName ?? "")"
         
+        
+        
         if user.type!.elementsEqual("user") {
             professionLbl.text = "\(user.designation ?? "No Designation")"
             //self.followingLabel.text = "\(user.pendingConnection ?? "")"
