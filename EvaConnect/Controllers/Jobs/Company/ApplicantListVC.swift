@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ApplicantListVC: UIViewController {
     
@@ -64,6 +65,7 @@ class ApplicantListVC: UIViewController {
 
 extension ApplicantListVC {
     func setupUI(details: ApplicantListData) {
+        jobImageView.sd_setImage(with: URL(string: details.image ?? ""), placeholderImage: UIImage(named: "profile")!)
         positionNameLbl.text = details.jobTitle
         companyNameLbl.text = details.position
         locationLbl.text = details.location
@@ -94,7 +96,8 @@ extension ApplicantListVC {
         
         showActivity()
         
-        let url = EndPoints.getAllJobApplicant
+        //let url = EndPoints.getAllJobApplicant
+        let url = "http://18.168.230.15:2300/Jobs/14/applicantlist"
         
         let parameters: AFParameters = ["job_id": self.jobId]
         

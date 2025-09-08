@@ -61,15 +61,15 @@ class HomeJobCVC: UICollectionViewCell {
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
            UIApplication.shared.canOpenURL(url) {
-            self.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "jobLogoPlaceholder"))
+            self.profileImgVw.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
         } else {
-            self.profileImgVw.image = UIImage(named: "jobLogoPlaceholder")
+            self.profileImgVw.image = UIImage(named: "profile")
         }
 
         self.titleLbl.text = job.jobTitle ?? ""
         self.subTitleLbl_1.text = job.position ?? ""
         self.subTitleLbl_2.text = job.location ?? ""
-        self.salaryLbl.text = "\(job.currencySymbol ?? "£") \(job.salary ?? 0)"
+        self.salaryLbl.text = "\(job.currencySymbol ?? "Rs") \(job.salary ?? 0)"
         self.jobTimeLbl.text = job.jobtype ?? ""
         
         let jobSaved = job.saved ?? 0

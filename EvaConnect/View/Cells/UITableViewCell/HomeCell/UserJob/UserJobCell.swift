@@ -60,7 +60,7 @@ class UserJobCell: UITableViewCell {
         positionNameLbl.text = data.jobTitle ?? ""
         companyNameLbl.text = data.position ?? ""
         jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-        salaryLbl.text = "\(data.currencySymbol ?? "£") \(data.salary ?? 0)"
+        salaryLbl.text = "\(data.currencySymbol ?? "Rs") \(data.salary ?? 0)"
         locationLbl.text = data.location ?? ""
         contractLbl.text = data.jobtype ?? ""
         if data.saved == 1 {
