@@ -588,6 +588,7 @@ extension OthersProfileVC {
                     if let user = self.userDetails {
                         self.setData(user: user)
                     }
+                    self.getPosts(offSet: 1)
                 } else {
                     self.presentAlert("Error", nil, response.message as? Error)
                 }
