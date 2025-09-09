@@ -155,7 +155,7 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     }
     
     func toggleInactiveBtn() {
-        self.jobType = "deactive"
+        self.jobStatus = "deactivate"
         toggleButton.setTitle("Inactive", for: .normal)
         toggleButton.setTitleColor(UIColor.white, for: .normal)
         toggleButton.backgroundColor = UIColor(hex: "#DCDCDC")
@@ -165,7 +165,7 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     }
     
     func toggleActiveBtn() {
-        self.jobType = "active"
+        self.jobStatus = "active"
         toggleButton.setTitle("Active", for: .normal)
         toggleButton.setTitleColor(UIColor.white, for: .normal)
         toggleButton.backgroundColor = UIColor(hex: "#4D76CD")
@@ -189,15 +189,6 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     
     
     @IBAction func update_touchUpInside(_ sender: Any) { //!jobTimings.text!.isEmpty &&
-//        if !enterTitleTF.text!.isEmpty &&
-//            !enterJobSecTF.text!.isEmpty && !enterLocationTF.text!.isEmpty && !enterSalaryTF.text!.isEmpty &&  !enterJobTypeTF.text!.isEmpty && !enterDurationTF.text!.isEmpty && !enterDesTextView.text!.isEmpty &&  profileImg.image != nil {
-//  
-//            Int(enterSalaryTF.text ?? "") == nil ? presentAlert("Alert", "Salary should be in integer") : addUpdateJob()
-//            
-//        } else {
-//            presentAlert("Alert", "All Fields are mandatory")
-//        }
-        
         if !enterTitleTF.text!.isEmpty &&
             !enterJobSecTF.text!.isEmpty &&
             !enterLocationTF.text!.isEmpty &&
@@ -388,7 +379,8 @@ extension CreateEditPostedJobVC {
                           "location": enterLocationTF.text!,
                           "salary": enterSalaryTF.text!,
                           "job_description": enterDesTextView.text!,
-                          "status": self.jobStatus]
+                          "status": self.jobStatus,
+                          "currency_id": self.selectedCurrencyID]
         }
         
         NetworkManagerr.request(url, method: method, parameters: parameters) { [weak self] (response) in
@@ -608,6 +600,14 @@ extension CreateEditPostedJobVC {
         self.toggleActiveBtn()
         
 //        JobSwitch.isHidden = roleType == .add
+        
+        if isIndivisualUser {
+            self.toggleButton.isHidden = true
+            self.circleView.isHidden = true
+        } else {
+            self.toggleButton.isHidden = false
+            self.circleView.isHidden = false
+        }
         
         if roleType == .edit {
 //            getJobDetails()
