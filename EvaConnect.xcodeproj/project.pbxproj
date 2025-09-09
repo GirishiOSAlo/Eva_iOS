@@ -489,6 +489,7 @@
 		A62A49C62AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */; };
 		A62AB11D2DD4A9CE006C7A21 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */; };
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
+		A62F49FF2E6FFABC00D14062 /* CurrenciesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */; };
 		A63714412E20C44E00C6B3E8 /* NetworkEventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */; };
 		A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */; };
 		A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */; };
@@ -1119,6 +1120,7 @@
 		A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAgendaTimeTblCell.swift; sourceTree = "<group>"; };
 		A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
+		A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesDataModel.swift; sourceTree = "<group>"; };
 		A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEventListDataModel.swift; sourceTree = "<group>"; };
 		A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMeetingCVC.swift; sourceTree = "<group>"; };
 		A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventMeetingCVC.xib; sourceTree = "<group>"; };
@@ -1771,6 +1773,7 @@
 				A625F9922E3C8D6000E60035 /* ScheduleMeetingDataModel.swift */,
 				A61946912E4CA87600EBE382 /* ShareDataModel.swift */,
 				A62347472E5354A20017B1F1 /* Firebase_Chat.swift */,
+				A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4477,6 +4480,7 @@
 				703938E92805639A008A846C /* UIRefreshControl.swift in Sources */,
 				48BD862F2B1EF5040026C0B2 /* FTPopOverMenuCell.swift in Sources */,
 				18503F152403F1FE00F14BA2 /* MyJobListingModel.swift in Sources */,
+				A62F49FF2E6FFABC00D14062 /* CurrenciesDataModel.swift in Sources */,
 				184BC01023D03F0000D0AA2E /* ConnectionVC.swift in Sources */,
 				48BD862E2B1EF5040026C0B2 /* FT+Extension.swift in Sources */,
 				18AD68D52477B13F00F45AF1 /* HomeImage.swift in Sources */,

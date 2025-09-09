@@ -24,6 +24,7 @@ enum TableDataType {
     case locationRoom
     case currentEvent
     case allCategory
+    case currency
 }
 
 class CommonPopupVC: UIViewController {
@@ -35,6 +36,7 @@ class CommonPopupVC: UIViewController {
     
     var completion: ((String, Int) -> ())? = nil
     var eventCompletion: ((EventListData) -> ())? = nil
+    var currencyCompletion: ((CurrenciesData) -> ())? = nil
     var isComeFromEventDelegate = false
     var isRegion = false
     var stringArray : [String] = []
@@ -44,6 +46,7 @@ class CommonPopupVC: UIViewController {
     var eventLocations: [EventLocation] = []
     var currentEventList: [EventListData] = []
     var allCategoryList: [AllCategoryList] = []
+    var currencyList: [CurrenciesData] = []
     
     weak var businessSectorDismissDelegate: BusinessSectorPopUpDismiss?
     weak var regionDismissDelegate: RegionPopUpDismiss?
@@ -83,6 +86,8 @@ class CommonPopupVC: UIViewController {
             rowCount = currentEventList.count
         case .allCategory:
             rowCount = allCategoryList.count
+        case .currency:
+            rowCount = currencyList.count
         }
         
         let tblHeight = CGFloat(rowCount * 50) + 40.0
@@ -127,6 +132,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             return currentEventList.count
         case .allCategory:
             return allCategoryList.count
+        case .currency:
+            return currencyList.count
         }
     }
     
@@ -155,6 +162,8 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             cell.titleName.text = currentEventList[indexPath.row].name
         case .allCategory:
             cell.titleName.text = allCategoryList[indexPath.row].categoryName
+        case .currency:
+            cell.titleName.text = currencyList[indexPath.row].name
         }
         return cell
     }
@@ -227,12 +236,14 @@ extension CommonPopupVC: UITableViewDataSource, UITableViewDelegate {
             self.dismiss(animated: true)
             //self.completion?(selectedStr, selectedID)
             self.eventCompletion?(self.currentEventList[indexPath.row])
-            
         case .allCategory:
             let selectedID = allCategoryList[indexPath.row].id ?? 0
             let selectedStr = allCategoryList[indexPath.row].categoryName ?? ""
             self.dismiss(animated: true)
             self.completion?(selectedStr, selectedID)
+        case .currency:
+            self.dismiss(animated: true)
+            self.currencyCompletion?(self.currencyList[indexPath.row])
         }
     }
     

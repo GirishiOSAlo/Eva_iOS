@@ -31,7 +31,11 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     //@IBOutlet weak var JobSwitch: LabelSwitch!
     @IBOutlet weak var sectorTF: UITextField!
     @IBOutlet weak var companyTF: UITextField!
+    
     @IBOutlet weak var salaryTF: UITextField!
+    @IBOutlet weak var countrySymbolLbl: UILabel!
+    @IBOutlet weak var countryCodeLbl: UILabel!
+    
     @IBOutlet weak var designationTF: UITextField!
     @IBOutlet weak var updateJobBtn: UIButton!
     @IBOutlet weak var locationTF: UITextField!
@@ -100,6 +104,8 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     var listingDuration = 0
     var jobStatus = ""
     var isActive = false
+    var currencyList: [CurrenciesData] = []
+    var selectedCurrencyID = 0
     
     var jobSectorList: [Sectors] = []
     var durationArr: [Sectors] = [
@@ -183,13 +189,33 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     
     
     @IBAction func update_touchUpInside(_ sender: Any) { //!jobTimings.text!.isEmpty &&
+//        if !enterTitleTF.text!.isEmpty &&
+//            !enterJobSecTF.text!.isEmpty && !enterLocationTF.text!.isEmpty && !enterSalaryTF.text!.isEmpty &&  !enterJobTypeTF.text!.isEmpty && !enterDurationTF.text!.isEmpty && !enterDesTextView.text!.isEmpty &&  profileImg.image != nil {
+//  
+//            Int(enterSalaryTF.text ?? "") == nil ? presentAlert("Alert", "Salary should be in integer") : addUpdateJob()
+//            
+//        } else {
+//            presentAlert("Alert", "All Fields are mandatory")
+//        }
+        
         if !enterTitleTF.text!.isEmpty &&
-            !enterJobSecTF.text!.isEmpty && !enterLocationTF.text!.isEmpty && !enterSalaryTF.text!.isEmpty &&  !enterJobTypeTF.text!.isEmpty && !enterDurationTF.text!.isEmpty && !enterDesTextView.text!.isEmpty &&  profileImg.image != nil {
-  
-            Int(enterSalaryTF.text ?? "") == nil ? presentAlert("Alert", "Salary should be in integer") : addUpdateJob()
+            !enterJobSecTF.text!.isEmpty &&
+            !enterLocationTF.text!.isEmpty &&
+            !enterSalaryTF.text!.isEmpty &&
+            !enterJobTypeTF.text!.isEmpty &&
+            !enterDurationTF.text!.isEmpty &&
+            !enterDesTextView.text!.isEmpty &&
+            profileImg.image != nil &&
+            selectedCurrencyID != 0 {
+            
+            if Int(enterSalaryTF.text ?? "") == nil {
+                presentAlert("Alert", "Salary should be in integer")
+            } else {
+                addUpdateJob()
+            }
             
         } else {
-            presentAlert("Alert", "All Fields are mandatory")
+            presentAlert("Alert", "All Fields are mandatory (including currency)")
         }
     }
     
@@ -248,6 +274,24 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
 //        self.navigationController?.popToRootViewController(animated: true)
     }
         
+    @IBAction func onSelectCountryBtn(_ sender: UIButton) {
+        if self.currencyList.count == 0 {
+            self.presentAlert("Currency list not found.")
+        } else {
+            let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+            popupvc.modalPresentationStyle = .overFullScreen
+            popupvc.activeDataType = .currency
+            popupvc.currencyList = currencyList
+            popupvc.currencyCompletion = { selectedCurrency in
+                self.countryCodeLbl.text = selectedCurrency.code
+                self.countrySymbolLbl.text = selectedCurrency.symbol
+                self.selectedCurrencyID = selectedCurrency.id ?? 0
+            }
+            self.navigationController?.present(popupvc, animated: true)
+        }
+    }
+    
+    
 }
 
 // MARK: APIs Calls
@@ -412,6 +456,41 @@ extension CreateEditPostedJobVC {
 //            }
         }
     }
+    
+    func fetchCurrenciesList() {
+        showActivity()
+        let url = "\(EndPoints.currencies)"
+        
+        NetworkManagerr.request(url, method: .get) { (response) in
+            self.hideActivity()
+            guard response.result.isSuccess else {
+                self.presentAlert("Error", nil, response.error?.localizedDescription as? Error)
+                return
+            }
+
+            guard let data = response.data else {
+                self.presentAlert("Error", nil, "No data received." as? Error)
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(CurrenciesDataModel.self, from: data)
+                //print(response)
+                self.currencyList = response.data ?? []
+                if self.currencyList.count == 0 {
+                    self.selectedCurrencyID = self.currencyList[0].id ?? 0
+                    self.countrySymbolLbl.text = self.currencyList[0].symbol ?? ""
+                    self.countryCodeLbl.text = self.currencyList[0].code ?? ""
+                } else {
+                    print("Currency is Empty.")
+                }
+                
+            } catch {
+                print(error)
+                self.presentAlert("Error", nil, error.localizedDescription as? Error)
+            }
+        }
+    }
 }
 
 //MARK: TextField Delegates
@@ -517,6 +596,11 @@ extension CreateEditPostedJobVC {
         setCornerRadius(view: enterDurationView)
         setCornerRadius(view: enterDesView)
         
+        countrySymbolLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        countryCodeLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        
+        self.fetchCurrenciesList()
+        
         toggleButton.layer.cornerRadius = 16
         toggleButton.titleLabel?.font = UIFont(name: Myfonts.regular, size: 14.0)
         circleView.layer.cornerRadius = circleView.frame.height / 2
@@ -614,6 +698,18 @@ extension CreateEditPostedJobVC {
         enterDurationTF.text = "\(job.listingDuration ?? 0) Days"
         listingDuration = job.listingDuration ?? 0
         enterDesTextView.text = job.jobDescription ?? ""
+        
+        self.selectedCurrencyID = job.currencyID ?? 0
+        //Edit Job Set Currency data...
+        if let currency = self.currencyList.first(where: { $0.id == selectedCurrencyID }) {
+            print("Found currency")
+            countrySymbolLbl.text = currency.symbol ?? ""
+            countryCodeLbl.text = currency.code ?? ""
+        } else {
+            print("Currency not found")
+            countrySymbolLbl.text = "--"
+            countryCodeLbl.text = "--"
+        }
     }
     
     func updateUI(jobDetail: JobDetail) {

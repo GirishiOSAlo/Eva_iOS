@@ -242,6 +242,9 @@ enum EndPoints {
     // MARK: Help
     static let help = baseURL + "user/helpcreate"
     
+    // MARK: Currencies
+    static let currencies = baseURL + "currencies"
+    
     // MARK: FAQ's
     static let faq = baseURL + "user/faqs"
     

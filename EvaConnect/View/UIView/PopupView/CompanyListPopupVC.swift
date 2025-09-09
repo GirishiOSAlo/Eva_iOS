@@ -67,6 +67,8 @@ class CompanyListPopupVC: UIViewController,XIBed {
             break
         case .allCategory:
             break
+        case .currency:
+            break
         }
     }
 
@@ -181,6 +183,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
             return 0
         case .allCategory:
             return 0
+        case .currency:
+            return 0
         }
     }
     
@@ -202,6 +206,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
         case .currentEvent:
             break
         case .allCategory:
+            break
+        case .currency:
             break
         }
         return cell
@@ -228,6 +234,8 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
         case .currentEvent:
             break
         case .allCategory:
+            break
+        case .currency:
             break
         }
     }
