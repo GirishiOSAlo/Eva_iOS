@@ -62,9 +62,8 @@ struct DashboardJob: Codable {
     let image, value: String?
     
     enum CodingKeys: String, CodingKey {
-        case id, userID, user, jobTitle, jobNature
-        case jobtype = "jobtype "
-        case jobSector = "jobSector "
+        case id, userID, user, jobTitle, jobNature, jobtype
+        case jobSector = "jobSector"
         case companyName, companylogo, userimage, position, weeklyHours, location, salary, currencyName, currencySymbol, content, jobImage, attendees, commentCount, applicantCount, isJobLike, isApplied, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, type, os, status, isURL, postVideo, isConnected
         case connectionID = "connectionId"
         case isReceiver, saved
