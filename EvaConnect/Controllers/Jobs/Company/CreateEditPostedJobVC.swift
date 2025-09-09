@@ -517,6 +517,7 @@ extension CreateEditPostedJobVC {
         setCornerRadius(view: enterDesView)
         
         toggleButton.layer.cornerRadius = 16
+        toggleButton.titleLabel?.font = UIFont(name: Myfonts.regular, size: 14.0)
         circleView.layer.cornerRadius = circleView.frame.height / 2
         circleView.isUserInteractionEnabled = false
         self.toggleActiveBtn()
@@ -776,4 +777,18 @@ extension CreateEditPostedJobVC: UITextViewDelegate {
         }
     }
 
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        if textField == enterSalaryTF || textField == enterDurationTF {
+            // Allow only numbers
+            let allowedCharacters = CharacterSet.decimalDigits
+            let characterSet = CharacterSet(charactersIn: string)
+            return allowedCharacters.isSuperset(of: characterSet)
+        }
+        
+        // For other textfields → allow normal input
+        return true
+    }
 }

@@ -65,6 +65,7 @@
                                             <constraint firstAttribute="height" constant="32" id="D2y-P3-JxE"/>
                                             <constraint firstAttribute="width" constant="95" id="RIk-rl-BTF"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Active">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -847,7 +848,7 @@
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Salary" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7x6-f6-3VL">
                                                                 <rect key="frame" x="12" y="0.0" width="298" height="38"/>
                                                                 <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             </textField>
                                                         </subviews>
                                                         <constraints>
@@ -969,7 +970,7 @@
                                                                 <rect key="frame" x="12" y="0.0" width="278" height="38"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             </textField>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="B2b-h4-OgI">
                                                                 <rect key="frame" x="300" y="14" width="10" height="10"/>
