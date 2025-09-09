@@ -101,6 +101,7 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     private let textViewColor = UIColor(named: "DocumentBorder")!
     private var jobSuccessAlert: JobApplicationAlert!
     var jobType = ""
+    var jobSectorID = 0
     var listingDuration = 0
     var jobStatus = ""
     var isActive = false
@@ -147,6 +148,8 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -197,7 +200,8 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
             !enterDurationTF.text!.isEmpty &&
             !enterDesTextView.text!.isEmpty &&
             profileImg.image != nil &&
-            selectedCurrencyID != 0 {
+            selectedCurrencyID != 0 &&
+            jobSectorID != 0 {
             
             if Int(enterSalaryTF.text ?? "") == nil {
                 presentAlert("Alert", "Salary should be in integer")
@@ -225,8 +229,22 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     }
     
     @IBAction func JobSecBtnTapped(_ sender: UIButton) {
-        showActivity()
-        getSectors()
+//        showActivity()
+//        getSectors()
+        if self.jobSectorList.count == 0 {
+            self.presentAlert("Job Sector list not found.")
+        } else {
+        }
+        let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+        popupvc.modalPresentationStyle = .overFullScreen
+        self.hideActivity()
+        popupvc.activeDataType = .sector
+        popupvc.sectorsArray = self.jobSectorList
+        popupvc.completion = { passedAns, passedId in
+            self.enterJobSecTF.text = passedAns
+            self.jobSectorID = passedId
+        }
+        self.navigationController?.present(popupvc, animated: true)
     }
     
     @IBAction func locationBtnTapped(_ sender: Any) {
@@ -290,30 +308,15 @@ extension CreateEditPostedJobVC {
     
     private func getSectors() {
         NetworkManagerr.request(EndPoints.getSectors, method: .post) { [weak self] (response) in
-
             do {
                 let jsonDecoder = JSONDecoder()
                 let sectors = try jsonDecoder.decode(AllSectorModel.self, from: response.data!)
-                
                 self?.jobSectorList = sectors.data
-                let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
-                popupvc.modalPresentationStyle = .overFullScreen
-                self?.hideActivity()
-                popupvc.activeDataType = .sector
-                popupvc.sectorsArray = self?.jobSectorList ?? []
-                popupvc.completion = { passedAns, passedId in
-                    self?.enterJobSecTF.text = passedAns
-//                    self?.passedAns = passedAns
-                }
-                self?.navigationController?.present(popupvc, animated: true)
             } catch {
                 
                 self?.presentAlert("Failure", nil, response.result.error)
                 print(error.localizedDescription)
             }
-            
-            //self.contentPickerView.setPicker(values: sectors.data)
-            
         }
     }
     
@@ -375,6 +378,7 @@ extension CreateEditPostedJobVC {
             parameters = ["job_title": enterTitleTF.text!,
                           "job_type": self.jobType,
                           "job_sector": enterJobSecTF.text!,
+                          "job_sector_id": self.jobSectorID,
                           "listing_duration": self.listingDuration,
                           "location": enterLocationTF.text!,
                           "salary": enterSalaryTF.text!,
@@ -469,12 +473,14 @@ extension CreateEditPostedJobVC {
                 let response = try JSONDecoder().decode(CurrenciesDataModel.self, from: data)
                 //print(response)
                 self.currencyList = response.data ?? []
-                if self.currencyList.count == 0 {
-                    self.selectedCurrencyID = self.currencyList[0].id ?? 0
-                    self.countrySymbolLbl.text = self.currencyList[0].symbol ?? ""
-                    self.countryCodeLbl.text = self.currencyList[0].code ?? ""
-                } else {
-                    print("Currency is Empty.")
+                DispatchQueue.main.async {
+                    if self.currencyList.count == 0 {
+                        self.selectedCurrencyID = self.currencyList[0].id ?? 0
+                        self.countrySymbolLbl.text = self.currencyList[0].symbol ?? ""
+                        self.countryCodeLbl.text = self.currencyList[0].code ?? ""
+                    } else {
+                        print("Currency is Empty.")
+                    }
                 }
                 
             } catch {
@@ -592,6 +598,7 @@ extension CreateEditPostedJobVC {
         countryCodeLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         
         self.fetchCurrenciesList()
+        self.getSectors()
         
         toggleButton.layer.cornerRadius = 16
         toggleButton.titleLabel?.font = UIFont(name: Myfonts.regular, size: 14.0)
@@ -699,8 +706,18 @@ extension CreateEditPostedJobVC {
         listingDuration = job.listingDuration ?? 0
         enterDesTextView.text = job.jobDescription ?? ""
         
+        //Edit Job Sector Id data...
+        let jobSectorName = job.jobSector ?? ""
+        if let jobSector = self.jobSectorList.first(where: { $0.name == jobSectorName }) {
+            print("Found Job Sector")
+            jobSectorID = jobSector.id
+        } else {
+            print("Job Sector not found")
+            jobSectorID = 0
+        }
+        
         self.selectedCurrencyID = job.currencyID ?? 0
-        //Edit Job Set Currency data...
+        //Edit Job Currency Id data...
         if let currency = self.currencyList.first(where: { $0.id == selectedCurrencyID }) {
             print("Found currency")
             countrySymbolLbl.text = currency.symbol ?? ""
