@@ -320,7 +320,8 @@ extension CreateEditPostedJobVC {
         
         showActivity()
         
-        let url = roleType == .add ? EndPoints.postJobAd : EndPoints.jobDetails + "\(jobId ?? 0)"
+        //let url = roleType == .add ? EndPoints.postJobAd : EndPoints.jobDetails + "\(jobId ?? 0)"
+        let url = roleType == .add ? EndPoints.postJobAd : EndPoints.postJobAd + "/\(jobId ?? 0)"
         
         let method: HTTPMethod = roleType == .add ? .post : .patch
 
