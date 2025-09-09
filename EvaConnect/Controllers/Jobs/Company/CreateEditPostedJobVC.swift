@@ -620,11 +620,11 @@ extension CreateEditPostedJobVC {
 //            getJobDetails()
             getJobListingData(jobId: self.jobId ?? 0)
             
-            successfulLabel.text = "Job Edit Successful"
-            successfulDescLbl.text = "Your job edit was successful. Please check your notifications for their reply"
+            successfulLabel.text = "Your Job is Successfully Updated"//"Job Edit Successful"
+            successfulDescLbl.text = ""//"Your job edit was successful. Please check your notifications for their reply"
         } else {
-            successfulLabel.text = "Job Post Successful"
-            successfulDescLbl.text = "Your job post has been created. Please check your notifications for their reply"
+            successfulLabel.text = "Your Job is Successfully Created"//"Job Post Successful"
+            successfulDescLbl.text = ""//"Your job post has been created. Please check your notifications for their reply"
         }
         
         self.applyJobSuccessPopupVw.isHidden = true
