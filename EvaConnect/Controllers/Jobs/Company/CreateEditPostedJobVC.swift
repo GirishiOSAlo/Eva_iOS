@@ -103,7 +103,7 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     var jobType = ""
     var jobSectorID = 0
     var listingDuration = 0
-    var jobStatus = ""
+    var jobStatus = "active"
     var isActive = false
     var currencyList: [CurrenciesData] = []
     var selectedCurrencyID = 0
@@ -148,8 +148,6 @@ class CreateEditPostedJobVC: UIViewController {//, LabelSwitchDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -370,10 +368,13 @@ extension CreateEditPostedJobVC {
             parameters = ["job_title": enterTitleTF.text!,
                           "job_type": self.jobType,
                           "job_sector": enterJobSecTF.text!,
+                          "job_sector_id": self.jobSectorID,
                           "listing_duration": self.listingDuration,
                           "location": enterLocationTF.text!,
                           "salary": enterSalaryTF.text!,
-                          "job_description": enterDesTextView.text!]
+                          "job_description": enterDesTextView.text!,
+                          "status": self.jobStatus,
+                          "currency_id": self.selectedCurrencyID]
         } else {
             parameters = ["job_title": enterTitleTF.text!,
                           "job_type": self.jobType,
@@ -456,36 +457,34 @@ extension CreateEditPostedJobVC {
     func fetchCurrenciesList() {
         showActivity()
         let url = "\(EndPoints.currencies)"
-        
         NetworkManagerr.request(url, method: .get) { (response) in
             self.hideActivity()
             guard response.result.isSuccess else {
-                self.presentAlert("Error", nil, response.error?.localizedDescription as? Error)
+                print("Error ::", response.error?.localizedDescription as? Error ?? "Default Error")
                 return
             }
 
             guard let data = response.data else {
-                self.presentAlert("Error", nil, "No data received." as? Error)
+                print("Error :: No data received.")
                 return
             }
 
             do {
                 let response = try JSONDecoder().decode(CurrenciesDataModel.self, from: data)
-                //print(response)
-                self.currencyList = response.data ?? []
-                DispatchQueue.main.async {
+                if let data = response.data {
+                    self.currencyList = data
                     if self.currencyList.count == 0 {
+                        print("Currency is Empty.")
+                    } else {
                         self.selectedCurrencyID = self.currencyList[0].id ?? 0
                         self.countrySymbolLbl.text = self.currencyList[0].symbol ?? ""
                         self.countryCodeLbl.text = self.currencyList[0].code ?? ""
-                    } else {
-                        print("Currency is Empty.")
                     }
+                } else {
+                    print("Error ::", response.message as? Error ?? "Default Error")
                 }
-                
             } catch {
-                print(error)
-                self.presentAlert("Error", nil, error.localizedDescription as? Error)
+                print("Error ::", error)
             }
         }
     }
