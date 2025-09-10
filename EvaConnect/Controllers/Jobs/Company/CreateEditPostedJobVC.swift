@@ -620,14 +620,14 @@ extension CreateEditPostedJobVC {
                 successfulLabel.text = "Your Job is Successfully Updated"//"Job Edit Successful"
                 successfulDescLbl.text = ""//"Your job edit was successful. Please check your notifications for their reply"
                 
-                self.toggleButton.isHidden = true
-                self.circleView.isHidden = true
+                self.toggleButton.isHidden = false
+                self.circleView.isHidden = false
             } else {
                 successfulLabel.text = "Your Job is Successfully Created"//"Job Post Successful"
                 successfulDescLbl.text = ""//"Your job post has been created. Please check your notifications for their reply"
                 
-                self.toggleButton.isHidden = false
-                self.circleView.isHidden = false
+                self.toggleButton.isHidden = true
+                self.circleView.isHidden = true
             }
         }
         
