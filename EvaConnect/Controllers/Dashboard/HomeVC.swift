@@ -336,7 +336,7 @@ class HomeVC: BaseVC {
         showActivity()
             NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
                 self.hideActivity()
-                
+                self.indicatorView.stopAnimating()
                 guard let responseData = response.data else {
                     print("No response data received.")
                     // Optionally show an alert here
@@ -384,7 +384,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
-            
+            self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
                 // Optionally show an alert here
@@ -439,7 +439,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
-            
+            self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
                 // Optionally show an alert here
@@ -492,7 +492,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
-            
+            self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
                 // Optionally show an alert here
@@ -545,7 +545,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
-            
+            self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
                 // Optionally show an alert here
@@ -598,7 +598,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
-            
+            self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
                 // Optionally show an alert here
@@ -651,7 +651,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
-            
+            self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
                 // Optionally show an alert here
