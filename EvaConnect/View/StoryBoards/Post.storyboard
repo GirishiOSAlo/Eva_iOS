@@ -219,7 +219,7 @@
                         <outlet property="documentBtn" destination="Fwf-YE-uUh" id="wTa-KV-u7x"/>
                         <outlet property="embeddedView" destination="Fvu-QG-jEP" id="4o0-UL-zcl"/>
                         <outlet property="galleryBtn" destination="4Mm-MF-zpP" id="Hvn-mg-kqL"/>
-                        <outlet property="headerTitleLbl" destination="923-OI-uME" id="ejF-Wm-GLD"/>
+                        <outlet property="headerTitleLbl" destination="923-OI-uME" id="Sb3-aI-wdy"/>
                         <outlet property="headerView" destination="c7W-Y0-4Lh" id="0BB-hU-vlZ"/>
                         <outlet property="nameLbl" destination="jJf-Zj-XPH" id="5Zu-95-FqV"/>
                         <outlet property="postBtn" destination="jDL-h1-sgj" id="0Xr-7N-wlY"/>
