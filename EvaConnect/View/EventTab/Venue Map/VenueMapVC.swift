@@ -60,6 +60,12 @@ extension VenueMapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = VenueMapViewVC.instantiate()
+        vc.selectedVeneuMapUrl = self.forPlanImages[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.listCollectionVw.frame.size.width, height: 250.0)
     }
