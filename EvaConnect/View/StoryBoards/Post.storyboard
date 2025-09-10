@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,7 +43,7 @@
                                             <action selector="backBtnTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="yKr-GG-IGy"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="923-OI-uME" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="923-OI-uME">
                                         <rect key="frame" x="55" y="76" width="76" height="19.5"/>
                                         <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -219,6 +219,7 @@
                         <outlet property="documentBtn" destination="Fwf-YE-uUh" id="wTa-KV-u7x"/>
                         <outlet property="embeddedView" destination="Fvu-QG-jEP" id="4o0-UL-zcl"/>
                         <outlet property="galleryBtn" destination="4Mm-MF-zpP" id="Hvn-mg-kqL"/>
+                        <outlet property="headerTitleLbl" destination="923-OI-uME" id="ejF-Wm-GLD"/>
                         <outlet property="headerView" destination="c7W-Y0-4Lh" id="0BB-hU-vlZ"/>
                         <outlet property="nameLbl" destination="jJf-Zj-XPH" id="5Zu-95-FqV"/>
                         <outlet property="postBtn" destination="jDL-h1-sgj" id="0Xr-7N-wlY"/>
@@ -239,7 +240,7 @@
         <image name="back_icon" width="16" height="17"/>
         <image name="profile" width="111" height="111"/>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -14,6 +14,7 @@ import Alamofire
 
 class PostVC: BaseVC {
 
+    @IBOutlet weak var headerTitleLbl: UILabel!
     @IBOutlet weak var postBtn: UIButton!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerHeight: NSLayoutConstraint!
@@ -40,6 +41,7 @@ class PostVC: BaseVC {
         super.viewDidLoad()
         isSeparatorHidden = true
         self.navigationController?.isNavigationBarHidden = true
+        headerTitleLbl.font = UIFont(name: Myfonts.bold, size: 14.0)
         applyUserData()
         setTableView()
         setContentPickerView()
