@@ -611,20 +611,24 @@ extension CreateEditPostedJobVC {
         if isIndivisualUser {
             self.toggleButton.isHidden = true
             self.circleView.isHidden = true
-        } else {
-            self.toggleButton.isHidden = false
-            self.circleView.isHidden = false
         }
-        
-        if roleType == .edit {
-//            getJobDetails()
-            getJobListingData(jobId: self.jobId ?? 0)
-            
-            successfulLabel.text = "Your Job is Successfully Updated"//"Job Edit Successful"
-            successfulDescLbl.text = ""//"Your job edit was successful. Please check your notifications for their reply"
-        } else {
-            successfulLabel.text = "Your Job is Successfully Created"//"Job Post Successful"
-            successfulDescLbl.text = ""//"Your job post has been created. Please check your notifications for their reply"
+        else {
+            if roleType == .edit {
+                //getJobDetails()
+                getJobListingData(jobId: self.jobId ?? 0)
+                
+                successfulLabel.text = "Your Job is Successfully Updated"//"Job Edit Successful"
+                successfulDescLbl.text = ""//"Your job edit was successful. Please check your notifications for their reply"
+                
+                self.toggleButton.isHidden = true
+                self.circleView.isHidden = true
+            } else {
+                successfulLabel.text = "Your Job is Successfully Created"//"Job Post Successful"
+                successfulDescLbl.text = ""//"Your job post has been created. Please check your notifications for their reply"
+                
+                self.toggleButton.isHidden = false
+                self.circleView.isHidden = false
+            }
         }
         
         self.applyJobSuccessPopupVw.isHidden = true
