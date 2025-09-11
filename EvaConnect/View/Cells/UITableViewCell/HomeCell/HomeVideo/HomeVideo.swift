@@ -76,9 +76,10 @@ class HomeVideo: BaseCellClass {
     func uiData(dataMaper: DashboardItem) {
         let userid = dataMaper.user?.id ?? 0
         if userid == myUserDefaults.userId {
-           followBtn.isHidden = true
+            followBtn.isHidden = true
+            reportBtn.isHidden = true
         } else {
-            //followBtn.isHidden = false
+            reportBtn.isHidden = false
             if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
                 followBtn.isHidden = true
             } else {
@@ -112,9 +113,10 @@ class HomeVideo: BaseCellClass {
     func setData(dataMaper: DashboardPostData) {
         let userid = dataMaper.user?.id ?? 0
         if userid == myUserDefaults.userId {
-           followBtn.isHidden = true
+            followBtn.isHidden = true
+            reportBtn.isHidden = true
         } else {
-            //followBtn.isHidden = false
+            reportBtn.isHidden = false
             if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
                 followBtn.isHidden = true
             } else {
@@ -150,9 +152,11 @@ class HomeVideo: BaseCellClass {
     func uiData(dataMaper: SearchPost) {
         let userid = Int(dataMaper.userID ?? "")
         if userid == myUserDefaults.userId {
-           followBtn.isHidden = true
+            followBtn.isHidden = true
+            reportBtn.isHidden = true
         } else {
             followBtn.isHidden = false
+            reportBtn.isHidden = false
         }
         if dataMaper.userImage != nil {
             profileImage.sd_setImage(with: URL(string: dataMaper.userImage ?? ""), placeholderImage: #imageLiteral(resourceName: "profile"), options: .progressiveLoad, completed: .none)

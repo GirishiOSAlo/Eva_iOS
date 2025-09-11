@@ -21,6 +21,7 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet var headerLbllCollection: [UILabel]!
     @IBOutlet var textFieldBaseVwCollection: [UIView]!
     
+    @IBOutlet weak var jobTitleBaseVw: UIView!
     @IBOutlet weak var nameTxtField: UITextField!
     @IBOutlet weak var dobTxtField: UITextField!
     @IBOutlet weak var companyTxtField: UITextField!
@@ -107,6 +108,15 @@ class EditProfileViewController: UIViewController, XIBed {
         
         for baseVwTitleLbl in baseViewTitleLblCollection {
             baseVwTitleLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
+        }
+        
+        
+        if isIndivisualUser {
+            self.jobTitleBaseVw.isHidden = false
+            self.resumeBaseVw.isHidden = false
+        } else {
+            self.jobTitleBaseVw.isHidden = true
+            self.resumeBaseVw.isHidden = true
         }
         
         //country data from json string....

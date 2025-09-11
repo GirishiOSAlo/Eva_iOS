@@ -367,24 +367,24 @@ extension CreateEditPostedJobVC {
         if roleType == .add {
             parameters = ["job_title": enterTitleTF.text!,
                           "job_type": self.jobType,
-                          "job_sector": enterJobSecTF.text!,
+                          //"job_sector": enterJobSecTF.text!,
                           "job_sector_id": self.jobSectorID,
                           "listing_duration": self.listingDuration,
                           "location": enterLocationTF.text!,
                           "salary": enterSalaryTF.text!,
                           "job_description": enterDesTextView.text!,
-                          "status": self.jobStatus,
+                          //"status": self.jobStatus,
                           "currency_id": self.selectedCurrencyID]
         } else {
             parameters = ["job_title": enterTitleTF.text!,
                           "job_type": self.jobType,
-                          "job_sector": enterJobSecTF.text!,
+                          //"job_sector": enterJobSecTF.text!,
                           "job_sector_id": self.jobSectorID,
                           "listing_duration": self.listingDuration,
                           "location": enterLocationTF.text!,
                           "salary": enterSalaryTF.text!,
                           "job_description": enterDesTextView.text!,
-                          "status": self.jobStatus,
+                          //"status": self.jobStatus,
                           "currency_id": self.selectedCurrencyID]
         }
         
