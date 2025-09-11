@@ -159,6 +159,7 @@ extension SlideMenuVC {
             "Meetings",
             "News",
             "Jobs",
+            "Posts",
             "My Schedule",
             "Blocklist",
             "Change Password",

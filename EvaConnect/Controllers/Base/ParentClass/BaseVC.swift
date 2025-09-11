@@ -776,6 +776,12 @@ extension BaseVC: SlideMenuVCDelegate {
             vc.tabType = 3
             self.navigationController?.pushViewController(vc, animated: true)
             print("Push to Jobs Screen...")
+        case "Posts":
+            Constants.saveEnumToUserDefaults(.posts)
+            let vc = DashboardTabbarVC.instantiate()
+            vc.tabType = 3
+            self.navigationController?.pushViewController(vc, animated: true)
+            print("Push to Post Screen...")
         case "My Schedule":
             print("Push to My Schedule Screen...")
             let vc = MyScheduleVC.instantiate()
