@@ -168,14 +168,18 @@ class ChatListVC: BaseVC {
             self.notificationsBtn.titleLabel?.font = UIFont(name: "SFProText-Regular", size: 14.0)
             
             dataType = .chatList
+            self.noDataLabel.isHidden = true
+            self.tableView.reloadData()
             //loadMessage()
             let loggedInUserId = myUserDefaults.userId
             observeConversations(loggedInUserId: loggedInUserId) { [weak self] conversations in
+                print("👉 Conversations for user Id \(loggedInUserId) : \(conversations.count)")
                 DispatchQueue.main.async {
-                    self?.conversations = []
+                    // ✅ Assign conversations directly
                     self?.conversations = conversations
                     self?.tableView.reloadData()
-                    print("Conversations Count: \(self?.conversations.count ?? 0)")
+                    // ✅ Show/Hide "No Data" label
+                    self?.noDataLabel.isHidden = !conversations.isEmpty
                 }
             }
         } else {
@@ -193,14 +197,19 @@ class ChatListVC: BaseVC {
         self.messagesBtn.titleLabel?.font = UIFont(name: "SFProText-Regular", size: 14.0)
         
         dataType = .notifications
+        self.noDataLabel.isHidden = true
+        self.tableView.reloadData()
         //loadNotifications()
         let loggedInUserId = myUserDefaults.userId
-        observeNotifications(for: loggedInUserId) { notifications in
+        observeNotifications(for: loggedInUserId) { [weak self] notifications in
             print("👉 Notifications for user Id \(loggedInUserId) : \(notifications.count)")
+            
             DispatchQueue.main.async {
-                self.notificationList = []
-                self.notificationList = notifications
-                self.tableView.reloadData()
+                // ✅ Assign directly
+                self?.notificationList = notifications
+                self?.tableView.reloadData()
+                // ✅ Toggle "No Data" label
+                self?.noDataLabel.isHidden = !notifications.isEmpty
             }
         }
     }
@@ -237,13 +246,14 @@ extension ChatListVC {
         messagesRef.observe(.value) { snapshot, _ in
             var updatedConversations: [Conversation] = []
             
+            let dispatchGroup = DispatchGroup() // wait for all user fetches
+            
             for case let chatNode as DataSnapshot in snapshot.children {
                 guard let key = chatNode.key as String?, key.contains("_") else { continue }
                 
                 let participants = key.split(separator: "_").map { String($0) }
                 guard participants.contains(String(loggedInUserId)) else { continue }
                 
-                // Collect messages
                 var messages: [ChatMessage] = []
                 var unreadCount = 0
                 
@@ -267,7 +277,6 @@ extension ChatListVC {
                         )
                         messages.append(message)
                         
-                        // Count unread messages not sent by me
                         if let senderId = dict["firebase_sender_id"] as? String,
                            senderId != String(loggedInUserId),
                            dict["read"] as? Bool == false {
@@ -278,7 +287,6 @@ extension ChatListVC {
                 
                 guard let lastMessage = messages.max(by: { ($0.timestamp ?? 0.0) < ($1.timestamp ?? 0.0) }) else { continue }
                 
-                // Determine other participant
                 let otherUserId: Int
                 if participants[0] == String(loggedInUserId) {
                     otherUserId = Int(participants[1]) ?? -1
@@ -288,6 +296,7 @@ extension ChatListVC {
                 guard otherUserId != -1 else { continue }
                 
                 // Fetch user info
+                dispatchGroup.enter()
                 usersRef
                     .queryOrdered(byChild: "user_id")
                     .queryEqual(toValue: Double(otherUserId))
@@ -307,14 +316,18 @@ extension ChatListVC {
                                 updatedConversations.append(
                                     Conversation(user: user, lastMessage: lastMessage, chatId: key, unreadCount: unreadCount)
                                 )
-                                
-                                let sorted = updatedConversations.sorted {
-                                    ($0.lastMessage?.timestamp ?? 0.0) > ($1.lastMessage?.timestamp ?? 0.0)
-                                }
-                                onUpdate(sorted)
                             }
                         }
+                        dispatchGroup.leave()
                     }
+            }
+            
+            // ✅ Ensure callback fires even if no chats
+            dispatchGroup.notify(queue: .main) {
+                let sorted = updatedConversations.sorted {
+                    ($0.lastMessage?.timestamp ?? 0.0) > ($1.lastMessage?.timestamp ?? 0.0)
+                }
+                onUpdate(sorted)
             }
         }
     }
@@ -343,22 +356,25 @@ extension ChatListVC {
                         body: dict["body"] as? String ?? "",
                         created_at: dict["created_at"] as? String ?? "",
                         expire_at: dict["expire_at"] as? String ?? "",
-                        id: notificationIdInt,  // ✅ fixed parsing
+                        id: notificationIdInt,
                         read: dict["read"] as? Bool ?? false,
                         redirect_url: dict["redirect_url"] as? String ?? "",
                         title: dict["title"] as? String ?? "",
                         type: dict["type"] as? String ?? "",
                         subtype: dict["subtype"] as? String ?? "",
-                        notificationId: notifSnap.key,   // ✅ store Firebase key
+                        notificationId: notifSnap.key,   // ✅ Firebase key
                         meetingid: dict["meetingid"] as? Int ?? 0
                     )
                     updatedNotifications.append(notification)
                 }
             }
 
-            // ✅ Sort notifications by created_at or expire_at if needed
-            let sorted = updatedNotifications.sorted { $0.created_at ?? "" > $1.created_at ?? "" }
+            // ✅ Always sort before returning (latest first by created_at)
+            let sorted = updatedNotifications.sorted {
+                ($0.created_at ?? "") > ($1.created_at ?? "")
+            }
 
+            // ✅ Always call back, even if empty
             onUpdate(sorted)
         }
     }
@@ -909,7 +925,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 cell.configure(item: notification)
                 return cell
             }
-        default:
+        case .chatList:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as? ChatListCell {
 //                let conversation = messages[indexPath.row]
 //                cell.conversation = conversation
