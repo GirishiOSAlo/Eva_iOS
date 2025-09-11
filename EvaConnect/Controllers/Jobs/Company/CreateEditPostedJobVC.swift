@@ -603,7 +603,9 @@ extension CreateEditPostedJobVC {
         toggleButton.titleLabel?.font = UIFont(name: Myfonts.regular, size: 14.0)
         circleView.layer.cornerRadius = circleView.frame.height / 2
         circleView.isUserInteractionEnabled = false
-        self.toggleActiveBtn()
+        
+        
+        
         
 //        JobSwitch.isHidden = roleType == .add
         
@@ -622,6 +624,7 @@ extension CreateEditPostedJobVC {
                 self.toggleButton.isHidden = false
                 self.circleView.isHidden = false
             } else {
+                self.toggleActiveBtn()
                 successfulLabel.text = "Your Job is Successfully Created"//"Job Post Successful"
                 successfulDescLbl.text = ""//"Your job post has been created. Please check your notifications for their reply"
                 
