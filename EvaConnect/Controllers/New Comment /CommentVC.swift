@@ -646,6 +646,7 @@ extension CommentVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         }
         
         if cell.isExpanded {
+            cell.treadVericalLine.isHidden = false
             var insideReplyHeight = 0.0
             for reply in comment.replies ?? [] {
                 let lblHeight = self.heightForView(text: reply.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 184.0)
@@ -655,6 +656,7 @@ extension CommentVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
             cell.insideRepliesCollectionVwHeight.constant = insideReplyHeight
         }
         else {
+            cell.treadVericalLine.isHidden = true
             cell.insideRepliesCollectionVwHeight.constant = 0.0
         }
 
