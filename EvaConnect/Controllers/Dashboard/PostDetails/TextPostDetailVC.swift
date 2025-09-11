@@ -95,6 +95,7 @@ class TextPostDetailVC: BaseVC {
     var postType: PostType = .simpleText
     var articleContent: String?
     var commentData: [Comment] = []
+    var isComeFromNotificationPostComment = false
     
     //MARK: VIEW LIFECYLCE
     override func viewDidLoad() {
@@ -157,6 +158,10 @@ extension TextPostDetailVC {
     }
     
     @IBAction func commentBtnTapped(_ sender: UIButton) {
+        self.openCommentPopup()
+    }
+    
+    func openCommentPopup() {
         let vc = CommentVC.instantiate()
         vc.postId = self.postId
         vc.commentData = self.commentData
@@ -435,6 +440,13 @@ extension TextPostDetailVC {
                     } else {
                         self.commentData = []
                     }
+                    //When is come from notification side...
+                    if self.isComeFromNotificationPostComment {
+                        self.openCommentPopup()
+                    } else {
+                        print("Not Come From Notifiction Post Comment")
+                    }
+                    
                 } catch {
                     print("\(String(describing: response.result.error?.localizedDescription))")
                 }

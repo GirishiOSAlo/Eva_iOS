@@ -70,6 +70,7 @@ class NewsDetailVC: UIViewController {
     
     //var newsID = 0
     var offsetCount = 1
+    var isComeFromNotificationNewsComment = false
     
     var newsList: [RelatedNewsData] = [] {
         didSet {
@@ -110,6 +111,10 @@ class NewsDetailVC: UIViewController {
         fetchNewsDetails()
         //fetchRelatedNewsDetails(offset: 1)
         fetchTrendingNews()
+        
+        if isComeFromNotificationNewsComment {
+            self.openNewsCommentPopup()
+        }
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -210,6 +215,10 @@ class NewsDetailVC: UIViewController {
     
     @IBAction func commentNewsTapped(_ sender: UIButton) {
         //fetchCommentVC()
+        self.openNewsCommentPopup()
+    }
+    
+    func openNewsCommentPopup() {
         let vc = CommentVC.instantiate()
         vc.modalPresentationStyle = .overFullScreen
         vc.newsId = self.newsDetails?.id ?? 0

@@ -70,7 +70,7 @@ class CommentVC: UIViewController, XIBed {
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         if self.isComeFromNews {
-            self.getAllComments(id: self.newsId)
+            self.getNewsComments(id: self.newsId)
         }
     }
     
@@ -373,7 +373,7 @@ extension CommentVC: ReportCellDelegate {
 }
 
 extension CommentVC {
-    func getAllComments(id: Int) {
+    func getNewsComments(id: Int) {
         let parameters: AFParameters = [ "rss_news_id" : id]
         showActivity()
         NetworkManagerr.request(EndPoints.fetchNewsComment, method: .post, parameters: parameters) { (response) in
@@ -418,7 +418,7 @@ extension CommentVC {
                     let genericResponse = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                     if !genericResponse.error {
                         if self.isComeFromNews {
-                            self.getAllComments(id: self.newsId)
+                            self.getNewsComments(id: self.newsId)
                         }
                     }
                 } catch {
@@ -474,7 +474,7 @@ extension CommentVC {
                         self.commentTextView.resignFirstResponder()
                         if self.isComeFromNews {
                             self.commentTextView.text = ""
-                            self.getAllComments(id: self.newsId)
+                            self.getNewsComments(id: self.newsId)
                         }
                     }
                 } catch {
@@ -505,7 +505,7 @@ extension CommentVC {
                         self.commentTextView.resignFirstResponder()
                         if self.isComeFromNews {
                             self.commentTextView.text = ""
-                            self.getAllComments(id: self.newsId)
+                            self.getNewsComments(id: self.newsId)
                         }
                     }
                 } catch {

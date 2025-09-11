@@ -1119,12 +1119,26 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "post_like" {
+                let vc = StoryboardRouter.textPostDetailVC()
+                vc.postId = notificationID ?? 0
+                navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "post_comment" {
+                let vc = StoryboardRouter.textPostDetailVC()
+                vc.postId = notificationID ?? 0
+                vc.isComeFromNotificationPostComment = true
+                navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "news_like" {
+                let vc = StoryboardRouter.openNewsDetail()
+                vc.selectedNewsId = notificationID ?? 0
+                navigationController?.pushViewController(vc, animated: true)
             }
             else if type == "news_comment" {
+                let vc = StoryboardRouter.openNewsDetail()
+                vc.selectedNewsId = notificationID ?? 0
+                vc.isComeFromNotificationNewsComment = true
+                navigationController?.pushViewController(vc, animated: true)
             }
             
         default:
