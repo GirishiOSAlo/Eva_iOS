@@ -384,7 +384,7 @@ extension CreateEditPostedJobVC {
                           "location": enterLocationTF.text!,
                           "salary": enterSalaryTF.text!,
                           "job_description": enterDesTextView.text!,
-                          //"status": self.jobStatus,
+                          "status": self.jobStatus,
                           "currency_id": self.selectedCurrencyID]
         }
         
