@@ -49,7 +49,7 @@ class SlideMenuVC: UIViewController {
         
         setLayout()
         setItemsData()
-        setUserData()
+        //setUserData()
         setTableView()
         setupTapGesture()
     }
@@ -58,6 +58,7 @@ class SlideMenuVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        fetchUserDetail()
+        fetchUserDetailsData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -224,6 +225,42 @@ extension SlideMenuVC {
 //            guard let strongSelf = self else { return }
 //            strongSelf.notificationsLbl.text = "\(count ?? 0)"
 //        }
+    }
+    
+    func fetchUserDetailsData() {
+        showActivity()
+        let url = "\(EndPoints.userDetail)"
+        
+        NetworkManagerr.request(url, method: .get) { (response) in
+            self.hideActivity()
+            guard response.result.isSuccess else {
+                self.presentAlert("Error", nil, response.error?.localizedDescription as? Error)
+                return
+            }
+
+            guard let data = response.data else {
+                self.presentAlert("Error", nil, "No data received." as? Error)
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(UserDetailsDataModel.self, from: data)
+                print(response)
+                if let user = response.data?.first {
+                    //Save changes.....
+                    myUserDefaults.fullName = user.firstName ?? ""
+                    myUserDefaults.companyName = user.companyName ?? ""
+                    myUserDefaults.userImage = user.userImage ?? ""
+                    self.setUserData()
+
+                } else {
+                    self.presentAlert("Error", nil, response.message as? Error)
+                }
+            } catch {
+                print(error)
+                self.presentAlert("Error", nil, error.localizedDescription as? Error)
+            }
+        }
     }
     
 }

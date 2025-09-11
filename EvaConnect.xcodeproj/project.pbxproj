@@ -521,6 +521,8 @@
 		A661E0D32DCE1E01000D2119 /* FAQsCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A661E0D12DCE1E01000D2119 /* FAQsCVC.xib */; };
 		A66704E62DE42D45008A4B51 /* MyScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66704E42DE42D45008A4B51 /* MyScheduleVC.swift */; };
 		A66704E72DE42D45008A4B51 /* MyScheduleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A66704E52DE42D45008A4B51 /* MyScheduleVC.xib */; };
+		A6686A202E718BA300991447 /* VenueMapViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6686A1E2E718BA300991447 /* VenueMapViewVC.swift */; };
+		A6686A212E718BA300991447 /* VenueMapViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6686A1F2E718BA300991447 /* VenueMapViewVC.xib */; };
 		A66D344C2B45278900A797D6 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D344B2B45278900A797D6 /* MessageList.swift */; };
 		A66D344E2B457DAC00A797D6 /* MediaCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D344D2B457DAC00A797D6 /* MediaCollectionCell.swift */; };
 		A66F13FA2DBF9185009D5A13 /* HomeBannerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66F13F82DBF9185009D5A13 /* HomeBannerCVC.swift */; };
@@ -1152,6 +1154,8 @@
 		A661E0D12DCE1E01000D2119 /* FAQsCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FAQsCVC.xib; sourceTree = "<group>"; };
 		A66704E42DE42D45008A4B51 /* MyScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScheduleVC.swift; sourceTree = "<group>"; };
 		A66704E52DE42D45008A4B51 /* MyScheduleVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyScheduleVC.xib; sourceTree = "<group>"; };
+		A6686A1E2E718BA300991447 /* VenueMapViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueMapViewVC.swift; sourceTree = "<group>"; };
+		A6686A1F2E718BA300991447 /* VenueMapViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VenueMapViewVC.xib; sourceTree = "<group>"; };
 		A66D344B2B45278900A797D6 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		A66D344D2B457DAC00A797D6 /* MediaCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionCell.swift; sourceTree = "<group>"; };
 		A66F13F82DBF9185009D5A13 /* HomeBannerCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerCVC.swift; sourceTree = "<group>"; };
@@ -2437,6 +2441,8 @@
 			children = (
 				489895782DDF028200D2E54E /* VenueMapVC.swift */,
 				489895792DDF028200D2E54E /* VenueMapVC.xib */,
+				A6686A1E2E718BA300991447 /* VenueMapViewVC.swift */,
+				A6686A1F2E718BA300991447 /* VenueMapViewVC.xib */,
 			);
 			path = "Venue Map";
 			sourceTree = "<group>";
@@ -3882,6 +3888,7 @@
 				48BC641E2DCB7901002BA644 /* SF-Pro-Text-Bold.otf in Resources */,
 				48BC641F2DCB7901002BA644 /* SF-Pro-Text-Light.otf in Resources */,
 				48BC64202DCB7901002BA644 /* NunitoSans-Bold.ttf in Resources */,
+				A6686A212E718BA300991447 /* VenueMapViewVC.xib in Resources */,
 				48BC64212DCB7901002BA644 /* NunitoSans-LightItalic.ttf in Resources */,
 				48BC64222DCB7901002BA644 /* NunitoSans-Black.ttf in Resources */,
 				A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */,
@@ -4182,6 +4189,7 @@
 				48BD862B2B1EF5040026C0B2 /* FTConstants.swift in Sources */,
 				489CB3C72DCBA2A500A0C77B /* UploadCVVC.swift in Sources */,
 				500A54322473F69600095324 /* UILabels.swift in Sources */,
+				A6686A202E718BA300991447 /* VenueMapViewVC.swift in Sources */,
 				48A421622AAB53DA00A8D37C /* CustomTabView.swift in Sources */,
 				488BC3AB2DD1E0A200A361ED /* EventDetailsVC.swift in Sources */,
 				50EE237E24EA6D9500D98E17 /* ConnectionUpdatable.swift in Sources */,
