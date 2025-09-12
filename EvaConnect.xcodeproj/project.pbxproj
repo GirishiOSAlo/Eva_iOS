@@ -4671,7 +4671,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.6;
+				CURRENT_PROJECT_VERSION = 8.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
@@ -4733,7 +4733,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.6;
+				CURRENT_PROJECT_VERSION = 8.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
