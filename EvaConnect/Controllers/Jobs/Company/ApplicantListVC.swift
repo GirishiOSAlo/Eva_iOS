@@ -197,7 +197,7 @@ extension ApplicantListVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = StoryboardRouter.othersProfileVC()
-        vc.profileID = applicantsList[indexPath.row].id ?? 0
+        vc.profileID = applicantsList[indexPath.row].userID ?? 0
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -1578,8 +1578,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.setData(data: job)
                 cell.viewDetailsBtn.tag = indexPath.row
                 cell.saveJobBtn.tag = indexPath.row
-                cell.editBtn.tag = indexPath.row
-                cell.applicantBtn.tag = indexPath.row
+//                cell.editBtn.tag = indexPath.row
+//                cell.applicantBtn.tag = indexPath.row
                 cell.applyNowBtn.tag = indexPath.row
                 //                cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
                 
