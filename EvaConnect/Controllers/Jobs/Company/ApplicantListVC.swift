@@ -182,6 +182,7 @@ extension ApplicantListVC : UITableViewDelegate, UITableViewDataSource {
         cell.accept.tag = indexPath.row
         cell.decline.tag = indexPath.row
         cell.sendButton.tag = indexPath.row
+        cell.downloadBtn.tag = indexPath.row
         //cell.connection = applicantsList[indexPath.row]
         cell.setData(obj: applicantsList[indexPath.row])
         cell.sendButton.addTarget(self, action: #selector(sendTapped(_:)), for: .touchUpInside)
@@ -190,7 +191,7 @@ extension ApplicantListVC : UITableViewDelegate, UITableViewDataSource {
 //        cell.connection = dataType == .normal ? connections[indexPath.row] : filteredConnections[indexPath.row]
 //        cell.accept.addTarget(self, action:#selector(updateConnectionFunction(sender:)), for: .touchUpInside)
 //        cell.decline.addTarget(self, action:#selector(updateConnectionFunction(sender:)), for: .touchUpInside)
-
+        cell.downloadBtn.addTarget(self, action: #selector(downloadBtnTapped(sender:)), for: .touchUpInside)
         
         return cell
     }
@@ -203,6 +204,30 @@ extension ApplicantListVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 116
+    }
+    
+    @objc func downloadBtnTapped(sender: UIButton) {
+        let obj = self.applicantsList[sender.tag]
+        self.openResume(resumeString: obj.resume ?? "")
+    }
+    
+    func openResume(resumeString: String?) {
+        if let resumeString = resumeString,
+           !resumeString.isEmpty,
+           let url = URL(string: resumeString),
+           UIApplication.shared.canOpenURL(url) {
+            
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+        } else {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "The resume link is invalid or missing.",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

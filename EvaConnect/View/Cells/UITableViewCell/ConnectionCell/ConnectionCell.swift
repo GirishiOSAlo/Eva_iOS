@@ -28,6 +28,7 @@ class ConnectionCell: BaseCellClass {
     @IBOutlet var acceptanceStackView: UIStackView!
     @IBOutlet weak var connectedBtn: UIButton!
     
+    @IBOutlet weak var downloadBtn: UIButton!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var onlineStatusVw: UIView!
@@ -233,8 +234,8 @@ class ConnectionCell: BaseCellClass {
     }
     
     @IBAction func cancelReqBtnTapped(_ sender: UIButton) {
-        connectionDelegate?.cancelRequest(connection: connection)
         print("Sent Request Button Tapped.")
+        connectionDelegate?.cancelRequest(connection: connection)
     }
     
     @IBAction func addFriendBtnTapped(_ sender: UIButton) {

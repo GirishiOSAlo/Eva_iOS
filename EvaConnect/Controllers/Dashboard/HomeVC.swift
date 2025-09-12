@@ -1648,9 +1648,15 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
     }
     
     @objc func tapApplicantsList(sender: UIButton){
-        let vc = StoryboardRouter.applicantList()
-        vc.jobId = jobList[sender.tag].id ?? 0
-        navigationController?.pushViewController(vc, animated: true)
+        let job = jobList[sender.tag]
+        let countStr = jobList[sender.tag].applicationsCount ?? ""
+        if countStr == "0" || countStr.isEmpty {
+            print("Applications are not available")
+        } else {
+            let vc = StoryboardRouter.applicantList()
+            vc.jobId = job.id ?? 0
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc func tapEditJob(sender: UIButton){
