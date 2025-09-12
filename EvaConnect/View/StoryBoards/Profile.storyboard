@@ -3244,10 +3244,17 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcn-EC-qLj">
+                                                <rect key="frame" x="125.33333333333333" y="484" width="163.33333333333337" height="24"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="iGL-xe-F9J" firstAttribute="leading" secondItem="8i6-3x-flN" secondAttribute="leading" id="50t-og-62Z"/>
+                                            <constraint firstItem="kcn-EC-qLj" firstAttribute="top" secondItem="sMK-Kz-Q4a" secondAttribute="bottom" constant="50" id="66G-BM-wrn"/>
                                             <constraint firstItem="sMK-Kz-Q4a" firstAttribute="leading" secondItem="8i6-3x-flN" secondAttribute="leading" constant="20" id="Bxs-Ud-lcQ"/>
                                             <constraint firstAttribute="bottom" secondItem="iGL-xe-F9J" secondAttribute="bottom" constant="20" id="IGB-NB-url"/>
                                             <constraint firstItem="J7T-60-5QL" firstAttribute="top" secondItem="nrX-zv-eRH" secondAttribute="bottom" constant="24" id="JOW-AC-drs"/>
@@ -3257,6 +3264,7 @@
                                             <constraint firstItem="rTd-VI-rq9" firstAttribute="leading" secondItem="8i6-3x-flN" secondAttribute="leading" constant="20" id="b0R-N1-sOI"/>
                                             <constraint firstItem="nrX-zv-eRH" firstAttribute="top" secondItem="8i6-3x-flN" secondAttribute="top" constant="30" id="d0Q-ki-U5y"/>
                                             <constraint firstItem="nrX-zv-eRH" firstAttribute="leading" secondItem="8i6-3x-flN" secondAttribute="leading" constant="20" id="dcD-5w-MUJ"/>
+                                            <constraint firstItem="kcn-EC-qLj" firstAttribute="centerX" secondItem="8i6-3x-flN" secondAttribute="centerX" id="eio-F0-T4R"/>
                                             <constraint firstItem="sMK-Kz-Q4a" firstAttribute="top" secondItem="J7T-60-5QL" secondAttribute="bottom" constant="25" id="f2e-wc-7yL"/>
                                             <constraint firstAttribute="trailing" secondItem="J7T-60-5QL" secondAttribute="trailing" constant="20" id="kmR-uI-beM"/>
                                             <constraint firstAttribute="trailing" secondItem="iGL-xe-F9J" secondAttribute="trailing" id="pqW-mg-oga"/>
@@ -3323,6 +3331,7 @@
                         <outlet property="inviteToFollowBtn" destination="F2j-0q-dAZ" id="4vR-pl-7wx"/>
                         <outlet property="inviteView" destination="ZIc-Wi-4b6" id="zZh-AL-TTz"/>
                         <outlet property="nameLbl" destination="eSq-I9-tBo" id="FXn-Ao-aig"/>
+                        <outlet property="noDataLbl" destination="kcn-EC-qLj" id="tsC-Dw-mwJ"/>
                         <outlet property="postTVHeight" destination="TJS-Hg-2Oi" id="X1J-Ez-lnn"/>
                         <outlet property="postTableView" destination="UHz-gn-uCf" id="IAd-g9-Tof"/>
                         <outlet property="privateAccView" destination="XSx-fT-tGl" id="ORS-HO-6gp"/>

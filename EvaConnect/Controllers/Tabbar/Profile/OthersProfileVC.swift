@@ -63,6 +63,7 @@ class OthersProfileVC: UIViewController {
     @IBOutlet weak var profileMainVw: UIView!
     @IBOutlet weak var bioMainView: UIView!
 //    @IBOutlet weak var bioViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var noDataLbl: UILabel!
     
 //    @IBOutlet weak var onlineStatusDotView: UIView!
 //    @IBOutlet weak var onlineStatusLbl: UILabel!
@@ -145,9 +146,9 @@ class OthersProfileVC: UIViewController {
 //            inviteView.isHidden = true
 //        }
         self.postTVHeight.constant = 0.0
-        
-        fetchUserDetailsData()
-        getPosts(offSet: 1)
+        self.noDataLbl.isHidden = true
+        self.fetchUserDetailsData()
+        //getPosts(offSet: 1)
         privateAccView.isHidden = true
         
         self.postTableView.delegate = self
@@ -587,6 +588,15 @@ extension OthersProfileVC {
                     self.userDetails = user
                     if let user = self.userDetails {
                         self.setData(user: user)
+                        
+                        let isPublic = user.isPublic
+                        if isPublic == 0 { //Ptivate
+                            self.postTableView.isHidden = true
+                            self.privateAccView.isHidden = false
+                        } else { //Public
+                            self.postTableView.isHidden = false
+                            self.privateAccView.isHidden = true
+                        }
                     }
                     self.getPosts(offSet: 1)
                 } else {
@@ -610,17 +620,21 @@ extension OthersProfileVC {
 //            self.stopAPICall = false
             switch result {
             case .success(let post):
-
-                if post.error == true, post.message == "Account is Private" {
-                    postTableView.isHidden = true
-                    privateAccView.isHidden = false
-                }
+                
+//                if post.error == true, post.message == "Account is Private" {
+//                    postTableView.isHidden = true
+//                    privateAccView.isHidden = false
+//                } else {
+//                    postTableView.isHidden = false
+//                    privateAccView.isHidden = true
+//                }
                 
                 if post.error == false, post.data?.count ?? 0 > 0 {
-                    postTableView.isHidden = false
-                    privateAccView.isHidden = true
                     self.posts = post.data ?? []
                     self.setPostTableHeight()
+                    self.noDataLbl.isHidden = true
+                } else {
+                    self.noDataLbl.isHidden = false
                 }
                     
             case .failure(let failure):
