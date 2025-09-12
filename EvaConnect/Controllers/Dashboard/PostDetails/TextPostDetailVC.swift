@@ -354,15 +354,15 @@ extension TextPostDetailVC {
         docSizeLbl.font = UIFont(name: Myfonts.regular, size: 14)
         docTimeLbl.font = UIFont(name: Myfonts.regular, size: 14)
         
-        if self.dashboardItem?.user?.id == myUserDefaults.userId {
-           followBtn.isHidden = true
-        } else {
-            if self.dashboardItem?.isConnected == "connected" || self.dashboardItem?.isConnected == "active" {
-                followBtn.isHidden = true
-            } else {
-                followBtn.isHidden = false
-            }
-        }
+//        if self.dashboardItem?.user?.id == myUserDefaults.userId {
+//           followBtn.isHidden = true
+//        } else {
+//            if self.dashboardItem?.isConnected == "connected" || self.dashboardItem?.isConnected == "active" {
+//                followBtn.isHidden = true
+//            } else {
+//                followBtn.isHidden = false
+//            }
+//        }
         
         switch postType {
         case .simpleText:
@@ -670,6 +670,16 @@ extension TextPostDetailVC {
            self.hideActivity()
             if let post = postModel {
                 self.postDetail = post
+                
+                if self.postDetail?.user?.id == myUserDefaults.userId {
+                    self.followBtn.isHidden = true
+                } else {
+                    if self.postDetail?.isConnected == "connected" || self.postDetail?.isConnected == "active" {
+                        self.followBtn.isHidden = true
+                    } else {
+                        self.followBtn.isHidden = false
+                    }
+                }
                 
                 if post.postVideo != "" && post.postVideo != nil {
                     self.postType = .video
