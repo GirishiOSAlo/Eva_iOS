@@ -273,6 +273,33 @@ extension ConnectionViewController {
             }
         }
     }
+    
+    func connectionSendRequest(receiverID: Int, status: Int) {
+        let url = EndPoints.delegateSendRequest
+        let parameters = [
+            "receiver_id": receiverID,
+            "status": status] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(SendRequestDataModel.self, from: response.data!)
+                if !(networkEventRoot.error ?? false) {
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                    self.titlePopupLbl.text = networkEventRoot.message ?? "Success"
+                    self.fetchData()
+                } else {
+                    self.presentAlert(networkEventRoot.message ?? "")
+                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
 }
 
 //MARK: UICollection Delegate & DataSource....
@@ -297,6 +324,8 @@ extension ConnectionViewController: UICollectionViewDelegate, UICollectionViewDa
         cell.acceptBtn.addTarget(self, action: #selector(acceptTapped(sender:)), for: .touchUpInside)
         cell.rejectBtn.tag = indexPath.row
         cell.rejectBtn.addTarget(self, action: #selector(rejectTapped(sender:)), for: .touchUpInside)
+        cell.sendReqBtn.tag = indexPath.row
+        cell.sendReqBtn.addTarget(self, action: #selector(sendReqTapped(sender:)), for: .touchUpInside)
         
         return cell
     }
@@ -324,12 +353,12 @@ extension ConnectionViewController {
     
     @objc func followTapped(sender: UIButton) {
         let obj = list[sender.tag]
-        self.userFollowUnfollow(receiverId: obj.id ?? 0, status: 2)
+        self.userFollowUnfollow(receiverId: obj.id ?? 0, status: 2) //2= follow
     }
     
     @objc func unfollowTapped(sender: UIButton) {
         let obj = list[sender.tag]
-        self.userFollowUnfollow(receiverId: obj.id ?? 0, status: 6)
+        self.userFollowUnfollow(receiverId: obj.id ?? 0, status: 6) //6= unfollow
     }
     
     @objc func acceptTapped(sender: UIButton) {
@@ -340,5 +369,10 @@ extension ConnectionViewController {
     @objc func rejectTapped(sender: UIButton) {
         let obj = list[sender.tag]
         self.userAcceptReject(connection_id: obj.id ?? 0, action: "reject")
+    }
+    
+    @objc func sendReqTapped(sender: UIButton) {
+        let obj = list[sender.tag]
+        self.connectionSendRequest(receiverID: obj.id ?? 0, status: 1) //1= pending
     }
 }

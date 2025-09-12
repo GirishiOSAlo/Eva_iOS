@@ -52,10 +52,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YsW-1L-RGJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="13.333333333333334"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="10"/>
                                                 <subviews>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evX-wb-RCN">
-                                                        <rect key="frame" x="2" y="2" width="96" height="9.3333333333333339"/>
+                                                        <rect key="frame" x="2" y="2" width="96" height="6"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" title="Unfollow">
@@ -72,10 +72,10 @@
                                                 </constraints>
                                             </view>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S3h-hB-2vn">
-                                                <rect key="frame" x="0.0" y="13.333333333333336" width="100" height="13.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="10" width="100" height="10"/>
                                                 <subviews>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79N-KB-nhP">
-                                                        <rect key="frame" x="2" y="2" width="96" height="9.3333333333333339"/>
+                                                        <rect key="frame" x="2" y="2" width="96" height="6"/>
                                                         <color key="backgroundColor" red="0.30196078431372547" green="0.46274509803921571" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -92,19 +92,40 @@
                                                     <constraint firstAttribute="trailing" secondItem="79N-KB-nhP" secondAttribute="trailing" constant="2" id="b4m-gy-iip"/>
                                                 </constraints>
                                             </view>
-                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIv-GS-MYS">
-                                                <rect key="frame" x="0.0" y="26.666666666666668" width="100" height="13.333333333333332"/>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nya-Nz-9XX">
+                                                <rect key="frame" x="0.0" y="20" width="100" height="10"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qSD-T4-Lpo">
-                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="13.333333333333334"/>
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6YN-04-2vP">
+                                                        <rect key="frame" x="2" y="2" width="96" height="6"/>
+                                                        <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Send Request">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="6YN-04-2vP" secondAttribute="trailing" constant="2" id="Apa-q5-hMV"/>
+                                                    <constraint firstItem="6YN-04-2vP" firstAttribute="leading" secondItem="nya-Nz-9XX" secondAttribute="leading" constant="2" id="O5u-hc-TcV"/>
+                                                    <constraint firstItem="6YN-04-2vP" firstAttribute="top" secondItem="nya-Nz-9XX" secondAttribute="top" constant="2" id="bsY-R9-qHP"/>
+                                                    <constraint firstAttribute="bottom" secondItem="6YN-04-2vP" secondAttribute="bottom" constant="2" id="cbd-rE-Xao"/>
+                                                </constraints>
+                                            </view>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIv-GS-MYS">
+                                                <rect key="frame" x="0.0" y="30" width="100" height="10"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="qSD-T4-Lpo">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="10"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPA-HZ-R8q">
-                                                                <rect key="frame" x="0.0" y="0.0" width="46" height="13.333333333333334"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="47.666666666666664" height="10"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_rejected"/>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5TL-1c-dGy">
-                                                                <rect key="frame" x="54" y="0.0" width="46" height="13.333333333333334"/>
+                                                                <rect key="frame" x="52.666666666666686" y="0.0" width="47.333333333333343" height="10"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="ic_accepted"/>
                                                             </button>
@@ -174,6 +195,8 @@
                 <outlet property="acceptBtn" destination="5TL-1c-dGy" id="atA-E1-gaO"/>
                 <outlet property="acceptrejectVw" destination="HIv-GS-MYS" id="40p-7D-XwD"/>
                 <outlet property="baseView" destination="Zvf-cn-V0I" id="Mdc-X8-SVj"/>
+                <outlet property="btnBaseVwWidthConst" destination="I7Z-Ya-pSg" id="MGj-er-SX0"/>
+                <outlet property="buttonBaseVw" destination="Wpd-hK-j4Q" id="Swd-8C-fPP"/>
                 <outlet property="companyLbl" destination="isw-Et-7ED" id="PB4-zP-2kd"/>
                 <outlet property="designationLbl" destination="L1Y-Hj-Esy" id="ddc-Zl-4EV"/>
                 <outlet property="followBtn" destination="79N-KB-nhP" id="qxE-4l-cHk"/>
@@ -182,6 +205,8 @@
                 <outlet property="nameLbl" destination="hXR-HZ-L4E" id="OU1-Ue-68n"/>
                 <outlet property="profileImgVw" destination="32E-dD-aPb" id="qlv-Ma-WuG"/>
                 <outlet property="rejectBtn" destination="BPA-HZ-R8q" id="kYg-Y3-NOO"/>
+                <outlet property="sendReqBtn" destination="6YN-04-2vP" id="Nit-v4-pN6"/>
+                <outlet property="sendReqVw" destination="nya-Nz-9XX" id="2hJ-0f-Ntr"/>
                 <outlet property="unfollowBtn" destination="evX-wb-RCN" id="l91-NS-x4n"/>
                 <outlet property="unfollowVw" destination="YsW-1L-RGJ" id="i1x-aX-Oef"/>
             </connections>
