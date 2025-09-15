@@ -252,7 +252,7 @@ class ChatVC: BaseVC {
         // Show/hide placeholder as needed
         self.placeholderLabel.isHidden = !self.messageTextView.text.isEmpty
         
-        if self.isComeFromNotification {
+//        if self.isComeFromNotification {
             let loggedInUserId = myUserDefaults.userId
             let otherUserID = userId
             let chatId = makeChatId(user1Id: loggedInUserId, user2Id: otherUserID)
@@ -267,16 +267,15 @@ class ChatVC: BaseVC {
                     print("Notification User not found")
                 }
             }
-        }
-        else {
-            if let conversation = conversationDetails {
-                chatMemberImage.kf.setImage(with: URL(string: conversation.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
-                chatMemberName.text = conversation.user?.name
-                lstOnlineLbl.text = conversation.user?.status//DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
-            } else {
-                print("User not found")
-            }
-        }
+//        } else {
+//            if let conversation = conversationDetails {
+//                chatMemberImage.kf.setImage(with: URL(string: conversation.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
+//                chatMemberName.text = conversation.user?.name
+//                lstOnlineLbl.text = conversation.user?.status//DateUtils.formatTo24Hour(timestamp: conversation.lastMessage?.timestamp ?? 0.0)
+//            } else {
+//                print("User not found")
+//            }
+//        }
         
 //        if let user = user {
 //            if let imageName = user.userImage,
