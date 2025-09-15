@@ -175,9 +175,9 @@ class ConnectionCell: BaseCellClass {
     func initUI() {
         self.baseView.layer.cornerRadius = 13
         self.onlineStatusVw.layer.cornerRadius = self.onlineStatusVw.frame.size.height/2
+        self.userImage.layer.cornerRadius = self.userImage.frame.size.height/2
         
-        
-        userImage.roundOnly()
+        //userImage.roundOnly()
 //        accept.makeRoundView(boderColor: Constants.AppColorLiteral.greenColor, boderValue: 1.0)
 //        decline.makeRoundView(boderColor: Constants.AppColorLiteral.loginColor, boderValue: 1.0)
 //        connect.makeRoundView(boderColor: AppColors.evaBlue, boderValue: 1.0)
