@@ -2294,6 +2294,31 @@ private extension HomeVC {
             self.view.isUserInteractionEnabled = true
         }
     }
+    
+    func likeNews(newsId: Int, status: String, action: String) {
+        let param: AFParameters = [ "rss_news_id": newsId,
+                                    "created_by_id":  myUserDefaults.userId,
+                                    "status": status,
+                                    "action": action ]
+        
+        view.isUserInteractionEnabled = false
+        showActivity()
+        ApiCallerClass.likeNewsServiceFunc(usertoken: myUserDefaults.token,para: param, success: { (dataRespose) in
+            let data = dataRespose as? NSDictionary
+            let error = data?["error"] as? Int
+            self.hideActivity()
+            if error == 0 {
+                self.fetchNewsListData(offSet: 1)
+            }
+            else {
+                //self.presentAlert("Alert", "No more news")
+            }
+        })
+        { (error) in
+            self.hideActivity()
+            self.view.isUserInteractionEnabled = true
+        }
+    }
 }
 
 //MARK: LAYOUT SETTING
@@ -2796,7 +2821,13 @@ extension HomeVC {
 //        SVProgressHUD.show()
 //        let post = posts[sender.tag]
 //        likeNews(postId: post.id, status: "active", action: !post.isNewsLike.isNil ? "unlike" : "like", at: sender.tag)
-        self.openNewsDetailsPage(index: sender.tag)
+        //self.openNewsDetailsPage(index: sender.tag)
+        let news = self.newsList[sender.tag]
+        if news.isNewsLike == 1 {
+            self.likeNews(newsId: news.id ?? 0, status: "deactivate", action: "dislike")
+        } else {
+            self.likeNews(newsId: news.id ?? 0, status: "active", action: "like")
+        }
     }
     
 //    @objc func eventsLiked(_ sender: UIButton) {
@@ -2857,7 +2888,12 @@ extension HomeVC {
 //            }
 //        }
 //        navigationController?.present(vc, animated: true)
-        self.openNewsDetailsPage(index: sender.tag)
+        //self.openNewsDetailsPage(index: sender.tag)
+        let vc = CommentVC.instantiate()
+        vc.modalPresentationStyle = .overFullScreen
+        vc.newsId = self.newsList[sender.tag].id ?? 0
+        vc.isComeFromNews = true
+        self.present(vc, animated: true)
     }
     
     @objc func saveNewsTapped(sender: UIButton) {
@@ -2949,18 +2985,25 @@ extension HomeVC {
     }
     
     @objc func urlVCPost(sender: UIButton) {
-        self.openNewsDetailsPage(index: sender.tag)
+        //self.openNewsDetailsPage(index: sender.tag)
+        tabBarController?.tabBar.isHidden = true
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+        vc.objectId = self.newsList[sender.tag].id ?? 0
+        vc.type = .news
+        vc.modalPresentationStyle = .popover
+        self.present(vc, animated: true)
     }
     
-    func openNewsDetailsPage(index: Int) {
-        let vc = StoryboardRouter.openNewsDetail() //openURLVC()
-        let bindModelData = newsList[index]
-        vc.selectedNewsId = bindModelData.id ?? 0
-//        vc.categoryID = bindModelData.evaNewsCategory?[0].id ?? 0
-//        vc.contentString = bindModelData.type == .news ? bindModelData.link : bindModelData.content!.fetchUrlFromString()
-        navigationController?.pushViewController(vc, animated: true)
-
-    }
+//    func openNewsDetailsPage(index: Int) {
+//        let vc = StoryboardRouter.openNewsDetail() //openURLVC()
+//        let bindModelData = newsList[index]
+//        vc.selectedNewsId = bindModelData.id ?? 0
+////        vc.categoryID = bindModelData.evaNewsCategory?[0].id ?? 0
+////        vc.contentString = bindModelData.type == .news ? bindModelData.link : bindModelData.content!.fetchUrlFromString()
+//        navigationController?.pushViewController(vc, animated: true)
+//
+//    }
 }
 
 //MARK: CUSTOM PROTOCAL FOR API CALLING

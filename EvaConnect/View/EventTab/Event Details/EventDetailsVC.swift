@@ -79,6 +79,10 @@ class EventDetailsVC: UIViewController, XIBed {
         eventHeadingLabel.font = UIFont(name: Myfonts.bold, size: 18)
         createdByLabel.font = UIFont(name: Myfonts.regular, size: 14)
         
+        per1imgView.layer.cornerRadius = per1imgView.frame.size.height / 2
+        per2imgView.layer.cornerRadius = per2imgView.frame.size.height / 2
+        per3imgView.layer.cornerRadius = per3imgView.frame.size.height / 2
+        
         noOfJoinedPeopleLabel.font = UIFont(name: Myfonts.medium, size: 10)
         noOfJoinedPeopleLabel.textColor = UIColor(hex: "#848397")
         
@@ -166,8 +170,33 @@ class EventDetailsVC: UIViewController, XIBed {
         
 //        let Count: Int = Int(eventDetail.interestedUsersCount ?? "") ?? 0
 //        noOfJoinedPeopleLabel.text = Count > 100 ? "\(eventDetail.interestedUsersCount ?? "")+ joined" : "\(eventDetail.interestedUsersCount ?? "")"
-        let count = eventDetail.attendeesCount ?? 0
-        noOfJoinedPeopleLabel.text = "\(count)+ Joined"
+        let attendees = self.eventDetail?.evaEventsAttendees ?? []
+        let attendeesCount = eventDetail.attendeesCount ?? 0
+        noOfJoinedPeopleLabel.text = "\(attendeesCount)+ Joined"
+            
+        if attendeesCount == 1 {
+            let imgURL = URL(string: attendees[0].evaEventsAttendeeUser?.userImage ?? "")
+            self.per1imgView.kf.setImage(with: imgURL, placeholder: UIImage(named: "profile"))
+        }
+        else if attendeesCount == 2 {
+            let imgURL = URL(string: attendees[0].evaEventsAttendeeUser?.userImage ?? "")
+            self.per1imgView.kf.setImage(with: imgURL, placeholder: UIImage(named: "profile"))
+            let imgURL1 = URL(string: attendees[1].evaEventsAttendeeUser?.userImage ?? "")
+            self.per2imgView.kf.setImage(with: imgURL1, placeholder: UIImage(named: "profile"))
+        }
+        else if attendeesCount >= 3 {
+            let imgURL = URL(string: attendees[0].evaEventsAttendeeUser?.userImage ?? "")
+            self.per1imgView.kf.setImage(with: imgURL, placeholder: UIImage(named: "profile"))
+            let imgURL1 = URL(string: attendees[1].evaEventsAttendeeUser?.userImage ?? "")
+            self.per2imgView.kf.setImage(with: imgURL1, placeholder: UIImage(named: "profile"))
+            let imgURL2 = URL(string: attendees[2].evaEventsAttendeeUser?.userImage ?? "")
+            self.per3imgView.kf.setImage(with: imgURL2, placeholder: UIImage(named: "profile"))
+        } else {
+            self.per1imgView.image = UIImage(named: "profile")
+            self.per2imgView.image = UIImage(named: "profile")
+            self.per3imgView.image = UIImage(named: "profile")
+        }
+            
         
         eventTypeLabel.text = "\(eventDetail.isPrivate ?? 0 == 1 ? "Private" : "Public")"
         

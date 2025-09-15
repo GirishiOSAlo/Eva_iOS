@@ -1022,28 +1022,78 @@ extension HomePageVC {
         })
     }
     
-    func openNewsDetailsPage(index: Int) {
-        let vc = StoryboardRouter.openNewsDetail() //openURLVC()
-        let news = newsList[index]
-        vc.selectedNewsId = news.id ?? 0
+//    func openNewsDetailsPage(index: Int) {
+//        let vc = StoryboardRouter.openNewsDetail() //openURLVC()
+//        let news = newsList[index]
+//        vc.selectedNewsId = news.id ?? 0
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
+    
+    @objc func newsDetails(_ sender: UIButton) {
+        //self.openNewsDetailsPage(index: sender.tag)
+        let vc = StoryboardRouter.openNewsDetail()
+        vc.selectedNewsId = self.newsList[sender.tag].id ?? 0
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func newsLiked(_ sender: UIButton) {
-        self.openNewsDetailsPage(index: sender.tag)
+        //self.openNewsDetailsPage(index: sender.tag)
+        let news = self.newsList[sender.tag]
+        if news.isNewsLike == 1 {
+            self.likeNews(newsId: news.id ?? 0, status: "deactivate", action: "dislike")
+        } else {
+            self.likeNews(newsId: news.id ?? 0, status: "active", action: "like")
+        }
     }
     
     @objc func urlVCPost(sender: UIButton) {
-        self.openNewsDetailsPage(index: sender.tag)
+        //self.openNewsDetailsPage(index: sender.tag)
+        tabBarController?.tabBar.isHidden = true
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+        vc.objectId = self.newsList[sender.tag].id ?? 0
+        vc.type = .news
+        vc.modalPresentationStyle = .popover
+        self.present(vc, animated: true)
     }
     
     @objc func newsCommentVCPost(sender: UIButton) {
-        self.openNewsDetailsPage(index: sender.tag)
+        //self.openNewsDetailsPage(index: sender.tag)
+        let vc = CommentVC.instantiate()
+        vc.modalPresentationStyle = .overFullScreen
+        vc.newsId = self.newsList[sender.tag].id ?? 0
+        vc.isComeFromNews = true
+        self.present(vc, animated: true)
     }
     
     @objc func saveNewsTapped(sender: UIButton) {
         let news = newsList[sender.tag]
         saveNews(newsId: news.id ?? 0, at: sender.tag)
+    }
+    
+    func likeNews(newsId: Int, status: String, action: String) {
+        let param: AFParameters = [ "rss_news_id": newsId,
+                                    "created_by_id":  myUserDefaults.userId,
+                                    "status": status,
+                                    "action": action ]
+        
+        view.isUserInteractionEnabled = false
+        showActivity()
+        ApiCallerClass.likeNewsServiceFunc(usertoken: myUserDefaults.token,para: param, success: { (dataRespose) in
+            let data = dataRespose as? NSDictionary
+            let error = data?["error"] as? Int
+            self.hideActivity()
+            if error == 0 {
+                self.fetchDashboardNews()
+            }
+            else {
+                //self.presentAlert("Alert", "No more news")
+            }
+        })
+        { (error) in
+            self.hideActivity()
+            self.view.isUserInteractionEnabled = true
+        }
     }
 }
 
@@ -1164,7 +1214,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
             
             self.objectId = obj.id ?? 0
             self.type = .news
-            cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
+            cell.detailNavigateBtn.addTarget(self, action: #selector(newsDetails(_:)), for: .touchUpInside)
             cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
             cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
             cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
