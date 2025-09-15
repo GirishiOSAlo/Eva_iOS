@@ -366,7 +366,8 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             cell.cancelMeetingBtn.isHidden = false
             cell.rescheduleBtn.isHidden = false
             cell.messageBtn.isHidden = false
-            cell.joinMeetingBtn.setTitle("Join Meeting", for: .normal)
+            //cell.joinMeetingBtn.setTitle("Join Meeting", for: .normal)
+            cell.joinMeetingBtn.setTitle("Accept", for: .normal)
             
             if self.type == .approved {
                 cell.joinMeetingBtn.isHidden = true
