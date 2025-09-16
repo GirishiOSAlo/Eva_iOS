@@ -632,6 +632,22 @@ extension EditProfileViewController {
         var params: [String:Any] = [:]
         
         if self.isPersionalDetailsEdit {
+            
+            var cat_ID = ""
+            if self.categoryId == 0 {
+                cat_ID = ""
+            } else {
+                cat_ID = "\(self.categoryId)"
+            }
+            
+            var sector_ID = ""
+            if self.businessSectorId == 0 {
+                sector_ID = ""
+            } else {
+                sector_ID = "\(self.businessSectorId)"
+            }
+            
+            
             if let imageData = self.profileImageView.image?.jpegData(compressionQuality: 0.50) {
                 let base64ImageString = imageData.base64EncodedString(options: [])
                 base64String = "data:image/png;base64,\(base64ImageString)"
@@ -641,8 +657,8 @@ extension EditProfileViewController {
                       "dob": self.dobTxtField.text ?? "",
                       "company_id": self.companyId,
                       "designation": self.jobTitleTxtField.text ?? "",
-                      "category_id": self.categoryId,
-                      "sector_id": self.businessSectorId,
+                      "category_id": cat_ID,
+                      "sector_id": sector_ID,
                       "bio_data": self.descriptionTxtVw.text ?? "",
                       "user_image": base64String,
                       "is_public": "\(self.userDetails?.isPublic ?? 0)"] as [String: Any]
