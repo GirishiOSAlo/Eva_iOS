@@ -1727,11 +1727,6 @@
                 <constraint firstItem="0VV-ko-IKd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gxy-jt-efr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AKB-zI-hfO" secondAttribute="trailing" id="jOj-OZ-5it"/>
             </constraints>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="8ZQ-Rq-3Yk"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="49.618320610687022" y="-1.4084507042253522"/>
         </view>
     </objects>
