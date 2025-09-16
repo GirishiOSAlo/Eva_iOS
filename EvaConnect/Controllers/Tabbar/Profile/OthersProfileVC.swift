@@ -591,11 +591,11 @@ extension OthersProfileVC {
                         
                         let isPublic = user.isPublic
                         if isPublic == 0 { //Private
-                            self.noDataLbl.isHidden = true
+                            //self.noDataLbl.isHidden = true
                             self.postTableView.isHidden = true
                             self.privateAccView.isHidden = false
                         } else { //Public
-                            self.noDataLbl.isHidden = false
+                            //self.noDataLbl.isHidden = false
                             self.postTableView.isHidden = false
                             self.privateAccView.isHidden = true
                         }
@@ -636,7 +636,11 @@ extension OthersProfileVC {
                     self.setPostTableHeight()
                     self.noDataLbl.isHidden = true
                 } else {
-                    self.noDataLbl.isHidden = false
+                    if self.userDetails?.isPublic == 0 { //Private
+                        self.noDataLbl.isHidden = true
+                    } else {
+                        self.noDataLbl.isHidden = false
+                    }
                 }
                     
             case .failure(let failure):
