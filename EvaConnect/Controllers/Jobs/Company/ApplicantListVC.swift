@@ -87,7 +87,7 @@ extension ApplicantListVC {
         let obj = applicantsList[sender.tag]
         if isChatEnable {
             let chatVC = StoryboardRouter.chat()
-            chatVC.userId = obj.id ?? 0
+            chatVC.userId = obj.userID ?? 0
             navigationController?.pushViewController(chatVC, animated: true)
         } else {
             self.presentAlert("Alert", "This action has been disabled, Please contact admin.")
