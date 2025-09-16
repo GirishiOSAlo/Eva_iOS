@@ -59,7 +59,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="998-xU-2HU">
-                    <rect key="frame" x="0.0" y="0.0" width="440" height="922"/>
+                    <rect key="frame" x="0.0" y="0.0" width="440" height="921.99999999999977"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dld-tc-kX2" userLabel="Container View">
                             <rect key="frame" x="0.0" y="0.0" width="440" height="1024.3333333333333"/>
@@ -330,8 +330,8 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMG-BA-cdN">
-                                            <rect key="frame" x="42" y="16" width="350" height="196"/>
-                                            <string key="text">Maecenas interdum, odio sit amet dignissim euismod, enim eros volutpat mi, ut sollicitudin tortor magna at arcu. Morbi nec tincidunt nulla. Quisque sapien eros, luctus a blandit ut, maximus nec diam. Donec vel quam at ligula pretium dapibus a eget mauris. Aliquam erat volutpat. Pellentesque nec purus lacus. Suspendisse bibendum, velit eu tincidunt fringilla, neque nunc cursus lorem, a vehicula elit nunc tincidunt velit. Quisque sed velit quis ante cursus euismod. Duis maximus elit at purus scelerisque, eget elementum orci feugiat. Proin sapien elit, luctus non dolor eget, dapibus pulvinar massa.</string>
+                                            <rect key="frame" x="42" y="16" width="346" height="196"/>
+                                            <string key="text">Please note that any airport transfer information provided is for the event organisers’ reference only. Unless otherwise specified, it is the responsibility of each attendee to arrange their own transportation. The organisers are not responsible for booking or managing airport transfers.</string>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -341,7 +341,7 @@
                                     <constraints>
                                         <constraint firstItem="hMG-BA-cdN" firstAttribute="top" secondItem="LXB-eA-h78" secondAttribute="top" id="2Er-EO-pcs"/>
                                         <constraint firstItem="hMG-BA-cdN" firstAttribute="leading" secondItem="LXB-eA-h78" secondAttribute="trailing" constant="8" id="Kie-dW-MhB"/>
-                                        <constraint firstAttribute="trailing" secondItem="hMG-BA-cdN" secondAttribute="trailing" constant="8" id="Ms7-0K-uiA"/>
+                                        <constraint firstAttribute="trailing" secondItem="hMG-BA-cdN" secondAttribute="trailing" constant="12" id="Ms7-0K-uiA"/>
                                         <constraint firstItem="LXB-eA-h78" firstAttribute="leading" secondItem="7ag-mj-IpB" secondAttribute="leading" constant="16" id="RDp-Vt-QJc"/>
                                         <constraint firstItem="LXB-eA-h78" firstAttribute="top" secondItem="7ag-mj-IpB" secondAttribute="top" constant="16" id="YfO-Yx-kw2"/>
                                         <constraint firstAttribute="bottom" secondItem="hMG-BA-cdN" secondAttribute="bottom" constant="8" id="x4b-Nk-ZDK"/>

@@ -82,8 +82,8 @@ class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
         var totalCellHeight = 0.0
         for (index, event) in delegateMeetingsList.enumerated() {
             let nameHeight = self.heightForView(text: event.meetingNotes ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 113.0)
-            let meetingWithHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
-            let colleaguesHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+            let meetingWithHeight = self.heightForView(text: event.meetingWith ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
+            let colleaguesHeight = self.heightForView(text: event.withColleagues ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
             let locationHeight = self.heightForView(text: event.location ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 72.0)
 
             let cellHeight = nameHeight + meetingWithHeight + colleaguesHeight + locationHeight + 206.0

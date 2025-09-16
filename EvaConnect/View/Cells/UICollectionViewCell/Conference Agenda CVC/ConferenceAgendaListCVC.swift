@@ -79,7 +79,7 @@ extension ConferenceAgendaListCVC: UICollectionViewDelegate, UICollectionViewDat
         //-->Normal height
         let program = self.conferencePrograms[indexPath.row]
         let lblHeight_1 = self.heightForView(text: program.name ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.programsCollectionVw.frame.width - 64.0)
-        let lblHeight_2 = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.programsCollectionVw.frame.width - 64.0)
+        let lblHeight_2 = self.heightForView(text: program.sponsorname ?? "", font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.programsCollectionVw.frame.width - 64.0)
         let cellHeight = lblHeight_1 + lblHeight_2 + 139.0
         return CGSize(width: self.programsCollectionVw.frame.size.width, height: cellHeight)
     }
