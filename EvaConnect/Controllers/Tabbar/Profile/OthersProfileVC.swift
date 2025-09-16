@@ -590,10 +590,12 @@ extension OthersProfileVC {
                         self.setData(user: user)
                         
                         let isPublic = user.isPublic
-                        if isPublic == 0 { //Ptivate
+                        if isPublic == 0 { //Private
+                            self.noDataLbl.isHidden = true
                             self.postTableView.isHidden = true
                             self.privateAccView.isHidden = false
                         } else { //Public
+                            self.noDataLbl.isHidden = false
                             self.postTableView.isHidden = false
                             self.privateAccView.isHidden = true
                         }
