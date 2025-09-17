@@ -24,6 +24,7 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet weak var jobTitleBaseVw: UIView!
     @IBOutlet weak var nameTxtField: UITextField!
     @IBOutlet weak var dobTxtField: UITextField!
+    @IBOutlet weak var companyBaseVw: UIView!
     @IBOutlet weak var companyTxtField: UITextField!
     @IBOutlet weak var jobTitleTxtField: UITextField!
     @IBOutlet weak var categoryTxtField: UITextField!
@@ -114,9 +115,11 @@ class EditProfileViewController: UIViewController, XIBed {
         if isIndivisualUser {
             self.jobTitleBaseVw.isHidden = false
             self.resumeBaseVw.isHidden = false
+            self.companyBaseVw.isHidden = false
         } else {
             self.jobTitleBaseVw.isHidden = true
             self.resumeBaseVw.isHidden = true
+            self.companyBaseVw.isHidden = true
         }
         
         //country data from json string....

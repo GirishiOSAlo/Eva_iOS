@@ -111,11 +111,13 @@ extension SlideMenuVC {
     }
     
     private func setUserData() {
-        if isIndivisualUser {
-            nameLbl.text = myUserDefaults.fullName
-        } else {
-            nameLbl.text = myUserDefaults.companyName
-        }
+//        if isIndivisualUser {
+//            nameLbl.text = myUserDefaults.fullName
+//        } else {
+//            nameLbl.text = myUserDefaults.companyName
+//        }
+        nameLbl.text = myUserDefaults.fullName
+        
         viewProfileLbl.text = "View Profile"
 //        if let url = URL(string: myUserDefaults.userImage) { profileImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "profile")) }
         
@@ -249,7 +251,7 @@ extension SlideMenuVC {
                 print(response)
                 if let user = response.data?.first {
                     //Save changes.....
-                    myUserDefaults.fullName = user.firstName ?? ""
+                    myUserDefaults.fullName = "\(user.firstName ?? "") \(user.lastName ?? "")"
                     myUserDefaults.companyName = user.companyName ?? ""
                     myUserDefaults.userImage = user.userImage ?? ""
                     self.setUserData()

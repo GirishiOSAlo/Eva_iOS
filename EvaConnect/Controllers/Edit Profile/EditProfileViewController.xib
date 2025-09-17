@@ -27,6 +27,7 @@
                 <outlet property="arrivalTimeTxtField" destination="p0I-Oy-Pia" id="pUg-7L-YfU"/>
                 <outlet property="businessSectorTxtField" destination="f7S-B1-f5Q" id="ant-CJ-Xxo"/>
                 <outlet property="categoryTxtField" destination="7La-Xs-TDU" id="wuO-OS-mB9"/>
+                <outlet property="companyBaseVw" destination="0R3-6R-BYH" id="PQr-Xw-JP2"/>
                 <outlet property="companyTxtField" destination="N1W-8q-g1V" id="Zpd-bl-dVq"/>
                 <outlet property="contactInfoEditBtn" destination="7zH-zQ-qkp" id="MLs-KW-biJ"/>
                 <outlet property="countryFlagLbl" destination="E8A-WR-P0n" id="myX-53-EVX"/>
@@ -1727,6 +1728,11 @@
                 <constraint firstItem="0VV-ko-IKd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gxy-jt-efr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AKB-zI-hfO" secondAttribute="trailing" id="jOj-OZ-5it"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="8ZQ-Rq-3Yk"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="49.618320610687022" y="-1.4084507042253522"/>
         </view>
     </objects>

@@ -630,7 +630,8 @@ extension UserProfileVC {
             self.profileImageView.image = UIImage(named: "profile")
         }
         
-        nameLbl.text = isIndivisualUser ? "\(user.firstName ?? "") \(user.lastName ?? "")" : "\(user.companyName ?? "")"
+//        nameLbl.text = isIndivisualUser ? "\(user.firstName ?? "") \(user.lastName ?? "")" : "\(user.companyName ?? "")"
+        nameLbl.text = "\(user.firstName ?? "") \(user.lastName ?? "")"
         
         if user.type!.elementsEqual("user") {
             professionLbl.text = "\(user.designation ?? "No Designation")"
