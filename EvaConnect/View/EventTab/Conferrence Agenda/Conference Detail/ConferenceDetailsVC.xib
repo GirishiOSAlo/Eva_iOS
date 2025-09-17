@@ -16,7 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConferenceDetailsVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
-                <outlet property="agendaCollectionVw" destination="M9l-7c-Wnq" id="Rvr-xR-WHf"/>
+                <outlet property="agendaTblVw" destination="vxm-7y-mPc" id="WmE-Nk-HHf"/>
                 <outlet property="backBtn" destination="jmL-Di-HSK" id="Jsf-T8-Ios"/>
                 <outlet property="headingLabel" destination="ylN-Jc-cjk" id="JJn-Fa-lpb"/>
                 <outlet property="topView" destination="mgy-52-ylQ" id="wok-qE-iNA"/>
@@ -59,30 +59,25 @@
                         <constraint firstItem="ylN-Jc-cjk" firstAttribute="centerY" secondItem="jmL-Di-HSK" secondAttribute="centerY" id="xkR-AA-zxd"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-7c-Wnq">
-                    <rect key="frame" x="0.0" y="129" width="393" height="689"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vxm-7y-mPc">
+                    <rect key="frame" x="20" y="129" width="353" height="689"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="zxI-lX-v6s">
-                        <size key="itemSize" width="128" height="128"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                    <inset key="separatorInset" minX="12" minY="0.0" maxX="12" maxY="0.0"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="M9l-7c-Wnq" secondAttribute="bottom" id="1GB-p3-imR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vxm-7y-mPc" secondAttribute="trailing" constant="20" id="0c1-cQ-Cda"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="jmL-Di-HSK" secondAttribute="top" constant="-20" id="7f3-4e-nJb"/>
                 <constraint firstItem="mgy-52-ylQ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="AiD-4J-Lxf"/>
-                <constraint firstItem="M9l-7c-Wnq" firstAttribute="top" secondItem="mgy-52-ylQ" secondAttribute="bottom" id="VUD-ws-dWV"/>
+                <constraint firstItem="vxm-7y-mPc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="NsH-vk-4rI"/>
+                <constraint firstItem="vxm-7y-mPc" firstAttribute="top" secondItem="mgy-52-ylQ" secondAttribute="bottom" id="PBj-Pm-GjR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vxm-7y-mPc" secondAttribute="bottom" id="Zg2-82-yfh"/>
                 <constraint firstItem="mgy-52-ylQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cQ7-F7-jrH"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="M9l-7c-Wnq" secondAttribute="trailing" id="p41-I3-BUf"/>
-                <constraint firstItem="M9l-7c-Wnq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tIT-cc-bJU"/>
                 <constraint firstItem="mgy-52-ylQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xqE-BY-kVC"/>
             </constraints>
-            <point key="canvasLocation" x="47" y="20"/>
+            <point key="canvasLocation" x="46.564885496183201" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>

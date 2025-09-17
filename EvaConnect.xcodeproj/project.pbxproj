@@ -581,10 +581,6 @@
 		A6B754042E4C413900AB2F79 /* HomeNewsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B754032E4C413900AB2F79 /* HomeNewsDataModel.swift */; };
 		A6B7ADAF2E090EE5009172CD /* DashboardBannerDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADAE2E090EE5009172CD /* DashboardBannerDataModel.swift */; };
 		A6B7ADB12E096377009172CD /* AgendaListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */; };
-		A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B7ADB32E0967BE009172CD /* ConferenceAgendaListCVC.xib */; };
-		A6B7ADB52E0967BE009172CD /* ConferenceAgendaListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADB22E0967BE009172CD /* ConferenceAgendaListCVC.swift */; };
-		A6B7ADB92E0971FA009172CD /* ConferenceProgramsCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B7ADB82E0971FA009172CD /* ConferenceProgramsCVC.xib */; };
-		A6B7ADBA2E0971FA009172CD /* ConferenceProgramsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADB72E0971FA009172CD /* ConferenceProgramsCVC.swift */; };
 		A6C3C6012DC8822D00A2E229 /* HomeEventCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6C3C5FE2DC8822D00A2E229 /* HomeEventCVC.xib */; };
 		A6C3C6022DC8822D00A2E229 /* HomeJobCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6C3C6002DC8822D00A2E229 /* HomeJobCVC.xib */; };
 		A6C3C6032DC8822D00A2E229 /* HomeEventCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C3C5FD2DC8822D00A2E229 /* HomeEventCVC.swift */; };
@@ -1212,10 +1208,6 @@
 		A6B754032E4C413900AB2F79 /* HomeNewsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsDataModel.swift; sourceTree = "<group>"; };
 		A6B7ADAE2E090EE5009172CD /* DashboardBannerDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardBannerDataModel.swift; sourceTree = "<group>"; };
 		A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaListDataModel.swift; sourceTree = "<group>"; };
-		A6B7ADB22E0967BE009172CD /* ConferenceAgendaListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceAgendaListCVC.swift; sourceTree = "<group>"; };
-		A6B7ADB32E0967BE009172CD /* ConferenceAgendaListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConferenceAgendaListCVC.xib; sourceTree = "<group>"; };
-		A6B7ADB72E0971FA009172CD /* ConferenceProgramsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceProgramsCVC.swift; sourceTree = "<group>"; };
-		A6B7ADB82E0971FA009172CD /* ConferenceProgramsCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConferenceProgramsCVC.xib; sourceTree = "<group>"; };
 		A6C3C5FD2DC8822D00A2E229 /* HomeEventCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCVC.swift; sourceTree = "<group>"; };
 		A6C3C5FE2DC8822D00A2E229 /* HomeEventCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeEventCVC.xib; sourceTree = "<group>"; };
 		A6C3C5FF2DC8822D00A2E229 /* HomeJobCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeJobCVC.swift; sourceTree = "<group>"; };
@@ -2850,7 +2842,6 @@
 				A6782F672DDC890A0029443B /* SpeakersCVC */,
 				A6A125932DDDB09B00979389 /* SponsorCVC */,
 				A60117452E1FE9A800B4DCE2 /* VenueCVC */,
-				A6B7ADB62E096913009172CD /* Conference Agenda CVC */,
 				A64394CC2E1CF3FD006EE7F4 /* FollowersCVC */,
 				A625F9942E3C90D100E60035 /* Schedule Meeting CVC */,
 			);
@@ -3660,17 +3651,6 @@
 			path = EventDelegateSearchPopupVC;
 			sourceTree = "<group>";
 		};
-		A6B7ADB62E096913009172CD /* Conference Agenda CVC */ = {
-			isa = PBXGroup;
-			children = (
-				A6B7ADB22E0967BE009172CD /* ConferenceAgendaListCVC.swift */,
-				A6B7ADB32E0967BE009172CD /* ConferenceAgendaListCVC.xib */,
-				A6B7ADB72E0971FA009172CD /* ConferenceProgramsCVC.swift */,
-				A6B7ADB82E0971FA009172CD /* ConferenceProgramsCVC.xib */,
-			);
-			path = "Conference Agenda CVC";
-			sourceTree = "<group>";
-		};
 		A6CDBDDE2DD1E0CF009B65CD /* Help */ = {
 			isa = PBXGroup;
 			children = (
@@ -3842,7 +3822,6 @@
 				48B285722AB319660086CA61 /* SenderImgTVCell.xib in Resources */,
 				A6782F652DDC88B50029443B /* SpeakersViewController.xib in Resources */,
 				505176542445077600544956 /* Chat.storyboard in Resources */,
-				A6B7ADB42E0967BE009172CD /* ConferenceAgendaListCVC.xib in Resources */,
 				A6E71F472E52ED2B00DC8F7A /* GoogleService-Info.plist in Resources */,
 				259495F827884A6500C5579B /* UserJobCell.xib in Resources */,
 				A64C49892E1BFADE00F9D3F9 /* ConnectionViewController.xib in Resources */,
@@ -3883,7 +3862,6 @@
 				A6A1259B2DDDB5BC00979389 /* HotelsVC.xib in Resources */,
 				48BC641D2DCB7901002BA644 /* NunitoSans-BoldItalic.ttf in Resources */,
 				485FC1A32DD75F8300AA05A4 /* ExhibitorsCell.xib in Resources */,
-				A6B7ADB92E0971FA009172CD /* ConferenceProgramsCVC.xib in Resources */,
 				485FC1852DD37C4400AA05A4 /* DelegatesTableCell.xib in Resources */,
 				48BC641E2DCB7901002BA644 /* SF-Pro-Text-Bold.otf in Resources */,
 				48BC641F2DCB7901002BA644 /* SF-Pro-Text-Light.otf in Resources */,
@@ -4321,7 +4299,6 @@
 				A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */,
 				A6508FB92E2DF7C7007587C3 /* FAQlistDataModel.swift in Sources */,
 				A6782F6B2DDC893E0029443B /* SpeakersCVC.swift in Sources */,
-				A6B7ADBA2E0971FA009172CD /* ConferenceProgramsCVC.swift in Sources */,
 				18791B8624164D5A00BFF055 /* ApplicantDetailVC.swift in Sources */,
 				5073A86824840783008F2E7D /* UIAlertController.swift in Sources */,
 				48703A962B29B525008B2409 /* NewsDetailVC.swift in Sources */,
@@ -4459,7 +4436,6 @@
 				A6782F6F2DDC92E50029443B /* SpeakersDetailsVC.swift in Sources */,
 				188A224024347C4A00F99A90 /* CalendarEventCell.swift in Sources */,
 				1828DC5E23C5F78A00C00EC9 /* SignUpVC_Step3.swift in Sources */,
-				A6B7ADB52E0967BE009172CD /* ConferenceAgendaListCVC.swift in Sources */,
 				500A54482474020900095324 /* NetworkManagerr.swift in Sources */,
 				1849DF252405075B0009DC99 /* CompanyJobListVC.swift in Sources */,
 				48BD86362B22EF9B0026C0B2 /* GlobalSearchTVCell.swift in Sources */,
