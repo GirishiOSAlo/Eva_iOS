@@ -8,9 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Inter-Regular.ttf">
-            <string>Inter-Regular</string>
-        </array>
         <array key="SF-Pro-Text-Medium.otf">
             <string>SFProText-Medium</string>
         </array>
@@ -67,20 +64,7 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Zv-LD-Ucr">
                                     <rect key="frame" x="156" y="0.0" width="78" height="56"/>
-                                    <subviews>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQe-dS-lPr">
-                                            <rect key="frame" x="0.0" y="40" width="78" height="13"/>
-                                            <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="11"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="TQe-dS-lPr" secondAttribute="trailing" id="GEd-PN-jQP"/>
-                                        <constraint firstAttribute="bottom" secondItem="TQe-dS-lPr" secondAttribute="bottom" constant="3" id="Wwy-Oq-JuH"/>
-                                        <constraint firstItem="TQe-dS-lPr" firstAttribute="leading" secondItem="6Zv-LD-Ucr" secondAttribute="leading" id="oYH-EY-sp6"/>
-                                    </constraints>
                                 </view>
                                 <view clipsSubviews="YES" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXT-Pn-bkk" userLabel="Message View" customClass="CustomTabView" customModule="AviationConnect" customModuleProvider="target">
                                     <rect key="frame" x="234" y="0.0" width="78" height="56"/>

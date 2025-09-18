@@ -201,9 +201,9 @@ class ChatListVC: BaseVC {
         self.tableView.reloadData()
         //loadNotifications()
         let loggedInUserId = myUserDefaults.userId
-        observeNotifications(for: loggedInUserId) { [weak self] notifications in
+        observeNotifications(for: loggedInUserId) { [weak self] notifications, unreadCount in
             print("👉 Notifications for user Id \(loggedInUserId) : \(notifications.count)")
-            
+            print("👉 Unread count: \(unreadCount)")
             DispatchQueue.main.async {
                 // ✅ Assign directly
                 self?.notificationList = notifications
@@ -333,25 +333,24 @@ extension ChatListVC {
     }
 
 
-    func observeNotifications(for userId: Int, onUpdate: @escaping ([FirebaseNotification]) -> Void) {
+    func observeNotifications(for userId: Int, onUpdate: @escaping ([FirebaseNotification], Int) -> Void) {
         let notificationsRef = Database.database().reference()
             .child("notifications")
-            .child("\(userId)")   // ✅ user-specific branch
+            .child("\(userId)")
 
         notificationsRef.observe(.value) { snapshot in
             var updatedNotifications: [FirebaseNotification] = []
+            var unreadCount = 0
 
             for case let notifSnap as DataSnapshot in snapshot.children {
                 if let dict = notifSnap.value as? [String: Any] {
-                    
-                    // ✅ Handle "id" as Int or String
                     var notificationIdInt: Int = 0
                     if let idValue = dict["id"] as? Int {
                         notificationIdInt = idValue
                     } else if let idString = dict["id"] as? String, let idValue = Int(idString) {
                         notificationIdInt = idValue
                     }
-                    
+
                     let notification = FirebaseNotification(
                         body: dict["body"] as? String ?? "",
                         created_at: dict["created_at"] as? String ?? "",
@@ -362,22 +361,26 @@ extension ChatListVC {
                         title: dict["title"] as? String ?? "",
                         type: dict["type"] as? String ?? "",
                         subtype: dict["subtype"] as? String ?? "",
-                        notificationId: notifSnap.key,   // ✅ Firebase key
+                        notificationId: notifSnap.key,
                         meetingid: dict["meetingid"] as? Int ?? 0
                     )
                     updatedNotifications.append(notification)
+
+                    // ✅ Count unread
+                    if notification.read == false {
+                        unreadCount += 1
+                    }
                 }
             }
 
-            // ✅ Always sort before returning (latest first by created_at)
             let sorted = updatedNotifications.sorted {
                 ($0.created_at ?? "") > ($1.created_at ?? "")
             }
 
-            // ✅ Always call back, even if empty
-            onUpdate(sorted)
+            onUpdate(sorted, unreadCount)
         }
     }
+
 }
 
 extension ChatListVC {

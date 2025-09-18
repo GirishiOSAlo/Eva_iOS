@@ -64,6 +64,23 @@ protocol CustomTabSelectDelegate: AnyObject {
         }
     }
     
+    @IBOutlet weak var badgeMainVw: UIView! {
+        didSet {
+            badgeMainVw.backgroundColor = .red
+            badgeMainVw.clipsToBounds = true
+            badgeMainVw.isHidden = true
+            badgeMainVw.layer.cornerRadius = badgeMainVw.frame.height / 2
+        }
+    }
+    
+    @IBOutlet weak var badgeLabel: UILabel! {
+        didSet {
+            badgeLabel.textColor = .white
+            badgeLabel.font = UIFont(name: Myfonts.semiBold, size: 5)
+            badgeLabel.textAlignment = .center
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
@@ -86,6 +103,16 @@ protocol CustomTabSelectDelegate: AnyObject {
 //        label.font = .systemFont(ofSize: 15) //AppSettings.shared.appFonts.montserratRegular.withSize(11)
 //        label.textColor = UIColor(hex: "#707070") //AppSettings.shared.appColors.textColor.secondaryColor
 //    }
+        
+    func setBadge(count: Int) {
+        if count > 0 {
+            badgeMainVw.isHidden = false
+            badgeLabel.text = count > 99 ? "99+" : "\(count)"
+        } else {
+            badgeMainVw.isHidden = true
+            badgeLabel.text = nil
+        }
+    }
     
     @objc func tap() {
         delegate?.didSelectTab(tab: self)

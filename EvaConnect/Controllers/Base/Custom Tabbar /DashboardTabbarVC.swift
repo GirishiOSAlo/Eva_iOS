@@ -8,6 +8,10 @@
 
 import UIKit
 import Foundation
+import FirebaseDatabase
+import FirebaseCore
+import FirebaseFirestore
+
 
 class DashboardTabbarVC: BaseVC, XIBed {
         
@@ -74,6 +78,10 @@ class DashboardTabbarVC: BaseVC, XIBed {
         self.navigationController?.isNavigationBarHidden = false
         setupUI()
         setTabViewssDelegates()
+        
+        fetchUnreadChatCount()
+        fetchUnreadNotificationCount()
+        
         NotificationCenter.default
                           .addObserver(self,
                                        selector: #selector(deeplinkData),
@@ -92,6 +100,12 @@ class DashboardTabbarVC: BaseVC, XIBed {
         notifView.imageName = "notifTab"
         messageView.imageName = "msgTab"
         profileView.imageName = "profileTab"
+        
+        // ✅ Show badge only for notif & message
+        messageView.setBadge(count: 0)
+        notifView.setBadge(count: 0)
+        homeView.setBadge(count: 0)
+        profileView.setBadge(count: 0)
         
         createJobBtn.layer.cornerRadius = 20
         createPostBtn.layer.cornerRadius = 20
@@ -126,6 +140,27 @@ class DashboardTabbarVC: BaseVC, XIBed {
         notifView.delegate = self
         messageView.delegate = self
         profileView.delegate = self
+    }
+    
+    func fetchUnreadChatCount() {
+        let loggedInUserId = myUserDefaults.userId
+        observeConversations(loggedInUserId: loggedInUserId) { conversations in
+            DispatchQueue.main.async {
+                let totalUnread = conversations.reduce(0) { $0 + ($1.unreadCount ?? 0) }
+                print("ID : \(loggedInUserId), Conversations Dashboard: \(conversations.count), Unread: \(totalUnread)")
+                self.messageView.setBadge(count: totalUnread)
+            }
+        }
+    }
+    
+    func fetchUnreadNotificationCount() {
+        let loggedInUserId = myUserDefaults.userId
+        observeNotifications(for: loggedInUserId) { [weak self] notifications, unreadCount in
+            print("ID : \(loggedInUserId), Notifications Dashboard: \(notifications.count), Unread: \(unreadCount)")
+            DispatchQueue.main.async {
+                self?.notifView.setBadge(count: unreadCount)
+            }
+        }
     }
     
     @IBAction func addPostTapped(_ sender: UIButton) {
@@ -218,6 +253,150 @@ class DashboardTabbarVC: BaseVC, XIBed {
 //        }
 //    }
 //}
+
+extension DashboardTabbarVC {
+    func observeConversations(loggedInUserId: Int, onUpdate: @escaping ([Conversation]) -> Void) {
+        let messagesRef = Database.database().reference().child("messages")
+        let usersRef = Database.database().reference().child("users")
+        
+        messagesRef.observe(.value) { snapshot, _ in
+            var updatedConversations: [Conversation] = []
+            
+            let dispatchGroup = DispatchGroup() // wait for all user fetches
+            
+            for case let chatNode as DataSnapshot in snapshot.children {
+                guard let key = chatNode.key as String?, key.contains("_") else { continue }
+                
+                let participants = key.split(separator: "_").map { String($0) }
+                guard participants.contains(String(loggedInUserId)) else { continue }
+                
+                var messages: [ChatMessage] = []
+                var unreadCount = 0
+                
+                for case let msgSnap as DataSnapshot in chatNode.children {
+                    if let dict = msgSnap.value as? [String: Any] {
+                        let message = ChatMessage(
+                            audio_file: dict["audio_file"] as? String,
+                            audio_file_url: dict["audio_file_url"] as? String,
+                            chat_time: dict["chat_time"] as? String,
+                            document: dict["document"] as? String,
+                            document_url: dict["document_url"] as? String,
+                            firebase_receiver_id: dict["firebase_receiver_id"] as? String,
+                            firebase_sender_id: dict["firebase_sender_id"] as? String,
+                            image: dict["image"] as? String,
+                            image_url: dict["image_url"] as? String,
+                            message: dict["message"] as? String,
+                            read: dict["read"] as? Bool,
+                            receiver_id: dict["receiver_id"] as? Int,
+                            sender_id: dict["sender_id"] as? Int,
+                            timestamp: dict["timestamp"] as? Double
+                        )
+                        messages.append(message)
+                        
+                        if let senderId = dict["firebase_sender_id"] as? String,
+                           senderId != String(loggedInUserId),
+                           dict["read"] as? Bool == false {
+                            unreadCount += 1
+                        }
+                    }
+                }
+                
+                guard let lastMessage = messages.max(by: { ($0.timestamp ?? 0.0) < ($1.timestamp ?? 0.0) }) else { continue }
+                
+                let otherUserId: Int
+                if participants[0] == String(loggedInUserId) {
+                    otherUserId = Int(participants[1]) ?? -1
+                } else {
+                    otherUserId = Int(participants[0]) ?? -1
+                }
+                guard otherUserId != -1 else { continue }
+                
+                // Fetch user info
+                dispatchGroup.enter()
+                usersRef
+                    .queryOrdered(byChild: "user_id")
+                    .queryEqual(toValue: Double(otherUserId))
+                    .observeSingleEvent(of: .value) { userSnap, _  in
+                        for case let child as DataSnapshot in userSnap.children {
+                            if let dict = child.value as? [String: Any] {
+                                let user = FirebaseUser(
+                                    avatar: dict["avatar"] as? String,
+                                    created_at: dict["created_at"] as? String,
+                                    email: dict["email"] as? String,
+                                    last_changed: dict["last_changed"] as? Double,
+                                    name: dict["name"] as? String,
+                                    status: dict["status"] as? String,
+                                    user_id: dict["user_id"] as? Int
+                                )
+                                
+                                updatedConversations.append(
+                                    Conversation(user: user, lastMessage: lastMessage, chatId: key, unreadCount: unreadCount)
+                                )
+                            }
+                        }
+                        dispatchGroup.leave()
+                    }
+            }
+            
+            // ✅ Ensure callback fires even if no chats
+            dispatchGroup.notify(queue: .main) {
+                let sorted = updatedConversations.sorted {
+                    ($0.lastMessage?.timestamp ?? 0.0) > ($1.lastMessage?.timestamp ?? 0.0)
+                }
+                onUpdate(sorted)
+            }
+        }
+    }
+    
+    func observeNotifications(for userId: Int, onUpdate: @escaping ([FirebaseNotification], Int) -> Void) {
+        let notificationsRef = Database.database().reference()
+            .child("notifications")
+            .child("\(userId)")
+
+        notificationsRef.observe(.value) { snapshot in
+            var updatedNotifications: [FirebaseNotification] = []
+            var unreadCount = 0
+
+            for case let notifSnap as DataSnapshot in snapshot.children {
+                if let dict = notifSnap.value as? [String: Any] {
+                    var notificationIdInt: Int = 0
+                    if let idValue = dict["id"] as? Int {
+                        notificationIdInt = idValue
+                    } else if let idString = dict["id"] as? String, let idValue = Int(idString) {
+                        notificationIdInt = idValue
+                    }
+
+                    let notification = FirebaseNotification(
+                        body: dict["body"] as? String ?? "",
+                        created_at: dict["created_at"] as? String ?? "",
+                        expire_at: dict["expire_at"] as? String ?? "",
+                        id: notificationIdInt,
+                        read: dict["read"] as? Bool ?? false,
+                        redirect_url: dict["redirect_url"] as? String ?? "",
+                        title: dict["title"] as? String ?? "",
+                        type: dict["type"] as? String ?? "",
+                        subtype: dict["subtype"] as? String ?? "",
+                        notificationId: notifSnap.key,
+                        meetingid: dict["meetingid"] as? Int ?? 0
+                    )
+                    updatedNotifications.append(notification)
+
+                    // ✅ Count unread
+                    if notification.read == false {
+                        unreadCount += 1
+                    }
+                }
+            }
+
+            let sorted = updatedNotifications.sorted {
+                ($0.created_at ?? "") > ($1.created_at ?? "")
+            }
+
+            onUpdate(sorted, unreadCount)
+        }
+    }
+
+}
 
 extension DashboardTabbarVC: CustomTabSelectDelegate {
     func didSelectTab(tab: CustomTabView) {
