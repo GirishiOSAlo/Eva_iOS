@@ -78,6 +78,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var eventEndDate = ""
     var eventStartTime = ""
     var eventEndTime = ""
+    var isComeFromSideMenu = false
     
     private let scopes = [kGTLRAuthScopeCalendar]
     private let service = GTLRCalendarService()
@@ -91,6 +92,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         
         collectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         if self.eventID == 0 {
+            self.isComeFromSideMenu = true
             self.fetchCurrentEventData()
         } else {
             self.fetchCreateMeetingDetails()
@@ -220,7 +222,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     }
     
     @IBAction func selectEventBtnTapped(_ sender: UIButton) {
-        if self.eventID == 0 {
+        if self.isComeFromSideMenu {
             if self.currentEventList.count == 0 {
                 self.makeAlert(titleMsg: "Alert", messageData: "Event list not found.")
             } else {
@@ -328,7 +330,7 @@ extension CreateMeetingVC {
         var requestedID = ""
         var invitedUserId:[Int] = []
         
-        if self.eventID == 0 { //come from side menu...
+        if self.isComeFromSideMenu {
             requestedID = "\(self.invitedIds[0])"
             if !invitedIds.isEmpty {
                 invitedIds.removeFirst()
@@ -362,9 +364,11 @@ extension CreateMeetingVC {
                     self.successPopupVw.isHidden = false
                     self.addAnimation()
                 } else {
+                    self.presentAlert("Error",networkEventRoot.message)
                     print("Error :: \(networkEventRoot.message)")
                 }
             } catch {
+                self.presentAlert("Error",error.localizedDescription)
                 print("Error:: ", error)
             }
         }
@@ -675,7 +679,9 @@ extension CreateMeetingVC {
         else if self.endTime.text == "" {
             self.makeAlert(titleMsg: "Error", messageData: "Please select an end time.")
         }
-        else {
+        else if self.invitedIds.count == 0 {
+            self.makeAlert(titleMsg: "Error", messageData: "Please invite people.")
+        } else {
             self.createEventMeeting()
         }
         
