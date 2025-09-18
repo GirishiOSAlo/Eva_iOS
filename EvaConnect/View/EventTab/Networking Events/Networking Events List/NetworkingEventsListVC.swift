@@ -92,11 +92,11 @@ class NetworkingEventsListVC: UIViewController,XIBed {
             }
             
             
-            let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             let locationLblHeight = self.heightForView(text: network.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
             let totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
-            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
+            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0 - 17.0 //-17 is sponsor header hide.....
             let collapseHeight = totalHeight - sponserheight
             
             if i == selectedIndex {
@@ -242,10 +242,11 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
             descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         }
         
-        let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         let locationLblHeight = self.heightForView(text: networkEvent.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
-        let totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
+        var totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
+        totalHeight = totalHeight - 17.0 //-17 is sponsor header hide.....
         
         if indexPath.row == selectedIndex {
             return totalHeight //157

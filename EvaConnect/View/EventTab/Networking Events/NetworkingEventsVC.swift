@@ -88,18 +88,31 @@ class NetworkingEventsVC: UIViewController, XIBed {
             let color = UIColor(hex: "#848397")
 
             var descLblHeight = 0.0
-            if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
-                let labelWidth = self.view.frame.width - 96.0
-                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
-            } else {
-                descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-            }
+//            if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+//                let labelWidth = self.view.frame.width - 96.0
+//                //descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+//                if let data = content.data(using: .utf8) {
+//                    let plainString = content.htmlToPlainString
+//                    print("---> \(plainString)")
+//                    descLblHeight = self.heightForView(text: plainString, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//                } else {
+//                    descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+//                }
+//            } else {
+//                descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//            }
+            let str = content.htmlToPlainString
+            descLblHeight = self.heightForView(text: str, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
-            let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             let locationLblHeight = self.heightForView(text: network.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
-            let totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
-            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
+            
+            var totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
+            if descLblHeight == 0 {
+                totalHeight = totalHeight - 11.0 // -11.0 top bottom margin desc lbl.
+            }
+            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0 - 17.0 - 6.0 //-17 is sponsor header hide & -6 id Bottom space.....
             let collapseHeight = totalHeight - sponserheight
             
             if i == selectedIndex {
@@ -233,24 +246,43 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
         let color = UIColor(hex: "#848397")
 
         var descLblHeight = 0.0
-        if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
-            let labelWidth = self.view.frame.width - 96.0
-            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
-        } else {
-            descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-        }
+//        if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+//            let labelWidth = self.view.frame.width - 96.0
+//            //descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+//            if let data = content.data(using: .utf8) {
+//                let plainString = content.htmlToPlainString
+//                descLblHeight = self.heightForView(text: plainString, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//            } else {
+//                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+//            }
+//        } else {
+//            descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//        }
+        let str = content.htmlToPlainString
+        descLblHeight = self.heightForView(text: str, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
-        let sponsorLblHeight = self.heightForView(text: "--", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         let locationLblHeight = self.heightForView(text: networkEvent.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
-        let totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
+        var totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
+        if descLblHeight == 0 {
+            totalHeight = totalHeight - 11.0 // -11.0 top bottom margin desc lbl.
+        }
+        let sponserheight = sponsorLblHeight + locationLblHeight + 126.0 - 17.0 - 6.0 //-17 is sponsor header hide & -6 id Bottom space.....
+        let collapseHeight = totalHeight - sponserheight
+        
+//        if indexPath.row == selectedIndex {
+//            return totalHeight //157
+//        } else {
+//            //return 101
+//            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
+//            let collapseHeight = totalHeight - sponserheight
+//            return collapseHeight
+//        }
         
         if indexPath.row == selectedIndex {
-            return totalHeight //157
+            return totalHeight
         } else {
-            //return 101
-            let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
-            let collapseHeight = totalHeight - sponserheight
             return collapseHeight
         }
     }

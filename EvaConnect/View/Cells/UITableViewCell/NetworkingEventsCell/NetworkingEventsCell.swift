@@ -16,6 +16,7 @@ class NetworkingEventsCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var sponsorsHeadingLabel: UILabel!
+    @IBOutlet weak var sponsorsHedingLblHeight: NSLayoutConstraint!
     @IBOutlet weak var sponsorsLabel: UILabel!
     @IBOutlet weak var locationHeadingLable: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -66,7 +67,9 @@ class NetworkingEventsCell: UITableViewCell {
         
         self.dateLabel.text = obj.date ?? ""
         self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
-        self.sponsorsLabel.text = "--"
+        //Sponsors Data not available in Backend...
+        self.sponsorsHedingLblHeight.constant = 0.0 //17.0 & bottom = 6
+        self.sponsorsLabel.text = ""
         self.locationLabel.text = obj.location ?? ""
         
         self.joinBtn.isHidden = true
@@ -96,7 +99,9 @@ class NetworkingEventsCell: UITableViewCell {
         
         self.dateLabel.text = obj.date ?? ""
         self.timeLabel.text = "\(obj.startTime ?? "") - \(obj.endTime ?? "")"
-        self.sponsorsLabel.text = "--"
+        //Sponsors Data not available in Backend...
+        self.sponsorsHedingLblHeight.constant = 0.0 //17.0 & bottom = 6
+        self.sponsorsLabel.text = ""
         self.locationLabel.text = obj.location ?? ""
         
         self.joinBtn.isHidden = true
