@@ -20,16 +20,19 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditProfileViewController" customModule="AviationConnect" customModuleProvider="target">
             <connections>
                 <outlet property="airportLocationTxtField" destination="dDn-JK-ShQ" id="w9C-uw-n3O"/>
+                <outlet property="airportMainVw" destination="Fs5-Z4-7SW" id="Mwz-3c-3bc"/>
                 <outlet property="airportTransferInfoLbl" destination="D6m-Ba-JvQ" id="jbG-3n-Psg"/>
                 <outlet property="airportTransferInfoVw" destination="uTB-Ms-gwf" id="HeE-Tf-bb1"/>
                 <outlet property="animationContainerView" destination="mqV-5h-2y2" id="dfX-lU-PRI"/>
                 <outlet property="arrivalDateTxtField" destination="BmL-w5-vH2" id="sfL-FW-ER0"/>
                 <outlet property="arrivalTimeTxtField" destination="p0I-Oy-Pia" id="pUg-7L-YfU"/>
+                <outlet property="assistanceMainVw" destination="blu-cE-owJ" id="bGs-F0-8x4"/>
                 <outlet property="businessSectorTxtField" destination="f7S-B1-f5Q" id="ant-CJ-Xxo"/>
                 <outlet property="categoryTxtField" destination="7La-Xs-TDU" id="wuO-OS-mB9"/>
                 <outlet property="companyBaseVw" destination="0R3-6R-BYH" id="PQr-Xw-JP2"/>
                 <outlet property="companyTxtField" destination="N1W-8q-g1V" id="Zpd-bl-dVq"/>
                 <outlet property="contactInfoEditBtn" destination="7zH-zQ-qkp" id="MLs-KW-biJ"/>
+                <outlet property="contactMainVw" destination="moI-TL-i0M" id="9xt-4R-vpw"/>
                 <outlet property="countryFlagLbl" destination="E8A-WR-P0n" id="myX-53-EVX"/>
                 <outlet property="countryPhnCodeTxtField" destination="SP6-Os-fXm" id="ZEk-u4-i89"/>
                 <outlet property="descTxtVwHeight" destination="6xL-2z-maz" id="KUc-Iq-WYc"/>
@@ -53,9 +56,11 @@
                 <outlet property="paEmailTxtfield" destination="kZd-5f-xlb" id="2go-Ar-wHZ"/>
                 <outlet property="paNameTxtField" destination="3WB-vX-DNP" id="UmJ-kE-Iaf"/>
                 <outlet property="persionalDetailEditBtn" destination="TMP-FP-Fxr" id="qjh-Mz-IfX"/>
+                <outlet property="persionalMainVw" destination="Ria-H2-DAd" id="KRA-aE-LnV"/>
                 <outlet property="profileImageView" destination="ZhY-DO-dbQ" id="Cdy-2U-XcS"/>
                 <outlet property="profileView" destination="JGd-Ad-tQX" id="CpI-oW-E55"/>
                 <outlet property="regionLanguageEditBtn" destination="5mx-0i-tLN" id="fvG-ZU-rsf"/>
+                <outlet property="regionMainVw" destination="Ftl-Sg-Nq4" id="mGT-EF-Hwb"/>
                 <outlet property="regionTxtField" destination="htI-Fv-Gzc" id="dIA-8g-16m"/>
                 <outlet property="resumeBaseVw" destination="jrZ-Qq-dgu" id="k2C-5D-5Wo"/>
                 <outlet property="resumeSubLbl" destination="fNu-qB-Q6U" id="w53-nG-8Fx"/>
@@ -1306,7 +1311,7 @@
                                                         <constraint firstItem="rWB-X0-tV1" firstAttribute="top" secondItem="blu-cE-owJ" secondAttribute="top" constant="16" id="rG9-37-vSt"/>
                                                     </constraints>
                                                 </view>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fs5-Z4-7SW" userLabel="Other Transection View">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fs5-Z4-7SW" userLabel="Airport Transection View">
                                                     <rect key="frame" x="0.0" y="2586" width="393" height="2000"/>
                                                     <subviews>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ufX-fn-Vvp" userLabel="AirportTransferBaseVw">

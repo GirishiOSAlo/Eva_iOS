@@ -21,6 +21,13 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet var headerLbllCollection: [UILabel]!
     @IBOutlet var textFieldBaseVwCollection: [UIView]!
     
+    @IBOutlet weak var persionalMainVw: UIView!
+    @IBOutlet weak var contactMainVw: UIView!
+    @IBOutlet weak var regionMainVw: UIView!
+    @IBOutlet weak var assistanceMainVw: UIView!
+    @IBOutlet weak var airportMainVw: UIView!
+    
+    
     @IBOutlet weak var jobTitleBaseVw: UIView!
     @IBOutlet weak var nameTxtField: UITextField!
     @IBOutlet weak var dobTxtField: UITextField!
@@ -116,10 +123,12 @@ class EditProfileViewController: UIViewController, XIBed {
             self.jobTitleBaseVw.isHidden = false
             self.resumeBaseVw.isHidden = false
             self.companyBaseVw.isHidden = false
+            self.airportMainVw.isHidden = false
         } else {
             self.jobTitleBaseVw.isHidden = true
             self.resumeBaseVw.isHidden = true
             self.companyBaseVw.isHidden = true
+            self.airportMainVw.isHidden = true
         }
         
         //country data from json string....
