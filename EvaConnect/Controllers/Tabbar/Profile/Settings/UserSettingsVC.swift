@@ -380,7 +380,7 @@ extension UserSettingsVC {
             self.hideActivity()
             do {
                 let jsonDecoder = JSONDecoder()
-                let root = try jsonDecoder.decode(DataDictResponse.self, from: response.data!)
+                let root = try jsonDecoder.decode(NotificationDataDictResponse.self, from: response.data!)
                 if !(root.error ?? false) {
                     self.successPopupVw.isHidden = false
                     self.addAnimation()
