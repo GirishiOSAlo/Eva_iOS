@@ -32,7 +32,7 @@ struct DataStringResponse: Codable {
 }
 
 
-struct DataDictResponse: Codable {
+struct NotificationDataDictResponse: Codable {
     let error: Bool?
     let message: String?
     let data: [String: Int]? // dynamic keys with Int values
