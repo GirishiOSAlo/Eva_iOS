@@ -554,6 +554,7 @@
 		A68950A02DD758F400ACC16F /* MeetingListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A689509F2DD758F400ACC16F /* MeetingListCVC.xib */; };
 		A68950A12DD758F400ACC16F /* MeetingListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A689509E2DD758F400ACC16F /* MeetingListCVC.swift */; };
 		A68C992A2E7BBDAD003B9B13 /* CompanyListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */; };
+		A68C992C2E7C14B1003B9B13 /* NotificationListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */; };
 		A68EB3DC2E39DC89008F6B9A /* MeetingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */; };
 		A68EB3DD2E39DC89008F6B9A /* MeetingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68EB3DB2E39DC89008F6B9A /* MeetingsVC.xib */; };
 		A695AAF32AA6EE4E006A2A71 /* ReactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695AAF12AA6EE4E006A2A71 /* ReactionTableViewCell.swift */; };
@@ -1184,6 +1185,7 @@
 		A689509E2DD758F400ACC16F /* MeetingListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListCVC.swift; sourceTree = "<group>"; };
 		A689509F2DD758F400ACC16F /* MeetingListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListCVC.xib; sourceTree = "<group>"; };
 		A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListDataModel.swift; sourceTree = "<group>"; };
+		A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListDataModel.swift; sourceTree = "<group>"; };
 		A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsVC.swift; sourceTree = "<group>"; };
 		A68EB3DB2E39DC89008F6B9A /* MeetingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingsVC.xib; sourceTree = "<group>"; };
 		A695AAF12AA6EE4E006A2A71 /* ReactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -1773,6 +1775,7 @@
 				A62347472E5354A20017B1F1 /* Firebase_Chat.swift */,
 				A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */,
 				A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */,
+				A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4232,6 +4235,7 @@
 				7093BFBE27E9C5A90045848A /* Encodable.swift in Sources */,
 				A68950A12DD758F400ACC16F /* MeetingListCVC.swift in Sources */,
 				5073A82A24774DE4008F2E7D /* CreateMeetingVC.swift in Sources */,
+				A68C992C2E7C14B1003B9B13 /* NotificationListDataModel.swift in Sources */,
 				186B4AA2243739890001B935 /* AllMyCurrentNotificationModel.swift in Sources */,
 				182BDB4E24964CEA00A50277 /* CommentCell.swift in Sources */,
 				48A421162AA8A40C00A8D37C /* GlobalSearchTVC.swift in Sources */,

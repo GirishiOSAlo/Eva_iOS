@@ -749,14 +749,6 @@ rescheduled</string>
                                                                                 <color key="textColor" red="0.01176470588" green="0.0078431372550000003" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nyu-xI-eti">
-                                                                                <rect key="frame" x="80" y="421" width="239" height="50.5"/>
-                                                                                <string key="text">Send me a meeting reminder 
-15 minutes before a due meeting time</string>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                <color key="textColor" red="0.01176470588" green="0.0078431372550000003" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
                                                                             <button opaque="NO" tag="106" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1S-5E-mag">
                                                                                 <rect key="frame" x="16" y="421" width="48" height="25"/>
                                                                                 <constraints>
@@ -770,6 +762,14 @@ rescheduled</string>
                                                                                     <action selector="onScheduleNotificationButtons:" destination="8us-2M-oZs" eventType="touchUpInside" id="bza-wh-CP4"/>
                                                                                 </connections>
                                                                             </button>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nyu-xI-eti">
+                                                                                <rect key="frame" x="80" y="421" width="239" height="50.5"/>
+                                                                                <string key="text">Send me a meeting reminder 
+15 minutes before a due meeting time</string>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                <color key="textColor" red="0.01176470588" green="0.0078431372550000003" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
                                                                         </subviews>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
@@ -1971,7 +1971,7 @@ rescheduled</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-l9-Nrw">
-                                        <rect key="frame" x="20" y="189" width="335" height="289"/>
+                                        <rect key="frame" x="20" y="202.5" width="335" height="262.5"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tu7-fU-srv">
                                                 <rect key="frame" x="116.5" y="16" width="102" height="102"/>
@@ -1981,14 +1981,14 @@ rescheduled</string>
                                                     <constraint firstAttribute="height" constant="102" id="gg2-1Q-fdJ"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your have joined the Meeting Successfully" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OU4-i2-L2T">
-                                                <rect key="frame" x="36" y="142" width="263" height="53"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OU4-i2-L2T">
+                                                <rect key="frame" x="36" y="142" width="263" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHf-gZ-Fqc">
-                                                <rect key="frame" x="16" y="219" width="303" height="50"/>
+                                                <rect key="frame" x="16" y="192.5" width="303" height="50"/>
                                                 <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Shg-qJ-6Ov"/>
@@ -2163,13 +2163,31 @@ rescheduled</string>
                     </view>
                     <connections>
                         <outlet property="animationContainerView" destination="Tu7-fU-srv" id="hB1-s8-CH8"/>
+                        <outlet property="calendarRemindersBrn" destination="psg-L7-hif" id="hTX-RV-9Ry"/>
+                        <outlet property="companyPostUpdatesBtn" destination="z68-Kf-pGD" id="Z5k-bx-r9X"/>
                         <outlet property="conferanceGoalsBaseVw" destination="Kbx-2U-v9d" id="fse-oT-0so"/>
+                        <outlet property="connectionRequestBtn" destination="Asb-lr-r14" id="iPQ-ak-53i"/>
                         <outlet property="headerLbl" destination="AGM-pU-GJY" id="9Aw-4l-UGH"/>
+                        <outlet property="mailBtn" destination="ay4-Vw-oV8" id="brL-7p-mtE"/>
+                        <outlet property="meetingCancelledBtn" destination="21C-jh-XPJ" id="rzC-wA-h4G"/>
+                        <outlet property="meetingReminderBtn" destination="k1S-5E-mag" id="H4P-sr-vd9"/>
+                        <outlet property="meetingRemindersBtn" destination="0BK-tm-fnN" id="3BM-AH-0yq"/>
+                        <outlet property="meetingRequestedBtn" destination="KmR-gF-raw" id="rH9-Jf-iho"/>
+                        <outlet property="meetingRescheduledBtn" destination="te1-5D-oCe" id="sGF-2A-g2k"/>
+                        <outlet property="messagesBtn" destination="HPh-qD-RR4" id="CX9-Jg-Xzd"/>
+                        <outlet property="newConnectionsBtn" destination="84G-Cx-LIx" id="B4F-fX-F3B"/>
+                        <outlet property="newEventsBtn" destination="Sjd-c9-G61" id="bCx-8j-VtF"/>
+                        <outlet property="newJobPostBtn" destination="ceh-zN-p2Z" id="yam-UW-gLO"/>
+                        <outlet property="newUpdateBtn" destination="r0H-M6-csd" id="hu6-OU-3iv"/>
                         <outlet property="okPopupBtn" destination="KHf-gZ-Fqc" id="QJk-nF-YeS"/>
                         <outlet property="otherNotificationBaseVw" destination="5S7-Ob-PBv" id="nQM-sA-Y3O"/>
+                        <outlet property="postCommentsBtn" destination="BsV-1U-fFf" id="NCJ-mx-FyW"/>
+                        <outlet property="postLikesBtn" destination="Xcv-9g-vDX" id="91q-P5-E6a"/>
                         <outlet property="privateAccountBtn" destination="oW6-tO-rAC" id="KgN-YJ-jL6"/>
                         <outlet property="privateDescLbl" destination="g9Y-FP-PT5" id="Ptu-Af-ARF"/>
                         <outlet property="privateTitleLbl" destination="vcI-ih-UKw" id="phb-bE-qDp"/>
+                        <outlet property="profileViewsBtn" destination="wCL-Qt-sqo" id="ZfH-VR-0DV"/>
+                        <outlet property="pushBrowserBtn" destination="p14-dy-84y" id="jOW-ta-keG"/>
                         <outlet property="responsibilitiesBaseVw" destination="Ykn-mB-dqQ" id="xnb-6z-3ci"/>
                         <outlet property="scheduleNotificationBaseVw" destination="KHq-Az-Igm" id="cYU-4c-gcX"/>
                         <outlet property="successPopupVw" destination="aLf-sk-jhJ" id="yYM-e1-3QS"/>
@@ -2835,7 +2853,7 @@ rescheduled</string>
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

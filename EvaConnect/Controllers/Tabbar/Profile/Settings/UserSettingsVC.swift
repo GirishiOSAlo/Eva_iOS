@@ -26,6 +26,28 @@ class UserSettingsVC: BaseVC {
     @IBOutlet weak var conferanceGoalsBaseVw: UIView!
     @IBOutlet weak var responsibilitiesBaseVw: UIView!
     
+    
+    @IBOutlet weak var pushBrowserBtn: UIButton!
+    @IBOutlet weak var mailBtn: UIButton!
+    @IBOutlet weak var meetingRequestedBtn: UIButton!
+    @IBOutlet weak var meetingCancelledBtn: UIButton!
+    @IBOutlet weak var meetingRescheduledBtn: UIButton!
+    @IBOutlet weak var meetingReminderBtn: UIButton!
+    
+    @IBOutlet weak var messagesBtn: UIButton!
+    @IBOutlet weak var postCommentsBtn: UIButton!
+    @IBOutlet weak var postLikesBtn: UIButton!
+    @IBOutlet weak var connectionRequestBtn: UIButton!
+    @IBOutlet weak var newConnectionsBtn: UIButton!
+    @IBOutlet weak var profileViewsBtn: UIButton!
+    @IBOutlet weak var newEventsBtn: UIButton!
+    @IBOutlet weak var newJobPostBtn: UIButton!
+    @IBOutlet weak var newUpdateBtn: UIButton!
+    @IBOutlet weak var companyPostUpdatesBtn: UIButton!
+    @IBOutlet weak var calendarRemindersBrn: UIButton!
+    @IBOutlet weak var meetingRemindersBtn: UIButton!
+        
+    
     @IBOutlet var sectionHeaderlabelCollection: [UILabel]!
     @IBOutlet var responsibilityTitlerlabelCollection: [UILabel]!
     @IBOutlet var labelCollection: [UILabel]!
@@ -96,8 +118,30 @@ class UserSettingsVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        self.fetchNotificationList()
     }
     
+    func setData(data:NotificationList?) {
+        pushBrowserBtn.isSelected = (data?.pushBrowser == 1)
+        mailBtn.isSelected = (data?.email == 1)
+        meetingRequestedBtn.isSelected = (data?.meetingRequested == 1)
+        meetingCancelledBtn.isSelected = (data?.meetingCancelled == 1)
+        meetingRescheduledBtn.isSelected = (data?.meetingRescheduled == 1)
+        meetingReminderBtn.isSelected = (data?.meetingReminder == 1)
+        
+        messagesBtn.isSelected = (data?.messages == 1)
+        postCommentsBtn.isSelected = (data?.postComments == 1)
+        postLikesBtn.isSelected = (data?.postLikes == 1)
+        connectionRequestBtn.isSelected = (data?.connectionRequest == 1)
+        newConnectionsBtn.isSelected = (data?.newConnections == 1)
+        profileViewsBtn.isSelected = (data?.profileViews == 1)
+        newEventsBtn.isSelected = (data?.newEvents == 1)
+        newJobPostBtn.isSelected = (data?.newJobPost == 1)
+        newUpdateBtn.isSelected = (data?.newUpdate == 1)
+        companyPostUpdatesBtn.isSelected = (data?.companyPostUpdates == 1)
+        calendarRemindersBrn.isSelected = (data?.calendarReminders == 1)
+        meetingRemindersBtn.isSelected = (data?.meetingReminders == 1)
+    }
     
     @IBAction func onPrivateAccountBtn(_ sender: UIButton) {
         if self.privateAccountBtn.isSelected {
@@ -110,62 +154,78 @@ class UserSettingsVC: BaseVC {
     }
     
     @IBAction func onScheduleNotificationButtons(_ sender: UIButton) {
-        if sender.tag == 101 {
-            sender.isSelected.toggle()
+        var key = ""
+        var value = 0
+        
+        // 1️⃣ Toggle first
+        sender.isSelected.toggle()
+        
+        // 2️⃣ Decide which key to update
+        switch sender.tag {
+        case 101:
+            key = "push_browser"
+        case 102:
+            key = "email"
+        case 103:
+            key = "meeting_requested"
+        case 104:
+            key = "meeting_cancelled"
+        case 105:
+            key = "meeting_rescheduled"
+        case 106:
+            key = "meeting_reminder"
+        default:
+            break
         }
-        else if sender.tag == 102 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 103 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 104 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 105 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 106 {
-            sender.isSelected.toggle()
+        // 3️⃣ Map selection to 0/1
+        value = sender.isSelected ? 1 : 0
+        // 4️⃣ Call API
+        if !key.isEmpty {
+            self.notificationUpdate(key: key, isEnable: value)
         }
     }
     
     @IBAction func onOtherNotificationButtons(_ sender: UIButton) {
-        if sender.tag == 201 {
-            sender.isSelected.toggle()
+        var key = ""
+        var value = 0
+        
+        // 1️⃣ Toggle first
+        sender.isSelected.toggle()
+        
+        // 2️⃣ Decide which key to update
+        switch sender.tag {
+        case 201:
+            key = "messages"
+        case 202:
+            key = "post_comments"
+        case 203:
+            key = "post_likes"
+        case 204:
+            key = "connection_request"
+        case 205:
+            key = "new_connections"
+        case 206:
+            key = "profile_views"
+        case 207:
+            key = "new_events"
+        case 208:
+            key = "new_job_post"
+        case 209:
+            key = "new_update"
+        case 210:
+            key = "company_post_updates"
+        case 211:
+            key = "calendar_reminders"
+        case 212:
+            key = "meeting_reminders"
+        default:
+            break
         }
-        else if sender.tag == 202 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 203 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 204 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 205 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 206 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 207 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 208 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 209 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 210 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 211 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 212 {
-            sender.isSelected.toggle()
+        // 3️⃣ Map selection to 0/1
+        value = sender.isSelected ? 1 : 0
+        // 4️⃣ Call API
+        if !key.isEmpty {
+            self.notificationUpdate(key: key, isEnable: value)
         }
     }
     
@@ -307,6 +367,60 @@ extension UserSettingsVC {
                 }
             } catch {
                 print("\(String(describing: response.result.error?.localizedDescription))")
+            }
+        }
+    }
+    
+    func notificationUpdate(key: String, isEnable: Int) {
+        //isEnable : 0 disable, 1 enable
+        let url = EndPoints.updateNotification
+        let parameters = ["key": key, "is_enabled": isEnable] as [String: Any]
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let root = try jsonDecoder.decode(DataDictResponse.self, from: response.data!)
+                if !(root.error ?? false) {
+                    self.successPopupVw.isHidden = false
+                    self.addAnimation()
+                    self.titlePopupLbl.text = "Notification Successfully Updated."//root.message ?? "--"
+                    self.fetchNotificationList()
+                } else {
+                    print("Error :: \(root.message ?? "Default Message")")
+                }
+            } catch {
+                print("\(String(describing: response.result.error?.localizedDescription))")
+            }
+        }
+    }
+    
+    func fetchNotificationList() {
+        showActivity()
+        let url = EndPoints.getNotificationList
+        NetworkManagerr.request(url, method: .get) { (response) in
+            self.hideActivity()
+            guard response.result.isSuccess else {
+                print("Error ::", response.error?.localizedDescription as? Error ?? "Default Error")
+                return
+            }
+
+            guard let data = response.data else {
+                print("Error :: No data received.")
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(NotificationListDataModel.self, from: data)
+                if let data = response.data {
+                    DispatchQueue.main.async {
+                        self.setData(data: data)
+                    }
+                } else {
+                    print("Error ::", response.message as? Error ?? "Default Error")
+                }
+            } catch {
+                print("Error ::", error)
             }
         }
     }
