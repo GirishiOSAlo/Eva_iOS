@@ -732,6 +732,7 @@ extension EditProfileViewController {
 extension EditProfileViewController {
     func persionalDetailsTextFieldUpdate() {
         self.dobTxtField.isUserInteractionEnabled = false
+        self.companyTxtField.isUserInteractionEnabled = false
         self.categoryTxtField.isUserInteractionEnabled = false
         self.businessSectorTxtField.isUserInteractionEnabled = false
         

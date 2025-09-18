@@ -60,7 +60,8 @@ class CompanyListPopupVC: UIViewController,XIBed {
         case .category:
             self.getCategory()
         case .company:
-            self.companySearchQuery()
+            //self.companySearchQuery()
+            self.getCompany()
         case .locationRoom:
             break
         case .currentEvent:
@@ -107,6 +108,23 @@ extension CompanyListPopupVC {
             }
         }
     }
+        
+    func getCompany() {
+        //let params: AFParameters = [ "company_id" : "" ]
+        let params = [:] as [String: Any]
+        NetworkManagerr.request(EndPoints.companyList, method: .post, parameters: params) { [weak self] (response) in
+            do {
+                let jsonDecoder = JSONDecoder()
+                let company = try jsonDecoder.decode(ComapnyListDataModel.self, from: response.data!)
+                self?.tableView.isHidden = false
+                self?.companyList = company.data ?? []
+                self?.emptyLabel.isHidden = !(self?.companyList.count ?? 0 > 0)
+            } catch {
+                self?.presentAlert("Failure", nil, response.result.error)
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     func getSectors() {
         let params = [:] as [String: Any]
@@ -118,7 +136,6 @@ extension CompanyListPopupVC {
                 self?.jobSectorList = sectors.data
                 self?.emptyLabel.isHidden = !(self?.jobSectorList.count ?? 0 > 0)
             } catch {
-                
                 self?.presentAlert("Failure", nil, response.result.error)
                 print(error.localizedDescription)
             }
@@ -200,7 +217,7 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
         case .category:
             cell.titleName.text = categoryList[indexPath.row].categoryName
         case .company:
-            cell.titleName.text = companyList[indexPath.row].companyName
+            cell.titleName.text = companyList[indexPath.row].firstName
         case .locationRoom:
             break
         case .currentEvent:
@@ -228,7 +245,7 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
             self.completion?(obj.categoryName ?? "", obj.id ?? 0)
         case .company:
             let obj = companyList[indexPath.row]
-            self.completion?(obj.companyName ?? "", obj.id ?? 0)
+            self.completion?(obj.firstName ?? "", obj.id ?? 0)
         case .locationRoom:
             break
         case .currentEvent:
@@ -241,20 +258,20 @@ extension CompanyListPopupVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - ComapnyListDataModel
-struct ComapnyListDataModel: Codable {
-    let error: Bool?
-    let message: String?
-    let data: [CompanyList]?
-}
-
-// MARK: - Datum
-struct CompanyList: Codable {
-    let id: Int?
-    let companyName: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case companyName = "company_name"
-    }
-}
+//// MARK: - ComapnyListDataModel
+//struct ComapnyListDataModel: Codable {
+//    let error: Bool?
+//    let message: String?
+//    let data: [CompanyList]?
+//}
+//
+//// MARK: - Datum
+//struct CompanyList: Codable {
+//    let id: Int?
+//    let companyName: String?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case companyName = "company_name"
+//    }
+//}
