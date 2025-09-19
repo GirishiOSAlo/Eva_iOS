@@ -816,10 +816,10 @@ extension OthersProfileVC {
                 let jsonDecoder = JSONDecoder()
                 let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
                 if !(networkEventRoot.error ?? false) {
-                    self.presentAlert(networkEventRoot.message ?? "")
+                    self.presentAlert(networkEventRoot.message ?? "",networkEventRoot.data ?? "")
                     self.fetchUserDetailsData()
                 } else {
-                    self.presentAlert(networkEventRoot.message ?? "")
+                    self.presentAlert(networkEventRoot.message ?? "",networkEventRoot.data ?? "")
                     print("Error :: \(networkEventRoot.message ?? "")")
                 }
             } catch {
@@ -866,10 +866,10 @@ extension OthersProfileVC {
                 let jsonDecoder = JSONDecoder()
                 let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
                 if !(networkEventRoot.error ?? false) {
-                    self.presentAlert(networkEventRoot.message ?? "")
+                    self.presentAlert(networkEventRoot.message ?? "",networkEventRoot.data ?? "")
                     self.fetchUserDetailsData()
                 } else {
-                    self.presentAlert(networkEventRoot.message ?? "")
+                    self.presentAlert(networkEventRoot.message ?? "",networkEventRoot.data ?? "")
                     print("Error :: \(networkEventRoot.message ?? "")")
                 }
             } catch {
