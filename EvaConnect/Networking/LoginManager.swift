@@ -38,13 +38,14 @@ class LoginManagerr {
                 
                 let jsonDecoder = JSONDecoder()
                 let loginData = try! jsonDecoder.decode(LoginStruct.self, from:response.data!)
-                if let userData = loginData.data, !loginData.error , userData.first?.status == status {
+                
+                //if let userData = loginData.data, !loginData.error , userData.first?.status == status {
+                if let userData = loginData.data, !loginData.error {
                     var user = userData[0]
                     userDefaults.setValue(user.token, forKeyPath: "UserToken")
                     userDefaults.setValue(user.id, forKey:"id")
                     userDefaults.setValue(user.companyName, forKey: "companyName")
                     userDefaults.setValue(user.bioData, forKey: "bioData")
-//                    userDefaults.setValue(user., forKey: "companyName")
                     user.socialMedia = socialMedia
                     BaseVC.saveUser(user: user)
 //                    if user.type == "company" {
