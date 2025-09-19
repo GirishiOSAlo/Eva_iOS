@@ -591,11 +591,15 @@ extension OthersProfileVC {
                         
                         let isPublic = user.isPublic
                         if isPublic == 0 { //Private
-                            //self.noDataLbl.isHidden = true
-                            self.postTableView.isHidden = true
-                            self.privateAccView.isHidden = false
+                            let connectionStatus = user.connectionStatus ?? ""
+                            if connectionStatus == "Connected" {
+                                self.postTableView.isHidden = false
+                                self.privateAccView.isHidden = true
+                            } else {
+                                self.postTableView.isHidden = true
+                                self.privateAccView.isHidden = false
+                            }
                         } else { //Public
-                            //self.noDataLbl.isHidden = false
                             self.postTableView.isHidden = false
                             self.privateAccView.isHidden = true
                         }
@@ -812,11 +816,11 @@ extension OthersProfileVC {
                 let jsonDecoder = JSONDecoder()
                 let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
                 if !(networkEventRoot.error ?? false) {
-                    self.presentAlert(networkEventRoot.message ?? "Success", networkEventRoot.data ?? "")
+                    self.presentAlert(networkEventRoot.message ?? "")
                     self.fetchUserDetailsData()
                 } else {
                     self.presentAlert(networkEventRoot.message ?? "")
-                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                    print("Error :: \(networkEventRoot.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
@@ -837,11 +841,11 @@ extension OthersProfileVC {
                 let jsonDecoder = JSONDecoder()
                 let networkEventRoot = try jsonDecoder.decode(SendRequestDataModel.self, from: response.data!)
                 if !(networkEventRoot.error ?? false) {
-                    self.presentAlert(networkEventRoot.message ?? "Success")
+                    self.presentAlert(networkEventRoot.message ?? "")
                     self.fetchUserDetailsData()
                 } else {
                     self.presentAlert(networkEventRoot.message ?? "")
-                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                    print("Error :: \(networkEventRoot.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
@@ -862,11 +866,11 @@ extension OthersProfileVC {
                 let jsonDecoder = JSONDecoder()
                 let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
                 if !(networkEventRoot.error ?? false) {
-                    self.presentAlert(networkEventRoot.message ?? "Success", networkEventRoot.data ?? "")
+                    self.presentAlert(networkEventRoot.message ?? "")
                     self.fetchUserDetailsData()
                 } else {
                     self.presentAlert(networkEventRoot.message ?? "")
-                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                    print("Error :: \(networkEventRoot.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
