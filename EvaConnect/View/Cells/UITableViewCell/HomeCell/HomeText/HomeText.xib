@@ -53,10 +53,10 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3KC-dN-OCa">
-                                <rect key="frame" x="170" y="32.5" width="280" height="0.0"/>
+                                <rect key="frame" x="450" y="32.5" width="0.0" height="0.0"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rou-M2-57b" customClass="ConnectButton" customModule="AviationConnect" customModuleProvider="target">
-                                        <rect key="frame" x="280" y="0.0" width="103" height="28"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="103" height="28"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="103" id="3Yk-rT-yJd"/>
@@ -66,7 +66,7 @@
                                         <state key="normal" title="Connect"/>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxQ-Uc-6dy">
-                                        <rect key="frame" x="280" y="0.0" width="25" height="28"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="0Sm-dm-gxf"/>
                                             <constraint firstAttribute="width" constant="25" id="nDf-Nd-WFY"/>
@@ -75,11 +75,11 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4RO-YP-tBz">
-                                <rect key="frame" x="73" y="13.5" width="92" height="38"/>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4RO-YP-tBz">
+                                <rect key="frame" x="73" y="13.5" width="228" height="38"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQc-yU-0GA" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="92" height="20"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQc-yU-0GA" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="228" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="fNN-R6-aAD"/>
                                         </constraints>
@@ -87,8 +87,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="January 9, 2020" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5p-LL-REg" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="20" width="92" height="18"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="January 9, 2020" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5p-LL-REg" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="20" width="228" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="7iC-NO-a7n"/>
                                         </constraints>
@@ -102,7 +102,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XCo-TH-OAi">
-                                <rect key="frame" x="16" y="5" width="149" height="55"/>
+                                <rect key="frame" x="16" y="5" width="285" height="55"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="VWS-5r-9qR"/>
@@ -139,7 +139,7 @@
                             <constraint firstAttribute="trailing" secondItem="nP1-dU-naW" secondAttribute="trailing" constant="20" id="Cca-gI-9gH"/>
                             <constraint firstItem="XCo-TH-OAi" firstAttribute="leading" secondItem="Mcd-r3-yBe" secondAttribute="leading" multiplier="0.8" id="DJo-tw-JNJ"/>
                             <constraint firstItem="XCo-TH-OAi" firstAttribute="centerY" secondItem="Mcd-r3-yBe" secondAttribute="centerY" id="DKC-9L-ZaC"/>
-                            <constraint firstItem="3KC-dN-OCa" firstAttribute="leading" secondItem="4RO-YP-tBz" secondAttribute="trailing" constant="5" id="KMz-CV-dX4"/>
+                            <constraint firstItem="Wpu-Ub-cYu" firstAttribute="leading" secondItem="4RO-YP-tBz" secondAttribute="trailing" constant="5" id="KMz-CV-dX4"/>
                             <constraint firstItem="nP1-dU-naW" firstAttribute="leading" secondItem="Wpu-Ub-cYu" secondAttribute="trailing" constant="12" id="NKE-lg-aYM"/>
                             <constraint firstAttribute="trailing" secondItem="3KC-dN-OCa" secondAttribute="trailing" constant="25" id="Q5T-VR-DiK"/>
                             <constraint firstItem="4RO-YP-tBz" firstAttribute="leading" secondItem="Mcd-r3-yBe" secondAttribute="trailing" constant="13" id="QB2-5F-lpu"/>

@@ -53,20 +53,20 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXR-aS-ybI">
-                                <rect key="frame" x="0.0" y="0.0" width="91.5" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="710" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4gc-fs-3NS">
-                                <rect key="frame" x="51" y="15" width="40.5" height="33.5"/>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4gc-fs-3NS">
+                                <rect key="frame" x="51" y="15" width="659" height="33.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgy-rt-bmb">
-                                        <rect key="frame" x="0.0" y="0.0" width="40.5" height="17"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgy-rt-bmb">
+                                        <rect key="frame" x="0.0" y="0.0" width="659" height="17"/>
                                         <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kW0-cl-ROT" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="19" width="40.5" height="14.5"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kW0-cl-ROT" customClass="HeadingThreeLabel" customModule="AviationConnect" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="19" width="659" height="14.5"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -121,6 +121,7 @@
                             <constraint firstItem="zXR-aS-ybI" firstAttribute="top" secondItem="wYQ-WV-YiT" secondAttribute="top" id="qcE-T0-zjW"/>
                             <constraint firstItem="yId-jp-V0f" firstAttribute="leading" secondItem="wYQ-WV-YiT" secondAttribute="leading" id="tdZ-5x-nwa"/>
                             <constraint firstItem="4gc-fs-3NS" firstAttribute="top" secondItem="yId-jp-V0f" secondAttribute="top" constant="5" id="ubP-Xl-iSY"/>
+                            <constraint firstItem="wDO-ut-r76" firstAttribute="leading" secondItem="4gc-fs-3NS" secondAttribute="trailing" constant="5" id="xE4-NQ-Z1D"/>
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1n4-oW-Uct">

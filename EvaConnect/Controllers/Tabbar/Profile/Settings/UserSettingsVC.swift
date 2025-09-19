@@ -363,7 +363,7 @@ extension UserSettingsVC {
                         myUserDefaults.isPrivate = false
                     }
                 } else {
-                    print("Error :: \(privacyRoot.message ?? "Default Message")")
+                    print("Error :: \(privacyRoot.message ?? "")")
                 }
             } catch {
                 print("\(String(describing: response.result.error?.localizedDescription))")
@@ -387,7 +387,7 @@ extension UserSettingsVC {
                     self.titlePopupLbl.text = "Notification Successfully Updated."//root.message ?? "--"
                     self.fetchNotificationList()
                 } else {
-                    print("Error :: \(root.message ?? "Default Message")")
+                    print("Error :: \(root.message ?? "")")
                 }
             } catch {
                 print("\(String(describing: response.result.error?.localizedDescription))")

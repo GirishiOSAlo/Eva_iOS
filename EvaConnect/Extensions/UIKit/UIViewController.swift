@@ -28,7 +28,7 @@ extension UIViewController {
     
     func presentAlert(_ title: String?, _ msg: String? = nil, _ error: Error? = nil, completion: (() -> Void)? = nil) {
         let tlt = title ?? "OK"
-        let msg = error?.localizedDescription ?? msg ?? "Default Message"
+        let msg = error?.localizedDescription ?? msg ?? ""
         let alert = UIAlertController(title: tlt, message: msg)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
             if let completion = completion { completion() }

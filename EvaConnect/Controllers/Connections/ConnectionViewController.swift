@@ -239,7 +239,7 @@ extension ConnectionViewController {
                     }
                     self.fetchData()
                 } else {
-                    print("Error :: \(res.message ?? "Default Message")")
+                    print("Error :: \(res.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
@@ -263,10 +263,10 @@ extension ConnectionViewController {
                 if !(res.error ?? false) {
                     self.successPopupVw.isHidden = false
                     self.addAnimation()
-                    self.titlePopupLbl.text = res.data ?? "Default Message"
+                    self.titlePopupLbl.text = res.data ?? ""
                     self.fetchData()
                 } else {
-                    print("Error :: \(res.message ?? "Default Message")")
+                    print("Error :: \(res.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
@@ -293,7 +293,7 @@ extension ConnectionViewController {
                     self.fetchData()
                 } else {
                     self.presentAlert(networkEventRoot.message ?? "")
-                    print("Error :: \(networkEventRoot.message ?? "Default Message")")
+                    print("Error :: \(networkEventRoot.message ?? "")")
                 }
             } catch {
                 print("Error:: ", error)
