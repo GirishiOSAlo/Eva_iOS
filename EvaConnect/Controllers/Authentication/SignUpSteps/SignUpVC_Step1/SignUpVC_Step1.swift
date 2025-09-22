@@ -314,7 +314,7 @@ extension SignUpVC_Step1 {
                     presentAlert("Invalid Email", "Please Enter Valid Email Address", nil)
                 }
             } else {
-                if validURL {
+//                if validURL {
                     if emailValid {
                         checkIfUserExists(email: email.text!, phoneNo: mobileNoTextField.text!) { reason in
                             if reason != "" {
@@ -332,9 +332,9 @@ extension SignUpVC_Step1 {
                     } else {
                         presentAlert("Invalid Email", "Please Enter Valid Email Address", nil)
                     }
-                } else {
-                    makeAlert(messageData: "Please Enter valid Website")
-                }
+//                } else {
+//                    makeAlert(messageData: "Please Enter valid Website")
+//                }
             }
 
         } else {
