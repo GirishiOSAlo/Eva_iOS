@@ -12,7 +12,6 @@ import Lottie
 class UserSettingsVC: BaseVC {
 
     @IBOutlet weak var headerLbl: HeadingLabel!
-    @IBOutlet weak var tableView: UITableView!
     private var settings = UserSetting.allCases
     
     
@@ -23,9 +22,6 @@ class UserSettingsVC: BaseVC {
     
     @IBOutlet weak var scheduleNotificationBaseVw: UIView!
     @IBOutlet weak var otherNotificationBaseVw: UIView!
-    @IBOutlet weak var conferanceGoalsBaseVw: UIView!
-    @IBOutlet weak var responsibilitiesBaseVw: UIView!
-    
     
     @IBOutlet weak var pushBrowserBtn: UIButton!
     @IBOutlet weak var mailBtn: UIButton!
@@ -49,7 +45,6 @@ class UserSettingsVC: BaseVC {
         
     
     @IBOutlet var sectionHeaderlabelCollection: [UILabel]!
-    @IBOutlet var responsibilityTitlerlabelCollection: [UILabel]!
     @IBOutlet var labelCollection: [UILabel]!
     
     @IBOutlet weak var successPopupVw: UIView!
@@ -58,6 +53,11 @@ class UserSettingsVC: BaseVC {
     @IBOutlet weak var titlePopupLbl: UILabel!
     @IBOutlet weak var okPopupBtn: UIButton!
     var animationView: LottieAnimationView!
+    
+    @IBOutlet weak var tblVw: UITableView!
+    @IBOutlet weak var tblVwHeight: NSLayoutConstraint!
+    var surveySections: [SurveySectionList] = []
+    var selectedIds: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,14 +78,10 @@ class UserSettingsVC: BaseVC {
     
     private func setLayout() {
         self.navigationController?.isNavigationBarHidden = true
-//        tableView.tableFooterView = UIView()
-        tableView.delegate = self
-        tableView.dataSource = self
+        registerCell()
         
         scheduleNotificationBaseVw.layer.cornerRadius = 20.0
         otherNotificationBaseVw.layer.cornerRadius = 20.0
-        conferanceGoalsBaseVw.layer.cornerRadius = 20.0
-        responsibilitiesBaseVw.layer.cornerRadius = 20.0
         
         self.successSubPopupVw.cornerRadius = 20.0
         self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 20)
@@ -99,6 +95,12 @@ class UserSettingsVC: BaseVC {
         }
     }
     
+    func registerCell() {
+        tblVw.dataSource = self
+        tblVw.delegate = self
+        tblVw.registerCell(withType: SurveyNotificationTVC.self)
+    }
+    
     func setLabelUI() {
         headerLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
         privateTitleLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
@@ -107,18 +109,27 @@ class UserSettingsVC: BaseVC {
         for label in sectionHeaderlabelCollection {
             label.font = UIFont(name: Myfonts.bold, size: 16.0)
         }
-        for label in responsibilityTitlerlabelCollection {
-            label.font = UIFont(name: Myfonts.bold, size: 14.0)
-        }
         for label in labelCollection {
             label.font = UIFont(name: Myfonts.regular, size: 14.0)
         }
+    }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         self.fetchNotificationList()
+        self.fetchSurveySectionLists()
     }
     
     func setData(data:NotificationList?) {
@@ -142,6 +153,33 @@ class UserSettingsVC: BaseVC {
         calendarRemindersBrn.isSelected = (data?.calendarReminders == 1)
         meetingRemindersBtn.isSelected = (data?.meetingReminders == 1)
     }
+    
+    func setTableVwHeight(data: SurveySectionListData?) {
+        var finalHeight = 0.0
+        let sections = data?.sections ?? []
+        for surveySection in sections {
+            var optionHeight = 0.0
+            let optionsList = surveySection.options ?? []
+            for option in optionsList {
+                let optionTitle = ((option.optionTitle?.isEmpty ?? true) ? "--" : option.optionTitle) ?? ""
+                
+                let optionLblHeight = self.heightForView(text: optionTitle, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 105.0)
+                let totalHeight = optionLblHeight + 16.0
+                
+                if totalHeight > 45.0 {
+                    optionHeight += totalHeight
+                } else {
+                    optionHeight += 50
+                }
+            }
+            finalHeight = finalHeight + optionHeight + 70.0 //70 is section header height...
+        }
+        
+        // Set the height constraint
+        self.tblVwHeight.constant = finalHeight
+        self.view.layoutIfNeeded()
+    }
+    
     
     @IBAction func onPrivateAccountBtn(_ sender: UIButton) {
         if self.privateAccountBtn.isSelected {
@@ -226,102 +264,6 @@ class UserSettingsVC: BaseVC {
         // 4️⃣ Call API
         if !key.isEmpty {
             self.notificationUpdate(key: key, isEnable: value)
-        }
-    }
-    
-    @IBAction func onConfernceGoalsButtons(_ sender: UIButton) {
-        if sender.tag == 301 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 302 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 303 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 304 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 305 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 306 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 307 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 308 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 309 {
-            sender.isSelected.toggle()
-        }
-    }
-    
-    @IBAction func onRegionButtons(_ sender: UIButton) {
-        if sender.tag == 401 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 402 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 403 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 404 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 405 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 406 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 407 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 408 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 409 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 410 {
-            sender.isSelected.toggle()
-        }
-    }
-    
-    @IBAction func onHandlingButtons(_ sender: UIButton) {
-        if sender.tag == 501 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 502 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 503 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 504 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 505 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 506 {
-            sender.isSelected.toggle()
-        }
-    }
-    
-    @IBAction func onResponsibilitiesButtons(_ sender: UIButton) {
-        if sender.tag == 601 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 602 {
-            sender.isSelected.toggle()
-        }
-        else if sender.tag == 603 {
-            sender.isSelected.toggle()
         }
     }
     
@@ -424,86 +366,288 @@ extension UserSettingsVC {
             }
         }
     }
+    
+    func fetchSurveySectionLists() {
+        showActivity()
+        let url = EndPoints.surveySectionlists
+        NetworkManagerr.request(url, method: .get) { (response) in
+            self.hideActivity()
+            guard response.result.isSuccess else {
+                print("Error ::", response.error?.localizedDescription as? Error ?? "Default Error")
+                return
+            }
+
+            guard let data = response.data else {
+                print("Error :: No data received.")
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(SurveySectionListDataModel.self, from: data)
+                if let data = response.data {
+                    print("Success ::", data.sections?.count ?? 0)
+                    DispatchQueue.main.async {
+                        self.surveySections = data.sections ?? []
+                        self.selectedIds = data.selected ?? []
+                        self.tblVw.reloadData()
+                        self.setTableVwHeight(data: data)
+                    }
+                } else {
+                    print("Error ::", response.message as? Error ?? "Default Error")
+                }
+            } catch {
+                print("Error ::", error)
+            }
+        }
+    }
+    
+    func updateSurveySection(checked: Int, optionID: Int, sectionID: Int) {
+        let parameters: AFParameters = [ "checked": checked,
+                                         "option_id": optionID,
+                                         "section_id": sectionID]
+        showActivity()
+        NetworkManagerr.request(EndPoints.UpdateSurveySectionlists , method: .post, parameters: parameters) { (response) in
+            
+            self.hideActivity()
+            if response.result.isSuccess {
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let root = try decoder.decode(GenericResponse.self, from: response.data!)
+                    if !(root.error) {
+                        self.successPopupVw.isHidden = false
+                        self.addAnimation()
+                        self.titlePopupLbl.text = "Notification Successfully Updated."
+                        self.fetchSurveySectionLists()
+                    } else {
+                        print("Error :: \(root.message)")
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
 }
 
-extension UserSettingsVC: UITableViewDataSource {
+//extension UserSettingsVC: UITableViewDataSource {
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { settings.count }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell: EditUserProfileCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//        cell.selectionStyle = .none
+//        cell.title = settings[indexPath.item].rawValue
+//        return cell
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 63 }
+//    
+//}
+//
+//extension UserSettingsVC: UITableViewDelegate {
+//    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//        navigationController?.navigationBar.isHidden = true
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        
+//        switch settings[indexPath.item] {
+//        case .profile:
+//            let vc = StoryboardRouter.editUserProfile()
+//            vc.userDetail = LoggedUserDetails.shared.user
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .notification:
+//            let vc = StoryboardRouter.userNotificationSettings()
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .rss:
+//            let vc = StoryboardRouter.newsSources()
+//            vc.updateNewsSource = true
+//            vc.mode = .edit
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .blockList:
+//            let vc = BlockListVC.instantiate()
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .security:
+//            let vc = StoryboardRouter.editPasswordVC()
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .help:
+//            let vc = StoryboardRouter.help()
+//            vc.section = .help
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .language:
+//            let vc = StoryboardRouter.signUpLocationDOB()
+//            vc.isFromSettings = true
+//            vc.delegate = self
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .terms:
+//            let vc = StoryboardRouter.help()
+//            vc.section = .termsOfServices
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .cookies:
+//            let vc = StoryboardRouter.help()
+//            vc.section = .cookies
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .privacy:
+//            let vc = StoryboardRouter.help()
+//            vc.section = .privacy
+//            navigationController?.pushViewController(vc, animated: true)
+//        case .account:
+//            let vc = StoryboardRouter.account()
+//            
+//            navigationController?.pushViewController(vc, animated: true)
+//            print("Coming soon")
+//        }
+//        
+//        
+//    }
+//    
+//}
+//
+//extension UserSettingsVC: EditUserProfileDelegate {
+//    
+//    func didProfileUpdated(item: EditProfile, value: String) {
+//        
+//    }
+//
+//}
+
+
+// MARK: - TableView Delegate & DataSource
+extension UserSettingsVC: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { settings.count }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.surveySections.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.surveySections[section].options?.count ?? 0
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: EditUserProfileCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        let cell = tblVw.dequeueReusableCell(withIdentifier: SurveyNotificationTVC.id(),
+                                                   for: indexPath) as! SurveyNotificationTVC
+        
+        let option = self.surveySections[indexPath.section].options?[indexPath.row]
+        cell.titleLbl.text = option?.optionTitle ?? ""
+        
+        let optionId = option?.id
+        if let id = optionId, self.selectedIds.contains(id) {
+            cell.checkmarkImgVw.image = UIImage(named: "ic_checkMark_select")
+        } else {
+            cell.checkmarkImgVw.image = UIImage(named: "ic_checkMark_unselect")
+        }
+        
+        // Button setup
+        cell.checkmarkBtn.tag = indexPath.row
+        cell.checkmarkBtn.accessibilityIdentifier = "\(indexPath.section)"
+        cell.checkmarkBtn.addTarget(self, action: #selector(self.checkmarkBtnTapped(sender:)), for: .touchUpInside)
+        
         cell.selectionStyle = .none
-        cell.title = settings[indexPath.item].rawValue
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 63 }
-    
-}
-
-extension UserSettingsVC: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    // Custom Header
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
+        headerView.clipsToBounds = true
         
-        navigationController?.navigationBar.isHidden = true
-        tableView.deselectRow(at: indexPath, animated: true)
+        // Background view (fills header)
+        let bgView = UIView()
+        bgView.backgroundColor = UIColor(hex: "#F8F6F8")
+        bgView.clipsToBounds = true
+        bgView.translatesAutoresizingMaskIntoConstraints = false
         
-        switch settings[indexPath.item] {
-        case .profile:
-            let vc = StoryboardRouter.editUserProfile()
-            vc.userDetail = LoggedUserDetails.shared.user
-            navigationController?.pushViewController(vc, animated: true)
-        case .notification:
-            let vc = StoryboardRouter.userNotificationSettings()
-            navigationController?.pushViewController(vc, animated: true)
-        case .rss:
-            let vc = StoryboardRouter.newsSources()
-            vc.updateNewsSource = true
-            vc.mode = .edit
-            navigationController?.pushViewController(vc, animated: true)
-        case .blockList:
-            let vc = BlockListVC.instantiate()
-            navigationController?.pushViewController(vc, animated: true)
-        case .security:
-            let vc = StoryboardRouter.editPasswordVC()
-            navigationController?.pushViewController(vc, animated: true)
-        case .help:
-            let vc = StoryboardRouter.help()
-            vc.section = .help
-            navigationController?.pushViewController(vc, animated: true)
-        case .language:
-            let vc = StoryboardRouter.signUpLocationDOB()
-            vc.isFromSettings = true
-            vc.delegate = self
-            navigationController?.pushViewController(vc, animated: true)
-        case .terms:
-            let vc = StoryboardRouter.help()
-            vc.section = .termsOfServices
-            navigationController?.pushViewController(vc, animated: true)
-        case .cookies:
-            let vc = StoryboardRouter.help()
-            vc.section = .cookies
-            navigationController?.pushViewController(vc, animated: true)
-        case .privacy:
-            let vc = StoryboardRouter.help()
-            vc.section = .privacy
-            navigationController?.pushViewController(vc, animated: true)
-        case .account:
-            let vc = StoryboardRouter.account()
+        // Base card view (rounded top corners)
+        let baseView = UIView()
+        baseView.backgroundColor = UIColor(hex: "#FFFFFF")
+        baseView.layer.cornerRadius = 20.0
+        baseView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] // top-right + top-left
+        baseView.clipsToBounds = true
+        baseView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Date Label
+        let label = UILabel()
+        label.text = self.surveySections[section].sectionTitle ?? ""
+        label.textColor = UIColor(hex: "#030229")
+        label.font = UIFont(name: Myfonts.semiBold, size: 16.0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Underline
+        let underline = UIView()
+        underline.backgroundColor = UIColor(hex: "#B8C4CE")
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Hierarchy
+        headerView.addSubview(bgView)
+        headerView.addSubview(baseView)
+        baseView.addSubview(label)
+        baseView.addSubview(underline)
+        
+        NSLayoutConstraint.activate([
+            // bgView fills header
+            bgView.topAnchor.constraint(equalTo: headerView.topAnchor),
+            bgView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
+            bgView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            bgView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             
-            navigationController?.pushViewController(vc, animated: true)
-            print("Coming soon")
-        }
+            // baseView inside header (10pt from top)
+            baseView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 20),
+            baseView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 0),
+            baseView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: 0),
+            baseView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
+            
+            // label inside baseView
+            label.leadingAnchor.constraint(equalTo: baseView.leadingAnchor, constant: 16),
+            label.centerYAnchor.constraint(equalTo: baseView.centerYAnchor),
+            
+            // underline inside baseView
+            underline.heightAnchor.constraint(equalToConstant: 1),
+            underline.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: baseView.bottomAnchor)
+        ])
         
-        
+        return headerView
+    }
+
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 70
     }
     
+    // Dynamic row height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let option = self.surveySections[indexPath.section].options?[indexPath.row]
+        let optionTitle = ((option?.optionTitle?.isEmpty ?? true) ? "--" : option?.optionTitle) ?? ""
+        
+        let optionLblHeight = self.heightForView(text: optionTitle, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 105.0)
+        let totalHeight = optionLblHeight + 16.0
+        
+        if totalHeight > 45.0 {
+            return totalHeight
+        } else {
+            return 50
+        }
+    }
 }
 
-extension UserSettingsVC: EditUserProfileDelegate {
-    
-    func didProfileUpdated(item: EditProfile, value: String) {
+// MARK: - Drop Down Button Action
+extension UserSettingsVC {
+    @objc func checkmarkBtnTapped(sender: UIButton) {
+        guard let sectionStr = sender.accessibilityIdentifier,
+              let section = Int(sectionStr) else { return }
+        let indexPath = IndexPath(row: sender.tag, section: section)
+        //Update api call...
+        let surveySection = self.surveySections[indexPath.section]
+        let option = surveySection.options?[indexPath.row]
         
+        let optionId = option?.id
+        if let id = optionId, self.selectedIds.contains(id) { //available in list...
+            self.updateSurveySection(checked: 0, optionID: option?.id ?? 0, sectionID: surveySection.id ?? 0)
+        } else {
+            self.updateSurveySection(checked: 1, optionID: option?.id ?? 0, sectionID: surveySection.id ?? 0)
+        }
     }
-    
 }

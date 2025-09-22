@@ -258,6 +258,8 @@ enum EndPoints {
     // MARK: Notification
     static let getNotificationList = baseURL + "user/notificationsettinglists"
     static let updateNotification = baseURL + "user/notificationsettings"
+    static let surveySectionlists = baseURL + "user/surveysectionlists"
+    static let UpdateSurveySectionlists = baseURL + "user/surveytoggle"
     
     // MARK: Schedule Meeting
     static let scheduleMeeting = baseURL + "event/schedule-meeting"

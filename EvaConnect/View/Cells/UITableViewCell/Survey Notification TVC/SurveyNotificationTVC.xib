@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SurveyNotificationTVC" customModule="AviationConnect" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_checkMark_unselect" translatesAutoresizingMaskIntoConstraints="NO" id="h4C-qO-hmE">
+                        <rect key="frame" x="16" y="9.6666666666666643" width="20" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="YAt-i3-YHW"/>
+                            <constraint firstAttribute="width" constant="20" id="cGr-eE-dPI"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hz-H1-reK">
+                        <rect key="frame" x="48" y="8" width="260" height="28"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.011764705882352941" green="0.0078431372549019607" blue="0.16078431372549018" alpha="0.89803921568627454" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dF6-Ba-M4d">
+                        <rect key="frame" x="10" y="8" width="40" height="28"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="LsQ-S9-18f"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="dF6-Ba-M4d" secondAttribute="bottom" constant="8" id="8Yy-Th-KaG"/>
+                    <constraint firstAttribute="bottom" secondItem="1hz-H1-reK" secondAttribute="bottom" constant="8" id="JJB-I5-ShY"/>
+                    <constraint firstItem="h4C-qO-hmE" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LfL-iF-UfN"/>
+                    <constraint firstItem="1hz-H1-reK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="S5x-bO-Y0f"/>
+                    <constraint firstItem="1hz-H1-reK" firstAttribute="leading" secondItem="h4C-qO-hmE" secondAttribute="trailing" constant="12" id="ZwK-SU-j32"/>
+                    <constraint firstItem="dF6-Ba-M4d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="a19-4H-ihJ"/>
+                    <constraint firstAttribute="trailing" secondItem="1hz-H1-reK" secondAttribute="trailing" constant="12" id="hZ0-ce-odZ"/>
+                    <constraint firstItem="h4C-qO-hmE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="qhE-He-6D0"/>
+                    <constraint firstItem="dF6-Ba-M4d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ym4-V0-RD5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkmarkBtn" destination="dF6-Ba-M4d" id="Ndn-ar-eo7"/>
+                <outlet property="checkmarkImgVw" destination="h4C-qO-hmE" id="rmE-jk-T0b"/>
+                <outlet property="titleLbl" destination="1hz-H1-reK" id="ro1-E8-yUU"/>
+            </connections>
+            <point key="canvasLocation" x="-44.274809160305338" y="-1.4084507042253522"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_checkMark_unselect" width="24" height="24"/>
+    </resources>
+</document>

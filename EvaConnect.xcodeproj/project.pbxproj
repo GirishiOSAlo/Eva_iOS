@@ -553,6 +553,9 @@
 		A689509C2DD7499300ACC16F /* MeetingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950992DD7499300ACC16F /* MeetingListVC.swift */; };
 		A68950A02DD758F400ACC16F /* MeetingListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A689509F2DD758F400ACC16F /* MeetingListCVC.xib */; };
 		A68950A12DD758F400ACC16F /* MeetingListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A689509E2DD758F400ACC16F /* MeetingListCVC.swift */; };
+		A68C08292E812F8C002CE235 /* SurveySectionListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */; };
+		A68C08392E81456C002CE235 /* SurveyNotificationTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68C08382E81456C002CE235 /* SurveyNotificationTVC.xib */; };
+		A68C083A2E81456C002CE235 /* SurveyNotificationTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C08372E81456C002CE235 /* SurveyNotificationTVC.swift */; };
 		A68C992A2E7BBDAD003B9B13 /* CompanyListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */; };
 		A68C992C2E7C14B1003B9B13 /* NotificationListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */; };
 		A68EB3DC2E39DC89008F6B9A /* MeetingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */; };
@@ -1184,6 +1187,9 @@
 		A689509A2DD7499300ACC16F /* MeetingListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListVC.xib; sourceTree = "<group>"; };
 		A689509E2DD758F400ACC16F /* MeetingListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListCVC.swift; sourceTree = "<group>"; };
 		A689509F2DD758F400ACC16F /* MeetingListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListCVC.xib; sourceTree = "<group>"; };
+		A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySectionListDataModel.swift; sourceTree = "<group>"; };
+		A68C08372E81456C002CE235 /* SurveyNotificationTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyNotificationTVC.swift; sourceTree = "<group>"; };
+		A68C08382E81456C002CE235 /* SurveyNotificationTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SurveyNotificationTVC.xib; sourceTree = "<group>"; };
 		A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListDataModel.swift; sourceTree = "<group>"; };
 		A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListDataModel.swift; sourceTree = "<group>"; };
 		A68EB3DA2E39DC89008F6B9A /* MeetingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsVC.swift; sourceTree = "<group>"; };
@@ -1776,6 +1782,7 @@
 				A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */,
 				A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */,
 				A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */,
+				A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2815,6 +2822,7 @@
 				A62A49C52AAF40C90009ADD6 /* EventAgendaTimeTblCell.swift */,
 				A6ADF5952AB077E200423428 /* EventAgendaSheduleTblCell.swift */,
 				A6D9F6662AAF4C6D00F604BF /* EventDelegatesTblCell.swift */,
+				A68C08362E814559002CE235 /* Survey Notification TVC */,
 			);
 			path = UITableViewCell;
 			sourceTree = "<group>";
@@ -3574,6 +3582,15 @@
 			path = MeetingListCVC;
 			sourceTree = "<group>";
 		};
+		A68C08362E814559002CE235 /* Survey Notification TVC */ = {
+			isa = PBXGroup;
+			children = (
+				A68C08372E81456C002CE235 /* SurveyNotificationTVC.swift */,
+				A68C08382E81456C002CE235 /* SurveyNotificationTVC.xib */,
+			);
+			path = "Survey Notification TVC";
+			sourceTree = "<group>";
+		};
 		A695AAF02AA6EDD6006A2A71 /* ReactionCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3898,6 +3915,7 @@
 				50102F2D2475107200E81860 /* SideMenu.xib in Resources */,
 				5073A82F24775DE8008F2E7D /* InviteConnectionCell.xib in Resources */,
 				1822975223C5B5D30077769D /* AuthenticationVC.storyboard in Resources */,
+				A68C08392E81456C002CE235 /* SurveyNotificationTVC.xib in Resources */,
 				48E0C0D12B3C34EE006EBEF0 /* AttachmentPopupVC.xib in Resources */,
 				5042EF2A244E0AE400616F7E /* ReceiverCell.xib in Resources */,
 				180F5E932536C8320044832B /* Share.storyboard in Resources */,
@@ -4187,6 +4205,7 @@
 				A6C3C6032DC8822D00A2E229 /* HomeEventCVC.swift in Sources */,
 				A6C3C6042DC8822D00A2E229 /* HomeJobCVC.swift in Sources */,
 				485FC1A02DD75EE700AA05A4 /* ExhibitorsVC.swift in Sources */,
+				A68C083A2E81456C002CE235 /* SurveyNotificationTVC.swift in Sources */,
 				25D40B3E27C3A30200EEF2AA /* Wrapper.swift in Sources */,
 				A63779482DE6F4DE0072055F /* AlertView.swift in Sources */,
 				2586A8BD277C7C3A000350DE /* UIDevice.swift in Sources */,
@@ -4195,6 +4214,7 @@
 				4802FF772AE15D0200DCC112 /* UserDetails.swift in Sources */,
 				181BEA4A2495F0D20020D456 /* SearchHome.swift in Sources */,
 				1898D98024B49F9C00E625AB /* GooglePlaceManager.swift in Sources */,
+				A68C08292E812F8C002CE235 /* SurveySectionListDataModel.swift in Sources */,
 				A6D231802E2A53D50091E44E /* DelegateEventMeetingStatusModel.swift in Sources */,
 				483EDA032B5809F0003257C7 /* UINavigationController.swift in Sources */,
 				48B285712AB319660086CA61 /* SenderImgTVCell.swift in Sources */,
