@@ -139,14 +139,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         } else {
             expandedIndexPath = indexPath // expand new
         }
-        
-        // Animate height and layout changes
-        listCollectionVw.performBatchUpdates {
-            listCollectionVw.reloadItems(at: indexPathsToReload)
-            UIView.animate(withDuration: 0.1) {
-                self.view.layoutIfNeeded()
-            }
-        }
+        listCollectionVw.reloadData()
     }
 
     @IBAction func onSuccessOkBtn(_ sender: UIButton) {
