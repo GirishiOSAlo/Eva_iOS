@@ -176,7 +176,7 @@ class UserSettingsVC: BaseVC {
         }
         
         // Set the height constraint
-        self.tblVwHeight.constant = finalHeight
+        self.tblVwHeight.constant = finalHeight + 50.0 //50 is last cell visible.....
         self.view.layoutIfNeeded()
     }
     
