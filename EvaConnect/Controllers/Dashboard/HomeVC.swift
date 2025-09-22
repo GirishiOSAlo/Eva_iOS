@@ -1309,7 +1309,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             
             self.objectId = newz.id ?? 0
             self.type = .news
-            cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
+            cell.detailNavigateBtn.addTarget(self, action: #selector(newsDetails(_:)), for: .touchUpInside)
             cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
             cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
             cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
@@ -2995,6 +2995,13 @@ extension HomeVC {
         self.present(vc, animated: true)
     }
     
+    @objc func newsDetails(_ sender: UIButton) {
+        let vc = StoryboardRouter.openNewsDetail() //openURLVC()
+        let bindModelData = newsList[sender.tag]
+        vc.selectedNewsId = bindModelData.id ?? 0
+        navigationController?.pushViewController(vc, animated: true)
+    }
+//    
 //    func openNewsDetailsPage(index: Int) {
 //        let vc = StoryboardRouter.openNewsDetail() //openURLVC()
 //        let bindModelData = newsList[index]
