@@ -90,6 +90,17 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         listCollectionVw.addSubview(refreshControl) // not required when using UITableViewController
     }
     
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
+    
     func setupSuccessPopup() {
         self.successSubPopupVw.cornerRadius = 20.0
         self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 22)
@@ -132,7 +143,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         // Animate height and layout changes
         listCollectionVw.performBatchUpdates {
             listCollectionVw.reloadItems(at: indexPathsToReload)
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.1) {
                 self.view.layoutIfNeeded()
             }
         }
@@ -417,18 +428,45 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             return CGSize(width: width, height: self.categoryCollectionVw.frame.size.height)
             
         case self.listCollectionVw:
+            let obj = self.list[indexPath.row]
+            let meetingDetails = ((obj.meetingDetails?.isEmpty ?? true) ? "--" : obj.meetingDetails) ?? ""
+            let meetingWith = ((obj.meetingWith?.isEmpty ?? true) ? "--" : obj.meetingWith) ?? ""
+            let colleagues = ((obj.withColleagues?.isEmpty ?? true) ? "--" : obj.withColleagues) ?? ""
+            let location = ((obj.locationName?.isEmpty ?? true) ? "--" : obj.locationName) ?? ""
+            
+            let meetingDetailsLblHeight = self.heightForView(text: meetingDetails, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 89.0)
+            let meetingWithLblHeight = self.heightForView(text: meetingWith, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
+            let colleaguesLblHeight = self.heightForView(text: colleagues, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
+            let locationLblHeight = self.heightForView(text: location, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
+            
+            let totalHeight = meetingDetailsLblHeight + meetingWithLblHeight + colleaguesLblHeight + locationLblHeight + 283.0
+            
             if indexPath == expandedIndexPath {  //--> Expanded height...
                 var cellHeight = 0.0
                 if self.type == .cancelled {
-                    cellHeight = 262.0 //(-45 button view hidden)
+                    cellHeight = totalHeight - 45.0
                 } else {
-                    cellHeight = 307.0 //(6*45 + 32 top & bottom)
+                    cellHeight = totalHeight
                 }
                 return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
             } else {  //--> Normal height...
-                let cellHeight = 167.0 //(3*45 + 32 top & bottom)
+                let cellHeight = meetingDetailsLblHeight + 80.0
                 return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
             }
+
+            
+//            if indexPath == expandedIndexPath {  //--> Expanded height...
+//                var cellHeight = 0.0
+//                if self.type == .cancelled {
+//                    cellHeight = 262.0 //(-45 button view hidden)
+//                } else {
+//                    cellHeight = 307.0 //(6*45 + 32 top & bottom)
+//                }
+//                return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
+//            } else {  //--> Normal height...
+//                let cellHeight = 167.0 //(3*45 + 32 top & bottom)
+//                return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
+//            }
             
         default:
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)

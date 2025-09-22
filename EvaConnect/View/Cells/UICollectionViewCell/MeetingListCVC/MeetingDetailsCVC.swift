@@ -22,6 +22,7 @@ class MeetingDetailsCVC: UICollectionViewCell {
     @IBOutlet weak var timeLbl: UILabel!
     
     @IBOutlet var detilsTitleLbllCollection: [UILabel]!
+    @IBOutlet weak var meetingDetailsLbl: UILabel!
     @IBOutlet weak var meetingWithLbl: UILabel!
     @IBOutlet weak var colleaguesLbl: UILabel!
     @IBOutlet weak var locationLbl: UILabel!
@@ -30,7 +31,6 @@ class MeetingDetailsCVC: UICollectionViewCell {
     @IBOutlet weak var joinMeetingBtn: UIButton!
     @IBOutlet weak var cancelMeetingBtn: UIButton!
     
-    @IBOutlet weak var locationBaseVw: UIView!
     @IBOutlet weak var buttonBaseVw: UIView!
     @IBOutlet weak var cancelBtnBaseVw: UIView!
     
@@ -41,7 +41,6 @@ class MeetingDetailsCVC: UICollectionViewCell {
         didSet {
             let imageName = isExpanded ? "ic_fillDropUp" : "ic_fillDropDown"
             dropBtn.setImage(UIImage(named: imageName), for: .normal)
-            locationBaseVw.isHidden = isExpanded ? false : true
             buttonBaseVw.isHidden = isExpanded ? false : true
             cancelBtnBaseVw.isHidden = isExpanded ? false : true
         }
@@ -62,6 +61,7 @@ class MeetingDetailsCVC: UICollectionViewCell {
         for lbl in detilsTitleLbllCollection {
             lbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         }
+        meetingDetailsLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         meetingWithLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         colleaguesLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         locationLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
@@ -77,10 +77,11 @@ class MeetingDetailsCVC: UICollectionViewCell {
     }
     
     func setData(obj: EventMeeting) {
+        self.meetingDetailsLbl.text = ((obj.meetingDetails?.isEmpty ?? true) ? "--" : obj.meetingDetails) ?? ""
         self.dateLbl.text = obj.startDay ?? "--"
         self.timeLbl.text = "\(obj.startTime ?? "--") - \(obj.endTime ?? "--")"
-        self.meetingWithLbl.text = obj.meetingWith ?? "--"
-        self.colleaguesLbl.text = obj.withColleagues ?? "--"
-        self.locationLbl.text = obj.locationName ?? "--"
+        self.meetingWithLbl.text = ((obj.meetingWith?.isEmpty ?? true) ? "--" : obj.meetingWith) ?? ""
+        self.colleaguesLbl.text = ((obj.withColleagues?.isEmpty ?? true) ? "--" : obj.withColleagues) ?? ""
+        self.locationLbl.text = ((obj.locationName?.isEmpty ?? true) ? "--" : obj.locationName) ?? ""
     }
 }
