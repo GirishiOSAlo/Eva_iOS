@@ -127,12 +127,12 @@ class HomeVC: BaseVC {
     
     var refreshControl = UIRefreshControl()
     
-//    lazy var refresher: UIRefreshControl = {
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.tintColor = .black
-//        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
-//        return refreshControl
-//    }()
+    //    lazy var refresher: UIRefreshControl = {
+    //        let refreshControl = UIRefreshControl()
+    //        refreshControl.tintColor = .black
+    //        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
+    //        return refreshControl
+    //    }()
     
     var expandedCells: Set<Int> = []
     var specificUserPost: Int? = nil
@@ -150,15 +150,15 @@ class HomeVC: BaseVC {
     //MARK: VIEW LIFECYLCE
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if isIndivisualUser {
-//            Constants.saveEnumToUserDefaults(.news)
-//        } else {
-//            Constants.saveEnumToUserDefaults(.industryEvents)
-//        }
+        //        if isIndivisualUser {
+        //            Constants.saveEnumToUserDefaults(.news)
+        //        } else {
+        //            Constants.saveEnumToUserDefaults(.industryEvents)
+        //        }
         
-//        //--> Set up the refresh control
-//        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
-//        tableView.refreshControl = refreshControl
+        //        //--> Set up the refresh control
+        //        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
+        //        tableView.refreshControl = refreshControl
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.sendToken), name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
         
@@ -168,7 +168,7 @@ class HomeVC: BaseVC {
         
         if selectedTab == .events {
             self.selectedHomeFilter = .new
-        } else if selectedTab == .jobs {
+        } else if selectedTab == .jobs || selectedTab == .industryJobs {
             if isIndivisualUser {
                 selectedHomeFilter = .all
             } else {
@@ -214,7 +214,7 @@ class HomeVC: BaseVC {
         self.newsListTblVwHeight.constant = 0
         self.emptyListMessageLbl.text = ""
         
-        if selectedTab == .jobs {
+        if selectedTab == .jobs || selectedTab == .industryJobs {
             if isIndivisualUser {
                 homeTabFilter = HomeTabFilter.job
             } else {
