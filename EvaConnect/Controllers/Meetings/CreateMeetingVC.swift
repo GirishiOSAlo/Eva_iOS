@@ -606,7 +606,7 @@ extension CreateMeetingVC {
             endTimePicker.preferredDatePickerStyle = .wheels
         }
         // Force 24-hour format
-        startTimePicker.locale = Locale(identifier: "en_GB")
+        endTimePicker.locale = Locale(identifier: "en_GB")
 
         // Set min and max time
         if let min = minTime {
