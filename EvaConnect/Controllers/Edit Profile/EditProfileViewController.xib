@@ -282,8 +282,13 @@
                                                                                             </constraints>
                                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                             <state key="normal" image="ic_calendar"/>
+                                                                                        </button>
+                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwC-7d-W2u">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="321" height="40"/>
+                                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                             <connections>
-                                                                                                <action selector="onCalenderBtnTap:" destination="-1" eventType="touchUpInside" id="Vbt-kz-UIX"/>
+                                                                                                <action selector="onCalenderBtnTap:" destination="-1" eventType="touchUpInside" id="EV9-tV-YW4"/>
                                                                                             </connections>
                                                                                         </button>
                                                                                     </subviews>
@@ -291,12 +296,16 @@
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="bottom" secondItem="lch-Hr-iNl" secondAttribute="bottom" id="6DC-Ll-vNE"/>
                                                                                         <constraint firstItem="Lkq-tL-Wy3" firstAttribute="top" secondItem="elw-gX-skm" secondAttribute="top" id="GsU-Oi-qWr"/>
+                                                                                        <constraint firstItem="kwC-7d-W2u" firstAttribute="leading" secondItem="elw-gX-skm" secondAttribute="leading" id="Lcg-1g-Zd6"/>
                                                                                         <constraint firstItem="lch-Hr-iNl" firstAttribute="leading" secondItem="Lkq-tL-Wy3" secondAttribute="trailing" id="Ma9-fb-oTY"/>
                                                                                         <constraint firstAttribute="bottom" secondItem="Lkq-tL-Wy3" secondAttribute="bottom" id="ZuO-fU-rxw"/>
+                                                                                        <constraint firstAttribute="trailing" secondItem="kwC-7d-W2u" secondAttribute="trailing" id="c2g-Ke-T2R"/>
                                                                                         <constraint firstAttribute="height" constant="40" id="dMy-45-qv2"/>
+                                                                                        <constraint firstItem="kwC-7d-W2u" firstAttribute="top" secondItem="elw-gX-skm" secondAttribute="top" id="g82-Vh-Ced"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="lch-Hr-iNl" secondAttribute="trailing" id="ktr-8u-UTi"/>
                                                                                         <constraint firstItem="Lkq-tL-Wy3" firstAttribute="leading" secondItem="elw-gX-skm" secondAttribute="leading" constant="16" id="o2d-ch-nwZ"/>
                                                                                         <constraint firstItem="lch-Hr-iNl" firstAttribute="top" secondItem="elw-gX-skm" secondAttribute="top" id="w1K-1V-9zJ"/>
+                                                                                        <constraint firstAttribute="bottom" secondItem="kwC-7d-W2u" secondAttribute="bottom" id="y61-yK-9My"/>
                                                                                     </constraints>
                                                                                 </view>
                                                                             </subviews>
@@ -1760,6 +1769,11 @@
                 <constraint firstItem="0VV-ko-IKd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gxy-jt-efr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AKB-zI-hfO" secondAttribute="trailing" id="jOj-OZ-5it"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="8ZQ-Rq-3Yk"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="49.618320610687022" y="-1.4084507042253522"/>
         </view>
     </objects>
