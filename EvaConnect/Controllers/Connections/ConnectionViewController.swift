@@ -36,6 +36,8 @@ class ConnectionViewController: UIViewController, XIBed {
     var animationView: LottieAnimationView!
     
     var type: TypeConectionEnum = .Followers
+    var isComeFromOtherProfile = false
+    var otherProfileID = 0
     
     var delegatesDetails: DelegatesDetails?
     var list: [Follower] = [] {
@@ -184,7 +186,13 @@ extension ConnectionViewController {
 extension ConnectionViewController {
     func fetchData() {
         showActivity()
-        let url = "\(EndPoints.followersData)"
+        var url = ""
+        
+        if self.isComeFromOtherProfile {
+            url = "\(EndPoints.followersData)/\(self.otherProfileID)"
+        } else {
+            url = "\(EndPoints.followersData)"
+        }
         
         NetworkManagerr.request(url, method: .get) { (response) in
             self.hideActivity()

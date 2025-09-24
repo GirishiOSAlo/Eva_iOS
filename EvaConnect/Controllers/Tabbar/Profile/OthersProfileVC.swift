@@ -537,6 +537,22 @@ class OthersProfileVC: UIViewController {
         vc.isComeFromDelegate = self.isComeFromDelegate
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @IBAction func onFollowerBtnTap(_ sender: UIButton) {
+        let vc = ConnectionViewController.instantiate()
+        vc.type = .Followers
+        vc.isComeFromOtherProfile = true
+        vc.otherProfileID = self.otherUserID
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func onFollowingBtnTap(_ sender: UIButton) {
+        let vc = ConnectionViewController.instantiate()
+        vc.type = .Following
+        vc.isComeFromOtherProfile = true
+        vc.otherProfileID = self.otherUserID
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 //MARK: Network calls

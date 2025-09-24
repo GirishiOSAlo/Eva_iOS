@@ -2554,13 +2554,25 @@
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GR9-uP-GpR">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="170.66666666666666" height="41"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <connections>
+                                                                            <action selector="onFollowerBtnTap:" destination="db3-Th-gMW" eventType="touchUpInside" id="ilP-bq-ol0"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="bottom" secondItem="uDR-8B-fiR" secondAttribute="bottom" id="9Uv-IT-MVo"/>
                                                                     <constraint firstItem="uDR-8B-fiR" firstAttribute="leading" secondItem="3O0-fN-EIX" secondAttribute="leading" constant="12" id="GLe-e8-2um"/>
+                                                                    <constraint firstItem="GR9-uP-GpR" firstAttribute="top" secondItem="3O0-fN-EIX" secondAttribute="top" id="JbC-G6-RCt"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="GR9-uP-GpR" secondAttribute="trailing" id="WsN-hX-AHF"/>
                                                                     <constraint firstAttribute="trailing" secondItem="uDR-8B-fiR" secondAttribute="trailing" constant="12" id="Xrk-yP-chH"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="GR9-uP-GpR" secondAttribute="bottom" id="axB-9w-l88"/>
                                                                     <constraint firstItem="uDR-8B-fiR" firstAttribute="top" secondItem="3O0-fN-EIX" secondAttribute="top" id="dHb-xL-3jh"/>
+                                                                    <constraint firstItem="GR9-uP-GpR" firstAttribute="leading" secondItem="3O0-fN-EIX" secondAttribute="leading" id="nJn-o2-TDl"/>
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zn0-Cu-eKX">
@@ -2583,12 +2595,24 @@
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmn-yK-cuv">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="170.33333333333334" height="41"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                        <connections>
+                                                                            <action selector="onFollowingBtnTap:" destination="db3-Th-gMW" eventType="touchUpInside" id="8OS-Hr-gJO"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="hmn-yK-cuv" firstAttribute="top" secondItem="zn0-Cu-eKX" secondAttribute="top" id="7wS-sg-SEc"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="hmn-yK-cuv" secondAttribute="trailing" id="Udj-d3-4Eh"/>
                                                                     <constraint firstAttribute="trailing" secondItem="U2P-SC-FHH" secondAttribute="trailing" constant="12" id="V5w-4b-kOY"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="hmn-yK-cuv" secondAttribute="bottom" id="a6Z-Xp-h82"/>
                                                                     <constraint firstItem="U2P-SC-FHH" firstAttribute="leading" secondItem="zn0-Cu-eKX" secondAttribute="leading" constant="12" id="cKk-Zk-JV7"/>
                                                                     <constraint firstItem="U2P-SC-FHH" firstAttribute="top" secondItem="zn0-Cu-eKX" secondAttribute="top" id="f2C-q1-QLX"/>
+                                                                    <constraint firstItem="hmn-yK-cuv" firstAttribute="leading" secondItem="zn0-Cu-eKX" secondAttribute="leading" id="jtm-Zh-7dK"/>
                                                                     <constraint firstAttribute="bottom" secondItem="U2P-SC-FHH" secondAttribute="bottom" id="qRQ-aj-AY5"/>
                                                                 </constraints>
                                                             </view>
