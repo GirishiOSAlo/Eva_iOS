@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 
-class ReschedulePopupVw: UIViewController, XIBed {
+class ReschedulePopupVw: BaseVC, XIBed {
 
     @IBOutlet weak var baseView: UIView!
     
@@ -110,8 +110,12 @@ class ReschedulePopupVw: UIViewController, XIBed {
     }
     
     @IBAction func onEndTimePickerBtnTap(_ sender: UIButton) {
-        endTimePickerSet()
-        self.endtimeTextField.becomeFirstResponder()
+        if self.starttimeTextField.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "First select a start time.")
+        } else {
+            endTimePickerSet()
+            self.endtimeTextField.becomeFirstResponder()
+        }
     }
     
     @IBAction func onRescheduleBtnTap(_ sender: UIButton) {
@@ -332,7 +336,7 @@ extension ReschedulePopupVw {
             endTimePicker.preferredDatePickerStyle = .wheels
         }
         // Force 24-hour format
-        startTimePicker.locale = Locale(identifier: "en_GB")
+        endTimePicker.locale = Locale(identifier: "en_GB")
 
         // Set min and max time
         if let min = minTime {
