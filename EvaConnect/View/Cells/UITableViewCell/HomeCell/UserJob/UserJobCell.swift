@@ -98,6 +98,8 @@ class UserJobCell: UITableViewCell {
         viewDetailsBtn.layer.borderColor = AppColors.appBlue.cgColor
         viewDetailsBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
         
+        jobImageView.layer.cornerRadius = self.jobImageView.frame.size.height/2
+        
         jobActiveTimeLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         applicantBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 14.0)
     }
