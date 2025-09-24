@@ -1643,7 +1643,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             vc.jobId = obj.id
             navigationController?.pushViewController(vc, animated: true)
         } else {
-            showToastWithLogo(message: "You have already applied for this job.")
+            //showToastWithLogo(message: "You have already applied for this job.")
+            self.presentAlert("You have already applied for this job.")
         }
     }
     
