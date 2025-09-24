@@ -220,8 +220,8 @@ extension EditPasswordVC {
     
     func changeCall() {
         
-        if let user = LoggedUserDetails.shared.user {
-            let parameters: Parameters = ["user_id": user.id ?? 0,
+//        if let user = LoggedUserDetails.shared.user {
+            let parameters: Parameters = ["user_id": myUserDefaults.userId,
                                           "old_password": oldPassword.text!,
                                           "new_password": newPassword.text!] as [String : Any]
             
@@ -242,7 +242,7 @@ extension EditPasswordVC {
                     self.presentAlert("Failure", genericResponse.message, nil)
                 }
             }
-        }
+//        }
     }
     
     

@@ -793,6 +793,7 @@ extension BaseVC: SlideMenuVCDelegate {
         case "Change Password":
             print("Push to Change Password Screen...")
             let vc = StoryboardRouter.editPasswordVC()
+            //let vc = StoryboardRouter.forgotPasswordVC()
             self.navigationController?.pushViewController(vc, animated: true)
         case "Settings":
             print("Push to Settings Screen...")
