@@ -426,7 +426,7 @@ class OthersProfileVC: UIViewController {
             
             switch selectedIndex {
             case 0:
-                print("Edit")
+                print("Block")
                 self.blockUser(userId: self.profileID)
                 break
             default:
@@ -448,7 +448,8 @@ class OthersProfileVC: UIViewController {
     }
     
     @IBAction func unblockBtnTapped(_ sender: UIButton) {
-        self.blockUser(userId: self.profileID)
+        //self.blockUser(userId: self.profileID)
+        self.unBlocklockUser(userId: self.profileID)
     }
     
     @IBAction func sendRequestBtnTapped(_ sender: UIButton) {
@@ -723,6 +724,33 @@ extension OthersProfileVC {
             }
         }
     }
+    
+    func unBlocklockUser(userId: Int) {
+        let url = "\(EndPoints.blockUser)"
+        let param: AFParameters = [ "receiver_id": userId,
+                                    "sender_id": myUserDefaults.userId,
+                                    "status": "active"]
+
+        NetworkManagerr.request(url, method: .post, parameters: param) { [weak self] (result: Result<GenericResponse>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                if response.error == true {
+                    self.presentAlert("Error", response.message)
+                }
+                
+                if response.error == false {
+                    showToast(message: "User Blocked Successfully")
+                    self.backBtnTapped(backBtn!)
+                }
+            case .failure(let failure):
+                self.presentAlert("Error", nil, failure)
+            default:
+                break
+            }
+        }
+    }
+    
     
     func addConnection(receiverId: Int, completion: @escaping () -> Void) {
         
