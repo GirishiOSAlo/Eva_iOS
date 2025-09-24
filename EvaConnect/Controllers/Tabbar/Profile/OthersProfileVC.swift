@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AVKit
+import IQKeyboardManagerSwift
 
 class OthersProfileVC: UIViewController {
 
@@ -1071,6 +1072,23 @@ extension OthersProfileVC {
     }
 }
 
+extension OthersProfileVC: CollectionViewCellDelegate {
+    func didSelectItem(at indexPath: Int, imgArr: [String?]) {
+        let image = imgArr[indexPath]
+        if image != nil {
+            let imgString = image!
+            let vc = DownloadChatImgVC.instantiate(imageString: imgString)
+            vc.modalPresentationStyle = .fullScreen
+            vc.isFromHomeVc = true
+            vc.completion = {
+                
+            }
+            self.navigationController?.present(vc, animated: true)
+            print("Selected:", imgString)
+        }
+    }
+}
+
 extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -1142,6 +1160,8 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
             else if homePost.datumPostImage!.count > 0 {//Image
                 let cell: HomeImage = postTableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.backgroundColor = UIColor(hex: "#F8F6F8")
+                //cell.delegate = self
+                cell.delegateDidSelect = self
                 cell.uiData(dataMaper: homePost)
 
                 //for other user profile...
