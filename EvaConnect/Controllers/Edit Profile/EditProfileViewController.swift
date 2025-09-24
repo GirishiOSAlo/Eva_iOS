@@ -213,7 +213,19 @@ class EditProfileViewController: UIViewController, XIBed {
         self.categoryId = user.categoryID ?? 0
         self.businessSectorId = user.sectorID ?? 0
         
-        self.countryPhnCodeTxtField.text = user.countryCode ?? ""
+        var countryCode = user.countryCode ?? ""
+        let normalizedCode = countryCode.hasPrefix("+") ? countryCode : "+\(countryCode)"
+
+        // get country flag based on code.....
+        if let matchedCountry = countries.first(where: { $0.dialCode == normalizedCode }) {
+            print("Found country: \(matchedCountry.name), flag: \(matchedCountry.flag)")
+            self.countryFlagLbl.text = matchedCountry.flag
+        } else {
+            print("No country found")
+            self.countryFlagLbl.text = "🇮🇳"
+        }
+        
+        self.countryPhnCodeTxtField.text = countryCode
         self.mobileTxtField.text = user.phoneNumber ?? ""
         self.emailTxtField.text = user.email ?? ""
         self.websiteTxtField.text = user.companyURL ?? ""
