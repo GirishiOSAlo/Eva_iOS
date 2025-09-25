@@ -295,7 +295,11 @@ class OthersProfileVC: UIViewController {
             if self.eventID == 0 {
                 self.downloadResumeBtn.isHidden = true
             } else {
-                self.downloadResumeBtn.isHidden = false
+                if user.isPublic == 0 { //Private
+                    self.downloadResumeBtn.isHidden = true
+                } else { //Public
+                    self.downloadResumeBtn.isHidden = false
+                }
             }
         }
         self.companyNameLbl.text = user.companyName ?? ""
