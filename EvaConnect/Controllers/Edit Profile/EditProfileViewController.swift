@@ -36,6 +36,7 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet weak var jobTitleTxtField: UITextField!
     @IBOutlet weak var categoryTxtField: UITextField!
     @IBOutlet weak var businessSectorTxtField: UITextField!
+    @IBOutlet weak var descriptionTxtVwPlaceHolder: UILabel!
     @IBOutlet weak var descriptionTxtVw: UITextView!
     @IBOutlet weak var descTxtVwHeight: NSLayoutConstraint!
     @IBOutlet weak var resumeBaseVw: UIView!
@@ -63,6 +64,7 @@ class EditProfileViewController: UIViewController, XIBed {
     @IBOutlet weak var airportLocationTxtField: UITextField!
     @IBOutlet weak var flightNumberTxtField: UITextField!
     @IBOutlet weak var otherTransferTxtVw: UITextView!
+    @IBOutlet weak var otherTransferPlaceHolderLbl: UILabel!
     @IBOutlet weak var otherTransferTxtVwHeight: NSLayoutConstraint!
     
     @IBOutlet weak var persionalDetailEditBtn: UIButton!
@@ -153,6 +155,9 @@ class EditProfileViewController: UIViewController, XIBed {
         self.resumeTitleLbl.font = UIFont(name: Myfonts.bold, size: 16.0)
         self.resumeSubLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         
+        self.descriptionTxtVwPlaceHolder.font = UIFont(name: Myfonts.regular, size: 14.0)
+        self.otherTransferPlaceHolderLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        
         self.persionalDetailEditBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1.0, radius: 12.0)
         self.contactInfoEditBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1.0, radius: 12.0)
         self.regionLanguageEditBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1.0, radius: 12.0)
@@ -203,12 +208,17 @@ class EditProfileViewController: UIViewController, XIBed {
         self.jobTitleTxtField.text = user.designation ?? ""
         self.categoryTxtField.text = user.categoryName ?? ""
         self.businessSectorTxtField.text = user.sectorName ?? ""
-//        self.categoryTxtField.text = user.categoryLists?.first(where: { $0.id == user.categoryID })?.categoryName
-//        self.businessSectorTxtField.text = user.sectorLists?.first(where: { $0.id == user.sectorID })?.name
+        //        self.categoryTxtField.text = user.categoryLists?.first(where: { $0.id == user.categoryID })?.categoryName
+        //        self.businessSectorTxtField.text = user.sectorLists?.first(where: { $0.id == user.sectorID })?.name
         self.descriptionTxtVw.text = user.bioData ?? ""
+        self.descriptionTxtVwPlaceHolder.isHidden = !self.descriptionTxtVw.text.isEmpty
         
-        let descLblHeight = self.heightForView(text: self.descriptionTxtVw.text, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 100.0)
-        self.descTxtVwHeight.constant = descLblHeight + 30.0
+        if self.descriptionTxtVw.text.isEmpty {
+            self.descTxtVwHeight.constant = 40.0
+        } else {
+            let descLblHeight = self.heightForView(text: self.descriptionTxtVw.text, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 100.0)
+            self.descTxtVwHeight.constant = descLblHeight + 40.0
+        }
         self.companyId = Int(user.companyID ?? 0)
         self.categoryId = user.categoryID ?? 0
         self.businessSectorId = user.sectorID ?? 0
@@ -242,9 +252,14 @@ class EditProfileViewController: UIViewController, XIBed {
         self.airportLocationTxtField.text = user.location ?? ""
         self.flightNumberTxtField.text = user.flightNo ?? ""
         self.otherTransferTxtVw.text = user.transferDetails ?? ""
+        self.otherTransferPlaceHolderLbl.isHidden = !self.otherTransferTxtVw.text.isEmpty
         
-        let otherTransferLblHeight = self.heightForView(text: self.otherTransferTxtVw.text, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 100.0)
-        self.otherTransferTxtVwHeight.constant = otherTransferLblHeight + 30.0
+        if self.otherTransferTxtVw.text.isEmpty {
+            self.otherTransferTxtVwHeight.constant = 40.0
+        } else {
+            let otherTransferLblHeight = self.heightForView(text: self.otherTransferTxtVw.text, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 100.0)
+            self.otherTransferTxtVwHeight.constant = otherTransferLblHeight + 40.0
+        }
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
@@ -546,16 +561,27 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
 //MARK: TextView Delegate Method...
 extension EditProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        let maxHeight = textView.font!.lineHeight * 7
+        var maxHeight = textView.font!.lineHeight * 7
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
+        //print("Max : \(maxHeight), Estimate : \(estimatedSize)")
         
         if estimatedSize.height <= maxHeight {
             textView.isScrollEnabled = false
             if textView == descriptionTxtVw {
-                descTxtVwHeight.constant = estimatedSize.height
+                self.descriptionTxtVwPlaceHolder.isHidden = !textView.text.isEmpty
+                if estimatedSize.height < 40.0 {
+                    self.descTxtVwHeight.constant = 40.0
+                } else {
+                    descTxtVwHeight.constant = estimatedSize.height
+                }
             } else {
-                otherTransferTxtVwHeight.constant = estimatedSize.height
+                self.otherTransferPlaceHolderLbl.isHidden = !textView.text.isEmpty
+                if estimatedSize.height < 40.0 {
+                    self.otherTransferTxtVwHeight.constant = 40.0
+                } else {
+                    otherTransferTxtVwHeight.constant = estimatedSize.height
+                }
             }
         } else {
             textView.isScrollEnabled = true
