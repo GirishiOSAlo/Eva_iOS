@@ -279,17 +279,17 @@ class CommentVC: UIViewController, XIBed {
         let commentID = comment.id ?? 0
         
         if self.isComeFromNews {
-            //            if comment.isCommentLike == 1 { //--> Dislike...
-            //                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "deactivate", action: "dislike")
-            //            } else { //--> Like...
-            self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
-            //            }
+            if comment.isCommentLike == 1 { //--> Dislike...
+                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "unlike")
+            } else { //--> Like...
+                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
+            }
         } else {
-            //            if comment.isCommentLike == 1 {
-            //                self.likePostComment(postId: self.postId, commentId: commentID, status: "deactivate", action: "dislike")
-            //            } else {
-            self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
-            //            }
+            if comment.isCommentLike == 1 {
+                self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "unlike")
+            } else {
+                self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
+            }
         }
     }
     @objc func dislikeCommentTapped(sender: UIButton){
@@ -340,11 +340,26 @@ extension CommentVC: CommentsCellDelegate {
     //Reply Comment Like...
     func didTapReplyLikeButton(replyComment: RepliesComment, isComeFromNews: Bool) {
         let commentID = replyComment.id ?? 0
-        if isComeFromNews {
+//        if isComeFromNews {
+//            let rssNewsID = replyComment.rssNewsID ?? 0
+//            self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
+//        } else {
+//            self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
+//        }
+        
+        if self.isComeFromNews {
             let rssNewsID = replyComment.rssNewsID ?? 0
-            self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
+            if replyComment.isCommentLike == 1 { //--> Dislike...
+                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "unlike")
+            } else { //--> Like...
+                self.likeNewsComment(newsId: rssNewsID, commentId: commentID, status: "active", action: "like")
+            }
         } else {
-            self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
+            if replyComment.isCommentLike == 1 {
+                self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "unlike")
+            } else {
+                self.likePostComment(postId: self.postId, commentId: commentID, status: "active", action: "like")
+            }
         }
     }
     
