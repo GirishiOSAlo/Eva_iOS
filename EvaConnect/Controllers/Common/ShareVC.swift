@@ -67,13 +67,20 @@ class ShareVC: UIViewController {
     
     @IBAction func copyLinkTapped(_ sender: UIButton) {
         //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        if self.copiedLink == "" {
+            self.presentAlert("Alert","data is not available.")
+            return
+        }
         UIPasteboard.general.string = self.copiedLink
         showToastWithLogo(message: "Link Copied")
     }
     
     @IBAction func whatsAppTapped(_ sender: UIButton) {
         //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
-        
+        if self.whatsappLink == "" {
+            self.presentAlert("Alert","data is not available.")
+            return
+        }
         let urlString = "https://api.whatsapp.com/send?text=Hey check this out \(self.whatsappLink)"
         let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let URL = NSURL(string: urlStringEncoded!)
@@ -103,6 +110,12 @@ class ShareVC: UIViewController {
     
     @IBAction func facebookTapped(_ sender: UIButton) {
         //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        
+        if self.facebookLink == "" {
+            self.presentAlert("Alert","data is not available.")
+            return
+        }
+        
         let urlStr = String(format: "fb-messenger://share/?link=%@", facebookLink)
         let url  = NSURL(string: urlStr)
 
@@ -250,8 +263,9 @@ private extension ShareVC {
         
         if selectedUserIds.count == 0 {
             self.presentAlert("Alert","Please choose at least one user")
-        } else {
-            
+            return
+        }
+        
             var parameters = [ "user_id":  myUserDefaults.userId,
                                "share_user_id": selectedUserIds] as [String : Any]
             var endPoint = ""
@@ -297,13 +311,10 @@ private extension ShareVC {
                                 }
                             }
                         }
-                    } else {
-                        self.dismiss(animated: true)
                     }
                 }
                 
             }
-        }
 //        }
         
     }
