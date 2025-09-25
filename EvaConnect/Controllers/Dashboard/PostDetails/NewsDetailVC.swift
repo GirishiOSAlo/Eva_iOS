@@ -127,13 +127,17 @@ class NewsDetailVC: UIViewController {
     
     func updateUI(data: NewsDetailData) {
         
-        guard let newsImage = data.sourceImage else {
-            navBarImageView.image = UIImage(named: "eventPlaceholder")
-            return
+        if let imageUrl = data.sourceImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            navBarImageView.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            navBarImageView.image = UIImage(named: "profile")
         }
-        navBarImageView.kf.setImage(with: URL(string: newsImage))
-        self.navBarTitleLbl.text = data.newsSource ?? "--"
-        navBarTimeLbl.text = data.relativeTime ?? "--"
+        
+        self.navBarTitleLbl.text = (data.newsSource?.isEmpty ?? true) ? "--" : data.newsSource
+        navBarTimeLbl.text = (data.relativeTime?.isEmpty ?? true) ? "--" : data.relativeTime
         
         self.NewsTitleLbl.text = data.title ?? ""
         //self.newsSorceLbl.text = data.href ?? "--"

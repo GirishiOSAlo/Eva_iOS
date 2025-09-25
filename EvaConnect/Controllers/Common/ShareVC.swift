@@ -58,7 +58,6 @@ class ShareVC: UIViewController {
         super.viewWillAppear(animated)
 //        initUI()
         getAllConnection()
-        shareConnection()
 //        createShareView()
     }
     
@@ -248,8 +247,12 @@ private extension ShareVC {
                 print("Not Selected")
             }
         }
+        
+        if selectedUserIds.count == 0 {
+            self.presentAlert("Alert","Please choose at least one user")
+        } else {
             
-        var parameters = [ "user_id":  myUserDefaults.userId,
+            var parameters = [ "user_id":  myUserDefaults.userId,
                                "share_user_id": selectedUserIds] as [String : Any]
             var endPoint = ""
             if type == .post {
@@ -268,7 +271,7 @@ private extension ShareVC {
                 parameters["id"] = objectId
                 endPoint = EndPoints.shareMeet
             }
-
+            
             showActivity()
             NetworkManagerr.request(endPoint, method: .post, parameters: parameters) { (response) in
                 self.hideActivity()
@@ -300,6 +303,7 @@ private extension ShareVC {
                 }
                 
             }
+        }
 //        }
         
     }

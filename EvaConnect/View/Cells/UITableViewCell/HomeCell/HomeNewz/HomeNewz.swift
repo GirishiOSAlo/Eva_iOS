@@ -122,8 +122,8 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
             profileImage.image = UIImage(named: "profile")
         }
 
-        newzName.text = dataMaper.newsSource?.name ?? "--"
-        timeWhenPost.text = dataMaper.createdDatetime ?? "--"
+        newzName.text = (dataMaper.newsSource?.name?.isEmpty ?? true) ? "--" : dataMaper.newsSource?.name
+        timeWhenPost.text = (dataMaper.createdDatetime?.isEmpty ?? true) ? "--" : dataMaper.createdDatetime
         
         if let imageUrl = dataMaper.newsImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
