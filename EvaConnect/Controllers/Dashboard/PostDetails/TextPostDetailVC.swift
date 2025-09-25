@@ -395,9 +395,11 @@ extension TextPostDetailVC {
     func updateUI(post: PostDetail) {
         let userid = post.user?.id ?? 0
         if userid == myUserDefaults.userId {
-           followBtn.isHidden = true
+            followBtn.isHidden = true
+            reportBtn.isHidden = true
         } else {
             followBtn.isHidden = false
+            reportBtn.isHidden = false
         }
         
         if post.user?.userImage != nil {
@@ -463,7 +465,9 @@ extension TextPostDetailVC {
         let userid = videoPost.user?.id ?? 0
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
+            reportBtn.isHidden = true
         } else {
+            reportBtn.isHidden = false
             followBtn.isHidden = false
         }
         
@@ -501,8 +505,10 @@ extension TextPostDetailVC {
     func setImageData(imagePost: PostDetail) {
         let userid = imagePost.user?.id ?? 0
         if userid == myUserDefaults.userId {
+            reportBtn.isHidden = true
            followBtn.isHidden = true
         } else {
+            reportBtn.isHidden = false
             followBtn.isHidden = false
         }
         
@@ -554,7 +560,9 @@ extension TextPostDetailVC {
         let userid = docPost.user?.id ?? 0
         if userid == myUserDefaults.userId {
            followBtn.isHidden = true
+            reportBtn.isHidden = true
         } else {
+            reportBtn.isHidden = false
             followBtn.isHidden = false
         }
         
@@ -673,7 +681,9 @@ extension TextPostDetailVC {
                 
                 if self.postDetail?.user?.id == myUserDefaults.userId {
                     self.followBtn.isHidden = true
+                    self.reportBtn.isHidden = true
                 } else {
+                    self.reportBtn.isHidden = false
                     if self.postDetail?.isConnected == "connected" || self.postDetail?.isConnected == "active" {
                         self.followBtn.isHidden = true
                     } else {

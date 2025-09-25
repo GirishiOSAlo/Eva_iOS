@@ -674,6 +674,12 @@ extension CommentVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
             cell.treadVericalLine.isHidden = true
             cell.insideRepliesCollectionVwHeight.constant = 0.0
         }
+        
+        if user?.id == myUserDefaults.userId {
+            cell.moreBtn.isHidden = true
+        } else {
+            cell.moreBtn.isHidden = false
+        }
 
         cell.likeBtn.tag = indexPath.row
         cell.likeBtn.addTarget(self, action: #selector(likeCommentTapped(sender:)), for: .touchUpInside)

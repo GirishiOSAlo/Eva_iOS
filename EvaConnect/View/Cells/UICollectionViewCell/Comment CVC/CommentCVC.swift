@@ -205,6 +205,12 @@ extension CommentCVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             cell.dislikeBtn.setImage(UIImage(named: "ic_commentDislike"), for: .normal)
         }
         
+        if user?.id == myUserDefaults.userId {
+            cell.moreBtn.isHidden = true
+        } else {
+            cell.moreBtn.isHidden = false
+        }
+        
         cell.likeBtn.tag = indexPath.row
         cell.likeBtn.addTarget(self, action: #selector(replyLikeTapped(_:)), for: .touchUpInside)
         cell.dislikeBtn.tag = indexPath.row
