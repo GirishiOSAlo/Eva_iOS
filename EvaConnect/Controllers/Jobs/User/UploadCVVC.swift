@@ -53,6 +53,16 @@ class UploadCVVC: UIViewController {
         cvCollectionView.dataSource = self
     }
     
+    func selectBtnEnable() {
+        self.selectBtn.isUserInteractionEnabled = true
+        self.selectBtn.backgroundColor = UIColor(hex: "#4D76CD", alpha: 1.0)
+    }
+    
+    func selectBtnDisable() {
+        self.selectBtn.isUserInteractionEnabled = false
+        self.selectBtn.backgroundColor = UIColor(hex: "#4D76CD", alpha: 0.5)
+    }
+    
     @IBAction func backBtnTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -62,9 +72,13 @@ class UploadCVVC: UIViewController {
     }
     
     @IBAction func selectBtnTapped(_ sender: UIButton) {
-        let selectedResume = self.resumeList[self.selectedIndex]
-        delegate?.didPassData(selectedResume)
-        self.navigationController?.popViewController(animated: true)
+        if self.resumeList.count == 0 {
+            self.selectBtnDisable()
+        } else {
+            let selectedResume = self.resumeList[self.selectedIndex]
+            delegate?.didPassData(selectedResume)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func deleteResume(sender: UIButton) {
@@ -107,16 +121,16 @@ extension UploadCVVC: UIDocumentPickerDelegate {
             let sizeMB = Double(fileData.count) / (1024.0 * 1024.0)
             
             if sizeMB > 5 {
-                if let base64Doc = encodeToBase64(reqURL: fileURL),
-                   let decodedData = Data(base64Encoded: base64Doc) {
-                    
-                    let fileName = fileURL.lastPathComponent
-                    uploadResumeWithFile(fileData: decodedData, fileName: fileName)
-                } else {
-                    print("❌ Failed to encode/convert document")
-                    self.presentAlert("File Too Large",
-                        "Your document is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
-                }
+                print("❌ Resume PDF File Too Large")
+                self.presentAlert("File Too Large", "Your document is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is less than 5 MB.")
+                return
+            }
+            
+            if let base64Doc = encodeToBase64(reqURL: fileURL),
+               let decodedData = Data(base64Encoded: base64Doc) {
+                
+                let fileName = fileURL.lastPathComponent
+                uploadResumeWithFile(fileData: decodedData, fileName: fileName)
             }
         } catch {
             print("Error loading file data: \(error)")
@@ -144,7 +158,7 @@ extension UploadCVVC: UIDocumentPickerDelegate {
                 let base64String = myData.base64EncodedString()
                 return base64String
             } catch {
-                print("Error encoding video to base64: \(error)")
+                print("Error encoding PDF Resume to base64: \(error)")
                 return nil
             }
         } else {
@@ -155,6 +169,7 @@ extension UploadCVVC: UIDocumentPickerDelegate {
     
     func uploadResumeWithFile(fileData: Data, fileName: String) {
         let url = URL(string: EndPoints.resumeUpload)!
+        print(url)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
@@ -232,8 +247,11 @@ extension UploadCVVC {
                     self.resumeList = resumeData.data ?? []
                     if self.resumeList.count > 0 {
                         self.emptyDataLbl.isHidden = true
+                        self.selectBtnEnable()
+                        self.selectBtn.isEnabled = true
                     } else {
                         self.emptyDataLbl.isHidden = false
+                        self.selectBtnDisable()
                     }
                 } else {
                     self.presentAlert("Error", nil, response.error)

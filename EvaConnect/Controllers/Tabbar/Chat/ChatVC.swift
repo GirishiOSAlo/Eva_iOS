@@ -707,12 +707,12 @@ extension ChatVC {
                     if let docURL = documentURL {
                         let sizeMB = fileSizeInMB(url: docURL)
                         if sizeMB > 5 {
+                            print("❌ Document is larger than 5MB")
+                            self.presentAlert("File Too Large", "Your document is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
+                        } else {
                             let base64Doc = encodeToBase64(reqURL: docURL)
                             params["document"] = "data:application/pdf;base64,\(base64Doc ?? "")"
                             params["document_name"] = fileName
-                        } else {
-                            print("❌ Document is larger than 5MB")
-                            self.presentAlert("File Too Large", "Your document is \(String(format: "%.2f", sizeMB)) MB. Maximum allowed size is 5 MB.")
                         }
                     }
                 }
