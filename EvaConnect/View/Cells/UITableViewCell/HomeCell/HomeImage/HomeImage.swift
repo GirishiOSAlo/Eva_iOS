@@ -129,8 +129,10 @@ class HomeImage: BaseCellClass {
         let count = data.datumPostImage?.count ?? 0
         if count == 0 {
             self.pageControlHeight.constant = 0.0
+            self.pageNoLbl.isHidden = true
         } else if count == 1 {
             self.pageControlHeight.constant = 0.0
+            self.pageNoLbl.isHidden = true
             self.imageArr = data.datumPostImage ?? []
             pageControl.numberOfPages = self.imageArr.count
             pageControl.currentPage = 0
@@ -138,6 +140,7 @@ class HomeImage: BaseCellClass {
             imageCollection.reloadData()
         } else {
             self.pageControlHeight.constant = 30.0
+            self.pageNoLbl.isHidden = false
             self.imageArr = data.datumPostImage ?? []
             pageControl.numberOfPages = self.imageArr.count
             pageControl.currentPage = 0
@@ -184,14 +187,27 @@ class HomeImage: BaseCellClass {
         commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
         shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
         
-        if !dataMaper.datumPostImage!.isEmpty {
-//            setImages(imageUrl: dataMaper.postImage!)
-            
-            self.imageArr = dataMaper.datumPostImage ?? []
+//        if !dataMaper.datumPostImage!.isEmpty {
+////            setImages(imageUrl: dataMaper.postImage!)
+//            
+//            self.imageArr = dataMaper.datumPostImage ?? []
+//            pageControl.numberOfPages = self.imageArr.count
+//            pageControl.currentPage = 0
+//            pageNoLbl.text = "  \((pageControl.currentPage) + 1 )/\(pageControl.numberOfPages)  "
+//            imageCollection.reloadData()
+//        }
+        
+        self.imageArr = dataMaper.datumPostImage ?? []
+        imageCollection.reloadData()
+
+        if self.imageArr.count > 1 {
+            pageNoLbl.isHidden = false
             pageControl.numberOfPages = self.imageArr.count
             pageControl.currentPage = 0
             pageNoLbl.text = "  \((pageControl.currentPage) + 1 )/\(pageControl.numberOfPages)  "
             imageCollection.reloadData()
+        } else {
+            pageNoLbl.isHidden = true
         }
         
         if dataMaper.datumPostImage!.count == 0 || dataMaper.datumPostImage!.count == 1 {

@@ -1688,7 +1688,6 @@ Aviation</string>
                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="back_touchUpInside:" destination="pU6-ep-Vkq" eventType="touchUpInside" id="TEL-Th-AYr"/>
                                             <action selector="back_touchUpInside:" destination="fY2-c5-3hP" eventType="touchUpInside" id="uxH-qq-f97"/>
                                         </connections>
                                     </button>
@@ -1783,7 +1782,7 @@ Aviation</string>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EKC-I5-d6C">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="265"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="270"/>
                                                                 <subviews>
                                                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acp-ah-Ttb" customClass="ImageSlideshow" customModule="ImageSlideshow">
                                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="240"/>
@@ -1797,22 +1796,22 @@ Aviation</string>
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUI-li-j2D" userLabel="page Control View">
-                                                                        <rect key="frame" x="108" y="250" width="119" height="5"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUI-li-j2D" userLabel="page Control View">
+                                                                        <rect key="frame" x="20" y="250" width="295" height="10"/>
+                                                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.14999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="5" id="aRN-Qr-jMU"/>
+                                                                            <constraint firstAttribute="height" constant="10" id="aRN-Qr-jMU"/>
                                                                         </constraints>
                                                                     </view>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="trailingMargin" secondItem="lUI-li-j2D" secondAttribute="trailing" constant="100" id="LCY-B8-mDd"/>
+                                                                    <constraint firstAttribute="trailingMargin" secondItem="lUI-li-j2D" secondAttribute="trailing" constant="12" id="LCY-B8-mDd"/>
                                                                     <constraint firstItem="acp-ah-Ttb" firstAttribute="leading" secondItem="EKC-I5-d6C" secondAttribute="leading" id="Sux-so-6sa"/>
                                                                     <constraint firstItem="lUI-li-j2D" firstAttribute="top" secondItem="acp-ah-Ttb" secondAttribute="bottom" constant="10" id="beP-B9-h7T"/>
                                                                     <constraint firstAttribute="trailing" secondItem="acp-ah-Ttb" secondAttribute="trailing" id="gP2-tO-rHJ"/>
                                                                     <constraint firstItem="acp-ah-Ttb" firstAttribute="top" secondItem="EKC-I5-d6C" secondAttribute="top" id="hBI-Sm-5gT"/>
-                                                                    <constraint firstItem="lUI-li-j2D" firstAttribute="leading" secondItem="EKC-I5-d6C" secondAttribute="leadingMargin" constant="100" id="iCl-1K-iHb"/>
+                                                                    <constraint firstItem="lUI-li-j2D" firstAttribute="leading" secondItem="EKC-I5-d6C" secondAttribute="leadingMargin" constant="12" id="iCl-1K-iHb"/>
                                                                     <constraint firstAttribute="bottom" secondItem="lUI-li-j2D" secondAttribute="bottom" constant="10" id="xiE-cB-TGQ"/>
                                                                 </constraints>
                                                             </view>

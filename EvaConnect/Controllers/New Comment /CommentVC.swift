@@ -232,6 +232,7 @@ class CommentVC: UIViewController, XIBed {
                         if commentRoot.error {
                             self.presentAlert("Failure", commentRoot.message, nil)
                         } else {
+                            self.commentTextView.text = ""
                             self.commentTextView.resignFirstResponder()
                             self.getComments()
                         }
@@ -511,7 +512,6 @@ extension CommentVC {
                         self.commentTextView.text = ""
                         self.commentTextView.resignFirstResponder()
                         if self.isComeFromNews {
-                            self.commentTextView.text = ""
                             self.getNewsComments(id: self.newsId)
                         }
                     }
@@ -542,7 +542,6 @@ extension CommentVC {
                         self.commentTextView.text = ""
                         self.commentTextView.resignFirstResponder()
                         if self.isComeFromNews {
-                            self.commentTextView.text = ""
                             self.getNewsComments(id: self.newsId)
                         }
                     }

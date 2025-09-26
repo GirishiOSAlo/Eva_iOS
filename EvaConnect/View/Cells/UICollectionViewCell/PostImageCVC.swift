@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PostImageCVC: UICollectionViewCell {
 
@@ -14,10 +15,11 @@ class PostImageCVC: UICollectionViewCell {
     
     var image: String! {
         didSet {
-            if let url = URL(string: image), url.containsImage {
+            if let imageUrl = image,
+               !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+               let url = URL(string: imageUrl),
+               UIApplication.shared.canOpenURL(url) {
                 imageView.kf.setImage(with: url, placeholder: UIImage(named: "noPhoto"))
-                imageView.kf.indicatorType = .activity
-                layoutIfNeeded()
             } else {
                 imageView.image = UIImage(named: "noPhoto")
             }
