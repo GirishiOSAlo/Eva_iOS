@@ -603,7 +603,11 @@ extension AddPostVC {
                             self.hideActivity()
                             self.delegate?.refresh(homeStatus: true)
                             self.clearMemory()
-                            self.back_touchUpInside(self.backBtn)
+                            
+                            let alert = UIAlertController(title: "Success", message: "Your Post is successfully uploaded.", style: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { success in
+                                self.back_touchUpInside(self.backBtn)
+                            }))
                         }
                     } catch let error {
                         self.hideActivity()
