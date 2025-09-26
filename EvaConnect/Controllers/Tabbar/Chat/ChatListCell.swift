@@ -85,11 +85,16 @@ class ChatListCell: UITableViewCell {
         timeLabel.text = DateUtils.formatTo24Hour(timestamp: item.lastMessage?.timestamp ?? 0.0)
         onlineStatusView.isHidden = item.user?.status?.lowercased() == "online" ? false : true
         
-        if item.lastMessage?.read == true {
+        
+        if lastMessage?.sender_id == myUserDefaults.userId {
             unreadCount.isHidden = true
         } else {
-            unreadCount.isHidden = false
-            unreadCount.text = "\(item.unreadCount ?? 0)"
+            if item.lastMessage?.read == true {
+                unreadCount.isHidden = true
+            } else {
+                unreadCount.isHidden = false
+                unreadCount.text = "\(item.unreadCount ?? 0)"
+            }
         }
     }
 }

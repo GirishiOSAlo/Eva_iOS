@@ -502,7 +502,8 @@ extension NewsDetailVC {
     func fetchRelatedNewsDetails(offset: Int){
         let categoryID = self.newsDetails?.categoryID ?? 0
         let parameters = [
-            "category_id": 0
+            "category_id": 0,
+            "news_id": self.selectedNewsId
            ] as [String: Any]
         
         let url = "\(EndPoints.relatedNewsDetails)?limit=10&offset=\(offset)"
