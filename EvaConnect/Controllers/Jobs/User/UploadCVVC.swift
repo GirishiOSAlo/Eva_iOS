@@ -248,7 +248,6 @@ extension UploadCVVC {
                     if self.resumeList.count > 0 {
                         self.emptyDataLbl.isHidden = true
                         self.selectBtnEnable()
-                        self.selectBtn.isEnabled = true
                     } else {
                         self.emptyDataLbl.isHidden = false
                         self.selectBtnDisable()
@@ -308,7 +307,7 @@ extension UploadCVVC {
                                                   preferredStyle: .alert
                     )
                     let okButton = UIAlertAction(title: "OK", style: .default) { _ in
-                        self.navigationController?.popViewController(animated: true)
+                        //self.navigationController?.popViewController(animated: true)
                         self.fetchResumeData()
                     }
                     alert.addAction(okButton)
