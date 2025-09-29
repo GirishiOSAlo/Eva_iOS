@@ -62,6 +62,7 @@ class OthersProfileVC: UIViewController {
     @IBOutlet weak var profileView: UIView!
 //    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var profileMainVw: UIView!
+    @IBOutlet weak var profileMainVwHeight: NSLayoutConstraint!
     @IBOutlet weak var bioMainView: UIView!
 //    @IBOutlet weak var bioViewHeight: NSLayoutConstraint!
     @IBOutlet weak var noDataLbl: UILabel!
@@ -146,6 +147,19 @@ class OthersProfileVC: UIViewController {
 //            pendingView.isHidden = true
 //            inviteView.isHidden = true
 //        }
+        
+        
+        if self.profileID == myUserDefaults.userId { //Own Profile....
+            self.chatBtn.isHidden = true
+            self.downloadResumeBtn.isHidden = true
+            self.scheduleMeetingBtnWidth.constant = 0
+            self.profileMainVwHeight.constant = 190.0
+        }
+        else {
+            self.chatBtn.isHidden = false
+            self.profileMainVwHeight.constant = 250.0
+        }
+        
         self.postTVHeight.constant = 0.0
         self.noDataLbl.isHidden = true
         self.fetchUserDetailsData()
@@ -331,37 +345,42 @@ class OthersProfileVC: UIViewController {
         self.sendRequestBtnView.isHidden = true
         self.sentRequestBtnView.isHidden = true
         
-        if self.isComeFromDelegate {
-            self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
-        } else {
-            self.scheduleMeetingBtnWidth.constant = 0 //schedule meeting button hide...
-        }
-        
-        let connectionStatus = user.connectionStatus ?? ""
-        if connectionStatus == "Connected" {
-            //unfollow button show...
-            self.unfollowBtnView.isHidden = false
-            self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
-        }
-        else if connectionStatus == "Request Sent" { //sent request
-            //Friend request send...
-            self.sentRequestBtnView.isHidden = false
-        }
-        else if connectionStatus == "received request" {
-            //accept reject btn show...
-            self.aacceptDeclineBtnView.isHidden = false
-        }
-        else if connectionStatus == "Block" {
-            //unblock btn show...
-            self.unblockBtnView.isHidden = false
+        if self.profileID == myUserDefaults.userId {
+            print("Own User Profile")
         }
         else {
-            if user.isPublic == 0 {
-                //Send Request btn show...
-                self.sendRequestBtnView.isHidden = false
+            if self.isComeFromDelegate {
+                self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
             } else {
-                //Follow btn show...
-                self.followBtnView.isHidden = false
+                self.scheduleMeetingBtnWidth.constant = 0 //schedule meeting button hide...
+            }
+            
+            let connectionStatus = user.connectionStatus ?? ""
+            if connectionStatus == "Connected" {
+                //unfollow button show...
+                self.unfollowBtnView.isHidden = false
+                self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
+            }
+            else if connectionStatus == "Request Sent" { //sent request
+                //Friend request send...
+                self.sentRequestBtnView.isHidden = false
+            }
+            else if connectionStatus == "received request" {
+                //accept reject btn show...
+                self.aacceptDeclineBtnView.isHidden = false
+            }
+            else if connectionStatus == "Block" {
+                //unblock btn show...
+                self.unblockBtnView.isHidden = false
+            }
+            else {
+                if user.isPublic == 0 {
+                    //Send Request btn show...
+                    self.sendRequestBtnView.isHidden = false
+                } else {
+                    //Follow btn show...
+                    self.followBtnView.isHidden = false
+                }
             }
         }
     }

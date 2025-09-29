@@ -3363,6 +3363,7 @@
                         <outlet property="profileImageView" destination="NXs-Lj-4EN" id="QJH-Ae-gTt"/>
                         <outlet property="profileLoadingView" destination="eMN-jQ-U41" id="Qem-tO-6sM"/>
                         <outlet property="profileMainVw" destination="nrX-zv-eRH" id="t1Y-sw-iG9"/>
+                        <outlet property="profileMainVwHeight" destination="FZr-Xl-Iy6" id="crT-J4-EMr"/>
                         <outlet property="profileView" destination="onH-T6-McH" id="c4A-dm-ogj"/>
                         <outlet property="scheduleMeetingBtn" destination="aoS-Zm-6Fg" id="iZ6-dB-h1N"/>
                         <outlet property="scheduleMeetingBtnView" destination="5Sc-2g-cwG" id="TCw-gu-b4b"/>
@@ -3406,7 +3407,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -71,21 +71,29 @@ class FollowersCVC: UICollectionViewCell {
         self.sendReqVw.isHidden = true
         self.acceptrejectVw.isHidden = true
         
-        if obj.isPublic == 0 { //is Private...
-            self.btnBaseVwWidthConst.constant = 110.0
-            self.sendReqVw.isHidden = false
-        } else { //is Public...
-            if obj.action == "follow" {
-                self.btnBaseVwWidthConst.constant = 75
-                self.followVw.isHidden = false
-            }
-            else if obj.action == "unfollow" {
-                self.btnBaseVwWidthConst.constant = 85
-                self.unfollowVw.isHidden = false
-            }
-            else {
-                self.btnBaseVwWidthConst.constant = 100.0
-                self.acceptrejectVw.isHidden = false
+        if obj.id == myUserDefaults.userId { //Own User....
+            self.followVw.isHidden = true
+            self.unfollowVw.isHidden = true
+            self.sendReqVw.isHidden = true
+            self.acceptrejectVw.isHidden = true
+        }
+        else {
+            if obj.isPublic == 0 { //is Private...
+                self.btnBaseVwWidthConst.constant = 110.0
+                self.sendReqVw.isHidden = false
+            } else { //is Public...
+                if obj.action == "follow" {
+                    self.btnBaseVwWidthConst.constant = 75
+                    self.followVw.isHidden = false
+                }
+                else if obj.action == "unfollow" {
+                    self.btnBaseVwWidthConst.constant = 85
+                    self.unfollowVw.isHidden = false
+                }
+                else {
+                    self.btnBaseVwWidthConst.constant = 100.0
+                    self.acceptrejectVw.isHidden = false
+                }
             }
         }
     }
