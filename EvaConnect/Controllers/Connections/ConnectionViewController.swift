@@ -85,11 +85,16 @@ class ConnectionViewController: UIViewController, XIBed {
     
     func setupUI() {
         
-        if self.otherProfilePrivate {
+        if self.isComeFromOtherProfile {
             self.requestBaseVw.isHidden = true
         } else {
-            self.requestBaseVw.isHidden = false
+            if self.otherProfilePrivate {
+                self.requestBaseVw.isHidden = true
+            } else {
+                self.requestBaseVw.isHidden = false
+            }
         }
+        
         
         self.searchMainView.isHidden = true
         self.searchBaseVw.layer.cornerRadius = 8
