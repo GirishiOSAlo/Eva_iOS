@@ -10,14 +10,14 @@ import Foundation
 
 
 enum HomeTabFilter: String {
-    case all = "all"
+    case all = "All"
     case new = "New"
     case going = "Attending"
-    case saved = "saved"
+    case saved = "Saved"
     case passed = "Passed"
     case previous = "Previous"
-    case industry = "industry"
-    case applied = "applied"
+    case industry = "Industry"
+    case applied = "Applied"
     case requested = "Requested"
     case active = "Active"
     case inactive = "Inactive"
