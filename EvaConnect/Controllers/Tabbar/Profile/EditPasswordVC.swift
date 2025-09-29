@@ -156,7 +156,11 @@ extension EditPasswordVC {
     
     func changeValidation(){
         if oldPassword.text!.isEmpty {
-            self.presentAlert("Alert", "Please enter your current password", nil)
+            if myUserDefaults.password == oldPassword.text! {
+                self.presentAlert("Alert", "Please enter your old password", nil)
+            } else {
+                self.presentAlert("Alert", "Please enter your current password", nil)
+            }
         } else if newPassword.text!.isEmpty {
             self.presentAlert("Alert", "Please enter your new password", nil)
         }else if (newPassword.text?.length ?? 0) < 8 {

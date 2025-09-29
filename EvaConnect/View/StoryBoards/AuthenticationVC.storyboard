@@ -2605,6 +2605,7 @@
                     <connections>
                         <outlet property="descLabel" destination="cci-nC-t5M" id="sdU-Bi-JTA"/>
                         <outlet property="editEmail" destination="2de-X8-CeZ" id="JoQ-6k-e8B"/>
+                        <outlet property="headingLbl" destination="oUz-Po-Tol" id="tID-xj-Xt3"/>
                         <outlet property="nextBtn" destination="XSw-Hj-Jml" id="K6w-ym-hzg"/>
                         <outlet property="otpView" destination="lSr-BN-5qT" id="rR0-Xu-z4d"/>
                         <outlet property="passcodeTxt" destination="6Xk-sr-OTd" id="V7P-J5-K0j"/>

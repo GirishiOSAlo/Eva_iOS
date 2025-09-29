@@ -274,6 +274,7 @@ extension LoginVC {
                     myUserDefaults.companyName = user.companyName ?? ""
                     myUserDefaults.userImage = user.userImage ?? ""
                     myUserDefaults.token = user.token ?? ""
+                    myUserDefaults.password = self.passwordTxt.text ?? ""
                     
                     if user.isPublic == 0 {
                         myUserDefaults.isPrivate = true

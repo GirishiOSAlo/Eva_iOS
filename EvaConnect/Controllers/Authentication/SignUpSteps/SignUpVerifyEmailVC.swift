@@ -13,6 +13,7 @@ import Alamofire
 
 class SignUpVerifyEmailVC: BaseForAuthentication {
 
+    @IBOutlet weak var headingLbl: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var passcodeTxt: UITextField!
@@ -33,6 +34,13 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("OTP ==> \(self.otp ?? "")")
+        
+        if isFromForgotVC {
+            headingLbl.text = "Forgot Password"
+        } else {
+            headingLbl.text = "Create Account"
+        }
+        
         setLayoutStyle()
         self.startTimer()
     }
@@ -166,21 +174,22 @@ extension SignUpVerifyEmailVC {
             self.presentAlert("Error", "Please enter OTP")
             return
         }
-        //self.callVerifyOtp()
+        self.callVerifyOtp()
         
-        let enterOTP = self.otpView.text ?? ""
-        if enterOTP == self.otp {
-            if isFromForgotVC {
-                let vc = StoryboardRouter.editPasswordVC()
-                vc.isFromForgotVC = true
-                vc.email = email ?? ""
-                vc.code = self.otpView.text ?? ""
-                navigationController?.pushViewController(vc, animated: true)
-            } else {
-                guard let vc = storyboard?.instantiateViewController(withIdentifier: SignUpPasswordVC.storyboardIdentifier) as? SignUpPasswordVC else { return }
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        let enterOTP = self.otpView.text ?? ""
+//        if enterOTP == self.otp {
+//            if isFromForgotVC {
+//                let vc = StoryboardRouter.editPasswordVC()
+//                vc.isFromForgotVC = true
+//                vc.email = email ?? ""
+//                vc.code = self.otpView.text ?? ""
+//                navigationController?.pushViewController(vc, animated: true)
+//            } else {
+//                guard let vc = storyboard?.instantiateViewController(withIdentifier: SignUpPasswordVC.storyboardIdentifier) as? SignUpPasswordVC else { return }
+//                navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
+        
         
 //        if isFromForgotVC || pendingVerification {
 //            verifyOTP()
@@ -189,6 +198,18 @@ extension SignUpVerifyEmailVC {
 //        }
     }
     
+    func nextScreen() {
+        if isFromForgotVC {
+            let vc = StoryboardRouter.editPasswordVC()
+            vc.isFromForgotVC = true
+            vc.email = email ?? ""
+            vc.code = self.otpView.text ?? ""
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: SignUpPasswordVC.storyboardIdentifier) as? SignUpPasswordVC else { return }
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
     
     private func goToPasswordVC() {
@@ -258,7 +279,8 @@ extension SignUpVerifyEmailVC {
                     let verificationDetails = try decoder.decode(forgotPasswordModel.self, from: response.data!)
                     
                     if !(verificationDetails.error ?? false) {
-                        self.verifyOTP()
+                        //self.verifyOTP()
+                        self.nextScreen()
                     } else {
                         self.presentAlert("Error", verificationDetails.message, nil)
                     }
