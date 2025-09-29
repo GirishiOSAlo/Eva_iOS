@@ -86,7 +86,7 @@ class HomeUrl: BaseCellClass {
         }
         connectionNameLbl.text = homePost.user?.firstName ?? homePost.user?.companyName ?? ""
 
-        agoLbl.text = homePost.createdDatetime
+        agoLbl.text = homePost.createdDate
         likeValueLbl.text = "\(homePost.likeCount ?? 0)"
         commentValueLbl.text = "\(homePost.commentCount ?? 0)"
         shareValueLbl.text = "\(homePost.shareCount ?? 0)"
@@ -129,7 +129,7 @@ class HomeUrl: BaseCellClass {
         
         connectionNameLbl.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
 
-        agoLbl.text = dataMaper.createdDatetime
+        agoLbl.text = dataMaper.createdDate
         likeValueLbl.text = "\(dataMaper.likeCount ?? 0)"
         commentValueLbl.text = "\(dataMaper.commentCount ?? 0)"
         shareValueLbl.text = "\(dataMaper.shareCount ?? 0)"

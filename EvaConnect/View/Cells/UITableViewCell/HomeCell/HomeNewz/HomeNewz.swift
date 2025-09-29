@@ -69,7 +69,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
     }
     
     func uiData(dataMaper: HomeNewsData) {
-        timeWhenPost.text = dataMaper.createdDatetime
+        timeWhenPost.text = dataMaper.createdDate
         newzTitle.text = dataMaper.newsSource?.name
         newzName.text = dataMaper.newsSource?.name
         
@@ -123,7 +123,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         }
 
         newzName.text = (dataMaper.newsSource?.name?.isEmpty ?? true) ? "--" : dataMaper.newsSource?.name
-        timeWhenPost.text = (dataMaper.createdDatetime?.isEmpty ?? true) ? "--" : dataMaper.createdDatetime
+        timeWhenPost.text = (dataMaper.createdDate?.isEmpty ?? true) ? "--" : dataMaper.createdDate
         
         if let imageUrl = dataMaper.newsImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
@@ -157,7 +157,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         let newsSource = obj.newsSource
         profileImage.kf.setImage(with: URL(string: newsSource?.image ?? ""))
         newzName.text = newsSource?.name ?? ""
-        timeWhenPost.text = obj.createdDatetime ?? ""
+        timeWhenPost.text = obj.createdDate ?? ""
         
         urlImage.kf.setImage(with: URL(string: obj.image ?? ""))
         newzShortDetail.text = obj.title ?? ""
