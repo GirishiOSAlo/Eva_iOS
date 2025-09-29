@@ -77,7 +77,7 @@ class MeetingDetailsCVC: UICollectionViewCell {
     }
     
     func setData(obj: EventMeeting) {
-        self.meetingDetailsLbl.text = ((obj.meetingDetails?.isEmpty ?? true) ? "--" : obj.meetingDetails) ?? ""
+        self.meetingDetailsLbl.text = ((obj.meetingNotes?.isEmpty ?? true) ? "--" : obj.meetingNotes) ?? ""
         self.dateLbl.text = obj.startDay ?? "--"
         self.timeLbl.text = "\(obj.startTime ?? "--") - \(obj.endTime ?? "--")"
         self.meetingWithLbl.text = ((obj.meetingWith?.isEmpty ?? true) ? "--" : obj.meetingWith) ?? ""
