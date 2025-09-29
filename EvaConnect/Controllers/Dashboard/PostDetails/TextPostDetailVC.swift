@@ -275,8 +275,7 @@ extension TextPostDetailVC {
                 
             case 1:
                 print("User Block")
-                let postID = self.postId
-                self.blockUser(userId: postID)
+                self.blockUser(userId: self.postId)
                 
             default:
                 break
