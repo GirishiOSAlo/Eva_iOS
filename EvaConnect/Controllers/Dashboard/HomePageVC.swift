@@ -1042,8 +1042,8 @@ extension HomePageVC {
                 
             case 1:
                 print("User Block")
-                let postID = self.dashboardPostList[index].id ?? 0
-                self.blockUser(userId: postID)
+                let userID = self.dashboardPostList[index].user?.id ?? 0
+                self.blockUser(userId: userID)
                 
             default:
                 break

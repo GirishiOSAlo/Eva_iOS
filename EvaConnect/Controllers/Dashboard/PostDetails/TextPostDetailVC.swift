@@ -275,6 +275,7 @@ extension TextPostDetailVC {
                 
             case 1:
                 print("User Block")
+                let userID = self.postDetail?.user?.id ?? 0
                 self.blockUser(userId: self.postId)
                 
             default:

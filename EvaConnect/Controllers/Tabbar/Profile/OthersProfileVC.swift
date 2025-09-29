@@ -1101,8 +1101,8 @@ extension OthersProfileVC {
                 
             case 1:
                 print("User Block")
-                let postID = self.posts[index].id ?? 0
-                self.blockUser(userId: postID)
+                let userID = self.posts[index].user?.id ?? 0
+                self.blockUser(userId: userID)
                 
             default:
                 break
