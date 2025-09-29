@@ -21,6 +21,10 @@ class ConnectionViewController: UIViewController, XIBed {
     @IBOutlet weak var searchBaseVw: UIView!
     @IBOutlet weak var searchTxtField: UITextField!
     
+    @IBOutlet weak var followerBaseVw: UIView!
+    @IBOutlet weak var followingBaseVw: UIView!
+    @IBOutlet weak var requestBaseVw: UIView!
+    
     @IBOutlet weak var followerBtn: UIButton!
     @IBOutlet weak var followingBtn: UIButton!
     @IBOutlet weak var requestBtn: UIButton!
@@ -38,6 +42,7 @@ class ConnectionViewController: UIViewController, XIBed {
     var type: TypeConectionEnum = .Followers
     var isComeFromOtherProfile = false
     var otherProfileID = 0
+    var otherProfilePrivate = false
     
     var delegatesDetails: DelegatesDetails?
     var list: [Follower] = [] {
@@ -79,6 +84,13 @@ class ConnectionViewController: UIViewController, XIBed {
     }
     
     func setupUI() {
+        
+        if self.otherProfilePrivate {
+            self.requestBaseVw.isHidden = true
+        } else {
+            self.requestBaseVw.isHidden = false
+        }
+        
         self.searchMainView.isHidden = true
         self.searchBaseVw.layer.cornerRadius = 8
         self.searchBaseVw.layer.borderColor = UIColor(hex: "#837A88").cgColor
