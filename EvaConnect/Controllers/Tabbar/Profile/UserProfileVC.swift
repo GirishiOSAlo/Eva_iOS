@@ -488,7 +488,11 @@ extension UserProfileVC {
         
         //Set bio view Height.....
         let lblHeight = self.heightForView(text: self.aboutLbl.text ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: self.view.frame.width - 72.0)
-        self.bioViewHeight.constant = lblHeight + 64.0
+        if lblHeight == 0 { //Bio View Hide...
+            self.bioViewHeight.constant = 0.0
+        } else {
+            self.bioViewHeight.constant = lblHeight + 64.0
+        }
         
         self.connectionCountLbl.text = "\(user.connectionCount ?? 0)"
 //        self.pendingCountLbl.text = "\(user.)"
@@ -650,7 +654,11 @@ extension UserProfileVC {
         
         //Set bio view Height.....
         let lblHeight = self.heightForView(text: self.aboutLbl.text ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: self.view.frame.width - 72.0)
-        self.bioViewHeight.constant = lblHeight + 64.0
+        if lblHeight == 0 { //Bio View Hide...
+            self.bioViewHeight.constant = 0.0
+        } else {
+            self.bioViewHeight.constant = lblHeight + 64.0
+        }
         
         self.connectionCountLbl.text = "\(user.connectionCount ?? 0)"
         self.companyId = Int(user.companyID ?? 0)
