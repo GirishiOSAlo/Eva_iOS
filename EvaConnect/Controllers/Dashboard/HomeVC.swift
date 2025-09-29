@@ -223,7 +223,8 @@ class HomeVC: BaseVC {
             height = 32
             searchHeight = 40
             //selectedHomeFilter = .all
-            self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+            let filter = self.selectedHomeFilter.rawValue.lowercased()
+            self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         } else if selectedTab == .events {
             height = 32
             searchHeight = 0
@@ -949,7 +950,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             print(selectedHomeFilter)
             self.jobList = []
             self.currentPage = 1
-            self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+            let filter = self.selectedHomeFilter.rawValue.lowercased()
+            self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         } else if selectedTab == .news {
             self.newsList = []
             self.fetchNewsListData(offSet: 1)
@@ -1727,7 +1729,8 @@ extension HomeVC: UIScrollViewDelegate {
             if selectedTab == .jobs {
                 if currentPage < lastPage {
                     currentPage += 1
-                    self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                    let filter = self.selectedHomeFilter.rawValue.lowercased()
+                    self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
                 } else {
                     print("Page completed. No Api call")
                 }
@@ -2280,7 +2283,8 @@ private extension HomeVC {
             if error == 0 {
                 print("Job saved!!")
                 //self.getPosts(offSet: 1, inserted: false)
-                self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                let filter = self.selectedHomeFilter.rawValue.lowercased()
+                self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
 //                let indexPath = IndexPath(item: at, section: 0)
 //                UIView.performWithoutAnimation { self.tableView.reloadRows(at: [indexPath], with: .none) }
                 self.view.isUserInteractionEnabled = true
@@ -2412,7 +2416,8 @@ extension HomeVC: UITextFieldDelegate {
             self.jobList = []
             DispatchQueue.main.async {
                 self.currentPage = 1
-                self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                let filter = self.selectedHomeFilter.rawValue.lowercased()
+                self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
             }
         }
     }
@@ -2705,7 +2710,9 @@ extension HomeVC {
 //                reloadData()
 //
 //            }
-            self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+            
+            let filter = self.selectedHomeFilter.rawValue.lowercased()
+            self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
 //            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
 //            reloadData()
         case 3:
