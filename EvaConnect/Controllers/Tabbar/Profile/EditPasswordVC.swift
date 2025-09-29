@@ -223,7 +223,8 @@ extension EditPasswordVC {
 //        if let user = LoggedUserDetails.shared.user {
             let parameters: Parameters = ["user_id": myUserDefaults.userId,
                                           "old_password": oldPassword.text!,
-                                          "new_password": newPassword.text!] as [String : Any]
+                                          "new_password": newPassword.text!,
+                                          "new_password_confirmation": confirmPassword.text!] as [String : Any]
             
             NetworkManagerr.request(EndPoints.changePassword, method: .post, parameters: parameters) { (response) in
                 
