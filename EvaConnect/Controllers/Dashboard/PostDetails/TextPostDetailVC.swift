@@ -256,7 +256,7 @@ extension TextPostDetailVC {
     @IBAction func reportBtnTapped(_ sender: UIButton) {
         
         FTPopOverMenu.showForSender(sender: sender,
-                                    with: ["Report"],
+                                    with: ["Report","Block"],
                                     popOverPosition: .automatic,
                                     config: Constants.configWithMenuStyle(),
                                     done: { (selectedIndex) in
@@ -272,10 +272,37 @@ extension TextPostDetailVC {
                     self.navigationController?.present(vc, animated: true)
                 }
                 self.navigationController?.present(vc, animated: true)
+                
+            case 1:
+                print("User Block")
+                let postID = self.postId
+                self.blockUser(userId: postID)
+                
             default:
                 break
             }
         })
+    }
+    
+    func blockUser(userId: Int) {
+        let url = EndPoints.blockUser
+        let parameters = ["target_user_key": userId]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let res = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(res.error) {
+                    self.presentAlert("User Blocked Successfully")
+                } else {
+                    print("Error :: \(res.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
     
     @IBAction func videoLikeBtnTapped(_ sender: UIButton) {

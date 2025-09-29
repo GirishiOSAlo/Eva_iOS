@@ -1082,7 +1082,7 @@ extension OthersProfileVC {
     @objc func reportBtnTapped(_ sender: UIButton) {
         let index = sender.tag
         FTPopOverMenu.showForSender(sender: sender,
-                                    with: ["Report"],
+                                    with: ["Report","Block"],
                                     popOverPosition: .automatic,
                                     config: Constants.configWithMenuStyle(),
                                     done: { (selectedIndex) in
@@ -1098,6 +1098,12 @@ extension OthersProfileVC {
                     self.navigationController?.present(vc, animated: true)
                 }
                 self.navigationController?.present(vc, animated: true)
+                
+            case 1:
+                print("User Block")
+                let postID = self.posts[index].id ?? 0
+                self.blockUser(userId: postID)
+                
             default:
                 break
             }

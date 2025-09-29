@@ -138,6 +138,7 @@ extension ProfileManager {
     func getConnection(type: EvaConnectionType, completion: @escaping completionHandler) {
 //        let url = type == .pending ? EndPoints.pendingConnections :  EndPoints.blockConnection
         let url = EndPoints.blockConnection
+        print(url)
         NetworkManagerr.request(url) { (result: Result<PendingBlockFilterModel>) in
             switch result {
             case .success(let success):
