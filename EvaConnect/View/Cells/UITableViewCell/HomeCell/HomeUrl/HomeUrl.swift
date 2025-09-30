@@ -36,6 +36,7 @@ class HomeUrl: BaseCellClass {
     @IBOutlet weak var goToProfileBtn: UIButton!
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var followBtn: UIButton!
+    @IBOutlet weak var followBtnwidth: NSLayoutConstraint!
     
     var delegate: PostActionable?
     var isMoreViewSelected = true
@@ -74,14 +75,17 @@ class HomeUrl: BaseCellClass {
     func uiData(homePost: DashboardItem) {
         let userid = homePost.user?.id ?? 0
         if userid == myUserDefaults.userId {
-            followBtn.isHidden = true
+            //followBtn.isHidden = true
+            followBtnwidth.constant = 0.0
             reportBtn.isHidden = true
         } else {
             reportBtn.isHidden = false
             if homePost.isConnected == "connected" || homePost.isConnected == "active" {
-                followBtn.isHidden = true
+                //followBtn.isHidden = true
+                followBtnwidth.constant = 0.0
             } else {
-                followBtn.isHidden = false
+                //followBtn.isHidden = false
+                followBtnwidth.constant = 97.0
             }
         }
         connectionNameLbl.text = homePost.user?.firstName ?? homePost.user?.companyName ?? ""
@@ -116,14 +120,17 @@ class HomeUrl: BaseCellClass {
     func setData(dataMaper: DashboardPostData) {
         let userid = dataMaper.user?.id ?? 0
         if userid == myUserDefaults.userId {
-            followBtn.isHidden = true
+            //followBtn.isHidden = true
+            followBtnwidth.constant = 0.0
             reportBtn.isHidden = true
         } else {
             reportBtn.isHidden = false
             if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
-                followBtn.isHidden = true
+                //followBtn.isHidden = true
+                followBtnwidth.constant = 0.0
             } else {
-                followBtn.isHidden = false
+                //followBtn.isHidden = false
+                followBtnwidth.constant = 97.0
             }
         }
         
@@ -165,10 +172,12 @@ class HomeUrl: BaseCellClass {
     func uiData(post: SearchPost) {
         let userid = Int(post.userID ?? "")
         if userid == myUserDefaults.userId {
-            followBtn.isHidden = true
+            //followBtn.isHidden = true
+            followBtnwidth.constant = 0.0
             reportBtn.isHidden = true
         } else {
-            followBtn.isHidden = false
+            //followBtn.isHidden = false
+            followBtnwidth.constant = 97.0
             reportBtn.isHidden = false
         }
         connectionNameLbl.text = post.userName

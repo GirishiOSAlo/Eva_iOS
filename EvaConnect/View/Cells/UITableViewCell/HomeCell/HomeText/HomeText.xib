@@ -361,6 +361,7 @@
                 <outlet property="dateLbl" destination="a5p-LL-REg" id="9XR-e3-im2"/>
                 <outlet property="detailsView" destination="nQc-wZ-id3" id="S9J-0a-Yj4"/>
                 <outlet property="followBtn" destination="Wpu-Ub-cYu" id="yUk-Gf-LFj"/>
+                <outlet property="followBtnWidth" destination="j7H-NP-9PZ" id="Tbr-NK-97Z"/>
                 <outlet property="goToProfileBtn" destination="JJT-Vx-QLF" id="F7N-Dg-CgI"/>
                 <outlet property="isConnectedBtn" destination="Rou-M2-57b" id="sja-5o-0tE"/>
                 <outlet property="likeBtn" destination="rM1-pL-zs2" id="7fC-hU-LnW"/>
