@@ -45,9 +45,24 @@ class DownloadChatImgVC: UIViewController, XIBed {
         imageCollection.dataSource = self
         imageCollection.registerNib(cellNib: PostImageCVC.self)
         
+//        if self.imageArr.count > 1 {
+//            self.currentPage = self.at
+//            self.pageNoLbl.text = "  \((self.currentPage) + 1 )/\(self.imageArr.count)  "
+//        } else {
+//            self.pageNoLbl.text = ""
+//        }
+        
         if self.imageArr.count > 1 {
             self.currentPage = self.at
             self.pageNoLbl.text = "  \((self.currentPage) + 1 )/\(self.imageArr.count)  "
+            
+            // 💡 FIX: Scroll the collection view to the initial 'at' index
+            if self.at > 0 && self.at < self.imageArr.count {
+                DispatchQueue.main.async {
+                    let indexPath = IndexPath(item: self.at, section: 0)
+                    self.imageCollection.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+                }
+            }
         } else {
             self.pageNoLbl.text = ""
         }

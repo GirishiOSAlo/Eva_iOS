@@ -1132,11 +1132,12 @@ extension UserProfileVC: UITableViewDataSource {
                     return 2
                 }
             } else {
-                if posts.count <= 2 {
-                    return posts.count
-                } else {
-                    return 2
-                }
+                return posts.count
+//                if posts.count <= 2 {
+//                    return posts.count
+//                } else {
+//                    return 2
+//                }
             }
 //        } else {
 //            profileSettings.count
