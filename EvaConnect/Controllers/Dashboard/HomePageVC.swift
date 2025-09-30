@@ -189,17 +189,14 @@ class HomePageVC: UIViewController {
 extension HomePageVC: CollectionViewCellDelegate, PostActionable {
     func didSelectItem(at indexPath: Int, imgArr: [String?]) {
         print("Dashboard Post Image Clicked")
-        let image = imgArr[indexPath]
-        if image != nil {
-            let imgString = image!
-            let vc = DownloadChatImgVC.instantiate(imageString: imgString)
+        if imgArr.count != 0 {
+            let vc = DownloadChatImgVC.instantiate(images: imgArr, at: indexPath)
             vc.modalPresentationStyle = .fullScreen
             vc.isFromHomeVc = true
             vc.completion = {
                 
             }
             self.navigationController?.present(vc, animated: true)
-            print("Selected:", imgString)
         }
     }
 

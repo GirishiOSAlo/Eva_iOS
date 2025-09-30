@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,10 +24,10 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="jd0-UD-jDm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Bcm-qg-sB8"/>
-                <constraint firstItem="jd0-UD-jDm" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="S0o-YZ-OAx"/>
-                <constraint firstAttribute="trailing" secondItem="jd0-UD-jDm" secondAttribute="trailing" id="rOb-bc-4Do"/>
-                <constraint firstAttribute="bottom" secondItem="jd0-UD-jDm" secondAttribute="bottom" id="ylb-le-rWg"/>
+                <constraint firstAttribute="bottom" secondItem="jd0-UD-jDm" secondAttribute="bottom" id="AiW-rj-7Hg"/>
+                <constraint firstItem="jd0-UD-jDm" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Yv6-vk-MlM"/>
+                <constraint firstAttribute="trailing" secondItem="jd0-UD-jDm" secondAttribute="trailing" id="hqf-ou-OP6"/>
+                <constraint firstItem="jd0-UD-jDm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="iNn-tP-k1A"/>
             </constraints>
             <size key="customSize" width="235" height="150"/>
             <connections>

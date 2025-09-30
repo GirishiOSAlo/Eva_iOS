@@ -1262,7 +1262,10 @@ extension ChatVC {
         let obj = messages[Sender.tag]
         if obj.image_url != "" {
             let imgString = obj.image_url ?? ""
-            let vc = DownloadChatImgVC.instantiate(imageString: imgString)
+            var imgArr: [String] = []
+            imgArr.append(imgString)
+            
+            let vc = DownloadChatImgVC.instantiate(images: imgArr, at: 0)
             vc.completion = {
                 self.showToast(message: "Image Saved!!")
             }
@@ -1276,7 +1279,10 @@ extension ChatVC {
         let obj = messages[Sender.tag]
         if obj.image_url != "" {
             let imgString = obj.image_url ?? ""
-            let vc = DownloadChatImgVC.instantiate(imageString: imgString)
+            var imgArr: [String] = []
+            imgArr.append(imgString)
+            
+            let vc = DownloadChatImgVC.instantiate(images: imgArr, at: 0)
             vc.completion = {
                 self.showToast(message: "Image Saved!!")
             }

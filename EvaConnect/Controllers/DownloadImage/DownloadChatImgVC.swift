@@ -8,9 +8,10 @@
 import UIKit
 
 class DownloadChatImgVC: UIViewController, XIBed {
-    static func instantiate(imageString: String) -> Self {
+    static func instantiate(images: [String?], at: Int) -> Self {
         let vc = Self.instantiate()
-        vc.imageString = imageString
+        vc.imageArr = images
+        vc.at = at
         return vc
     }
 
@@ -18,9 +19,12 @@ class DownloadChatImgVC: UIViewController, XIBed {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var downloadButton: UIButton!
-    @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var pageNoLbl: UILabel!
+    @IBOutlet weak var imageCollection: UICollectionView!
     
-    var imageString: String = ""
+    var imageArr: [String?] = []
+    var at = 0
+    var currentPage = 0
     var downloadImage = UIImage()
     var isFromHomeVc = false
     
@@ -33,28 +37,20 @@ class DownloadChatImgVC: UIViewController, XIBed {
 
     func setupUI(){
         downloadButton.isHidden = isFromHomeVc
-        mainImage.contentMode = .scaleAspectFit
-                
-        //mainImage.sd_setImage(with: URL(string: imageString))
-        mainImage.kf.setImage(with: URL(string: imageString), placeholder: UIImage(named: "noPhoto"))
-//
         self.scrollView.minimumZoomScale = 1.0
         self.scrollView.maximumZoomScale = 10.0
         scrollView.delegate = self
-    }
-    
-    private func setZoomScale() {
-        guard let image = mainImage.image else { return }
         
-        let scrollViewSize = scrollView.bounds.size
-        let imageSize = image.size
+        imageCollection.delegate = self
+        imageCollection.dataSource = self
+        imageCollection.registerNib(cellNib: PostImageCVC.self)
         
-        let widthScale = scrollViewSize.width / imageSize.width
-        let heightScale = scrollViewSize.height / imageSize.height
-        let minScale = min(widthScale, heightScale)
-        
-        scrollView.minimumZoomScale = minScale
-        scrollView.zoomScale = minScale
+        if self.imageArr.count > 1 {
+            self.currentPage = self.at
+            self.pageNoLbl.text = "  \((self.currentPage) + 1 )/\(self.imageArr.count)  "
+        } else {
+            self.pageNoLbl.text = ""
+        }
     }
     
     func downloadImage(urlString: String){
@@ -79,31 +75,32 @@ class DownloadChatImgVC: UIViewController, XIBed {
     }
     
     @IBAction func downloadBtnDidTap(_ sender: UIButton) {
-        self.downloadImage(urlString: imageString)
+        self.downloadImage(urlString: self.imageArr[self.currentPage] ?? "")
     }
     
-    private func resetZoomScale() {
-            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
-        }
-
 }
 
-extension DownloadChatImgVC: UIScrollViewDelegate {
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.mainImage
+// MARK: - UICollectionViewDelegate
+extension DownloadChatImgVC {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageWidth = scrollView.frame.size.width
+        self.currentPage = Int(scrollView.contentOffset.x / pageWidth)
+        self.pageNoLbl.text = "  \((self.currentPage) + 1 )/\(self.imageArr.count)  "
+    }
+}
+
+extension DownloadChatImgVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageArr.count
     }
     
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        // Called while the scroll view is zooming
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostImageCVC.ReuseId, for: indexPath) as! PostImageCVC
+        cell.image = imageArr[indexPath.row]
+        return cell
     }
     
-    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        // Called when the zooming has ended
-        print("Zooming ended. Final scale: \(scale)")
-        
-//        mainImage.sd_setImage(with: URL(string: imageString))
-//        resetZoomScale()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (self.imageCollection.frame.size.width), height: (self.imageCollection.frame.size.height))
     }
-    
 }
