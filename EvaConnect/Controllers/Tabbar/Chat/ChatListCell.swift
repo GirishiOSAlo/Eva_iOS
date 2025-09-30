@@ -69,16 +69,16 @@ class ChatListCell: UITableViewCell {
         nameLabel.text = item.user?.name
         
         let lastMessage = item.lastMessage
-        if lastMessage?.image != "" {
+        if let imageString = lastMessage?.image, !imageString.isEmpty {
             latestMessageLabel.text = "📷 Photo" //"🎥 Video"
         }
-        else if lastMessage?.document != "" {
+        else if let documentString = lastMessage?.document, !documentString.isEmpty {
             latestMessageLabel.text = "📄 Document"
         }
-        else if lastMessage?.audio_file != "" {
+        else if let audioString = lastMessage?.audio_file, !audioString.isEmpty {
             latestMessageLabel.text = "🎵 Audio"
         }
-        else if lastMessage?.message != "" {
+        else if let messageString = lastMessage?.message, !messageString.isEmpty {
             latestMessageLabel.text = lastMessage?.message
         }
         

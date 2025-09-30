@@ -1433,7 +1433,7 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let msg = messages[indexPath.row]
-        if msg.image != "" { //Image
+        if let imageString = msg.image, !imageString.isEmpty { //Image
             if msg.sender_id == myUserDefaults.userId {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: SenderImgTVCell.id(), for: indexPath) as? SenderImgTVCell {
                     cell.selectionStyle = .default
@@ -1466,7 +1466,7 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
-        else if msg.document != "" { //Document
+        else if let documentString = msg.document, !documentString.isEmpty { //Document
             if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
                 cell.selectionStyle = .default
                 let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
@@ -1497,7 +1497,7 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
         }
-        else if msg.audio_file != "" { //Audio
+        else if let audioString = msg.audio_file, !audioString.isEmpty { //Audio
             if let cell = tableView.dequeueReusableCell(withIdentifier: DocAudioTVCell.id(), for: indexPath) as? DocAudioTVCell {
                 cell.selectionStyle = .default
                 let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
@@ -1528,7 +1528,7 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
         }
-        else if msg.message != "" { //Text
+        else if let messageString = msg.message, !messageString.isEmpty { //Text
             if msg.sender_id == myUserDefaults.userId {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: TextMsgTVCell.id(), for: indexPath) as? TextMsgTVCell {
                     cell.selectionStyle = .default
