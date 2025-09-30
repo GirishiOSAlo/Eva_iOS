@@ -698,53 +698,74 @@ class HomeVC: BaseVC {
     
     func fetchJobListData(filter: String, currentPage: Int, searchStr: String) {
         showActivity()
-        let params = [
-            "filter": filter, // applied,all,saved,industry,my_jobs' 'Active & Inactive'
-            "search": searchStr
+        // Base URL
+        guard var urlComponents = URLComponents(string: EndPoints.getJobList) else {
+            print("Invalid URL")
+            hideActivity()
+            return
+        }
+        
+        // Query parameters
+        urlComponents.queryItems = [
+            URLQueryItem(name: "limit", value: "10"),
+            URLQueryItem(name: "offset", value: "\(currentPage)"),
+            URLQueryItem(name: "filter", value: filter),
+            URLQueryItem(name: "search", value: searchStr)
         ]
-        let url = "\(EndPoints.getJobList)?limit=10&offset=\(currentPage)"
-        var urlComponents = URLComponents(string: url)!
-        urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
-
-        let finalURL = urlComponents.url!.absoluteString
-        print(finalURL)
-
-        NetworkManagerr.request(finalURL, method: .get) { (response) in
+        
+        guard let finalURL = urlComponents.url?.absoluteString else {
+            print("Failed to create final URL")
+            hideActivity()
+            return
+        }
+        
+        print("Request URL: \(finalURL)")
+        
+        // Network request
+        NetworkManagerr.request(finalURL, method: .get) { response in
             self.hideActivity()
             self.indicatorView.stopAnimating()
             self.filterCollectionView.isUserInteractionEnabled = true
-            let jsonDecoder = JSONDecoder()
             
-            let jobListData = try! jsonDecoder.decode(DashboardJobDataModel.self, from:response.data!)
-            if !(jobListData.error ?? false) {
-                self.lastPage = jobListData.data?.lastPage ?? 1
-                let list = jobListData.data?.jobs ?? []
+            let decoder = JSONDecoder()
+            
+            do {
+                let jobListData = try decoder.decode(DashboardJobDataModel.self, from: response.data!)
                 
-                if currentPage == 0 || currentPage == 1 {
-                    // new search — clear first
-                    self.jobList = []
-                    self.jobList = list
+                if !(jobListData.error ?? false) {
+                    self.lastPage = jobListData.data?.lastPage ?? 1
+                    let jobs = jobListData.data?.jobs ?? []
+                    
+                    // Update job list
+                    if currentPage <= 1 {
+                        self.jobList = jobs
+                    } else {
+                        self.jobList.append(contentsOf: jobs)
+                    }
+                    
+                    // Empty state
+                    if jobs.isEmpty {
+                        self.emptyListMessageLbl.text = jobListData.message ?? "Job list is empty"
+                    } else {
+                        self.emptyListMessageLbl.text = ""
+                    }
+                    
+                    // Table view height
+                    let rowHeight = self.selectedHomeFilter == .applied ? 234 : 284
+                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * rowHeight)
+                    
+                    self.jobListTblVw.reloadData()
+                    
                 } else {
-                    // pagination — append
-                    self.jobList.append(contentsOf: list)
+                    self.presentAlert("Failure", jobListData.message, nil)
                 }
-                if (jobListData.data?.jobs?.count ?? 0) > 0 {
-                    self.emptyListMessageLbl.text = ""
-                } else {
-                    self.emptyListMessageLbl.text = "\(jobListData.message ?? "Job list is empty")"
-                }
-                //TableView Height Managed...
-                if self.selectedHomeFilter == .applied {
-                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * 234)
-                } else {
-                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * 284)
-                }
-                
-            } else {
-                self.presentAlert("Failure", jobListData.message, nil)
+            } catch {
+                print("Decoding error: \(error)")
+                self.presentAlert("Error", "Failed to parse response", nil)
             }
         }
     }
+
     
     func convertTo12HourFormat(from time24: String) -> String? {
         let formatter = DateFormatter()
@@ -2707,7 +2728,7 @@ extension HomeVC {
 //                reloadData()
 //
 //            }
-            
+            self.currentPage = 1
             let filter = self.selectedHomeFilter.rawValue.lowercased()
             self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
 //            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
