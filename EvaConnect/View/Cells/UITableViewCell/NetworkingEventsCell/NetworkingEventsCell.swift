@@ -29,6 +29,11 @@ class NetworkingEventsCell: UITableViewCell {
         didSet {
             let imageName = isExpanded ? "ic_fillDropUp" : "ic_fillDropDown"
             drpDwnBtn.setImage(UIImage(named: imageName), for: .normal)
+            
+            self.locationHeadingLable.isHidden = !isExpanded
+            self.locationLabel.isHidden = !isExpanded
+            self.joinBtn.isHidden = !isExpanded
+            self.cancelBtn.isHidden = !isExpanded
         }
     }
     
@@ -57,7 +62,8 @@ class NetworkingEventsCell: UITableViewCell {
     }
     
     func setData(obj: EventNetworking) {
-        self.eventNameLabel.text = obj.networkingeventName ?? ""
+        let name = (obj.networkingeventName?.isEmpty ?? true) ? "--" : obj.networkingeventName
+        self.eventNameLabel.text = name
         
 //        self.eventDescLable.text = obj.description ?? ""
         let content = obj.description ?? ""
@@ -70,7 +76,8 @@ class NetworkingEventsCell: UITableViewCell {
         //Sponsors Data not available in Backend...
         self.sponsorsHedingLblHeight.constant = 0.0 //17.0 & bottom = 6
         self.sponsorsLabel.text = ""
-        self.locationLabel.text = obj.location ?? ""
+        let location = (obj.location?.isEmpty ?? true) ? "--" : obj.location
+        self.locationLabel.text = location
         
         self.joinBtn.isHidden = true
         self.cancelBtn.isHidden = true

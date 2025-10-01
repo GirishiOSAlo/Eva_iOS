@@ -75,7 +75,8 @@ class NetworkingEventsVC: UIViewController, XIBed {
         var finalHeight = 0.0
         
         for (i,network) in self.networkingEventList.enumerated() {
-            let eventNameLblHeight = self.heightForView(text: network.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let name = (network.networkingeventName?.isEmpty ?? true) ? "--" : network.networkingeventName
+            let eventNameLblHeight = self.heightForView(text: name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
 //            let content = network.description ?? ""
 //            var desc = ""
@@ -105,7 +106,8 @@ class NetworkingEventsVC: UIViewController, XIBed {
             descLblHeight = self.heightForView(text: str, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
             let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-            let locationLblHeight = self.heightForView(text: network.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let location = (network.location?.isEmpty ?? true) ? "--" : network.location
+            let locationLblHeight = self.heightForView(text: location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
             
             var totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
@@ -234,7 +236,8 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //return 320
         let networkEvent = self.networkingEventList[indexPath.row]
-        let eventNameLblHeight = self.heightForView(text: networkEvent.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        let name = (networkEvent.networkingeventName?.isEmpty ?? true) ? "--" : networkEvent.networkingeventName
+        let eventNameLblHeight = self.heightForView(text: name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
 //        let content = networkEvent.description ?? ""
 //        var desc = ""
@@ -262,7 +265,8 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
         descLblHeight = self.heightForView(text: str, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
         let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-        let locationLblHeight = self.heightForView(text: networkEvent.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        let location = (networkEvent.location?.isEmpty ?? true) ? "--" : networkEvent.location
+        let locationLblHeight = self.heightForView(text: location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
         var totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
         if descLblHeight == 0 {

@@ -70,15 +70,9 @@ class NetworkingEventsListVC: UIViewController,XIBed {
         var finalHeight = 0.0
         
         for (i,network) in self.networkingEventList.enumerated() {
-            let eventNameLblHeight = self.heightForView(text: network.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-            
-//            let content = network.description ?? ""
-//            var desc = ""
-//            if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-//                desc = attributed.string
-//            } else { desc = content }
-//            
-//            let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let name = (network.networkingeventName?.isEmpty ?? true) ? "--" : network.networkingeventName
+            let eventNameLblHeight = self.heightForView(text: name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+
             let content = network.description ?? ""
             let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
             let color = UIColor(hex: "#848397")
@@ -93,7 +87,8 @@ class NetworkingEventsListVC: UIViewController,XIBed {
             
             
             let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-            let locationLblHeight = self.heightForView(text: network.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            let location = (network.location?.isEmpty ?? true) ? "--" : network.location
+            let locationLblHeight = self.heightForView(text: location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
             let totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
             let sponserheight = sponsorLblHeight + locationLblHeight + 126.0 - 17.0 //-17 is sponsor header hide.....
@@ -222,14 +217,9 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //return 320
         let networkEvent = self.networkingEventList[indexPath.row]
-        let eventNameLblHeight = self.heightForView(text: networkEvent.networkingeventName ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        let name = (networkEvent.networkingeventName?.isEmpty ?? true) ? "--" : networkEvent.networkingeventName
+        let eventNameLblHeight = self.heightForView(text: name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
-//        let content = networkEvent.description ?? ""
-//        var desc = ""
-//        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-//            desc = attributed.string
-//        } else { desc = content }
-//        let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         let content = networkEvent.description ?? ""
         let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
         let color = UIColor(hex: "#848397")
@@ -243,15 +233,15 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         }
         
         let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-        let locationLblHeight = self.heightForView(text: networkEvent.location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        let location = (networkEvent.location?.isEmpty ?? true) ? "--" : networkEvent.location
+        let locationLblHeight = self.heightForView(text: location ?? "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
         var totalHeight = eventNameLblHeight + descLblHeight + sponsorLblHeight + locationLblHeight + 220.0
         totalHeight = totalHeight - 17.0 //-17 is sponsor header hide.....
         
         if indexPath.row == selectedIndex {
-            return totalHeight //157
+            return totalHeight
         } else {
-            //return 101
             let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
             let collapseHeight = totalHeight - sponserheight
             return collapseHeight
