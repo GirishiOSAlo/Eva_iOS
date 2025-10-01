@@ -263,7 +263,10 @@ class ChatVC: BaseVC {
                     print("Other user name: \(user.name ?? "N/A")")
                     self.chatMemberImage.kf.setImage(with: URL(string: user.avatar ?? ""), placeholder: UIImage(named: "profile"))
                     self.chatMemberName.text = user.name
-                    self.lstOnlineLbl.text = user.status
+                    //self.lstOnlineLbl.text = user.status
+                    
+                    self.setOnline(loggedInUserId: otherUserID)
+                    
                 } else {
                     print("Notification User not found")
                 }
@@ -331,6 +334,27 @@ class ChatVC: BaseVC {
     
     @objc func dismissDidTap() {
         self.attachmentMainVwTopConstraints.constant = self.view.frame.size.height
+    }
+    
+    func setOnline(loggedInUserId: Int) {
+        let databaseRef = Database.database().reference()
+            .child("users")
+            .child(String(loggedInUserId))
+            .child("status")
+        
+        // 1️⃣ Register onDisconnect first
+        databaseRef.onDisconnectSetValue("offline")
+        
+        // 2️⃣ Immediately write online
+        databaseRef.setValue("online") { error, _ in
+            if let error = error {
+                print("Failed to set online: \(error.localizedDescription)")
+                self.lstOnlineLbl.text = "Offline"
+            } else {
+                print("User is now online")
+                self.lstOnlineLbl.text = "Online"
+            }
+        }
     }
     
     private func setSendMessageView() {
