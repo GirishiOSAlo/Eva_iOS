@@ -9,8 +9,13 @@
 import UIKit
 import Lottie
 
+protocol MeetingDetailsDelegate: AnyObject {
+    func reload()
+}
+
 class ReschedulePopupVw: BaseVC, XIBed {
 
+    weak var delegate: MeetingDetailsDelegate?
     @IBOutlet weak var baseView: UIView!
     
     @IBOutlet weak var headingLbl: UILabel!
@@ -54,6 +59,7 @@ class ReschedulePopupVw: BaseVC, XIBed {
     func setupUI() {
         self.successPopupVw.isHidden = true
         self.setupTextView()
+        self.setupSuccessPopup()
         headingLbl.font = UIFont(name: Myfonts.bold, size: 18.0)
         rescheduleBtn.cornerRadius = 14.0
         for baseView in baseViewCollection {
@@ -67,6 +73,13 @@ class ReschedulePopupVw: BaseVC, XIBed {
         self.starttimeTextField.font = UIFont(name: Myfonts.regular, size: 14.0)
         self.endtimeTextField.font = UIFont(name: Myfonts.regular, size: 14.0)
         self.noteTextView.font = UIFont(name: Myfonts.regular, size: 14.0)
+    }
+    
+    func setupSuccessPopup() {
+        self.successSubPopupVw.cornerRadius = 20.0
+        self.titlePopupLbl.font = UIFont(name: Myfonts.bold, size: 22)
+        self.okPopupBtn.cornerRadius = 14.0
+        self.okPopupBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16)
     }
     
     func setupTextView() {
@@ -92,7 +105,9 @@ class ReschedulePopupVw: BaseVC, XIBed {
     @IBAction func onSuccessOkBtn(_ sender: UIButton) {
         self.successPopupVw.isHidden = true
         self.animationView.stop()
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) {
+            self.delegate?.reload()
+        }
     }
 
     @IBAction func onClose(_ sender: UIButton) {

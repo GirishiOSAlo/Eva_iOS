@@ -9,6 +9,7 @@
 import UIKit
 import Lottie
 
+
 enum MeetingDetailBtnEnum: String {
     case approved
     case cancelled
@@ -16,7 +17,8 @@ enum MeetingDetailBtnEnum: String {
     case pending
 }
 
-class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate {
+class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate, MeetingDetailsDelegate {
+    
 
     @IBOutlet weak var headingLbl: UILabel!
     @IBOutlet weak var categoryCollectionVw: UICollectionView!
@@ -81,7 +83,6 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         self.successPopupVw.isHidden = true
         self.headingLbl.font = UIFont(name: Myfonts.semiBold, size: 14.0)
         self.type = .approved
-        //self.fetchMeetingData()
         self.registerCell()
         self.setupSuccessPopup()
         
@@ -124,6 +125,10 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
         }
     }
     
+    func reload() {
+        self.fetchMeetingData()
+    }
+    
     func didTapDropdownButton(in cell: MeetingDetailsCVC) {
         guard let indexPath = listCollectionVw.indexPath(for: cell) else { return }
         
@@ -145,6 +150,7 @@ class MeetingListDetailsVC: UIViewController, XIBed, MeetingDetailsCellDelegate 
     @IBAction func onSuccessOkBtn(_ sender: UIButton) {
         self.successPopupVw.isHidden = true
         self.animationView.stop()
+        self.fetchMeetingData()
     }
     
     func addAnimation(){
@@ -278,7 +284,6 @@ extension MeetingListDetailsVC {
                 let meetingStatusRoot = try jsonDecoder.decode(DelegateEventMeetingStatusModel.self, from: response.data ?? Data())
                 if meetingStatusRoot.success ?? false {
                     print("Success")
-                    self.fetchMeetingData()
                     self.titlePopupLbl.text = meetingStatusRoot.message ?? ""
                     self.successPopupVw.isHidden = false
                     self.addAnimation()
@@ -441,7 +446,7 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
                 } else {
                     cellHeight = totalHeight
                 }
-                return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
+                return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight + 10.0)
             } else {  //--> Normal height...
                 let cellHeight = meetingDetailsLblHeight + 80.0
                 return CGSize(width: self.listCollectionVw.frame.size.width, height: cellHeight)
@@ -500,6 +505,7 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
     
     @objc func openRescheduleVw(sender: UIButton) {
         let vc = ReschedulePopupVw.instantiate()
+        vc.delegate = self
         vc.meetingID = self.list[sender.tag].id ?? 0
         vc.eventDetail = self.eventDetail
         vc.dashboardEvent = self.dashboardEvent
