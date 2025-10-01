@@ -2355,6 +2355,8 @@ private extension HomeVC {
                 let res = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 if !(res.error) {
                     self.presentAlert("User Blocked Successfully")
+                    self.posts = []
+                    reloadData()
                 } else {
                     print("Error :: \(res.message)")
                 }

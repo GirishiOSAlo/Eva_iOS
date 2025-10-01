@@ -296,6 +296,10 @@ extension TextPostDetailVC {
                 let res = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 if !(res.error) {
                     self.presentAlert("User Blocked Successfully")
+                    //Back Button Click.....
+                    self.delegate?.refresh(homeStatus: false)
+                    self.navigationController?.isNavigationBarHidden = false
+                    self.navigationController?.popViewController(animated: true)
                 } else {
                     print("Error :: \(res.message)")
                 }
