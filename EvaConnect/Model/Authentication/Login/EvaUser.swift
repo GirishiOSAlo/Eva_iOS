@@ -17,6 +17,7 @@ struct LoginStruct: Codable {
 struct EvaUser: Codable {
     
     let id: Int?
+    let firebaseID: String?
     let firstName: String?
     let lastName: String?
     let isConnected: String?//IsConnected?
@@ -50,6 +51,7 @@ struct EvaUser: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
+        case firebaseID = "firebase_id"
         case firstName = "first_name"
         case isConnected = "is_connected" 
         case isReceiver = "is_receiver"

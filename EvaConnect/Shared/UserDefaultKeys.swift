@@ -144,6 +144,14 @@ class myUserDefaults {
         }
     }
     
+    public static var firebaseID: String {
+        get {
+            UserDefaults.standard.string(forKey: "firebaseID") ?? ""
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "firebaseID")
+        }
+    }
+    
     public static var subSector: String {
         get {
             UserDefaults.standard.string(forKey: "subSector") ?? ""

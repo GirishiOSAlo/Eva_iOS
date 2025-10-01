@@ -12,6 +12,7 @@ import UIKit
 import Alamofire
 import IQKeyboardManagerSwift
 import PhotosUI
+import Kingfisher
 import MobileCoreServices
 import FirebaseDatabase
 
