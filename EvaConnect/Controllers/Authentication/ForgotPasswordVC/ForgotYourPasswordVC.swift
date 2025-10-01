@@ -9,7 +9,13 @@
 import UIKit
 import Alamofire
 
+protocol EditSignUpEmail {
+    func editedSignupEmil(email: String, otp: String)
+}
+
 class ForgotYourPasswordVC: BaseForAuthentication {
+    
+    var delegate: EditSignUpEmail?
 
     @IBOutlet weak var navBarTitle: NameLabel!
     @IBOutlet weak var sendOTPBtn: UIButton!
@@ -36,7 +42,8 @@ class ForgotYourPasswordVC: BaseForAuthentication {
                     presentAlert("Alert", "Please write your Email")
                     return
                 }
-                callEditEmail()
+                //callEditEmail()
+                sendOTPCall()
             }
         }
 //        guard let vc = storyboard?.instantiateViewController(withIdentifier: NewPasswordVC.storyboardIdentifier) else { return }
@@ -138,6 +145,32 @@ extension ForgotYourPasswordVC {
                 }
             } catch {
                 print("Error: \(error)")
+            }
+        }
+    }
+    
+    private func sendOTPCall() {
+        showActivity()
+        let param: AFParameters = [
+            "email" : emailTextField.text ?? ""
+        ]
+        
+        NetworkManagerr.request(EndPoints.sendOTP, method: .post, parameters: param) { [weak self] (response) in
+            do {
+                let jsonDecoder = JSONDecoder()
+                let OTPRoot = try jsonDecoder.decode(OTPModel.self, from: response.data!)
+                
+                if !(OTPRoot.error ?? false) {
+                    self?.hideActivity()
+                    self?.goBack()
+                    myUserDefaults.emailAdd = self?.emailTextField.text ?? ""
+                    
+                    let otp = String(OTPRoot.data?.otp ?? 0)
+                    self?.delegate?.editedSignupEmil(email: self?.emailTextField.text ?? "", otp: otp)
+                }
+            } catch {
+                self?.presentAlert("Failure", nil, response.result.error)
+                print(error.localizedDescription)
             }
         }
     }

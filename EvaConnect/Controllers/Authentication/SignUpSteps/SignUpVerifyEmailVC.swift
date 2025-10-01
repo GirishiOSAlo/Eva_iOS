@@ -62,6 +62,7 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
         self.stopTimer()
         let vc = StoryboardRouter.forgotPasswordVC()
         vc.isfromEditEmail = true
+        vc.delegate = self
         vc.email = self.email ?? ""
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -111,6 +112,19 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
     }
 }
 
+extension SignUpVerifyEmailVC: EditSignUpEmail {
+    func editedSignupEmil(email: String, otp: String) {
+        self.email = email
+        self.otp = otp
+        let fullText = "Please enter the 6- digit email verification code that we have shared to \(email)"
+        let attributedString = NSMutableAttributedString(string: fullText)
+        if let range = fullText.range(of: "\(self.email ?? "example.com")") {
+            attributedString.addAttribute(.foregroundColor, value: UIColor(hex: "#4D76CD"), range: NSRange(range, in: fullText))
+        }
+        descLabel.attributedText = attributedString
+    }
+}
+
 extension SignUpVerifyEmailVC {
     
     private func setLayoutStyle() {
@@ -118,9 +132,9 @@ extension SignUpVerifyEmailVC {
 //        giveButtonCorner(actionBtn: nextBtn, backColor: isUser ? Constants.AppColorLiteral.nextButtonColor : Constants.AppColorLiteral.nextButtonColor)
         nextBtn.layer.cornerRadius = 14
     
-        let fullText = "Please enter the 6- digit email verification code that we have shared to \(email ?? "example.com")"
+        let fullText = "Please enter the 6- digit email verification code that we have shared to \(self.email ?? "example.com")"
         let attributedString = NSMutableAttributedString(string: fullText)
-        if let range = fullText.range(of: "\(email ?? "example.com")") {
+        if let range = fullText.range(of: "\(self.email ?? "example.com")") {
             attributedString.addAttribute(.foregroundColor, value: UIColor(hex: "#4D76CD"), range: NSRange(range, in: fullText))
         }
 
@@ -174,7 +188,18 @@ extension SignUpVerifyEmailVC {
             self.presentAlert("Error", "Please enter OTP")
             return
         }
-        self.callVerifyOtp()
+        
+        if isFromForgotVC {
+            self.callVerifyOtp()
+        } else {
+            if otpView.text == self.otp {
+                guard let vc = storyboard?.instantiateViewController(withIdentifier: SignUpPasswordVC.storyboardIdentifier) as? SignUpPasswordVC else { return }
+                navigationController?.pushViewController(vc, animated: true)
+            } else {
+                self.presentAlert("Error", "Please enter Valid OTP")
+            }
+        }
+        
         
 //        let enterOTP = self.otpView.text ?? ""
 //        if enterOTP == self.otp {

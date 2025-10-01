@@ -2356,7 +2356,7 @@ private extension HomeVC {
                 if !(res.error) {
                     self.presentAlert("User Blocked Successfully")
                     self.posts = []
-                    reloadData()
+                    self.reloadData()
                 } else {
                     print("Error :: \(res.message)")
                 }
