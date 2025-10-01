@@ -2354,9 +2354,9 @@
 		485FC1A82DDDB30300AA05A4 /* Networking Events */ = {
 			isa = PBXGroup;
 			children = (
-				489895702DDDDDB600D2E54E /* Networking Events List */,
 				485FC1A92DDDB33D00AA05A4 /* NetworkingEventsVC.swift */,
 				485FC1AA2DDDB33D00AA05A4 /* NetworkingEventsVC.xib */,
+				489895702DDDDDB600D2E54E /* Networking Events List */,
 			);
 			path = "Networking Events";
 			sourceTree = "<group>";

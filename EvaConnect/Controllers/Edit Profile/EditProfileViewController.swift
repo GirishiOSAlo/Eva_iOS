@@ -465,8 +465,12 @@ class EditProfileViewController: UIViewController, XIBed {
     
     @IBAction func onContactInfoEditBtnTap(_ sender: UIButton) {
         if self.isContactInfoEdit {
-            self.updateInfo()
-            self.isContactInfoEdit = false
+            if self.mobileTxtField.text == "" {
+                self.presentAlert("Please enter mobile number.")
+            } else {
+                self.updateInfo()
+                self.isContactInfoEdit = false
+            }
         } else {
             self.isContactInfoEdit = true
         }
@@ -832,8 +836,9 @@ extension EditProfileViewController {
             self.countryPhnCodeTxtField.isUserInteractionEnabled = true
             self.mobileTxtField.textColor = UIColor(hex: "#000000")
             self.mobileTxtField.isUserInteractionEnabled = true
-            self.emailTxtField.textColor = UIColor(hex: "#000000")
-            self.emailTxtField.isUserInteractionEnabled = true
+            //Email not edited....
+//            self.emailTxtField.textColor = UIColor(hex: "#000000")
+//            self.emailTxtField.isUserInteractionEnabled = true
             self.websiteTxtField.textColor = UIColor(hex: "#000000")
             self.websiteTxtField.isUserInteractionEnabled = true
             self.linkedinTxtField.textColor = UIColor(hex: "#000000")
