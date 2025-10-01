@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UniformTypeIdentifiers
 import MobileCoreServices
 
 class UploadCVVC: UIViewController {
@@ -102,18 +103,58 @@ class UploadCVVC: UIViewController {
 }
 
 extension UploadCVVC: UIDocumentPickerDelegate {
-    private func openFile() {
-        let types = [kUTTypePDF, kUTTypeText, kUTTypeRTF, kUTTypeSpreadsheet, kUTTypeCompositeContent]
-        let documentPicker = UIDocumentPickerViewController(documentTypes: types as [String], in: .import)
-        documentPicker.delegate = self
-        present(documentPicker, animated: true, completion: nil)
-    }
+//    private func openFile() {
+//        let types = [kUTTypePDF, kUTTypeText, kUTTypeRTF, kUTTypeSpreadsheet, kUTTypeCompositeContent]
+//        let documentPicker = UIDocumentPickerViewController(documentTypes: types as [String], in: .import)
+//        documentPicker.delegate = self
+//        present(documentPicker, animated: true, completion: nil)
+//    }
+//    
+//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+////        let cvDocumentURL = url
+////        let fileName = url.lastPathComponent
+//        self.uploadResume(fileURL: url)
+//    }
     
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-//        let cvDocumentURL = url
-//        let fileName = url.lastPathComponent
-        self.uploadResume(fileURL: url)
-    }
+    private func openFile() {
+            if #available(iOS 14.0, *) {
+                // iOS 14+
+                let types: [UTType] = [
+                    .pdf,
+                    .plainText,
+                    .rtf,
+                    .spreadsheet,
+                    .content
+                ]
+                let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types, asCopy: true)
+                documentPicker.delegate = self
+                present(documentPicker, animated: true, completion: nil)
+            } else {
+                // iOS 13 and below (deprecated API but still works)
+                let types: [String] = [
+                    kUTTypePDF as String,
+                    kUTTypeText as String,
+                    kUTTypeRTF as String,
+                    kUTTypeSpreadsheet as String,
+                    kUTTypeCompositeContent as String
+                ]
+                let documentPicker = UIDocumentPickerViewController(documentTypes: types, in: .import)
+                documentPicker.delegate = self
+                present(documentPicker, animated: true, completion: nil)
+            }
+        }
+        
+        // Delegate for iOS 14+
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            guard let url = urls.first else { return }
+            self.uploadResume(fileURL: url)
+        }
+
+        // Delegate for iOS 13 and below
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+            self.uploadResume(fileURL: url)
+        }
+    
     
     func uploadResume(fileURL: URL) {
         do {
@@ -259,37 +300,37 @@ extension UploadCVVC {
         }
     }
     
-    func uploadResume() {
-        let parameters = [
-            "resume_file": ""
-        ] as [String: Any]
-        
-        showActivity()
-        NetworkManagerr.request(EndPoints.resumeUpload,method: .post, parameters: parameters) { (response) in
-            self.hideActivity()
-            do {
-                let jsonDecoder = JSONDecoder()
-                let root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
-                
-                if !(root.error) {
-                    let alert = UIAlertController(title: "Success",
-                                                  message: "Resume has been Uploaded successfully.",
-                                                  preferredStyle: .alert
-                    )
-                    let okButton = UIAlertAction(title: "OK", style: .default) { _ in
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                    alert.addAction(okButton)
-                    self.present(alert, animated: true, completion: nil)
-                    self.fetchResumeData()
-                } else {
-                    self.presentAlert("Failure", root.message, nil)
-                }
-            } catch {
-                print("Error:: ", error)
-            }
-        }
-    }
+//    func uploadResume() {
+//        let parameters = [
+//            "resume_file": ""
+//        ] as [String: Any]
+//        
+//        showActivity()
+//        NetworkManagerr.request(EndPoints.resumeUpload,method: .post, parameters: parameters) { (response) in
+//            self.hideActivity()
+//            do {
+//                let jsonDecoder = JSONDecoder()
+//                let root = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+//                
+//                if !(root.error) {
+//                    let alert = UIAlertController(title: "Success",
+//                                                  message: "Resume has been Uploaded successfully.",
+//                                                  preferredStyle: .alert
+//                    )
+//                    let okButton = UIAlertAction(title: "OK", style: .default) { _ in
+//                        self.navigationController?.popViewController(animated: true)
+//                    }
+//                    alert.addAction(okButton)
+//                    self.present(alert, animated: true, completion: nil)
+//                    self.fetchResumeData()
+//                } else {
+//                    self.presentAlert("Failure", root.message, nil)
+//                }
+//            } catch {
+//                print("Error:: ", error)
+//            }
+//        }
+//    }
     
     func deleteResume(id: Int) {
         showActivity()
