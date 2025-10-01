@@ -1005,9 +1005,10 @@ extension AddPostVC {
             } catch {
                 print("Error deleting compressed video file: \(error)")
             }
-        } else {
-            print("Compressed video file does not exist.")
         }
+//        else {
+//            print("Compressed video file does not exist.")
+//        }
     }
 
 }
