@@ -615,6 +615,10 @@ extension EditProfileViewController {
             pickerVC.maximumDate = Date()
         }
         
+        if self.isOtherTransferEdit {
+            pickerVC.minimumDate = Date()
+        }
+        
         pickerVC.onDateSelected = { [weak self] date in
             let selectedDate = date
             let formatter = DateFormatter()
