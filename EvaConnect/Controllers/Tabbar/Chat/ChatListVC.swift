@@ -1142,7 +1142,7 @@ extension ChatListVC: UITableViewDelegate, UITableViewDataSource {
                 vc.postId = notificationID ?? 0
                 navigationController?.pushViewController(vc, animated: true)
             }
-            else if type == "post_comment" {
+            else if type == "post_comment" || type == "post_comment_like" {
                 let vc = StoryboardRouter.textPostDetailVC()
                 vc.postId = notificationID ?? 0
                 vc.isComeFromNotificationPostComment = true

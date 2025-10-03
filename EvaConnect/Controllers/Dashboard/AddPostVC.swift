@@ -608,6 +608,7 @@ extension AddPostVC {
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { success in
                                 self.back_touchUpInside(self.backBtn)
                             }))
+                            self.present(alert, animated: true)
                         }
                     } catch let error {
                         self.hideActivity()

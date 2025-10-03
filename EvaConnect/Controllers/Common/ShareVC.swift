@@ -66,22 +66,24 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func copyLinkTapped(_ sender: UIButton) {
-        //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
-        if self.copiedLink == "" {
-            self.presentAlert("Alert","data is not available.")
-            return
-        }
-        UIPasteboard.general.string = self.copiedLink
+        let shareBaseURL = EndPoints.shareBaseURL
+        sharedLinks = "\(shareBaseURL)\(type)/\(objectId)"
+//        if self.copiedLink == "" {
+//            self.presentAlert("Alert","data is not available.")
+//            return
+//        }
+        UIPasteboard.general.string = self.sharedLinks
         showToastWithLogo(message: "Link Copied")
     }
     
     @IBAction func whatsAppTapped(_ sender: UIButton) {
-        //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
-        if self.whatsappLink == "" {
-            self.presentAlert("Alert","data is not available.")
-            return
-        }
-        let urlString = "https://api.whatsapp.com/send?text=Hey check this out \(self.whatsappLink)"
+        let shareBaseURL = EndPoints.shareBaseURL
+        sharedLinks = "\(shareBaseURL)\(type)/\(objectId)"
+//        if self.whatsappLink == "" {
+//            self.presentAlert("Alert","data is not available.")
+//            return
+//        }
+        let urlString = "https://api.whatsapp.com/send?text=Hey check this out \(self.sharedLinks)"
         let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let URL = NSURL(string: urlStringEncoded!)
         if UIApplication.shared.canOpenURL(URL! as URL){
@@ -109,14 +111,15 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func facebookTapped(_ sender: UIButton) {
-        //sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        let shareBaseURL = EndPoints.shareBaseURL
+        sharedLinks = "\(shareBaseURL)\(type)/\(objectId)"
         
-        if self.facebookLink == "" {
-            self.presentAlert("Alert","data is not available.")
-            return
-        }
+//        if self.facebookLink == "" {
+//            self.presentAlert("Alert","data is not available.")
+//            return
+//        }
         
-        let urlStr = String(format: "fb-messenger://share/?link=%@", facebookLink)
+        let urlStr = String(format: "fb-messenger://share/?link=%@", sharedLinks)
         let url  = NSURL(string: urlStr)
 
         if UIApplication.shared.canOpenURL(url! as URL) {
@@ -134,7 +137,8 @@ class ShareVC: UIViewController {
     }
     
     @IBAction func smsTapped(_ sender: UIButton) {
-        sharedLinks = "https://aviationconnect.com/\(type)/\(objectId)"
+        let shareBaseURL = EndPoints.shareBaseURL
+        sharedLinks = "\(shareBaseURL)\(type)/\(objectId)"
         let sms = "sms:&body=Hey check this out \(sharedLinks)"
         let strURL = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         UIApplication.shared.open(URL(string: strURL)!, options: [:], completionHandler: nil)
