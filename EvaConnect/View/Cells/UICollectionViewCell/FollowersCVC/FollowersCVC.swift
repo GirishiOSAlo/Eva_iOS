@@ -79,8 +79,13 @@ class FollowersCVC: UICollectionViewCell {
         }
         else {
             if obj.isPublic == 0 { //is Private...
-                self.btnBaseVwWidthConst.constant = 110.0
-                self.sendReqVw.isHidden = false
+                if obj.action == "unfollow" {
+                    self.btnBaseVwWidthConst.constant = 85
+                    self.unfollowVw.isHidden = false
+                } else {
+                    self.btnBaseVwWidthConst.constant = 110.0
+                    self.sendReqVw.isHidden = false
+                }
             } else { //is Public...
                 if obj.action == "follow" {
                     self.btnBaseVwWidthConst.constant = 75

@@ -341,15 +341,6 @@ class OthersProfileVC: UIViewController {
 //        self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
         
         
-        
-        
-        self.followBtnView.isHidden = true
-        self.unfollowBtnView.isHidden = true
-        self.unblockBtnView.isHidden = true
-        self.aacceptDeclineBtnView.isHidden = true
-        self.sendRequestBtnView.isHidden = true
-        self.sentRequestBtnView.isHidden = true
-        
         if self.profileID == myUserDefaults.userId {
             print("Own User Profile")
         }
@@ -361,31 +352,58 @@ class OthersProfileVC: UIViewController {
             }
             
             let connectionStatus = user.connectionStatus ?? ""
-            if connectionStatus == "Connected" {
-                //unfollow button show...
-                self.unfollowBtnView.isHidden = false
-                self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
-            }
-            else if connectionStatus == "Request Sent" { //sent request
-                //Friend request send...
-                self.sentRequestBtnView.isHidden = false
-            }
-            else if connectionStatus == "received request" {
-                //accept reject btn show...
-                self.aacceptDeclineBtnView.isHidden = false
-            }
-            else if connectionStatus == "Block" {
-                //unblock btn show...
-                self.unblockBtnView.isHidden = false
-            }
-            else {
-                if user.isPublic == 0 {
-                    //Send Request btn show...
-                    self.sendRequestBtnView.isHidden = false
-                } else {
-                    //Follow btn show...
-                    self.followBtnView.isHidden = false
-                }
+            let isPublic = user.isPublic ?? 0
+            self.updateConnectionUI(status: connectionStatus, isPublic: isPublic)
+        }
+    }
+    
+    func updateConnectionUI(status: String, isPublic: Int) {
+        // Normalize the connection status
+        let rawStatus = status.lowercased()
+        
+        var connection: String
+        switch rawStatus {
+        case "connected", "active":
+            connection = "Connected"
+        case "notconnected", "not_connected":
+            connection = "NotConnected"
+        case "sent request":
+            connection = "Request Sent"
+        case "received request":
+            connection = "Received Request"
+        case "blocked":
+            connection = "Block"
+        default:
+            connection = "NotConnected"
+        }
+        
+        // Hide all button views first
+        self.unfollowBtnView.isHidden = true
+        self.sentRequestBtnView.isHidden = true
+        self.aacceptDeclineBtnView.isHidden = true
+        self.unblockBtnView.isHidden = true
+        self.sendRequestBtnView.isHidden = true
+        self.followBtnView.isHidden = true
+        
+        // Apply UI changes based on connection
+        if connection == "Connected" {
+            self.unfollowBtnView.isHidden = false
+            self.scheduleMeetingBtnWidth.constant = 110.0
+        }
+        else if connection == "Request Sent" {
+            self.sentRequestBtnView.isHidden = false
+        }
+        else if connection == "Received Request" {
+            self.aacceptDeclineBtnView.isHidden = false
+        }
+        else if connection == "Block" {
+            self.unblockBtnView.isHidden = false
+        }
+        else {
+            if isPublic == 0 {
+                self.sendRequestBtnView.isHidden = false
+            } else {
+                self.followBtnView.isHidden = false
             }
         }
     }
