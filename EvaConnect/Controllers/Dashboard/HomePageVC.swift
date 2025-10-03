@@ -636,8 +636,14 @@ extension HomePageVC {
                 let jsonDecoder = JSONDecoder()
                 let res = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 if !(res.error) {
-                    self.presentAlert("User Blocked Successfully")
-                    self.fetchDashboardPostData()
+                    //self.presentAlert("User Blocked Successfully")
+                    let alert = UIAlertController(title: "User Blocked", message: "You can unblock this user anytime from your account settings under 'BlockList'", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (_) in
+                        DispatchQueue.main.async {
+                            self.fetchDashboardPostData()
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     print("Error :: \(res.message)")
                 }

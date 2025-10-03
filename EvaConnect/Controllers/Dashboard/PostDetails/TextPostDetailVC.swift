@@ -295,11 +295,15 @@ extension TextPostDetailVC {
                 let jsonDecoder = JSONDecoder()
                 let res = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 if !(res.error) {
-                    self.presentAlert("User Blocked Successfully")
-                    //Back Button Click.....
-                    self.delegate?.refresh(homeStatus: false)
-                    self.navigationController?.isNavigationBarHidden = false
-                    self.navigationController?.popViewController(animated: true)
+                    //self.presentAlert("User Blocked Successfully")
+                    let alert = UIAlertController(title: "User Blocked", message: "You can unblock this user anytime from your account settings under 'BlockList'", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (_) in
+                        //Back Button Click.....
+                        self.delegate?.refresh(homeStatus: false)
+                        self.navigationController?.isNavigationBarHidden = false
+                        self.navigationController?.popViewController(animated: true)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     print("Error :: \(res.message)")
                 }

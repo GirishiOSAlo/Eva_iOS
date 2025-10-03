@@ -404,6 +404,7 @@
                         <outlet property="currentEventLblHeight" destination="Fm9-Xr-f4U" id="gDZ-nm-i7l"/>
                         <outlet property="currentEventListHeight" destination="ZJ3-g6-YeN" id="xmd-fp-Tqt"/>
                         <outlet property="emptyListMessageLbl" destination="c2R-3Q-MSV" id="Fqr-UH-Akv"/>
+                        <outlet property="eventTblVw" destination="aqj-uT-nF9" id="dcJ-I2-CFC"/>
                         <outlet property="filterCollectionView" destination="uX7-nB-ZDM" id="cIR-yK-XcS"/>
                         <outlet property="filterCollectionViewHeight" destination="sNL-8Y-QOG" id="ezc-UJ-hlH"/>
                         <outlet property="indicatorView" destination="BUg-lB-ICN" id="HCX-DB-hmv"/>
@@ -423,7 +424,6 @@
                         <outlet property="searchTxtField" destination="S7Z-cY-5x4" id="fz4-LL-GRe"/>
                         <outlet property="searchUIView" destination="wO4-Sd-ffB" id="lZo-rL-eAs"/>
                         <outlet property="tabCollectionViewHeight" destination="xgS-wv-Gce" id="CDx-ik-LFM"/>
-                        <outlet property="tableView" destination="aqj-uT-nF9" id="8By-g6-iFq"/>
                         <outlet property="tableViewHeightConst" destination="Pg9-r5-gpT" id="JLd-8V-xkN"/>
                         <segue destination="QF6-GA-kqK" kind="show" identifier="showInviteConnections" id="TOH-FI-LBw"/>
                         <segue destination="fY2-c5-3hP" kind="show" identifier="showTextComment" id="LvF-hQ-ur2"/>

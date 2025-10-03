@@ -183,8 +183,13 @@ extension EventDelegateProfileVC {
                 }
                 
                 if response.error == false {
-                    showToast(message: "User Blocked Successfully")
-                    self.back_touchUpInside(backBtn)
+                    //showToast(message: "User Blocked Successfully")
+                    let alert = UIAlertController(title: "User Blocked", message: "You can unblock this user anytime from your account settings under 'BlockList'", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (_) in
+                        //Back Button Click.....
+                        self.back_touchUpInside(self.backBtn)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
             case .failure(let failure):
                 self.presentAlert("Error", nil, failure)
