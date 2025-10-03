@@ -86,9 +86,9 @@ class ExhibitorsCell: UITableViewCell {
             compImgView.image = UIImage(named: "profile")
         }
         
-        compNameLable.text = data.companyName ?? "--"
+        compNameLable.text = (data.firstName?.isEmpty ?? true) ? "--" : data.firstName
         sponsorTypeLable.text = "--"
-        countryLable.text = data.country ?? "--"
+        countryLable.text = (data.country?.isEmpty ?? true) ? "--" : data.country
         membersNoLable.text = "--"
         standNoLable.text = "--"
     }
