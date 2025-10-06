@@ -178,6 +178,11 @@ class HomeVC: BaseVC {
             selectedHomeFilter = .none
         }
         
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refreshingContent), for: .valueChanged)
+        scrollvw.refreshControl = refreshControl
+        
         //getPosts(offSet: 0)
     }
     
@@ -1339,90 +1344,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             return cell
             
         case self.tableView:
-            
-            switch selectedTab {
-            case .posts, .industryPost:
-                let homePost = posts[indexPath.row]
-                
-                if homePost.postVideo != "" && homePost.postVideo != nil {
-                    let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.delegate = self
-                    cell.uiData(dataMaper: homePost)
-                    
-                    cell.sharedBtn.tag = indexPath.row
-                    cell.commentBtn.tag = indexPath.row
-                    cell.likeBtn.tag = indexPath.row
-                    cell.goToProfileBtn.tag = indexPath.row
-                    cell.reportBtn.tag = indexPath.row
-                    self.objectId = homePost.id ?? 0
-                    self.type = .post
-                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                    cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
-                    cell.openVideoBtn.tag = indexPath.row
-                    cell.videoView.backgroundColor = .black
-                    cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
-                    cell.videoView.stop()
-                    cell.videoView.isHidden = false
-                    return cell
-                }
-                else if (homePost.postDocuments?.count ?? 0) > 0 {
-                    let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
-                    cell.delegate = self
-                    cell.uiData(homePost: homePost)
-                    cell.likeBtn.tag = indexPath.row
-                    cell.commentBtn.tag = indexPath.row
-                    cell.sharedBtn.tag = indexPath.row
-                    cell.openArticleBtn.tag = indexPath.row
-                    cell.goToProfileBtn.tag = indexPath.row
-                    cell.reportBtn.tag = indexPath.row
-                    self.objectId = homePost.id ?? 0
-                    self.type = .post
-                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                }
-                else if homePost.datumPostImage!.count > 0 {
-                    let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
-                    cell.uiData(dataMaper: homePost)
-                    cell.delegate = self
-                    cell.delegateDidSelect = self
-                    cell.parentViewController = self
-                    
-                    cell.likeButton.tag = indexPath.row
-                    cell.commentButton.tag = indexPath.row
-                    cell.shareButton.tag = indexPath.row
-                    cell.goToProfileBtn.tag = indexPath.row
-                    cell.reportBtn.tag = indexPath.row
-                    self.objectId = homePost.id ?? 0
-                    self.type = .post
-                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                }
-                else {
-                    let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    
-                    cell.detailsView.layer.cornerRadius = 13
-                    cell.delegate = self
-                    cell.uiData(dataMaper: homePost)
-                    cell.shareBtn.tag = indexPath.row
-                    cell.commentBtn.tag = indexPath.row
-                    cell.likeBtn.tag = indexPath.row
-                    cell.goToProfileBtn.tag = indexPath.row
-                    cell.reportBtn.tag = indexPath.row
-                    self.objectId = homePost.id ?? 0
-                    self.type = .post
-                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                    cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                    return cell
-                }
-                
-            case .events:
+            if selectedTab == .events {
                 let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 
                 let event = showEventList[indexPath.row]
@@ -1437,209 +1359,309 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                 cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
                 cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
                 cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-                
-//                if self.selectedHomeFilter == .new {
-//                    let event = allEventList[indexPath.row]
-//                    cell.uiData(event: event)
-//                    cell.delegate = self
-//                    cell.eventDelegate = self
-//                    cell.navigateToDetail.tag = indexPath.row
-//                    cell.saveEventBtn.tag = indexPath.row
-//                    cell.viewDetailsBtn.tag = indexPath.row
-//                    self.objectId = event.id ?? 0
-//                    self.type = .event
-//                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-//                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-//                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-//                    
-//                }
-//                else if self.selectedHomeFilter == .going {
-//                    let event = upcomingEventList[indexPath.row]
-//                    cell.uiData(event: event)
-//                    cell.delegate = self
-//                    cell.eventDelegate = self
-//                    cell.navigateToDetail.tag = indexPath.row
-//                    cell.saveEventBtn.tag = indexPath.row
-//                    cell.viewDetailsBtn.tag = indexPath.row
-//                    self.objectId = event.id ?? 0
-//                    self.type = .event
-//                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-//                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-//                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-//                }
-//                else {
-//                    
-//                    let event = posts[indexPath.row]
-//                    cell.uiData(dataMaper: event)
-//                    cell.dashboardItem = event
-//                    cell.delegate = self
-//                    cell.eventDelegate = self
-////                    cell.interrestedBtn.tag = indexPath.row
-////                    if LoggedUserDetails.shared.user!.id != event.user!.id {
-////                        cell.attendingBtn.isHidden = false
-////                        cell.attendingBtn.tag = indexPath.row
-////                        //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-////                    }
-////                    else {
-////                        cell.attendingBtn.isHidden = true
-////                    }
-////                    if self.selectedTabFilter == 1 {
-////                        cell.BottomViewStack.isHidden = true
-////                    } else {
-////                        cell.BottomViewStack.isHidden = false
-////                    }
-////                    cell.industryUserView.isHidden = true
-////                    cell.indivisualUserView.isHidden = false
-////                    
-////                    cell.sharedBtn.tag = indexPath.row
-//                    cell.navigateToDetail.tag = indexPath.row
-//                    cell.saveEventBtn.tag = indexPath.row
-//                    cell.viewDetailsBtn.tag = indexPath.row
-//                    self.objectId = event.id ?? 0
-//                    self.type = .event
-//                    
-//                    
-////                    let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
-////                    if eventAttendeesStatus == "accepted" {
-////                        cell.requestJoinBtn.setTitle("View details", for: .normal)
-////                    }
-////                    else if eventAttendeesStatus == "Request_To_Join" {
-////                        cell.requestJoinBtn.setTitle("Requested", for: .normal)
-////                    }
-////                    else if eventAttendeesStatus == "decline" {
-////                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-////                    }
-////                    else {
-////                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
-////                    }
-////                    
-////                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-//                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-//                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
-//                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
-////                    cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
-////                    
-////                    cell.intrestedTapped = { [weak self] dashboardItem in
-////                        let vc = StoryboardRouter.intrested()
-////                        vc.dashboardItem = dashboardItem
-////                        self?.navigationController?.pushViewController(vc, animated: true)
-////                    }
-//                }
-                return cell
-                
-            case .industryEvents:
-                let event = posts[indexPath.row]
-                let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.uiData(dataMaper: event)
-                cell.dashboardItem = event
-                //            cell.delegate = self
-                //            cell.eventDelegate = self
-                //            if LoggedUserDetails.shared.user!.id != event.user!.id {
-                //                cell.attendingBtn.isHidden = false
-                //                cell.attendingBtn.tag = indexPath.row
-                //                //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                //            }
-                //            else {
-                //                cell.attendingBtn.isHidden = true
-                //            }
-                
-                //                      cell.sharedBtn.tag = indexPath.row
-//                if self.selectedTabFilter == 1 {
-//                    cell.BottomViewStack.isHidden = true
-//                } else {
-//                    cell.BottomViewStack.isHidden = false
-//                }
-//                cell.industryUserView.isHidden = false
-//                cell.indivisualUserView.isHidden = true
-//                cell.navigateToDetail.tag = indexPath.row
-//                cell.noOfIntererstedBtn.tag = indexPath.row
-                //                      cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
-                cell.intrestedTapped = { [weak self] dashboardItem in
-                    let vc = StoryboardRouter.intrested()
-                    vc.dashboardItem = dashboardItem
-                    self?.navigationController?.pushViewController(vc, animated: true)
-                }
-//                cell.noOfIntererstedBtn.addTarget(self, action:#selector(interestedListTapped(_:)), for: .touchUpInside)
-                return cell
-            case .news:
-                let cell: HomeNewz = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                let newz = newsList[indexPath.row]
-                
-                //cell.uiData(dataMaper: newz)
-                cell.setNewsData(dataMaper: newz)
-                cell.likeBtn.tag = indexPath.row
-                cell.sharedBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.openURl.tag = indexPath.row
-                cell.saveNewsBtn.tag = indexPath.row
-                cell.detailNavigateBtn.tag = indexPath.row
-                
-                self.objectId = newz.id ?? 0
-                self.type = .news
-                cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
-                cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
-                cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
-                cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
-                cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
-                
-                return cell
-            case .jobs:
-                //            if user?.type == userType.user.rawValue {
-                let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.baseMainView.layer.cornerRadius = 12
-                cell.indivisualViewStack.isHidden = false
-                cell.industryView.isHidden = true
-                cell.indivisualVw.isHidden = false
-                cell.saveJobBtn.isHidden = false
-                //                cell.job = self.jobList[indexPath.row]
-                let job = self.jobList[indexPath.row]
-                cell.setData(data: job)
-                cell.viewDetailsBtn.tag = indexPath.row
-                cell.saveJobBtn.tag = indexPath.row
-//                cell.editBtn.tag = indexPath.row
-//                cell.applicantBtn.tag = indexPath.row
-                cell.applyNowBtn.tag = indexPath.row
-                //                cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
-                
-                if selectedHomeFilter == .applied {
-                    cell.applyNowBtnHeight.constant = 0
-                } else {
-                    cell.applyNowBtnHeight.constant = 50.0
-                }
-                
-                cell.viewDetailsBtn.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
-                cell.applyNowBtn.addTarget(self, action: #selector(tapJobApply(sender:)), for: .touchUpInside)
-                cell.saveJobBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
-                return cell
-                //            } else {
-                //                let cell: CompanyJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                //                cell.item = posts[indexPath.row]
-                //                cell.edit = { [weak self] in self?.navigateToEditJob(job: $0) }
-                //                return cell
-                //            }
-            case .industryJobs:
-                let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.job = posts[indexPath.row]
-                cell.baseMainView.layer.cornerRadius = 12
-                cell.indivisualViewStack.isHidden = true
-                cell.industryView.isHidden = false
-                cell.saveJobBtn.isHidden = true
-                cell.editBtn.tag = indexPath.row
-                cell.applicantBtn.tag = indexPath.row
-                
-                if self.selectedTabFilter == 0 {
-                    cell.jobActiveTimeLbl.isHidden = false
-                } else {
-                    cell.jobActiveTimeLbl.isHidden = true
-                }
-                cell.editBtn.addTarget(self, action:  #selector(tapEditJob(sender:)), for: .touchUpInside)
-                cell.applicantBtn.addTarget(self, action:  #selector(tapApplicantsList(sender:)), for: .touchUpInside)
-                //            cell.detailButton.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
-                
                 return cell
             }
+            
+//            switch selectedTab {
+//            case .posts, .industryPost:
+//                let homePost = posts[indexPath.row]
+//                
+//                if homePost.postVideo != "" && homePost.postVideo != nil {
+//                    let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                    cell.delegate = self
+//                    cell.uiData(dataMaper: homePost)
+//                    
+//                    cell.sharedBtn.tag = indexPath.row
+//                    cell.commentBtn.tag = indexPath.row
+//                    cell.likeBtn.tag = indexPath.row
+//                    cell.goToProfileBtn.tag = indexPath.row
+//                    cell.reportBtn.tag = indexPath.row
+//                    self.objectId = homePost.id ?? 0
+//                    self.type = .post
+//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                    cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+//                    cell.openVideoBtn.tag = indexPath.row
+//                    cell.videoView.backgroundColor = .black
+//                    cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
+//                    cell.videoView.stop()
+//                    cell.videoView.isHidden = false
+//                    return cell
+//                }
+//                else if (homePost.postDocuments?.count ?? 0) > 0 {
+//                    let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
+//                    cell.delegate = self
+//                    cell.uiData(homePost: homePost)
+//                    cell.likeBtn.tag = indexPath.row
+//                    cell.commentBtn.tag = indexPath.row
+//                    cell.sharedBtn.tag = indexPath.row
+//                    cell.openArticleBtn.tag = indexPath.row
+//                    cell.goToProfileBtn.tag = indexPath.row
+//                    cell.reportBtn.tag = indexPath.row
+//                    self.objectId = homePost.id ?? 0
+//                    self.type = .post
+//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                    cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                }
+//                else if homePost.datumPostImage!.count > 0 {
+//                    let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                    cell.backgroundColor = UIColor(hex: "#F8F6F8")
+//                    cell.uiData(dataMaper: homePost)
+//                    cell.delegate = self
+//                    cell.delegateDidSelect = self
+//                    cell.parentViewController = self
+//                    
+//                    cell.likeButton.tag = indexPath.row
+//                    cell.commentButton.tag = indexPath.row
+//                    cell.shareButton.tag = indexPath.row
+//                    cell.goToProfileBtn.tag = indexPath.row
+//                    cell.reportBtn.tag = indexPath.row
+//                    self.objectId = homePost.id ?? 0
+//                    self.type = .post
+//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                    cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                }
+//                else {
+//                    let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                    
+//                    cell.detailsView.layer.cornerRadius = 13
+//                    cell.delegate = self
+//                    cell.uiData(dataMaper: homePost)
+//                    cell.shareBtn.tag = indexPath.row
+//                    cell.commentBtn.tag = indexPath.row
+//                    cell.likeBtn.tag = indexPath.row
+//                    cell.goToProfileBtn.tag = indexPath.row
+//                    cell.reportBtn.tag = indexPath.row
+//                    self.objectId = homePost.id ?? 0
+//                    self.type = .post
+//                    cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                    cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                    cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                    return cell
+//                }
+//                
+//            case .events:
+//                let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                
+//                let event = showEventList[indexPath.row]
+//                cell.uiData(event: event)
+//                cell.delegate = self
+//                cell.eventDelegate = self
+//                cell.navigateToDetail.tag = indexPath.row
+//                cell.saveEventBtn.tag = indexPath.row
+//                cell.viewDetailsBtn.tag = indexPath.row
+//                self.objectId = event.id ?? 0
+//                self.type = .event
+//                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+//                cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+//                
+////                if self.selectedHomeFilter == .new {
+////                    let event = allEventList[indexPath.row]
+////                    cell.uiData(event: event)
+////                    cell.delegate = self
+////                    cell.eventDelegate = self
+////                    cell.navigateToDetail.tag = indexPath.row
+////                    cell.saveEventBtn.tag = indexPath.row
+////                    cell.viewDetailsBtn.tag = indexPath.row
+////                    self.objectId = event.id ?? 0
+////                    self.type = .event
+////                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+////                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+////                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+////                    
+////                }
+////                else if self.selectedHomeFilter == .going {
+////                    let event = upcomingEventList[indexPath.row]
+////                    cell.uiData(event: event)
+////                    cell.delegate = self
+////                    cell.eventDelegate = self
+////                    cell.navigateToDetail.tag = indexPath.row
+////                    cell.saveEventBtn.tag = indexPath.row
+////                    cell.viewDetailsBtn.tag = indexPath.row
+////                    self.objectId = event.id ?? 0
+////                    self.type = .event
+////                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+////                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+////                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+////                }
+////                else {
+////                    
+////                    let event = posts[indexPath.row]
+////                    cell.uiData(dataMaper: event)
+////                    cell.dashboardItem = event
+////                    cell.delegate = self
+////                    cell.eventDelegate = self
+//////                    cell.interrestedBtn.tag = indexPath.row
+//////                    if LoggedUserDetails.shared.user!.id != event.user!.id {
+//////                        cell.attendingBtn.isHidden = false
+//////                        cell.attendingBtn.tag = indexPath.row
+//////                        //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//////                    }
+//////                    else {
+//////                        cell.attendingBtn.isHidden = true
+//////                    }
+//////                    if self.selectedTabFilter == 1 {
+//////                        cell.BottomViewStack.isHidden = true
+//////                    } else {
+//////                        cell.BottomViewStack.isHidden = false
+//////                    }
+//////                    cell.industryUserView.isHidden = true
+//////                    cell.indivisualUserView.isHidden = false
+//////                    
+//////                    cell.sharedBtn.tag = indexPath.row
+////                    cell.navigateToDetail.tag = indexPath.row
+////                    cell.saveEventBtn.tag = indexPath.row
+////                    cell.viewDetailsBtn.tag = indexPath.row
+////                    self.objectId = event.id ?? 0
+////                    self.type = .event
+////                    
+////                    
+//////                    let eventAttendeesStatus = event.eventAttendeesStatus ?? ""
+//////                    if eventAttendeesStatus == "accepted" {
+//////                        cell.requestJoinBtn.setTitle("View details", for: .normal)
+//////                    }
+//////                    else if eventAttendeesStatus == "Request_To_Join" {
+//////                        cell.requestJoinBtn.setTitle("Requested", for: .normal)
+//////                    }
+//////                    else if eventAttendeesStatus == "decline" {
+//////                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//////                    }
+//////                    else {
+//////                        cell.requestJoinBtn.setTitle("Request To Join", for: .normal)
+//////                    }
+//////                    
+//////                    cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+////                    cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+////                    cell.saveEventBtn.addTarget(self, action: #selector(saveEventTapped(sender:)), for: .touchUpInside)
+////                    cell.viewDetailsBtn.addTarget(self, action: #selector(eventViewDetailsTapped(sender:)), for: .touchUpInside)
+//////                    cell.interrestedBtn.addTarget(self, action: #selector(interestedBtnTapped(_:)), for: .touchUpInside)
+//////                    
+//////                    cell.intrestedTapped = { [weak self] dashboardItem in
+//////                        let vc = StoryboardRouter.intrested()
+//////                        vc.dashboardItem = dashboardItem
+//////                        self?.navigationController?.pushViewController(vc, animated: true)
+//////                    }
+////                }
+//                return cell
+//                
+//            case .industryEvents:
+//                let event = posts[indexPath.row]
+//                let cell: HomeEvent = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.uiData(dataMaper: event)
+//                cell.dashboardItem = event
+//                //            cell.delegate = self
+//                //            cell.eventDelegate = self
+//                //            if LoggedUserDetails.shared.user!.id != event.user!.id {
+//                //                cell.attendingBtn.isHidden = false
+//                //                cell.attendingBtn.tag = indexPath.row
+//                //                //cell.attendingBtn.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                //            }
+//                //            else {
+//                //                cell.attendingBtn.isHidden = true
+//                //            }
+//                
+//                //                      cell.sharedBtn.tag = indexPath.row
+////                if self.selectedTabFilter == 1 {
+////                    cell.BottomViewStack.isHidden = true
+////                } else {
+////                    cell.BottomViewStack.isHidden = false
+////                }
+////                cell.industryUserView.isHidden = false
+////                cell.indivisualUserView.isHidden = true
+////                cell.navigateToDetail.tag = indexPath.row
+////                cell.noOfIntererstedBtn.tag = indexPath.row
+//                //                      cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.navigateToDetail.addTarget(self, action:#selector(openEventVCPost(sender:)), for: .touchUpInside)
+//                cell.intrestedTapped = { [weak self] dashboardItem in
+//                    let vc = StoryboardRouter.intrested()
+//                    vc.dashboardItem = dashboardItem
+//                    self?.navigationController?.pushViewController(vc, animated: true)
+//                }
+////                cell.noOfIntererstedBtn.addTarget(self, action:#selector(interestedListTapped(_:)), for: .touchUpInside)
+//                return cell
+//            case .news:
+//                let cell: HomeNewz = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                let newz = newsList[indexPath.row]
+//                
+//                //cell.uiData(dataMaper: newz)
+//                cell.setNewsData(dataMaper: newz)
+//                cell.likeBtn.tag = indexPath.row
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.openURl.tag = indexPath.row
+//                cell.saveNewsBtn.tag = indexPath.row
+//                cell.detailNavigateBtn.tag = indexPath.row
+//                
+//                self.objectId = newz.id ?? 0
+//                self.type = .news
+//                cell.detailNavigateBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
+//                cell.likeBtn.addTarget(self, action: #selector(newsLiked(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handleNewsShare(_:)), for: .touchUpInside)
+//                cell.openURl.addTarget(self, action: #selector(urlVCPost(sender:)), for: .touchUpInside)
+//                cell.commentBtn.addTarget(self, action:#selector(newsCommentVCPost(sender:)), for: .touchUpInside)
+//                cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
+//                
+//                return cell
+//            case .jobs:
+//                //            if user?.type == userType.user.rawValue {
+//                let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.baseMainView.layer.cornerRadius = 12
+//                cell.indivisualViewStack.isHidden = false
+//                cell.industryView.isHidden = true
+//                cell.indivisualVw.isHidden = false
+//                cell.saveJobBtn.isHidden = false
+//                //                cell.job = self.jobList[indexPath.row]
+//                let job = self.jobList[indexPath.row]
+//                cell.setData(data: job)
+//                cell.viewDetailsBtn.tag = indexPath.row
+//                cell.saveJobBtn.tag = indexPath.row
+////                cell.editBtn.tag = indexPath.row
+////                cell.applicantBtn.tag = indexPath.row
+//                cell.applyNowBtn.tag = indexPath.row
+//                //                cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
+//                
+//                if selectedHomeFilter == .applied {
+//                    cell.applyNowBtnHeight.constant = 0
+//                } else {
+//                    cell.applyNowBtnHeight.constant = 50.0
+//                }
+//                
+//                cell.viewDetailsBtn.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
+//                cell.applyNowBtn.addTarget(self, action: #selector(tapJobApply(sender:)), for: .touchUpInside)
+//                cell.saveJobBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
+//                return cell
+//                //            } else {
+//                //                let cell: CompanyJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                //                cell.item = posts[indexPath.row]
+//                //                cell.edit = { [weak self] in self?.navigateToEditJob(job: $0) }
+//                //                return cell
+//                //            }
+//            case .industryJobs:
+//                let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.job = posts[indexPath.row]
+//                cell.baseMainView.layer.cornerRadius = 12
+//                cell.indivisualViewStack.isHidden = true
+//                cell.industryView.isHidden = false
+//                cell.saveJobBtn.isHidden = true
+//                cell.editBtn.tag = indexPath.row
+//                cell.applicantBtn.tag = indexPath.row
+//                
+//                if self.selectedTabFilter == 0 {
+//                    cell.jobActiveTimeLbl.isHidden = false
+//                } else {
+//                    cell.jobActiveTimeLbl.isHidden = true
+//                }
+//                cell.editBtn.addTarget(self, action:  #selector(tapEditJob(sender:)), for: .touchUpInside)
+//                cell.applicantBtn.addTarget(self, action:  #selector(tapApplicantsList(sender:)), for: .touchUpInside)
+//                //            cell.detailButton.addTarget(self, action: #selector(tapJobDetail(sender:)), for: .touchUpInside)
+//                
+//                return cell
+//            }
             return UITableViewCell()
             
         default:
@@ -1905,13 +1927,6 @@ private extension HomeVC {
                     } else if selectedTab == .posts {
                         self.setPostTableHeight()
                     } else if selectedTab == .events {
-//                        if self.selectedHomeFilter == .new {
-//                            self.postListTblVwHeight.constant = 0.0
-//                        } else if self.selectedHomeFilter == .going {
-//                            self.postListTblVwHeight.constant = 0.0
-//                        } else {
-//                            self.setPostTableHeight()
-//                        }
                         self.postListTblVwHeight.constant = 0.0
                     }
                     else {
@@ -2355,10 +2370,11 @@ private extension HomeVC {
                 let res = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
                 if !(res.error) {
                     let alert = UIAlertController(title: "User Blocked", message: "You can unblock this user anytime from your account settings under 'BlockList'", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (_) in
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+                        self.posts.removeAll()
+                        self.postListTblVw.reloadData()
                         DispatchQueue.main.async {
-                            self.posts = []
-                            self.reloadData()
+                            self.reloadData(inserted: false)
                         }
                     }))
                     self.present(alert, animated: true, completion: nil)
@@ -2377,21 +2393,7 @@ extension HomeVC {
     
     func setLayOut() {
         scrollvw.delegate = self
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeJob.self, HomeEvent.self, HomeImage.self, HomeVideo.self, HomeNewz.self, UserJobCell.self, CompanyJobCell.self])
-        
-        jobListTblVw.dataSource = self
-        jobListTblVw.delegate = self
-        jobListTblVw.registerCell(withType: UserJobCell.self)
-        
-        newsListTblVw.dataSource = self
-        newsListTblVw.delegate = self
-        newsListTblVw.registerCell(withType: HomeNewz.self)
-        
-        postListTblVw.dataSource = self
-        postListTblVw.delegate = self
-        postListTblVw.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self])
+        registerCell()
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -2405,10 +2407,10 @@ extension HomeVC {
         filterCollectionView.delegate = self
 //        filterCollectionView.backgroundColor = AppColors.lightGrayBG
         
-        tableView.refreshControl = refreshControl
-        tableView.estimatedRowHeight = 600
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.tableFooterView =  UIView()
+//        tableView.refreshControl = refreshControl
+//        tableView.estimatedRowHeight = 600
+//        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.tableFooterView =  UIView()
         
         noCurrentEventLbl.font = UIFont(name: Myfonts.medium, size: 12.0)
         noOtherEventLbl.font = UIFont(name: Myfonts.medium, size: 12.0)
@@ -2428,6 +2430,24 @@ extension HomeVC {
 //            homeTabFilter = HomeTabFilter.industryEvents
 //        }
         reloadData()
+    }
+    
+    func registerCell() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeJob.self, HomeEvent.self, HomeImage.self, HomeVideo.self, HomeNewz.self, UserJobCell.self, CompanyJobCell.self])
+        
+        jobListTblVw.dataSource = self
+        jobListTblVw.delegate = self
+        jobListTblVw.registerCell(withType: UserJobCell.self)
+        
+        newsListTblVw.dataSource = self
+        newsListTblVw.delegate = self
+        newsListTblVw.registerCell(withType: HomeNewz.self)
+        
+        postListTblVw.dataSource = self
+        postListTblVw.delegate = self
+        postListTblVw.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self])
     }
     
 }
@@ -2530,9 +2550,76 @@ extension HomeVC {
   
     @objc private func refreshingContent() {
         postSeeMore.removeAll()
-        posts.removeAll()
-        postListTblVw.reloadData()
-        reloadData()
+        self.posts = []
+        self.jobList = []
+        self.newsList = []
+        self.currentEventList = []
+        self.allEventList = []
+        self.upcomingEventList = []
+        self.requestedEventList = []
+        self.savedEventList = []
+        self.passedEventList = []
+        self.showEventList = []
+        
+        //reloadData()
+        if selectedTab == .jobs || selectedTab == .industryJobs {
+            if isIndivisualUser {
+                homeTabFilter = HomeTabFilter.job
+            } else {
+                homeTabFilter = HomeTabFilter.industryJobs
+            }
+            height = 32
+            searchHeight = 40
+            //selectedHomeFilter = .all
+            let filter = self.selectedHomeFilter.rawValue.lowercased()
+            self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+        } else if selectedTab == .events {
+            height = 32
+            searchHeight = 0
+            if isIndivisualUser {
+                homeTabFilter = HomeTabFilter.userEvent
+            } else {
+                homeTabFilter = HomeTabFilter.industryEvents
+            }
+            
+            self.currentEventLbl.text = "Current Event"
+            self.noCurrentEventLblHeight.constant = 0.0
+            self.noOtherEventLblHeight.constant = 0.0
+            self.currentEventLblHeight.constant = 0.0
+            self.allEventLblHeight.constant = 0.0
+            self.currentEventListHeight.constant = 0
+            if self.selectedHomeFilter == .new {
+                self.currentEventLblHeight.constant = 70.0
+                self.allEventLblHeight.constant = 70.0
+                self.fetchCurrentEventData()
+                self.allEventLbl.text = "All Event"
+                self.fetchAllEventData()
+            } else if self.selectedHomeFilter == .going {
+                self.currentEventLblHeight.constant = 70.0
+                self.allEventLblHeight.constant = 70.0
+                self.fetchCurrentEventData()
+                self.allEventLbl.text = "Upcoming Event"
+                self.fetchUpcomingEventData()
+            } else if self.selectedHomeFilter == .requested {
+                self.fetchRequestedEventData()
+            } else if self.selectedHomeFilter == .saved {
+                self.fetchSavedEventData()
+            } else if self.selectedHomeFilter == .passed {
+                self.fetchPassedEventData()
+            }
+            
+        } else if selectedTab == .posts {
+            height = 0
+            searchHeight = 0
+            reloadData(inserted: false)
+            //posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
+        }
+        else if selectedTab == .news {
+            height = 32
+            searchHeight = 0
+            self.fetchNewsListData(offSet: 1)
+            //posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
+        }
     }
     
     @objc func reloadData(inserted: Bool = true) {
@@ -2614,19 +2701,17 @@ extension HomeVC {
         if tableView.refreshControl?.isRefreshing ?? false || indicatorView.isAnimating || selectedTab.selectedIndex == sender.tag { return }
         self.searchTxtField.text = ""
         homeTabFilter.removeAll()
-//        posts.removeAll()
-//        jobList.removeAll()
-//        tableView.reloadData()
-//        self.posts = []
-//        self.jobList = []
-//        self.newsList = []
-//        self.currentEventList = []
-//        self.allEventList = []
-//        self.upcomingEventList = []
-//        self.requestedEventList = []
-//        self.savedEventList = []
-//        self.passedEventList = []
-//        self.showEventList = []
+        
+        self.posts = []
+        self.jobList = []
+        self.newsList = []
+        self.currentEventList = []
+        self.allEventList = []
+        self.upcomingEventList = []
+        self.requestedEventList = []
+        self.savedEventList = []
+        self.passedEventList = []
+        self.showEventList = []
 
         self.noCurrentEventLblHeight.constant = 0
         self.noOtherEventLblHeight.constant = 0
