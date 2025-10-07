@@ -28,7 +28,7 @@ class PostImageCVC: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        imageView.layer.cornerRadius = 20.0
     }
 
 }

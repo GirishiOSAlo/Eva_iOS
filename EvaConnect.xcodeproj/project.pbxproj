@@ -621,6 +621,8 @@
 		A6F1CD222D78292600131C05 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD212D78292600131C05 /* FirebaseAnalyticsSwift */; };
 		A6F1CD242D78292600131C05 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD232D78292600131C05 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		A6F1CD262D78292600131C05 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = A6F1CD252D78292600131C05 /* FirebaseAppCheck */; };
+		A6F1E7902E93DFCD004565F5 /* HomePostTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6F1E78F2E93DFCD004565F5 /* HomePostTVC.xib */; };
+		A6F1E7912E93DFCD004565F5 /* HomePostTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F1E78E2E93DFCD004565F5 /* HomePostTVC.swift */; };
 		A6F3C8492AAF34280082E6AE /* EventDetailTabsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F3C8482AAF34280082E6AE /* EventDetailTabsCell.swift */; };
 		A6FF4F362E165237007D4A34 /* JobDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FF4F352E165237007D4A34 /* JobDetailsDataModel.swift */; };
 /* End PBXBuildFile section */
@@ -1244,6 +1246,8 @@
 		A6E754322DD2FF560057B781 /* CommentCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCVC.swift; sourceTree = "<group>"; };
 		A6E754332DD2FF560057B781 /* CommentCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCVC.xib; sourceTree = "<group>"; };
 		A6E8DA7E2AAB40B6006EF551 /* SignUpJobDescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpJobDescriptionVC.swift; sourceTree = "<group>"; };
+		A6F1E78E2E93DFCD004565F5 /* HomePostTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostTVC.swift; sourceTree = "<group>"; };
+		A6F1E78F2E93DFCD004565F5 /* HomePostTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePostTVC.xib; sourceTree = "<group>"; };
 		A6F3C8482AAF34280082E6AE /* EventDetailTabsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailTabsCell.swift; sourceTree = "<group>"; };
 		A6FF4F352E165237007D4A34 /* JobDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailsDataModel.swift; sourceTree = "<group>"; };
 		E6F534D2498CAEF45A6A7693 /* Pods-EvaConnect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaConnect.release.xcconfig"; path = "Target Support Files/Pods-EvaConnect/Pods-EvaConnect.release.xcconfig"; sourceTree = "<group>"; };
@@ -1429,6 +1433,7 @@
 		1822CD3323D17FD80088C941 /* HomeCell */ = {
 			isa = PBXGroup;
 			children = (
+				A6F1E78D2E93DF94004565F5 /* HomePostTVC */,
 				25F130C3278D89C200C01F11 /* HomePreviewCell */,
 				259495F2278848F300C5579B /* UserJob */,
 				1846E27424AF1E5F00B8A30F /* HomeNewz */,
@@ -3720,6 +3725,15 @@
 			path = "Comment CVC";
 			sourceTree = "<group>";
 		};
+		A6F1E78D2E93DF94004565F5 /* HomePostTVC */ = {
+			isa = PBXGroup;
+			children = (
+				A6F1E78E2E93DFCD004565F5 /* HomePostTVC.swift */,
+				A6F1E78F2E93DFCD004565F5 /* HomePostTVC.xib */,
+			);
+			path = HomePostTVC;
+			sourceTree = "<group>";
+		};
 		B147997A375A16063245D31C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -3895,6 +3909,7 @@
 				A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */,
 				48BC64232DCB7901002BA644 /* NunitoSans-ExtraBold.ttf in Resources */,
 				A6A125962DDDB0B800979389 /* SponsorsCVC.xib in Resources */,
+				A6F1E7902E93DFCD004565F5 /* HomePostTVC.xib in Resources */,
 				48BC64242DCB7901002BA644 /* NunitoSans-Regular.ttf in Resources */,
 				48BC64252DCB7901002BA644 /* SF-Pro-Text-Regular.otf in Resources */,
 				48BC64262DCB7901002BA644 /* SF-Pro-Text-LightItalic.otf in Resources */,
@@ -4086,6 +4101,7 @@
 				25550AE727B524D300245F15 /* UserNewsResponse.swift in Sources */,
 				1892692F2417B9AB0087019A /* EditJobUserVC.swift in Sources */,
 				180A570923D9A94500BD473D /* OtherCommentVC.swift in Sources */,
+				A6F1E7912E93DFCD004565F5 /* HomePostTVC.swift in Sources */,
 				489CB3CB2DCBA59100A0C77B /* PreviousCVCell.swift in Sources */,
 				50B929BB244A784300299CC0 /* UIColor.swift in Sources */,
 				A6D4F56A2E589B9B00F9230E /* CountryListVC.swift in Sources */,

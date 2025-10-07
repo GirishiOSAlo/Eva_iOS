@@ -170,6 +170,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVV-g1-QlH">
+                                <rect key="frame" x="158.5" y="55" width="70" height="70"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="IGr-6o-9Tv"/>
+                                    <constraint firstAttribute="width" constant="70" id="dTZ-2Y-i2M"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" backgroundImage="playIC"/>
+                            </button>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFq-Vz-ISI">
                                 <rect key="frame" x="20" y="200" width="347" height="22"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -328,32 +338,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="TVV-g1-QlH" firstAttribute="centerY" secondItem="Faq-jX-9WR" secondAttribute="centerY" id="Fr8-wn-mvc"/>
                             <constraint firstAttribute="trailing" secondItem="Xsd-oz-RQr" secondAttribute="trailing" id="JLR-z4-qcZ"/>
                             <constraint firstItem="Xsd-oz-RQr" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" id="K3V-4B-5aS"/>
                             <constraint firstItem="Faq-jX-9WR" firstAttribute="top" secondItem="xgJ-OL-jeO" secondAttribute="top" id="NW1-OJ-1Vo"/>
                             <constraint firstItem="AFq-Vz-ISI" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" constant="20" id="Uy2-uh-IzA"/>
                             <constraint firstItem="Faq-jX-9WR" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" id="al8-yW-kmt"/>
                             <constraint firstItem="AFq-Vz-ISI" firstAttribute="top" secondItem="Faq-jX-9WR" secondAttribute="bottom" constant="20" id="gWV-6E-Cry"/>
+                            <constraint firstItem="TVV-g1-QlH" firstAttribute="centerX" secondItem="Faq-jX-9WR" secondAttribute="centerX" id="gxp-IA-ipp"/>
                             <constraint firstItem="Xsd-oz-RQr" firstAttribute="top" secondItem="AFq-Vz-ISI" secondAttribute="bottom" constant="20" id="hkw-vv-WhU"/>
                             <constraint firstAttribute="trailing" secondItem="AFq-Vz-ISI" secondAttribute="trailing" constant="20" id="iHh-3G-V7n"/>
                             <constraint firstAttribute="trailing" secondItem="Faq-jX-9WR" secondAttribute="trailing" id="ljJ-BN-lE9"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVV-g1-QlH">
-                        <rect key="frame" x="178.5" y="125" width="70" height="70"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="70" id="IGr-6o-9Tv"/>
-                            <constraint firstAttribute="width" constant="70" id="dTZ-2Y-i2M"/>
-                        </constraints>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal" backgroundImage="playIC"/>
-                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="GNE-Um-02O" firstAttribute="leading" secondItem="R6Z-qx-22Y" secondAttribute="leading" id="1cq-al-U9l"/>
-                    <constraint firstItem="TVV-g1-QlH" firstAttribute="centerY" secondItem="Faq-jX-9WR" secondAttribute="centerY" id="6An-zv-cpP"/>
                     <constraint firstItem="xgJ-OL-jeO" firstAttribute="top" secondItem="R6Z-qx-22Y" secondAttribute="bottom" constant="10" id="AY9-sD-k7P"/>
                     <constraint firstItem="GNE-Um-02O" firstAttribute="top" secondItem="R6Z-qx-22Y" secondAttribute="top" id="DAO-sw-WQ6"/>
                     <constraint firstAttribute="trailing" secondItem="xgJ-OL-jeO" secondAttribute="trailing" constant="20" id="GhY-5D-tng"/>
@@ -363,7 +364,6 @@
                     <constraint firstAttribute="trailing" secondItem="R6Z-qx-22Y" secondAttribute="trailing" id="gan-4G-s70"/>
                     <constraint firstItem="xgJ-OL-jeO" firstAttribute="leading" secondItem="SBp-Ov-0wA" secondAttribute="leading" constant="20" id="oHu-Fv-mOT"/>
                     <constraint firstItem="GNE-Um-02O" firstAttribute="trailing" secondItem="yxr-4z-YFw" secondAttribute="leading" id="rlD-Wp-JUx"/>
-                    <constraint firstItem="TVV-g1-QlH" firstAttribute="centerX" secondItem="Faq-jX-9WR" secondAttribute="centerX" id="wRx-Hz-d2j"/>
                     <constraint firstItem="GNE-Um-02O" firstAttribute="bottom" secondItem="R6Z-qx-22Y" secondAttribute="bottom" id="xA7-la-mKe"/>
                 </constraints>
             </tableViewCellContentView>

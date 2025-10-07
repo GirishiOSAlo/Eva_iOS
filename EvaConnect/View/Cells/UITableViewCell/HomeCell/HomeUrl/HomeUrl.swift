@@ -27,6 +27,7 @@ class HomeUrl: BaseCellClass {
     @IBOutlet weak var likeImage: UIImageView!
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var sharedBtn: UIButton!
+    
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var urlText: UILabel!
     @IBOutlet weak var openArticleBtn: UIButton!
