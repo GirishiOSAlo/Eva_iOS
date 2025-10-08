@@ -2362,6 +2362,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o70-4N-jrI">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <connections>
+                                    <action selector="dismissTapped:" destination="e66-uE-3qm" eventType="touchUpInside" id="5Mi-Eb-yGI"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Mz-3n-RSA">
                                 <rect key="frame" x="0.0" y="245" width="414" height="651"/>
                                 <subviews>
@@ -2632,11 +2640,15 @@
                         <viewLayoutGuide key="safeArea" id="gds-O0-dXx"/>
                         <color key="backgroundColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="0.35999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="o70-4N-jrI" firstAttribute="leading" secondItem="gds-O0-dXx" secondAttribute="leading" id="2Wy-3m-M6Z"/>
                             <constraint firstItem="KuT-He-VEA" firstAttribute="bottom" secondItem="gds-O0-dXx" secondAttribute="bottom" id="65E-IL-d0J"/>
+                            <constraint firstItem="gds-O0-dXx" firstAttribute="trailing" secondItem="o70-4N-jrI" secondAttribute="trailing" id="85k-IR-D5f"/>
                             <constraint firstItem="gds-O0-dXx" firstAttribute="trailing" secondItem="9Mz-3n-RSA" secondAttribute="trailing" id="Epa-X4-iM9"/>
                             <constraint firstAttribute="bottom" secondItem="9Mz-3n-RSA" secondAttribute="bottom" id="Hav-Q6-GIY"/>
+                            <constraint firstItem="o70-4N-jrI" firstAttribute="top" secondItem="pz8-sr-CFD" secondAttribute="top" id="IXZ-eD-xKe"/>
                             <constraint firstItem="9Mz-3n-RSA" firstAttribute="leading" secondItem="gds-O0-dXx" secondAttribute="leading" id="eIA-R1-GSD"/>
                             <constraint firstItem="9Mz-3n-RSA" firstAttribute="height" secondItem="gds-O0-dXx" secondAttribute="height" multiplier="0.8" id="eZc-f9-xke"/>
+                            <constraint firstAttribute="bottom" secondItem="o70-4N-jrI" secondAttribute="bottom" id="uPx-4u-Jls"/>
                         </constraints>
                     </view>
                     <connections>

@@ -68,6 +68,33 @@ class InviteVC: UIViewController {
         shareTableView.dataSource = self
         self.shareTableView.separatorColor = UIColor.clear
         
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        view.addGestureRecognizer(panGesture)
+    }
+    
+    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+
+        switch gesture.state {
+        case .changed:
+            if translation.y > 0 { // dragging down
+                view.transform = CGAffineTransform(translationX: 0, y: translation.y)
+            }
+        case .ended:
+            if translation.y > 300 { // threshold to dismiss
+                self.dismiss(animated: true)
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.transform = .identity
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    @IBAction func dismissTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
 
     @IBAction func DoneBtnTapped(_ sender: UIButton) {
