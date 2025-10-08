@@ -642,9 +642,11 @@ extension UserProfileVC {
             self.pendingCountLbl.text = "\(user.pendingConnection ?? "")"
         }
         else {
-            professionLbl.text = isIndivisualUser ? "\(user.companyName ?? "")" : "--"
+            professionLbl.text = isIndivisualUser ? "\(user.companyName ?? "")" : ""
             self.pendingCountLbl.text = "--"
         }
+        
+        self.detailsLbl.text = user.description ?? ""
 
         //aboutLbl.text = user.bioData ?? ""
         let content = user.bioData ?? ""
