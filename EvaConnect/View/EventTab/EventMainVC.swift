@@ -202,6 +202,7 @@ extension EventMainVC  {
                         
                         self.addModule(self.eventDetailsVC, to: self.eventDetailsView)
                         self.drpDwnNameLable.text = "Event Details"
+                        self.headingLabel.text = self.eventDetail?.name ?? ""
                     }
                 } catch {
                     print(error)

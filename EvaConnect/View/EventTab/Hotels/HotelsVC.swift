@@ -88,14 +88,15 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             cell.profileImgVw.image = UIImage(named: "eventPlaceholder")
         }
         cell.nameLbl.text = hotel.hotelname ?? "--"
-        let content = hotel.description ?? "--"
-        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-            cell.subLbl.attributedText = attributed
-            cell.subLbl.textAlignment = .center
-        } else {
-            cell.subLbl.text = content
-            cell.subLbl.textAlignment = .center
-        }
+        cell.subLbl.text = "\(hotel.city ?? "--"), \(hotel.country ?? "--")"
+//        let content = hotel.description ?? "--"
+//        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+//            cell.subLbl.attributedText = attributed
+//            cell.subLbl.textAlignment = .center
+//        } else {
+//            cell.subLbl.text = content
+//            cell.subLbl.textAlignment = .center
+//        }
         return cell
     }
     
