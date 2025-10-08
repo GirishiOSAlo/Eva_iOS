@@ -586,29 +586,37 @@ class OthersProfileVC: UIViewController {
     }
     
     @IBAction func onFollowerBtnTap(_ sender: UIButton) {
-        let vc = ConnectionViewController.instantiate()
-        vc.type = .Followers
-        vc.isComeFromOtherProfile = true
         if self.userDetails?.isPublic == 0 { //Private
-            vc.otherProfilePrivate = true
+            print("Private Account.")
         } else {
-            vc.otherProfilePrivate = false
+            let vc = ConnectionViewController.instantiate()
+            vc.type = .Followers
+            vc.isComeFromOtherProfile = true
+            if self.userDetails?.isPublic == 0 { //Private
+                vc.otherProfilePrivate = true
+            } else {
+                vc.otherProfilePrivate = false
+            }
+            vc.otherProfileID = self.otherUserID
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        vc.otherProfileID = self.otherUserID
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func onFollowingBtnTap(_ sender: UIButton) {
-        let vc = ConnectionViewController.instantiate()
-        vc.type = .Following
-        vc.isComeFromOtherProfile = true
         if self.userDetails?.isPublic == 0 { //Private
-            vc.otherProfilePrivate = true
+            print("Private Account.")
         } else {
-            vc.otherProfilePrivate = false
+            let vc = ConnectionViewController.instantiate()
+            vc.type = .Following
+            vc.isComeFromOtherProfile = true
+            if self.userDetails?.isPublic == 0 { //Private
+                vc.otherProfilePrivate = true
+            } else {
+                vc.otherProfilePrivate = false
+            }
+            vc.otherProfileID = self.otherUserID
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        vc.otherProfileID = self.otherUserID
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
