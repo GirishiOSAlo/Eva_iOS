@@ -90,7 +90,7 @@ class ExhibitorsCell: UITableViewCell {
         sponsorTypeLable.text = "--"
         countryLable.text = (data.country?.isEmpty ?? true) ? "--" : data.country
         membersNoLable.text = "--"
-        standNoLable.text = "--"
+        standNoLable.text = (data.location?.isEmpty ?? true) ? "--" : data.location
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

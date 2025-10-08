@@ -50,7 +50,11 @@ class InviteTVC: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        initUI()
+    }
+    
+    func initUI() {
+        imgVw.layer.cornerRadius = imgVw.frame.size.width / 2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

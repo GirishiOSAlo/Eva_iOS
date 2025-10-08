@@ -83,10 +83,13 @@ class InviteConnectionCell: UITableViewCell {
 
         inviteButton.layer.cornerRadius = 10.0
 
-        imageViewContainer.roundOnly()
-        userAvatar.roundOnly()
-        imageViewContainer.layer.borderWidth = 2.0
-        imageViewContainer.layer.borderColor =  AppColors.evaBlue.cgColor
+//        imageViewContainer.roundOnly()
+//        userAvatar.roundOnly()
+//        
+//        imageViewContainer.layer.borderWidth = 2.0
+//        imageViewContainer.layer.borderColor = AppColors.evaBlue.cgColor
+        
+        imageViewContainer.applyBorderWithRadius(color: AppColors.evaBlue, value: 2, radius: 25.0)
         
     }
     

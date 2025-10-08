@@ -59,9 +59,9 @@ extension InviteConnectionVC {
     
     func getConnection() {
         
-        if let user = LoggedUserDetails.shared.user {
+//        if let user = LoggedUserDetails.shared.user {
             
-            let parameters = ["user_id":  user.id,
+            let parameters = ["user_id":  myUserDefaults.userId,
                               "connection_status": "active"] as [String : Any]
             
             showActivity()
@@ -83,7 +83,7 @@ extension InviteConnectionVC {
                     }
                 }
             }
-        }
+//        }
     }
     
     func shareConnection() {

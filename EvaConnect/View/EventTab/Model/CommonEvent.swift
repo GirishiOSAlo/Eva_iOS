@@ -76,6 +76,7 @@ struct CommonEventMetaData: Codable {
     let workAviation: Int?
     let city: String?
     let country, region: String?
+    let location: String?
     let isFacebook, isLinkedin: Int?
     let facebookImageURL, linkedinImageURL: String?
     let isNotifications: Int?
@@ -131,7 +132,7 @@ struct CommonEventMetaData: Codable {
         case sectorID = "sector_id"
         case otherSector = "other_sector"
         case workAviation = "work_aviation"
-        case city, country, region
+        case city, country, region, location
         case isFacebook = "is_facebook"
         case isLinkedin = "is_linkedin"
         case facebookImageURL = "facebook_image_url"
