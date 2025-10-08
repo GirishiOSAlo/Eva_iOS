@@ -3242,7 +3242,7 @@
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" backgroundImage="job_share_ic"/>
                                                                 <connections>
-                                                                    <action selector="shareButtonTapped:" destination="BBf-NW-ceg" eventType="touchUpInside" id="kia-UG-zx1"/>
+                                                                    <action selector="shareButtonTapped:" destination="HEm-va-zd7" eventType="touchUpInside" id="U49-Es-UkM"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>

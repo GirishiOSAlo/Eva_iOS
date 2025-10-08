@@ -122,6 +122,16 @@ class UserApplyJobVC: BaseVC {
     
     @IBAction func backBtnTapped(_ sender: Any) { goBack() }
     
+    @IBAction func shareButtonTapped(_ sender: UIButton) {
+        tabBarController?.tabBar.isHidden = true
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ShareVC") as! ShareVC
+        vc.objectId = self.jobId ?? 0
+        vc.type = .job
+        vc.modalPresentationStyle = .popover
+        self.present(vc, animated: true)
+    }
+    
     @IBAction func submitBtnTapped(_ sender: Any) {
         //if cvDocumentURL == nil {
         if selectedResume == nil {

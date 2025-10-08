@@ -770,8 +770,10 @@ class HomeVC: BaseVC {
                     
                     // Empty state
                     if jobs.isEmpty {
+                        self.emptyListMessageLbl.isHidden = false
                         self.emptyListMessageLbl.text = jobListData.message ?? "Job list is empty"
                     } else {
+                        self.emptyListMessageLbl.isHidden = true
                         self.emptyListMessageLbl.text = ""
                     }
                     
