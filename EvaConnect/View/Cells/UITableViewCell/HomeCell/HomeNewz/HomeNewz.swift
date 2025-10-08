@@ -66,7 +66,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         
         newzName.font = UIFont(name: Myfonts.bold, size: 14.0)
         timeWhenPost.font = UIFont(name: Myfonts.regular, size: 12.0)
-        newzShortDetail.font = UIFont(name: Myfonts.regular, size: 14.0)
+        newzShortDetail.font = UIFont(name: Myfonts.semiBold, size: 14.0)
         
         // likeBtn.titleLabel?.font = UIFont(defaultFontStyle: .bold, size: 11.0)
         // connectionCompanyLbl.textColor = Constants.AppColorLiteral.loginColor
