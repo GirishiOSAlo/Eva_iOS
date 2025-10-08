@@ -206,18 +206,22 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     }
     
     @IBAction func SelectLoactionBtnTapped(_ sender: UIButton) {
-        if self.eventLocations.count == 0 {
-            self.makeAlert(titleMsg: "Error", messageData: "Location data is empty")
+        if self.selectEvent.text == "" {
+            self.makeAlert(titleMsg: "Error", messageData: "First select a event.")
         } else {
-            let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
-            popupvc.modalPresentationStyle = .overFullScreen
-            popupvc.activeDataType = .locationRoom
-            popupvc.eventLocations = self.eventLocations
-            popupvc.completion = { passedAns, passedId in
-                self.selecMeetingtLocationTF.text = passedAns
-                self.selectedMeetingLocationId = passedId
+            if self.eventLocations.count == 0 {
+                self.makeAlert(titleMsg: "Error", messageData: "Location data is empty")
+            } else {
+                let popupvc = CommonPopupVC(nibName: "CommonPopupVC", bundle: nil)
+                popupvc.modalPresentationStyle = .overFullScreen
+                popupvc.activeDataType = .locationRoom
+                popupvc.eventLocations = self.eventLocations
+                popupvc.completion = { passedAns, passedId in
+                    self.selecMeetingtLocationTF.text = passedAns
+                    self.selectedMeetingLocationId = passedId
+                }
+                self.navigationController?.present(popupvc, animated: true)
             }
-            self.navigationController?.present(popupvc, animated: true)
         }
     }
     
