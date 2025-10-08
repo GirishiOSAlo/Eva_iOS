@@ -259,7 +259,7 @@ extension UploadCVVC: UIDocumentPickerDelegate {
                                                       message: "Resume has been Uploaded successfully.",
                                                       preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                            self.navigationController?.popViewController(animated: true)
+                            //self.navigationController?.popViewController(animated: true)
                             self.fetchResumeData()
                         })
                         self.present(alert, animated: true)

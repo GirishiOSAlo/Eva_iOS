@@ -40,6 +40,7 @@ class HelpPageVC: UIViewController, XIBed {
         headerLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
         linkLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         descriptionLbl.font = UIFont(name: Myfonts.regular, size: 14.0)
+        self.selectBtnDisable()
         
         // Add gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
@@ -63,12 +64,22 @@ class HelpPageVC: UIViewController, XIBed {
         print("Link was tapped!")
     }
     
+    func selectBtnEnable() {
+        self.submitBtn.isUserInteractionEnabled = true
+        self.submitBtn.backgroundColor = UIColor(hex: "#4D76CD", alpha: 1.0)
+    }
+    
+    func selectBtnDisable() {
+        self.submitBtn.isUserInteractionEnabled = false
+        self.submitBtn.backgroundColor = UIColor(hex: "#4D76CD", alpha: 0.5)
+    }
+    
     @IBAction func onSubmitBtnTap(_ sender: UIButton) {
-        print("Submit Btn Tap")
         let desc = self.textView.text ?? ""
-        if desc.elementsEqual("") {
-            print("TextView Text empty...")
+        if desc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            print("TextView is empty or contains only spaces/newlines")
         } else {
+            self.textView.resignFirstResponder()
             self.helpSubmit(with: self.textView.text)
         }
     }
@@ -86,7 +97,6 @@ extension HelpPageVC {
                 let helpRoot = try jsonDecoder.decode(HelpDataModel.self, from: response.data!)
                 if !(helpRoot.error ?? false) {
                     self.textView.text = ""
-                    self.textView.resignFirstResponder()
                     self.presentAlert("Help Submit Successfully")
                 } else {
                     print("Error :: \(helpRoot.message ?? "")")
@@ -99,13 +109,21 @@ extension HelpPageVC {
 }
 
 extension HelpPageVC: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel?.isHidden = !textView.text.isEmpty
-    }
     func textViewDidEndEditing(_ textView: UITextView) {
         placeholderLabel?.isHidden = !textView.text.isEmpty
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
         placeholderLabel?.isHidden = true
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel?.isHidden = !textView.text.isEmpty
+        let trimmed = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty {
+            print("⚠️ TextView is empty or only spaces")
+            self.selectBtnDisable()
+        } else {
+            print("✅ TextView contains valid text: \(trimmed)")
+            self.selectBtnEnable()
+        }
     }
 }

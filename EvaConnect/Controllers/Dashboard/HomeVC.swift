@@ -24,6 +24,7 @@ class HomeVC: BaseVC {
     
     //MARK: OUTLETS
     
+    @IBOutlet weak var secondBorderVw: UIView!
     @IBOutlet weak var tabCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var emptyListMessageLbl: UILabel!
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
@@ -362,6 +363,7 @@ class HomeVC: BaseVC {
         showActivity()
             NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
                 self.hideActivity()
+                self.refreshControl.endRefreshing()
                 self.indicatorView.stopAnimating()
                 guard let responseData = response.data else {
                     print("No response data received.")
@@ -410,6 +412,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
@@ -465,6 +468,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
@@ -518,6 +522,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
@@ -571,6 +576,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
@@ -624,6 +630,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
@@ -677,6 +684,7 @@ class HomeVC: BaseVC {
         showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             guard let responseData = response.data else {
                 print("No response data received.")
@@ -749,6 +757,7 @@ class HomeVC: BaseVC {
         // Network request
         NetworkManagerr.request(finalURL, method: .get) { response in
             self.hideActivity()
+            self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
             self.filterCollectionView.isUserInteractionEnabled = true
             
