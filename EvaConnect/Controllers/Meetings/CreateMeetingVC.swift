@@ -429,7 +429,9 @@ extension CreateMeetingVC {
     func startDatePickerSet() {
         var eventStartDateStr = ""
         var eventEndDateStr = ""
-        if self.eventDetails.count == 0 {
+
+        // 1️⃣ Get event start & end date strings
+        if self.eventDetails.isEmpty {
             eventStartDateStr = self.eventStartDate
             eventEndDateStr = self.eventEndDate
         } else {
@@ -437,34 +439,33 @@ extension CreateMeetingVC {
             eventEndDateStr = self.eventDetails[0].endDate ?? ""
         }
         
-        // Date formatter to convert string to Date
+        // 2️⃣ Convert strings to Date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MMM-yyyy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
-        // Convert strings to Date
-        // Set min and max dates if conversion is successful
-        if let startParsedDate = DateUtils.parseDate(from: eventStartDateStr) {
-            print("✅ Parsed Start Date: \(startParsedDate)")
-            startDatePicker.minimumDate = startParsedDate
-            startDatePicker.date = startParsedDate
-        } else {
-            print("❌ Could not parse start date from input: \(eventStartDateStr)")
-        }
-        
-        if let endParsedDate = DateUtils.parseDate(from: eventEndDateStr) {
-            print("✅ Parsed End Date: \(endParsedDate)")
-            startDatePicker.maximumDate = endParsedDate
-        } else {
-            print("❌ Could not parse end date from input: \(eventEndDateStr)")
+        guard let eventStartDate = DateUtils.parseDate(from: eventStartDateStr),
+              let eventEndDate = DateUtils.parseDate(from: eventEndDateStr) else {
+            print("❌ Could not parse event date range properly")
+            return
         }
 
+        // 3️⃣ Determine min date (today if event started, else event start)
+        let today = Calendar.current.startOfDay(for: Date())
+        let minDate = max(today, eventStartDate)   // 👉 if today > start, picker starts from today
+        let maxDate = eventEndDate
+
+        // 4️⃣ Configure UIDatePicker
+        startDatePicker.minimumDate = minDate
+        startDatePicker.maximumDate = maxDate
+        startDatePicker.date = minDate
         startDatePicker.datePickerMode = .date
+        
         if #available(iOS 13.4, *) {
             startDatePicker.preferredDatePickerStyle = .wheels
         }
 
-        // Toolbar setup
+        // 5️⃣ Toolbar setup
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartDatePicker))
@@ -474,11 +475,64 @@ extension CreateMeetingVC {
         toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
         toolbar.tintColor = UIColor(hex: "#000000")
 
+        // 6️⃣ Assign picker & toolbar to text field
         self.startDate.inputView = startDatePicker
         self.startDate.inputAccessoryView = toolbar
-        
-        
     }
+
+//    func startDatePickerSet() {
+//        var eventStartDateStr = ""
+//        var eventEndDateStr = ""
+//        if self.eventDetails.count == 0 {
+//            eventStartDateStr = self.eventStartDate
+//            eventEndDateStr = self.eventEndDate
+//        } else {
+//            eventStartDateStr = self.eventDetails[0].startDate ?? ""
+//            eventEndDateStr = self.eventDetails[0].endDate ?? ""
+//        }
+//        
+//        // Date formatter to convert string to Date
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "dd-MMM-yyyy"
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//
+//        // Convert strings to Date
+//        // Set min and max dates if conversion is successful
+//        if let startParsedDate = DateUtils.parseDate(from: eventStartDateStr) {
+//            print("✅ Parsed Start Date: \(startParsedDate)")
+//            startDatePicker.minimumDate = startParsedDate
+//            startDatePicker.date = startParsedDate
+//        } else {
+//            print("❌ Could not parse start date from input: \(eventStartDateStr)")
+//        }
+//        
+//        if let endParsedDate = DateUtils.parseDate(from: eventEndDateStr) {
+//            print("✅ Parsed End Date: \(endParsedDate)")
+//            startDatePicker.maximumDate = endParsedDate
+//        } else {
+//            print("❌ Could not parse end date from input: \(eventEndDateStr)")
+//        }
+//
+//        startDatePicker.datePickerMode = .date
+//        if #available(iOS 13.4, *) {
+//            startDatePicker.preferredDatePickerStyle = .wheels
+//        }
+//
+//        // Toolbar setup
+//        let toolbar = UIToolbar()
+//        toolbar.sizeToFit()
+//        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneStartDatePicker))
+//        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+//        toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+//        toolbar.backgroundColor = UIColor(hex: "#F8F6F8")
+//        toolbar.tintColor = UIColor(hex: "#000000")
+//
+//        self.startDate.inputView = startDatePicker
+//        self.startDate.inputAccessoryView = toolbar
+//        
+//        
+//    }
 
     
     func startTimePickerSet() {
