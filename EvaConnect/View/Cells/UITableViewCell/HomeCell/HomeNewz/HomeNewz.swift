@@ -64,6 +64,10 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         imgView.dropShadow()
 //        setCardView(view: imgView)
         
+        newzName.font = UIFont(name: Myfonts.bold, size: 14.0)
+        timeWhenPost.font = UIFont(name: Myfonts.regular, size: 12.0)
+        newzShortDetail.font = UIFont(name: Myfonts.regular, size: 14.0)
+        
         // likeBtn.titleLabel?.font = UIFont(defaultFontStyle: .bold, size: 11.0)
         // connectionCompanyLbl.textColor = Constants.AppColorLiteral.loginColor
     }
@@ -134,7 +138,9 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
             urlImage.image = UIImage(named: "profile")
         }
         
-        newzShortDetail.text = dataMaper.title ?? "--"
+        let htmlString = dataMaper.content
+        let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
+        newzShortDetail.text = dataMaper.content
         
         likeCountLbl.text = "\(dataMaper.likeCount ?? 0)"
         commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
@@ -160,7 +166,9 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         timeWhenPost.text = obj.createdDate ?? ""
         
         urlImage.kf.setImage(with: URL(string: obj.image ?? ""))
-        newzShortDetail.text = obj.title ?? ""
+        let htmlString = obj.content
+        let cleanString = htmlString?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
+        newzShortDetail.text = obj.content
         
         likeCountLbl.text = "\(obj.likeCount ?? 0)"
         commentCountLbl.text = "\(obj.commentCount ?? 0)"
