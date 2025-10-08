@@ -88,7 +88,7 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             cell.profileImgVw.image = UIImage(named: "eventPlaceholder")
         }
         cell.nameLbl.text = hotel.hotelname ?? "--"
-        cell.subLbl.text = "\(hotel.city ?? "--"), \(hotel.country ?? "--")"
+        cell.subLbl.text = "\(hotel.address ?? "--"), \(hotel.city ?? "--")"
 //        let content = hotel.description ?? "--"
 //        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
 //            cell.subLbl.attributedText = attributed
