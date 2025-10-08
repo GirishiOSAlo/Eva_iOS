@@ -27,28 +27,61 @@ extension String {
 //        }
 //    }
     
-    func htmlToAttributedString(withFont font: UIFont, color: UIColor = .label) -> NSAttributedString? {
-        guard let data = self.data(using: .utf8) else { return nil }
-        do {
-            let attributedString = try NSMutableAttributedString(
-                data: data,
-                options: [
-                    .documentType: NSAttributedString.DocumentType.html,
-                    .characterEncoding: String.Encoding.utf8.rawValue
-                ],
-                documentAttributes: nil
-            )
-            
-            // Apply custom font and color to entire string
-            let fullRange = NSRange(location: 0, length: attributedString.length)
-            attributedString.addAttribute(.font, value: font, range: fullRange)
-            attributedString.addAttribute(.foregroundColor, value: color, range: fullRange)
-            
-            return attributedString
-        } catch {
-            print("HTML to Attributed String Error: \(error)")
+    
+//    func htmlToAttributedString(withFont font: UIFont, color: UIColor = .label) -> NSAttributedString? {
+//        guard let data = self.data(using: .utf8) else { return nil }
+//        do {
+//            let attributedString = try NSMutableAttributedString(
+//                data: data,
+//                options: [
+//                    .documentType: NSAttributedString.DocumentType.html,
+//                    .characterEncoding: String.Encoding.utf8.rawValue
+//                ],
+//                documentAttributes: nil
+//            )
+//            
+//            // Apply custom font and color to entire string
+//            let fullRange = NSRange(location: 0, length: attributedString.length)
+//            attributedString.addAttribute(.font, value: font, range: fullRange)
+//            attributedString.addAttribute(.foregroundColor, value: color, range: fullRange)
+//            
+//            return attributedString
+//        } catch {
+//            print("HTML to Attributed String Error: \(error)")
+//            return nil
+//        }
+//    }
+    
+    func htmlToAttributedString(withFont font: UIFont, color: UIColor) -> NSAttributedString? {
+        guard let data = data(using: .utf8) else { return nil }
+        
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        
+        guard let attributedString = try? NSMutableAttributedString(data: data,
+                                                                    options: options,
+                                                                    documentAttributes: nil) else {
             return nil
         }
+        
+        // Apply font and color
+        let range = NSRange(location: 0, length: attributedString.length)
+        attributedString.addAttributes([
+            .font: font,
+            .foregroundColor: color
+        ], range: range)
+        
+        // Apply paragraph style
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        paragraphStyle.lineSpacing = 2     // spacing between lines
+        paragraphStyle.paragraphSpacing = 4 // spacing between paragraphs
+        paragraphStyle.paragraphSpacingBefore = 0
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        
+        return attributedString
     }
     
     public var length: Int {

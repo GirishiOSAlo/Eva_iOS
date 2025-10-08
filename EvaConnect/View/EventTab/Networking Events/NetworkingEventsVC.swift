@@ -78,32 +78,17 @@ class NetworkingEventsVC: UIViewController, XIBed {
             let name = (network.networkingeventName?.isEmpty ?? true) ? "--" : network.networkingeventName
             let eventNameLblHeight = self.heightForView(text: name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             
-//            let content = network.description ?? ""
-//            var desc = ""
-//            if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-//                desc = attributed.string
-//            } else { desc = content }
-//            let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             let content = network.description ?? ""
             let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
             let color = UIColor(hex: "#848397")
-
+            let labelWidth = self.view.frame.width - 96.0
+            
             var descLblHeight = 0.0
-//            if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
-//                let labelWidth = self.view.frame.width - 96.0
-//                //descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
-//                if let data = content.data(using: .utf8) {
-//                    let plainString = content.htmlToPlainString
-//                    print("---> \(plainString)")
-//                    descLblHeight = self.heightForView(text: plainString, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-//                } else {
-//                    descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
-//                }
-//            } else {
-//                descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-//            }
-            let str = content.htmlToPlainString
-            descLblHeight = self.heightForView(text: str, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+            if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+            } else {
+                descLblHeight = heightForView(text: content, font: font, width: labelWidth)
+            }
             
             let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
             let location = (network.location?.isEmpty ?? true) ? "--" : network.location
@@ -153,6 +138,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
         let networkId = self.networkingEventList[sender.tag].id ?? 0
         self.networkJoinApiCall(networkingID: networkId, status: "cancel")
     }
+    
     
     func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
@@ -239,30 +225,17 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
         let name = (networkEvent.networkingeventName?.isEmpty ?? true) ? "--" : networkEvent.networkingeventName
         let eventNameLblHeight = self.heightForView(text: name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         
-//        let content = networkEvent.description ?? ""
-//        var desc = ""
-//        if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-//            desc = attributed.string
-//        } else { desc = content }
         let content = networkEvent.description ?? ""
         let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
         let color = UIColor(hex: "#848397")
+        let labelWidth = self.view.frame.width - 96.0
 
         var descLblHeight = 0.0
-//        if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
-//            let labelWidth = self.view.frame.width - 96.0
-//            //descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
-//            if let data = content.data(using: .utf8) {
-//                let plainString = content.htmlToPlainString
-//                descLblHeight = self.heightForView(text: plainString, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-//            } else {
-//                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
-//            }
-//        } else {
-//            descLblHeight = self.heightForView(text: content, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-//        }
-        let str = content.htmlToPlainString
-        descLblHeight = self.heightForView(text: str, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+        if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+        } else {
+            descLblHeight = heightForView(text: content, font: font, width: labelWidth)
+        }
         
         let sponsorLblHeight = self.heightForView(text: "", font:  UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
         let location = (networkEvent.location?.isEmpty ?? true) ? "--" : networkEvent.location
