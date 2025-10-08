@@ -113,7 +113,12 @@ class NewsDetailVC: UIViewController {
         fetchTrendingNews()
         
         if isComeFromNotificationNewsComment {
-            self.openNewsCommentPopup()
+            //self.openNewsCommentPopup()
+            let vc = CommentVC.instantiate()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.newsId = self.selectedNewsId
+            vc.isComeFromNews = true
+            self.present(vc, animated: true)
         }
     }
     
