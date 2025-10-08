@@ -54,11 +54,11 @@ class SponsorsVC: UIViewController, XIBed {
     
     func updateCollectionHeigth() {
         var finalHeight = 0.0
-        for (i,sponsor) in self.sponsorsList.enumerated() {
-            //let sponsor = self.sponsorsList[indexPath.row]
+        for sponsor in self.sponsorsList {
             let nameLblHeight = self.heightForView(text: sponsor.firstName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
             let subLblHeight = self.heightForView(text: sponsor.companyName ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
-            finalHeight = nameLblHeight + subLblHeight + 216.0
+            let cellHeight = nameLblHeight + subLblHeight + 216.0
+            finalHeight = finalHeight + cellHeight
         }
         self.collectionVwHeight.constant = finalHeight
     }
