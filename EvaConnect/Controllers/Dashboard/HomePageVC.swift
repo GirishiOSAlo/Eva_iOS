@@ -47,7 +47,7 @@ class HomePageVC: UIViewController {
             self.postTableVw.reloadData()
         }
     }
-    var newsList: [RelatedNewsData] = [] {
+    var newsList: [HomeNews] = [] {
         didSet {
             self.newsTableVw.reloadData()
         }
@@ -427,11 +427,11 @@ extension HomePageVC {
             self.refreshControl.endRefreshing()
             do {
                 let jsonDecoder = JSONDecoder()
-                let newsRoot = try jsonDecoder.decode(RelatedNewsDataModel.self, from: response.data!)
+                let newsRoot = try jsonDecoder.decode(HomeNewsDataModel.self, from: response.data!)
                 
                 if !(newsRoot.error!) {
                     if let data = newsRoot.data {
-                        self.newsList = data
+                        self.newsList = newsRoot.data?.news ?? []
                         self.newsTableVwHeight.constant = CGFloat(self.newsList.count * 430)
                     }
                 } else {

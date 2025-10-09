@@ -72,7 +72,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         // connectionCompanyLbl.textColor = Constants.AppColorLiteral.loginColor
     }
     
-    func uiData(dataMaper: HomeNewsData) {
+    func uiData(dataMaper: HomeNews) {
         timeWhenPost.text = dataMaper.createdDate
         newzTitle.text = dataMaper.newsSource?.name
         newzName.text = dataMaper.newsSource?.name
@@ -116,7 +116,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         }
     }
     
-    func setNewsData(dataMaper: HomeNewsData) {
+    func setNewsData(dataMaper: HomeNews) {
         if let imageUrl = dataMaper.newsSource?.image,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
@@ -159,7 +159,7 @@ class HomeNewz: BaseCellClass, WKUIDelegate {
         }
     }
     
-    func setData(obj: RelatedNewsData) {
+    func setData(obj: HomeNews) {
         let newsSource = obj.newsSource
         profileImage.kf.setImage(with: URL(string: newsSource?.image ?? ""))
         newzName.text = newsSource?.name ?? ""

@@ -77,7 +77,7 @@ class HomeVC: BaseVC {
         }
     }
     
-    var newsList: [HomeNewsData] = [] {
+    var newsList: [HomeNews] = [] {
         didSet {
             self.newsListTblVw.reloadData()
         }
@@ -140,6 +140,7 @@ class HomeVC: BaseVC {
     var searchEnabled = false
     var currentPage = 1
     var lastPage = 1
+    var isLoading = false
     
     var searchFilterKey: (key: String, query: String)? = nil {
         didSet {
@@ -220,6 +221,8 @@ class HomeVC: BaseVC {
         self.newsListTblVwHeight.constant = 0
         self.emptyListMessageLbl.text = ""
         
+        self.offsetCount = 1
+        
         if selectedTab == .jobs || selectedTab == .industryJobs {
             if myUserDefaults.isIndivisualUser {
                 homeTabFilter = HomeTabFilter.job
@@ -275,7 +278,8 @@ class HomeVC: BaseVC {
         else if selectedTab == .news {
             height = 32
             searchHeight = 0
-            self.fetchNewsListData(offSet: 1)
+            self.offsetCount = 1
+            self.fetchNewsListData(offSet: offsetCount)
             //posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         }
         
@@ -678,19 +682,77 @@ class HomeVC: BaseVC {
         }
     }
     
-    func fetchNewsListData(offSet: Int) {
+//    func fetchNewsListData(offSet: Int) {
+//        let url = "\(selectedTab.getPostEndPoint)?limit=\(pageSize)&offset=\(offSet)"
+//        let parameters: AFParameters = ["filter": selectedHomeFilter.getFilter(tab: selectedTab)]
+//        showActivity()
+//        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+//            self.hideActivity()
+//            self.refreshControl.endRefreshing()
+//            self.indicatorView.stopAnimating()
+//            guard let responseData = response.data else {
+//                print("No response data received.")
+//                // Optionally show an alert here
+//                self.noOtherEventLbl.text = "No News Data Found."
+//                self.noOtherEventLblHeight.constant = 50.0
+//                return
+//            }
+//
+//            do {
+//                let jsonDecoder = JSONDecoder()
+//                let newsRoot = try jsonDecoder.decode(HomeNewsDataModel.self, from: responseData)
+//
+//                if newsRoot.error == true {
+//                    print("News Failure :: \(newsRoot.message ?? "Error")")
+//                    self.newsList = newsRoot.data?.news ?? []
+//                    self.newsListTblVwHeight.constant = 0
+//                    self.noOtherEventLbl.text = "No News Data Found."
+//                    self.noOtherEventLblHeight.constant = 50.0
+//                    // Optionally show an alert here
+//                    // self.presentAlert("Info", currentEventRoot.message, nil)
+//                    return
+//                }
+//
+//                if let news = newsRoot.data?.news, !news.isEmpty {
+//                    self.newsList = news
+//                    self.newsListTblVwHeight.constant = CGFloat(self.newsList.count * 430)
+//                    self.noOtherEventLblHeight.constant = 0.0
+//                } else {
+//                    print("No news found.")
+//                    self.newsList = newsRoot.data?.news ?? []
+//                    self.newsListTblVwHeight.constant = 0
+//                    self.noOtherEventLbl.text = "No News Data Found."
+//                    self.noOtherEventLblHeight.constant = 50.0
+//                }
+//
+//            } catch {
+//                self.offsetCount -= 1
+//                print("news Decoding error: \(error)")
+//                // Optionally show an alert here
+//            }
+//        }
+//    }
+    
+    func fetchNewsListData(offSet: Int, isRefreshing: Bool = false) {
+        guard !isLoading else { return } // 🔒 prevent multiple calls
+        isLoading = true
+
         let url = "\(selectedTab.getPostEndPoint)?limit=\(pageSize)&offset=\(offSet)"
         let parameters: AFParameters = ["filter": selectedHomeFilter.getFilter(tab: selectedTab)]
-        showActivity()
-        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+
+        if !isRefreshing {
+            showActivity()
+        }
+
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { response in
             self.hideActivity()
             self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
+            self.isLoading = false
+
             guard let responseData = response.data else {
-                print("No response data received.")
-                // Optionally show an alert here
                 self.noOtherEventLbl.text = "No News Data Found."
-                self.noOtherEventLblHeight.constant = 50.0
+                self.noOtherEventLblHeight.constant = 50
                 return
             }
 
@@ -700,34 +762,58 @@ class HomeVC: BaseVC {
 
                 if newsRoot.error == true {
                     print("News Failure :: \(newsRoot.message ?? "Error")")
-                    self.newsList = newsRoot.data ?? []
-                    self.newsListTblVwHeight.constant = 0
-                    self.noOtherEventLbl.text = "No News Data Found."
-                    self.noOtherEventLblHeight.constant = 50.0
-                    // Optionally show an alert here
-                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                    if isRefreshing {
+                        self.newsList.removeAll()
+                    }
+                    DispatchQueue.main.async {
+                        self.newsListTblVw.reloadData()
+                        self.newsListTblVwHeight.constant = 0
+                        self.noOtherEventLbl.text = "No News Data Found."
+                        self.noOtherEventLblHeight.constant = 50
+                    }
                     return
                 }
 
-                if let news = newsRoot.data, !news.isEmpty {
-                    self.newsList = news
-                    self.newsListTblVwHeight.constant = CGFloat(self.newsList.count * 430)
-                    self.noOtherEventLblHeight.constant = 0.0
+                guard let data = newsRoot.data else {
+                    DispatchQueue.main.async {
+                        self.newsListTblVw.reloadData()
+                        self.newsListTblVwHeight.constant = 0
+                        self.noOtherEventLbl.text = "No News Data Found."
+                        self.noOtherEventLblHeight.constant = 50
+                    }
+                    return
+                }
+
+                self.lastPage = data.lastPage ?? 1 // save last page info
+
+                if let newNews = data.news, !newNews.isEmpty {
+                    if isRefreshing || offSet == 1 {
+                        self.newsList = newNews
+                    } else {
+                        self.newsList.append(contentsOf: newNews)
+                    }
+
+                    DispatchQueue.main.async {
+                        self.newsListTblVw.reloadData()
+                        self.newsListTblVwHeight.constant = CGFloat(self.newsList.count * 430)
+                        self.noOtherEventLblHeight.constant = 0
+                    }
                 } else {
-                    print("No news found.")
-                    self.newsList = newsRoot.data ?? []
-                    self.newsListTblVwHeight.constant = 0
-                    self.noOtherEventLbl.text = "No News Data Found."
-                    self.noOtherEventLblHeight.constant = 50.0
+                    DispatchQueue.main.async {
+                        self.newsListTblVw.reloadData()
+                        self.newsListTblVwHeight.constant = 0
+                        self.noOtherEventLbl.text = "No News Data Found."
+                        self.noOtherEventLblHeight.constant = 50
+                    }
                 }
 
             } catch {
                 self.offsetCount -= 1
-                print("news Decoding error: \(error)")
-                // Optionally show an alert here
+                print("Decoding error: \(error)")
             }
         }
     }
+
     
     func fetchJobListData(filter: String, currentPage: Int, searchStr: String) {
         showActivity()
@@ -796,7 +882,8 @@ class HomeVC: BaseVC {
                     self.presentAlert("Failure", jobListData.message, nil)
                 }
             } catch {
-                print("Decoding error: \(error)")
+                self.offsetCount -= 1
+                print("Job Decoding error: \(error)")
                 self.presentAlert("Error", "Failed to parse response", nil)
             }
         }
@@ -968,6 +1055,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 //        if tableView.refreshControl!.isRefreshing || indicatorView.isAnimating { return }
 //        if self.collectionView == collectionView || selectedTabFilter == indexPath.item { return }
         selectedHomeFilter = homeTabFilter[indexPath.item]
+        self.offsetCount = 1
         if selectedTab == .events {
             
             self.currentEventList = []
@@ -1011,7 +1099,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         } else if selectedTab == .news {
             self.newsList = []
-            self.fetchNewsListData(offSet: 1)
+            self.offsetCount = 1
+            self.fetchNewsListData(offSet: offsetCount)
         }
         else {
             self.posts = []
@@ -1862,7 +1951,11 @@ extension HomeVC: UIScrollViewDelegate {
                     getPosts(offSet: offsetCount, inserted: true)
                 }
             } else if selectedTab == .news {
+                guard !isLoading else { return }
+                guard offsetCount < lastPage else { return } // ✅ stop at last page
+                
                 offsetCount += 1
+                fetchNewsListData(offSet: offsetCount)
             }
             else if selectedTab == .events || selectedTab == .industryEvents {
                 offsetCount += 1
@@ -2240,7 +2333,8 @@ private extension HomeVC {
             SVProgressHUD.dismiss()
             if error == 0 {
                 print("News saved!!")
-                self.fetchNewsListData(offSet: 1)
+                self.offsetCount = 1
+                self.fetchNewsListData(offSet: self.offsetCount)
                 //self.getPosts(offSet: 1, inserted: false)
 //                self.posts = self.likeManager.homeLikeManager(homePosts: self.posts, indexAt: at, likeType: self.selectedTab.likeType)
                 
@@ -2444,7 +2538,8 @@ private extension HomeVC {
             let error = data?["error"] as? Int
             self.hideActivity()
             if error == 0 {
-                self.fetchNewsListData(offSet: 1)
+                self.offsetCount = 1
+                self.fetchNewsListData(offSet: self.offsetCount)
             }
             else {
                 //self.presentAlert("Alert", "No more news")
@@ -2656,7 +2751,7 @@ extension HomeVC {
         self.savedEventList = []
         self.passedEventList = []
         self.showEventList = []
-        
+        self.offsetCount = 1
         //reloadData()
         if selectedTab == .jobs || selectedTab == .industryJobs {
             if myUserDefaults.isIndivisualUser {
@@ -2714,7 +2809,8 @@ extension HomeVC {
         else if selectedTab == .news {
             height = 32
             searchHeight = 0
-            self.fetchNewsListData(offSet: 1)
+            offsetCount = 1
+            fetchNewsListData(offSet: offsetCount, isRefreshing: true)
             //posts.isEmpty ? refreshingContent() : reloadData(inserted: false)
         }
     }
@@ -2844,7 +2940,8 @@ extension HomeVC {
 //            if LoggedUserDetails.shared.user?.type == userType.company.rawValue { tableViewBottom = -70 }
 //            reloadData()
             //getPosts(offSet: 1, inserted: false)
-            self.fetchNewsListData(offSet: 1)
+            self.offsetCount = 1
+            self.fetchNewsListData(offSet: offsetCount)
         case 1:
             print("Event Tab Select")
             self.currentEventList = []

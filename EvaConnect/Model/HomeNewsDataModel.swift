@@ -8,15 +8,39 @@
 import Foundation
 //HomeNewsDataModel
 
+//// MARK: - Welcome
+//struct HomeNewsDataModel: Codable {
+//    let error: Bool?
+//    let message: String?
+//    let data: [HomeNewsData]?
+//}
+
 // MARK: - Welcome
 struct HomeNewsDataModel: Codable {
     let error: Bool?
     let message: String?
-    let data: [HomeNewsData]?
+    let data: HomeNewsData?
+}
+
+// MARK: - DataClass
+struct HomeNewsData: Codable {
+    let total, currentPage, lastPage: Int?
+    let prevPageURL: String?
+    let nextPageURL: String?
+    let news: [HomeNews]?
+
+    enum CodingKeys: String, CodingKey {
+        case total
+        case currentPage = "current_page"
+        case lastPage = "last_page"
+        case prevPageURL = "prev_page_url"
+        case nextPageURL = "next_page_url"
+        case news
+    }
 }
 
 // MARK: - Datum
-struct HomeNewsData: Codable {
+struct HomeNews: Codable {
     let id: Int?
     let userID, isURL: Int?
     let postVideo: String?
