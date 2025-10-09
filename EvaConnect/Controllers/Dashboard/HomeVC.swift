@@ -1378,10 +1378,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             cell.commentButton.tag = indexPath.row
             cell.shareButton.tag = indexPath.row
             cell.openArticleBtn.tag = indexPath.row
+            cell.detailsButton.tag = indexPath.row
             
             cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
             cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
             cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+            cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
             
             cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
             cell.openVideoBtn.tag = indexPath.row
@@ -3401,6 +3403,10 @@ extension HomeVC : BottomContentPickerDelegate {
             self.showToast(message: "Successfully Shared with desired Connection")
         }
         self.present(vc, animated: true)
+    }
+    
+    @objc func handlePostDetails(_ sender: UIButton) {
+        self.goToCommentVC(index: sender.tag)
     }
     
     @objc func handleNewsShare(_ sender: UIButton) {

@@ -53,6 +53,7 @@ class HomeImage: BaseCellClass {
     @IBOutlet weak var pageNoLbl: UILabel!
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var followBtn: UIButton!
+    @IBOutlet weak var detailsButton: UIButton!
     
     var delegate: PostActionable?
     weak var delegateDidSelect: CollectionViewCellDelegate?

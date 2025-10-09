@@ -39,6 +39,8 @@ class HomePostTVC: BaseCellClass {
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var shareCountLbl: UILabel!
     @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var detailsButton: UIButton!
+    
     
     @IBOutlet weak var imageCollection: UICollectionView!
     @IBOutlet weak var pageNoLbl: UILabel!

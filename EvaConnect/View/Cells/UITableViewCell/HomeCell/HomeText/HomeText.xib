@@ -23,7 +23,11 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeText" customModule="AviationConnect" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeText" customModule="AviationConnect" customModuleProvider="target">
+            <connections>
+                <outlet property="detailsButton" destination="kvH-Kv-njf" id="fd9-18-8J6"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HomeText" id="Phz-u7-tmC" customClass="HomeText" customModule="AviationConnect" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="475" height="250"/>
@@ -167,6 +171,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kvH-Kv-njf">
+                                        <rect key="frame" x="0.0" y="0.0" width="435" height="57"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EX8-Qk-zA0">
                                         <rect key="frame" x="0.0" y="57" width="435" height="40"/>
                                         <subviews>
@@ -319,10 +328,14 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="EX8-Qk-zA0" secondAttribute="trailing" id="1Fk-co-9Vl"/>
+                                    <constraint firstAttribute="trailing" secondItem="kvH-Kv-njf" secondAttribute="trailing" id="34c-Mi-yKM"/>
                                     <constraint firstItem="n57-cq-Tho" firstAttribute="leading" secondItem="nQc-wZ-id3" secondAttribute="leading" constant="20" id="58d-AD-TLd"/>
                                     <constraint firstItem="EX8-Qk-zA0" firstAttribute="top" secondItem="n57-cq-Tho" secondAttribute="bottom" constant="20" id="GfP-GU-Lbs"/>
                                     <constraint firstItem="n57-cq-Tho" firstAttribute="top" secondItem="nQc-wZ-id3" secondAttribute="top" constant="20" id="HO0-dL-L9H"/>
+                                    <constraint firstItem="kvH-Kv-njf" firstAttribute="top" secondItem="nQc-wZ-id3" secondAttribute="top" id="anS-P3-veU"/>
                                     <constraint firstItem="EX8-Qk-zA0" firstAttribute="leading" secondItem="nQc-wZ-id3" secondAttribute="leading" id="dQG-Ck-wp4"/>
+                                    <constraint firstItem="kvH-Kv-njf" firstAttribute="leading" secondItem="nQc-wZ-id3" secondAttribute="leading" id="hy9-UO-j9e"/>
+                                    <constraint firstItem="EX8-Qk-zA0" firstAttribute="top" secondItem="kvH-Kv-njf" secondAttribute="bottom" id="pyT-h6-E1e"/>
                                     <constraint firstAttribute="trailing" secondItem="n57-cq-Tho" secondAttribute="trailing" constant="20" id="vee-Oa-aE0"/>
                                 </constraints>
                             </view>

@@ -1009,6 +1009,36 @@ extension HomePageVC {
         self.present(vc, animated: true)
     }
     
+    @objc func handlePostDetails(_ sender: UIButton) {
+        let homePost = self.dashboardPostList[sender.tag]
+        
+        if homePost.postVideo != "" && homePost.postVideo != nil {//Video
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .video
+            vc.postId = homePost.id
+//                vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .article
+            vc.postId = homePost.id
+//                vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else if homePost.datumPostImage!.count > 0 {//Image
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .image
+            vc.postId = homePost.id
+//                vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else {//Text
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .simpleText
+            vc.postId = homePost.id
+//                vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     @objc func handleNewsShare(_ sender: UIButton) {
         tabBarController?.tabBar.isHidden = true
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -1159,6 +1189,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.sharedBtn.tag = indexPath.row
                 cell.goToProfileBtn.tag = indexPath.row
                 cell.reportBtn.tag = indexPath.row
+                cell.detailsButton.tag = indexPath.row
+                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 self.objectId = homePost.id ?? 0
                 self.type = .post
                 cell.delegate = self
@@ -1185,6 +1217,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.openArticleBtn.tag = indexPath.row
                 cell.goToProfileBtn.tag = indexPath.row
                 cell.reportBtn.tag = indexPath.row
+                cell.detailsButton.tag = indexPath.row
+                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 self.objectId = homePost.id ?? 0
                 self.type = .post
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
@@ -1205,7 +1239,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.shareButton.tag = indexPath.row
                 cell.goToProfileBtn.tag = indexPath.row
                 cell.reportBtn.tag = indexPath.row
-                
+                cell.detailsButton.tag = indexPath.row
+                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 self.objectId = homePost.id ?? 0
                 self.type = .post
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
@@ -1218,7 +1253,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.detailsView.layer.cornerRadius = 13
                 cell.delegate = self
                 cell.setData(data: homePost)
-                
+                cell.detailsButton.tag = indexPath.row
+                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 cell.likeBtn.tag = indexPath.row
                 cell.commentBtn.tag = indexPath.row
                 cell.shareBtn.tag = indexPath.row

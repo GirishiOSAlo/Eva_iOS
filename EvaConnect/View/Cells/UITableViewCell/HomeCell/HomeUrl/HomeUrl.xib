@@ -236,6 +236,11 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rkq-Ys-O7x">
+                                <rect key="frame" x="0.0" y="76" width="374" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTj-39-EMl">
                                 <rect key="frame" x="0.0" y="132" width="374" height="40"/>
                                 <subviews>
@@ -388,8 +393,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ihC-pz-5nX" firstAttribute="leading" secondItem="0K7-FC-NJN" secondAttribute="leading" constant="20" id="7F3-AD-aTD"/>
+                            <constraint firstItem="Rkq-Ys-O7x" firstAttribute="top" secondItem="Pml-Mx-CLE" secondAttribute="bottom" id="Dp0-V0-x2V"/>
                             <constraint firstItem="Pml-Mx-CLE" firstAttribute="top" secondItem="0K7-FC-NJN" secondAttribute="top" id="Gh3-Iz-mY6"/>
+                            <constraint firstItem="Rkq-Ys-O7x" firstAttribute="leading" secondItem="0K7-FC-NJN" secondAttribute="leading" id="JhR-LH-yZF"/>
+                            <constraint firstAttribute="trailing" secondItem="Rkq-Ys-O7x" secondAttribute="trailing" id="Kgc-KB-5sD"/>
                             <constraint firstItem="Pml-Mx-CLE" firstAttribute="leading" secondItem="0K7-FC-NJN" secondAttribute="leading" id="P5w-ta-x72"/>
+                            <constraint firstItem="fTj-39-EMl" firstAttribute="top" secondItem="Rkq-Ys-O7x" secondAttribute="bottom" id="TZr-1C-utk"/>
                             <constraint firstItem="ihC-pz-5nX" firstAttribute="top" secondItem="Pml-Mx-CLE" secondAttribute="bottom" constant="5" id="cSo-oI-9nP"/>
                             <constraint firstItem="fTj-39-EMl" firstAttribute="top" secondItem="ihC-pz-5nX" secondAttribute="bottom" constant="12" id="fxq-IJ-BOv"/>
                             <constraint firstItem="fTj-39-EMl" firstAttribute="leading" secondItem="0K7-FC-NJN" secondAttribute="leading" id="hKL-0t-Hmt"/>
@@ -423,6 +432,7 @@
                 <outlet property="commentBtn" destination="3Og-xr-XYD" id="wBH-QT-cbr"/>
                 <outlet property="commentValueLbl" destination="abc-Om-Ntz" id="gFY-Mx-dMb"/>
                 <outlet property="connectionNameLbl" destination="Ngh-FF-Xp0" id="ArO-RM-0jE"/>
+                <outlet property="detailsButton" destination="Rkq-Ys-O7x" id="pSb-zb-fik"/>
                 <outlet property="docImgUiView" destination="zbZ-Yt-kOj" id="Q5l-0k-8tS"/>
                 <outlet property="documentName" destination="KQt-bc-0xG" id="3d2-sV-RpP"/>
                 <outlet property="documentSizeLbl" destination="qPF-Wi-y7l" id="wPI-da-shp"/>

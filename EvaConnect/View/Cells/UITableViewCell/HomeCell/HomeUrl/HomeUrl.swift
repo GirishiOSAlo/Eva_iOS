@@ -28,6 +28,7 @@ class HomeUrl: BaseCellClass {
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var sharedBtn: UIButton!
     
+    
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var urlText: UILabel!
     @IBOutlet weak var openArticleBtn: UIButton!
@@ -38,6 +39,7 @@ class HomeUrl: BaseCellClass {
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var followBtn: UIButton!
     @IBOutlet weak var followBtnwidth: NSLayoutConstraint!
+    @IBOutlet weak var detailsButton: UIButton!
     
     var delegate: PostActionable?
     var isMoreViewSelected = true

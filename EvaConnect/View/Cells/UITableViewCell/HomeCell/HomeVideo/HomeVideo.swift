@@ -26,7 +26,7 @@ class HomeVideo: BaseCellClass {
     @IBOutlet weak var likeImage: UIImageView!
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var sharedBtn: UIButton!
-    
+    @IBOutlet weak var detailsButton: UIButton!
     
     @IBOutlet weak var mainView: UIView!
     

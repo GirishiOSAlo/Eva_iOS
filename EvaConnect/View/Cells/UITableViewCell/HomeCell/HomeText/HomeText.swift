@@ -36,6 +36,7 @@ class HomeText: BaseCellClass {
     @IBOutlet weak var reportBtn: UIButton!
     @IBOutlet weak var followBtn: UIButton!
     @IBOutlet weak var followBtnWidth: NSLayoutConstraint!
+    @IBOutlet weak var detailsButton: UIButton!
     
 //    let embeddedView = URLEmbeddedView()
     var checkForMultipleImages : Bool = false
