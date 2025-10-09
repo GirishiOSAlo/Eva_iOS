@@ -197,22 +197,37 @@ extension ReschedulePopupVw {
         dateFormatter.dateFormat = "dd-MMM-yyyy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
-        // Convert strings to Date
-        let eventStartDate = dateFormatter.date(from: eventStartDateStr)
-        let eventEndDate = dateFormatter.date(from: eventEndDateStr)
+        guard let eventStartDate = DateUtils.parseDate(from: eventStartDateStr),
+              let eventEndDate = DateUtils.parseDate(from: eventEndDateStr) else {
+            print("❌ Could not parse event date range properly")
+            return
+        }
 
+//        datePicker.datePickerMode = .date
+//        if #available(iOS 13.4, *) {
+//            datePicker.preferredDatePickerStyle = .wheels
+//        }
+//        // Set min and max dates if conversion is successful
+//        if let start = eventStartDate {
+//            datePicker.minimumDate = start
+//            datePicker.date = start // Set picker to start from start date
+//        }
+//        if let end = eventEndDate {
+//            datePicker.maximumDate = end
+//        }
+        
+        let today = Calendar.current.startOfDay(for: Date())
+        let minDate = max(today, eventStartDate)   // 👉 if today > start, picker starts from today
+        let maxDate = eventEndDate
+
+        // 4️⃣ Configure UIDatePicker
+        datePicker.minimumDate = minDate
+        datePicker.maximumDate = maxDate
+        datePicker.date = minDate
         datePicker.datePickerMode = .date
+        
         if #available(iOS 13.4, *) {
             datePicker.preferredDatePickerStyle = .wheels
-        }
-
-        // Set min and max dates if conversion is successful
-        if let start = eventStartDate {
-            datePicker.minimumDate = start
-            datePicker.date = start // Set picker to start from start date
-        }
-        if let end = eventEndDate {
-            datePicker.maximumDate = end
         }
 
         // Toolbar setup
