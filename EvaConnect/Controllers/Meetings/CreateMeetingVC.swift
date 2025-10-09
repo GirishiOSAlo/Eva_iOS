@@ -24,6 +24,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     @IBOutlet weak var selecMeetingtLocationTF: UITextField!
     @IBOutlet weak var videoConfLinkTF: UITextField!
     @IBOutlet weak var descriptionTV: UITextView!
+    @IBOutlet weak var descTVHeight: NSLayoutConstraint!
     @IBOutlet weak var createMeeting: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -754,13 +755,35 @@ extension CreateMeetingVC {
 
 extension CreateMeetingVC: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = !textView.text.isEmpty
-        if textView.contentSize.height >= 100 {
-            descriptionTV.isScrollEnabled = true
-        }
-        else {
-            textView.frame.size.height = textView.contentSize.height
-            descriptionTV.isScrollEnabled = false
+//        placeholderLabel.isHidden = !textView.text.isEmpty
+//        if textView.contentSize.height >= 100 {
+//            descriptionTV.isScrollEnabled = true
+//        }
+//        else {
+//            textView.frame.size.height = textView.contentSize.height
+//            descriptionTV.isScrollEnabled = false
+//        }
+        
+        var maxHeight = textView.font!.lineHeight * 7
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        //print("Max : \(maxHeight), Estimate : \(estimatedSize)")
+        
+        if estimatedSize.height <= maxHeight {
+            textView.isScrollEnabled = false
+            placeholderLabel.isHidden = !textView.text.isEmpty
+            if estimatedSize.height < 40.0 {
+                self.descTVHeight.constant = 40.0
+            } else {
+                descTVHeight.constant = estimatedSize.height
+            }
+        } else {
+            textView.isScrollEnabled = true
+            if textView == descriptionTV {
+                descTVHeight.constant = maxHeight
+            } else {
+                descTVHeight.constant = maxHeight
+            }
         }
     }
 }
