@@ -49,7 +49,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speakers" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0I-vn-Cs4">
-                            <rect key="frame" x="49.999999999999993" y="85.666666666666671" width="67.333333333333314" height="18.666666666666671"/>
+                            <rect key="frame" x="50" y="85.333333333333329" width="75" height="19.333333333333329"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -85,7 +85,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YQ-Bl-ffE">
                                                     <rect key="frame" x="16" y="16" width="112" height="112"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="RK1-dk-VXD">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="RK1-dk-VXD">
                                                             <rect key="frame" x="10" y="10" width="92" height="92"/>
                                                         </imageView>
                                                     </subviews>
@@ -133,7 +133,7 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Swy-Mt-CwA">
                                             <rect key="frame" x="36" y="286" width="321" height="200.66666666666663"/>
-                                            <mutableString key="text">Fabio Gamba is a distinguished leader in the aviation sector, bringing over 20 years of expertise in regulatory affairs, industry advocacy, and business development. As the Managing Director of the Aviation Connect Association (ACA), he is dedicated to fostering innovation, collaboration, and sustainability in business and general aviation. His leadership has been instrumental in driving ACA’s mission to connect key stakeholders, promote industry best practices, and support the evolving needs of the aviation community.</mutableString>
+                                            <string key="text">Fabio Gamba is a distinguished leader in the aviation sector, bringing over 20 years of expertise in regulatory affairs, industry advocacy, and business development. As the Managing Director of the Aviation Connect Association (ACA), he is dedicated to fostering innovation, collaboration, and sustainability in business and general aviation. His leadership has been instrumental in driving ACA’s mission to connect key stakeholders, promote industry best practices, and support the evolving needs of the aviation community.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.011764705882352941" green="0.0078431372549019607" blue="0.16078431372549018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
