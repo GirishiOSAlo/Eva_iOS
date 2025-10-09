@@ -1805,24 +1805,24 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if selectedTab == .jobs {
-//            if self.jobList.count > 0 {
-//                if indexPath.row == self.jobList.count - 1 {
-//                    print("👉 Last tableview cell is visible")
-//                    // Load next page if not already fetching and not at the last page
-//                    if currentPage < lastPage {
-//                        currentPage += 1
-//                        self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-//                    } else {
-//                        print("Page completed. No Api call")
-//                    }
-//                }
-//            } else {
-//                print("Job list is empty.")
-//            }
-//        }
-//    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if selectedTab == .jobs {
+            if self.jobList.count > 0 {
+                if indexPath.row == self.jobList.count - 1 {
+                    print("👉 Last tableview cell is visible")
+                    // Load next page if not already fetching and not at the last page
+                    if currentPage < lastPage {
+                        currentPage += 1
+                        self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                    } else {
+                        print("Page completed. No Api call")
+                    }
+                }
+            } else {
+                print("Job list is empty.")
+            }
+        }
+    }
 }
 
 //MARK: Scroll View Delegate...
@@ -1844,6 +1844,9 @@ extension HomeVC: UIScrollViewDelegate {
                     offsetCount += 1
                     getPosts(offSet: offsetCount, inserted: true)
                 }
+            } else if selectedTab == .news {
+//                offsetCount += 1
+//                fetchNewsListData(offSet: offsetCount)
             }
         }
     }

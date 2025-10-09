@@ -65,7 +65,10 @@ class ChatListCell: UITableViewCell {
     
 
     func configure(item: Conversation) {
-        conversationImageView.kf.setImage(with: URL(string: item.user?.avatar ?? ""), placeholder: UIImage(named: "profile"))
+        let url = EndPoints.shareBaseURL + (item.user?.avatar ?? "")
+        conversationImageView.kf.setImage(with: URL(string: url), placeholder: UIImage(named: "profile"))
+        print(url)
+        
         nameLabel.text = item.user?.name
         
         let lastMessage = item.lastMessage
