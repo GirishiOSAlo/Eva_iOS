@@ -161,104 +161,89 @@ struct DashboardItemRoot: Codable {
 //}
 // MARK: - Datum
 struct DashboardItem: Codable {
-//    let id, userID: Int?
-//    let isURL: Bool?
-//    let postVideo: String?
-//    var isPostLike, isPostdisLike: Int?
-//    let createdDate, isConnected: String?
-//    let connectionID: Int?
-//    let isReceiver: ReceiverID?
-//    let content: String?
-//    var postImage, commentCount, likeCount, createdByID: Int?
-//    let createdDatetime: String?
-//    let modifiedByID: Int?
-//    let modifiedDatetime: String?
-//    let os: String?
-//    let status, postDocument: String?
-//    let shareCount: Int?
-//    let type: TypePostEnum?
-//    let datumPostImage: [String]?
-//    let postDocuments: [String]?
-//    let user: EvaUser?
-    
     
 //    let id, userID: Int?
 //    let isURL: Bool?
 //    let postVideo: String?
-//    var isPostLike, isPostdisLike: Int?
-//    let createdDate, isConnected: String?
+//    var isPostLike, isPostdisLike, isNewsLike, isNewsDislike: Int?
+//    let newsImage, createdDate, isConnected: String?
 //    let connectionID: Int?
 //    let isReceiver: ReceiverID?
-//    let content: String?
+//    let content, title: String?
 //    var postImage, commentCount, likeCount, createdByID: Int?
 //    let createdDatetime: String?
 //    let modifiedByID: Int?
-//    let modifiedDatetime: String?
-//    let os: String?
-//    let status: String?
+//    let modifiedDatetime, os, status: String?
+//    let documentFileName: String?
+//    let documentSize: String?
 //    let postDocument: String?
+//    let fileDatetime: String?
 //    let shareCount: Int?
 //    let type: TypePostEnum?
 //    let datumPostImage: [String]?
-//    let documentFileName, documentSize, fileDatetime: String?
 //    let postDocuments: [String]?
+//    let image: String?
+//    let newsSource: NewsSource?
+//    let isNewsSave: Int?
 //    let user: EvaUser?
-    
-    let id, userID: Int?
-        let isURL: Bool?
-        let postVideo: String?
-        var isPostLike, isPostdisLike, isNewsLike, isNewsDislike: Int?
-        let newsImage, createdDate, isConnected: String?
-        let connectionID: Int?
-        let isReceiver: ReceiverID?
-        let content, title: String?
-        var postImage, commentCount, likeCount, createdByID: Int?
-        let createdDatetime: String?
-        let modifiedByID: Int?
-        let modifiedDatetime, os, status: String?
-        let documentFileName: String?
-        let documentSize: String?
-        let postDocument: String?
-        let fileDatetime: String?
-        let shareCount: Int?
-        let type: TypePostEnum?
-        let datumPostImage: [String]?
-        let postDocuments: [String]?
-        let image: String?
-        let newsSource: NewsSource?
-        let isNewsSave: Int?
-        let user: EvaUser?
-    
-    enum CodingKeys: String, CodingKey {
-//        case id, userID, isURL, postVideo, isPostLike, isPostdisLike, createdDate, isConnected
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case id, userID, isURL
+//        case postVideo = "post_video"
+//        case isPostLike, isPostdisLike
+//        case isNewsLike = "is_news_like"
+//        case isNewsDislike = "is_news_dislike"
+//        case newsImage = "news_image"
+//        case createdDate, isConnected
 //        case connectionID = "connectionId"
-//        case isReceiver, content, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status, postDocument, shareCount, type
-//        case datumPostImage = "post_image"
+//        case isReceiver, content, title, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status
 //        case documentFileName = "document_file_name"
 //        case documentSize = "document_size"
+//        case postDocument
 //        case fileDatetime = "file_datetime"
+//        case shareCount, type
+//        case datumPostImage = "post_image"
 //        case postDocuments = "post_documents"
-//        case user
-        
-        case id, userID, isURL
-        case postVideo = "post_video"
-        case isPostLike, isPostdisLike
-        case isNewsLike = "is_news_like"
-        case isNewsDislike = "is_news_dislike"
-        case newsImage = "news_image"
-        case createdDate, isConnected
+//        case image
+//        case newsSource = "news_source"
+//        case isNewsSave, user
+//    }
+    
+    let id, userID: Int?
+    let isURL: Bool?
+    let postVideo: String?
+    var isPostLike, isPostdisLike: Int?
+    let createdDate: String?
+    let isConnected: String?
+    let connectionID: Int?
+    let isReceiver: ReceiverID?
+    let content: String?
+    var postImage, commentCount, likeCount, createdByID: Int?
+    let createdDatetime: String?
+    let modifiedByID: Int?
+    let modifiedDatetime: String?
+    let os: String?
+    let status: String?
+    let postDocument: String?
+    let shareCount: Int?
+    let type: TypePostEnum?
+    let datumPostImage: [String]?
+    let documentFileName: String?
+    let documentSize: String?
+    let fileDatetime: String?
+    let postDocuments: [String]?
+    let user: EvaUser?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, userID, isURL, postVideo, isPostLike, isPostdisLike, createdDate, isConnected
         case connectionID = "connectionId"
-        case isReceiver, content, title, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status
+        case isReceiver, content, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status, postDocument, shareCount, type
+        case datumPostImage = "post_image"
         case documentFileName = "document_file_name"
         case documentSize = "document_size"
-        case postDocument
         case fileDatetime = "file_datetime"
-        case shareCount, type
-        case datumPostImage = "post_image"
         case postDocuments = "post_documents"
-        case image
-        case newsSource = "news_source"
-        case isNewsSave, user
+        case user
     }
 }
 
