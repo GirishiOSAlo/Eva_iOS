@@ -280,7 +280,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0XL-vf-I2P">
                                 <rect key="frame" x="0.0" y="0.0" width="391" height="80"/>
                                 <connections>
-                                    <action selector="article_touchUpInside:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zAQ-pf-TTi"/>
+                                    <action selector="article_touchUpInside:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jOd-of-qYf"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -1288,6 +1288,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             cell.likeButton.tag = indexPath.row
             cell.commentButton.tag = indexPath.row
             cell.shareButton.tag = indexPath.row
+            cell.openArticleBtn.tag = indexPath.row
             
             cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
             cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
@@ -1789,13 +1790,25 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if selectedTab == .jobs && user?.type == userType.company.rawValue { navigateToJobDetail(job: posts[indexPath.item]) }
-        else if selectedTab == .posts {
-            print("Post Selected")
-            goToCommentVC(index: indexPath.row)
-        }
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        if selectedTab == .jobs && user?.type == userType.company.rawValue { navigateToJobDetail(job: posts[indexPath.item]) }
+//        else if selectedTab == .posts {
+//            print("Post Selected")
+//            goToCommentVC(index: indexPath.row)
+//        }
         print("i am called tableViewDidSelectRowAt: ")
+        switch tableView {
+        case self.jobListTblVw:
+            if selectedTab == .jobs && user?.type == userType.company.rawValue { navigateToJobDetail(job: posts[indexPath.item]) }
+        case self.postListTblVw:
+            goToCommentVC(index: indexPath.row)
+        case self.newsListTblVw:
+            break
+        case self.tableView:
+            break
+        default:
+            break
+        }
     }
     
     func scrollToTop() {
@@ -1808,24 +1821,25 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if selectedTab == .jobs {
-            if self.jobList.count > 0 {
-                if indexPath.row == self.jobList.count - 1 {
-                    print("👉 Last tableview cell is visible")
-                    // Load next page if not already fetching and not at the last page
-                    if currentPage < lastPage {
-                        currentPage += 1
-                        self.fetchJobListData(filter: self.selectedHomeFilter.rawValue, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-                    } else {
-                        print("Page completed. No Api call")
-                    }
-                }
-            } else {
-                print("Job list is empty.")
-            }
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if selectedTab == .jobs {
+//            if self.jobList.count > 0 {
+//                if indexPath.row == self.jobList.count - 1 {
+//                    print("👉 Last tableview cell is visible")
+//                    // Load next page if not already fetching and not at the last page
+//                    if currentPage < lastPage {
+//                        currentPage += 1
+//                        let filter = self.selectedHomeFilter.rawValue.lowercased()
+//                        self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+//                    } else {
+//                        print("Page completed. No Api call")
+//                    }
+//                }
+//            } else {
+//                print("Job list is empty.")
+//            }
+//        }
+//    }
 }
 
 //MARK: Scroll View Delegate...
@@ -1834,7 +1848,7 @@ extension HomeVC: UIScrollViewDelegate {
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
         if bottomEdge >= scrollView.contentSize.height {
             print("👉 Last ScrollView is visible")
-            if selectedTab == .jobs {
+            if selectedTab == .jobs || selectedTab == .industryJobs {
                 if currentPage < lastPage {
                     currentPage += 1
                     let filter = self.selectedHomeFilter.rawValue.lowercased()
@@ -1848,8 +1862,21 @@ extension HomeVC: UIScrollViewDelegate {
                     getPosts(offSet: offsetCount, inserted: true)
                 }
             } else if selectedTab == .news {
-//                offsetCount += 1
-//                fetchNewsListData(offSet: offsetCount)
+                offsetCount += 1
+            }
+            else if selectedTab == .events || selectedTab == .industryEvents {
+                offsetCount += 1
+                if self.selectedHomeFilter == .new {
+                    self.fetchAllEventData()
+                } else if self.selectedHomeFilter == .going {
+                    self.fetchUpcomingEventData()
+                } else if self.selectedHomeFilter == .requested {
+                    self.fetchRequestedEventData()
+                } else if self.selectedHomeFilter == .saved {
+                    self.fetchSavedEventData()
+                } else if self.selectedHomeFilter == .passed {
+                    self.fetchPassedEventData()
+                }
             }
         }
     }
@@ -2639,7 +2666,8 @@ extension HomeVC {
             }
             height = 32
             searchHeight = 40
-            //selectedHomeFilter = .all
+            self.jobList = []
+            self.currentPage = 1
             let filter = self.selectedHomeFilter.rawValue.lowercased()
             self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
         } else if selectedTab == .events {
