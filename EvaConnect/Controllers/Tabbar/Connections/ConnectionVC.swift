@@ -130,7 +130,7 @@ class ConnectionVC: BaseVC {
         self.noRecordLbl.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
         self.isSeparatorHidden = true
-        self.navBarTitle.text = isIndivisualUser ? "My Connections" : "My Followers"
+        self.navBarTitle.text = myUserDefaults.isIndivisualUser ? "My Connections" : "My Followers"
         self.buttonBaseView.layer.cornerRadius = 8
         self.searchMainView.isHidden = true
 //        self.requestStackView.isHidden = true

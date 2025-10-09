@@ -63,7 +63,7 @@ class UserSettingsVC: BaseVC {
         super.viewDidLoad()
         self.successPopupVw.isHidden = true
 //        if LoggedUserDetails.shared.user?.isCompany ?? false { settings = settings.filter({ $0 != .rss }) }
-        if !isIndivisualUser {
+        if !myUserDefaults.isIndivisualUser {
             settings = settings.filter({$0 != .rss })
         }
         setLayout()

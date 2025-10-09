@@ -69,7 +69,7 @@ class UserJobCell: UITableViewCell {
             saveJobBtn.setImage(UIImage(named: "save"), for: .normal)
         }
         
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             print("Indivisual User")
             jobImageView.sd_setImage(with: URL(string: data.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
         } else {

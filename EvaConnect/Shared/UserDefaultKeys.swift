@@ -16,6 +16,14 @@ struct UserDefaultKeys {
 
 class myUserDefaults {
     
+    public static var isIndivisualUser: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "isIndivisualUser")
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "isIndivisualUser")
+        }
+    }
+    
     public static var isPrivate: Bool {
         get {
             UserDefaults.standard.bool(forKey: "isPrivate")

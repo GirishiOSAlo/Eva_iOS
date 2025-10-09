@@ -82,7 +82,7 @@ class HomeJobCVC: UICollectionViewCell {
         self.industryVw.isHidden = true
         self.individualVw.isHidden = true
         
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             print("Indivisual User")
             self.individualVw.isHidden = false
             self.saveBtn.isHidden = false

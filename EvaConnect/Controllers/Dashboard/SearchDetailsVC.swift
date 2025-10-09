@@ -62,7 +62,7 @@ class SearchDetailsVC: UIViewController {
         detailTableView.registerCell(withType: UserJobCell.self)
         detailTableView.registerCell(withType: ConnectionCell.self)
         
-        collectionParentViewTrailingConst.constant = isIndivisualUser ? 0 : 20
+        collectionParentViewTrailingConst.constant = myUserDefaults.isIndivisualUser ? 0 : 20
         
     }
     
@@ -92,11 +92,11 @@ extension SearchDetailsVC {
         case 0:
             filterValue = "all"
         case 1:
-            filterValue = isIndivisualUser ? "news" : "posts"
+            filterValue = myUserDefaults.isIndivisualUser ? "news" : "posts"
         case 2:
             filterValue = "connections"
         case 3:
-            filterValue = isIndivisualUser ? "jobs" : "events"
+            filterValue = myUserDefaults.isIndivisualUser ? "jobs" : "events"
         case 4:
             filterValue = "posts"
         case 5:
@@ -130,7 +130,7 @@ extension SearchDetailsVC {
 
                                 if let contentArray = value as? [Any] {
                                     for item in contentArray {
-                                        if isIndivisualUser {
+                                        if myUserDefaults.isIndivisualUser {
                                             switch key?.lowercased() {
                                             case "news", "connections", "jobs", "posts", "events":
                                                 if let resultItem = item as? Codable {
@@ -171,7 +171,7 @@ extension SearchDetailsVC {
                             
                             switch self.selectedCategoryIndex {
                             case 1:
-                                if isIndivisualUser {
+                                if myUserDefaults.isIndivisualUser {
                                     self.newsResults = data?.news ?? []
                                     self.emptyLabel.isHidden = (self.newsResults.count > 0)
                                 } else {
@@ -179,7 +179,7 @@ extension SearchDetailsVC {
                                     self.emptyLabel.isHidden = (self.postsResults.count > 0)
                                 }
                             case 2:
-                                if isIndivisualUser {
+                                if myUserDefaults.isIndivisualUser {
                                     self.connectionResults = data?.connections ?? []
                                     self.emptyLabel.isHidden = (self.connectionResults.count > 0)
                                 } else {
@@ -187,7 +187,7 @@ extension SearchDetailsVC {
                                     self.emptyLabel.isHidden = (self.connectionResults.count > 0)
                                 }
                             case 3:
-                                if isIndivisualUser {
+                                if myUserDefaults.isIndivisualUser {
                                     self.jobsResults = data?.jobs ?? []
                                     self.emptyLabel.isHidden = (self.jobsResults.count > 0)
                                 } else {
@@ -195,14 +195,14 @@ extension SearchDetailsVC {
                                     self.emptyLabel.isHidden = (self.eventsResults.count > 0)
                                 }
                             case 4:
-                                if isIndivisualUser {
+                                if myUserDefaults.isIndivisualUser {
                                     self.postsResults = data?.posts ?? []
                                     self.emptyLabel.isHidden = (self.postsResults.count > 0)
                                 } else {
                                     break
                                 }
                             case 5:
-                                if isIndivisualUser {
+                                if myUserDefaults.isIndivisualUser {
                                     self.eventsResults = data?.events ?? []
                                     self.emptyLabel.isHidden = (self.eventsResults.count > 0)
                                 } else {
@@ -243,11 +243,11 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
         } else {
             switch selectedCategoryIndex {
             case 1:
-                return isIndivisualUser ? newsResults.count : postsResults.count
+                return myUserDefaults.isIndivisualUser ? newsResults.count : postsResults.count
             case 2:
                 return connectionResults.count
             case 3:
-                return isIndivisualUser ? jobsResults.count : eventsResults.count
+                return myUserDefaults.isIndivisualUser ? jobsResults.count : eventsResults.count
             case 4:
                 return postsResults.count
             case 5:
@@ -381,7 +381,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
             
             switch selectedCategoryIndex {
             case 1:
-                if isIndivisualUser {
+                if myUserDefaults.isIndivisualUser {
                     let item = newsResults[indexPath.row]
                     let cell = tableView.dequeueReusableCell(withIdentifier: SearchNewsTVCell.id(), for: indexPath) as! SearchNewsTVCell
                     cell.titleLabel?.text = item.title
@@ -443,7 +443,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                 cell.addFriendView.isHidden = true
                 return cell
             case 3:
-                if isIndivisualUser {
+                if myUserDefaults.isIndivisualUser {
                     let job = jobsResults[indexPath.row]
                     let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.baseMainView.layer.cornerRadius = 12
@@ -604,7 +604,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
                 }
             }
         case 1:
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 let news = newsResults[indexPath.row]
                 let vc = StoryboardRouter.newsPopupVC()
                 vc.newId = Int(news.id ?? "0") ?? 0
@@ -653,7 +653,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
             navigationController?.pushViewController(vc, animated: true)
             break
         case 3:
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 let job = jobsResults[indexPath.row]
                 //            let itemId = job.id
                 let jobListing = StoryboardRouter.userJobListing()
@@ -759,7 +759,7 @@ extension SearchDetailsVC: UITableViewDelegate, UITableViewDataSource
 extension SearchDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isIndivisualUser ? self.categoryArr.count : self.industryCategoryArr.count
+        return myUserDefaults.isIndivisualUser ? self.categoryArr.count : self.industryCategoryArr.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -767,7 +767,7 @@ extension SearchDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource,
             
         cell.layer.cornerRadius = 8.0
         cell.categoryLbl.layer.cornerRadius = 8.0
-        cell.categoryLbl.text =  isIndivisualUser ? self.categoryArr[indexPath.row] : self.industryCategoryArr[indexPath.row]
+        cell.categoryLbl.text =  myUserDefaults.isIndivisualUser ? self.categoryArr[indexPath.row] : self.industryCategoryArr[indexPath.row]
         
         if indexPath.row == 0 {
             cell.lineView.isHidden = true
@@ -792,7 +792,7 @@ extension SearchDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let label = UILabel(frame: CGRect.zero)
-        label.text = isIndivisualUser ? categoryArr[indexPath.row] : industryCategoryArr[indexPath.row]
+        label.text = myUserDefaults.isIndivisualUser ? categoryArr[indexPath.row] : industryCategoryArr[indexPath.row]
         label.sizeToFit()
 
         let width = label.frame.width + 30

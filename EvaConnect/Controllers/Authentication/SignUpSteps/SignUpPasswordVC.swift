@@ -191,7 +191,7 @@ extension SignUpPasswordVC {
     
     private func createAccount() {
         var parameters: Parameters = [:]
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             parameters = [
                 "fullname": myUserDefaults.fullName,
                 "email": myUserDefaults.emailAdd,
@@ -233,7 +233,7 @@ extension SignUpPasswordVC {
         
 //        let email = (parameters["email"] as? String) ?? ""
 //        let password = (parameters["password"] as? String) ?? ""
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             if let loadedImage = loadImage() {
                 //            if let userImage = loadedImage {
                 if let imageData = loadedImage.jpegData(compressionQuality: 0.5) {

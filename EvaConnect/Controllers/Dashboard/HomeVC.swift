@@ -170,7 +170,7 @@ class HomeVC: BaseVC {
         if selectedTab == .events {
             self.selectedHomeFilter = .new
         } else if selectedTab == .jobs || selectedTab == .industryJobs {
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 selectedHomeFilter = .all
             } else {
                 selectedHomeFilter = .active
@@ -203,7 +203,7 @@ class HomeVC: BaseVC {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.isHidden = false
         isSeparatorHidden = true
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             self.selectedTab = Constants.getEnumFromUserDefaults() ?? .news
         } else {
             self.selectedTab = Constants.getEnumFromUserDefaults() ?? .news
@@ -221,7 +221,7 @@ class HomeVC: BaseVC {
         self.emptyListMessageLbl.text = ""
         
         if selectedTab == .jobs || selectedTab == .industryJobs {
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 homeTabFilter = HomeTabFilter.job
             } else {
                 homeTabFilter = HomeTabFilter.industryJobs
@@ -234,7 +234,7 @@ class HomeVC: BaseVC {
         } else if selectedTab == .events {
             height = 32
             searchHeight = 0
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 homeTabFilter = HomeTabFilter.userEvent
             } else {
                 homeTabFilter = HomeTabFilter.industryEvents
@@ -1107,7 +1107,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             }
             
         case jobListTblVw:
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 if selectedHomeFilter == .applied {
                     return 234
                 } else {
@@ -1237,7 +1237,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             cell.applyNowBtn.tag = indexPath.row
             //cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
             
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 cell.indivisualVw.isHidden = false
                 cell.saveJobBtn.isHidden = false
                 if selectedHomeFilter == .applied {
@@ -1791,7 +1791,10 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if selectedTab == .jobs && user?.type == userType.company.rawValue { navigateToJobDetail(job: posts[indexPath.item]) }
-        else if selectedTab == .posts { goToCommentVC(index: indexPath.row) }
+        else if selectedTab == .posts {
+            print("Post Selected")
+            goToCommentVC(index: indexPath.row)
+        }
         print("i am called tableViewDidSelectRowAt: ")
     }
     
@@ -2629,7 +2632,7 @@ extension HomeVC {
         
         //reloadData()
         if selectedTab == .jobs || selectedTab == .industryJobs {
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 homeTabFilter = HomeTabFilter.job
             } else {
                 homeTabFilter = HomeTabFilter.industryJobs
@@ -2642,7 +2645,7 @@ extension HomeVC {
         } else if selectedTab == .events {
             height = 32
             searchHeight = 0
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 homeTabFilter = HomeTabFilter.userEvent
             } else {
                 homeTabFilter = HomeTabFilter.industryEvents
@@ -2834,7 +2837,7 @@ extension HomeVC {
             height = 32
             searchHeight = 0
             //homeTabFilter = HomeTabFilter.userEvent
-            homeTabFilter = isIndivisualUser ? HomeTabFilter.userEvent : HomeTabFilter.industryEvents
+            homeTabFilter = myUserDefaults.isIndivisualUser ? HomeTabFilter.userEvent : HomeTabFilter.industryEvents
             self.currentEventLblHeight.constant = 70.0
             self.allEventLblHeight.constant = 70.0
             
@@ -2862,7 +2865,7 @@ extension HomeVC {
             
 //            if jobListingBtn.isHidden {
                // homeTabFilter = HomeTabFilter.job
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 selectedTab = .jobs
                 Constants.saveEnumToUserDefaults(.jobs)
                 selectedHomeFilter = .all

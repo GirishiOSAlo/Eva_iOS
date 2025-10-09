@@ -121,7 +121,7 @@ class EditProfileViewController: UIViewController, XIBed {
         }
         
         
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             self.jobTitleBaseVw.isHidden = false
             self.resumeBaseVw.isHidden = false
             self.companyBaseVw.isHidden = false

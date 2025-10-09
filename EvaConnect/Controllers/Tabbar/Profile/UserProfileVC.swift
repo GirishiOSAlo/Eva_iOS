@@ -291,7 +291,7 @@ class UserProfileVC: BaseVC {
     }
     
     @objc func TapOnView() {
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             
         } else {
             let vc = StoryboardRouter.interestedList()
@@ -501,7 +501,7 @@ extension UserProfileVC {
         self.connectionLbl.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Followers" : "Connections"
         self.pendingReqLabel.text = LoggedUserDetails.shared.user?.type == userType.company.rawValue ? "Employees" : "Pending Request"
         
-        self.pendingCountLbl.text = isIndivisualUser ? "\(user.pendingConnection ?? "")" : "\(user.employeesCount ?? 0)"
+        self.pendingCountLbl.text = myUserDefaults.isIndivisualUser ? "\(user.pendingConnection ?? "")" : "\(user.employeesCount ?? 0)"
         
         
 //        self.connectionTitleLbl.text = connectionTitle
@@ -642,7 +642,7 @@ extension UserProfileVC {
             self.pendingCountLbl.text = "\(user.pendingConnection ?? "")"
         }
         else {
-            professionLbl.text = isIndivisualUser ? "\(user.companyName ?? "")" : ""
+            professionLbl.text = myUserDefaults.isIndivisualUser ? "\(user.companyName ?? "")" : ""
             self.pendingCountLbl.text = "--"
         }
         

@@ -60,7 +60,7 @@ class EditUserProfileVC: BaseVC {
     
     private func setLayout() {
         
-        jobTitleWholeView.isHidden = !isIndivisualUser
+        jobTitleWholeView.isHidden = !myUserDefaults.isIndivisualUser
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -126,7 +126,7 @@ class EditUserProfileVC: BaseVC {
     @IBAction func updateProfileTapped(_ sender: UIButton) {
         let user = LoggedUserDetails.shared.user
         showActivity()
-        if profilePic != nil || jobTitleTextField.text != user?.designation || companyNameTextField.text != (isIndivisualUser ? user?.companyName : user?.firstName) || bioTextView.text !=  user?.bioData {
+        if profilePic != nil || jobTitleTextField.text != user?.designation || companyNameTextField.text != (myUserDefaults.isIndivisualUser ? user?.companyName : user?.firstName) || bioTextView.text !=  user?.bioData {
             updateProfile(jobTitle: jobTitleTextField.text ?? "", companyName: companyNameTextField.text ?? "", region: "Asia", bio: bioTextView.text ?? "") { success, error in
                 if success ?? false {
                     print("Done!!")
@@ -173,7 +173,7 @@ extension EditUserProfileVC {
     func updateProfile(jobTitle: String, companyName: String, region: String, bio: String, completion: @escaping (Bool?, Error?) -> Void) {
 
         var parameters: AFParameters = [:]
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
              parameters = ["is_online": true,
                            "modified_by_id": myUserDefaults.userId, //LoggedUserDetails.shared.user!.id ?? 0,
                            "first_name": myUserDefaults.fullName,
@@ -262,7 +262,7 @@ extension EditUserProfileVC {
         navigationController?.navigationBar.isHidden = true
         profileImageView.kf.setImage(with: URL(string: LoggedUserDetails.shared.user?.userImage ?? ""))
         bioTextView.text = LoggedUserDetails.shared.user?.bioData
-        companyNameTextField.text = isIndivisualUser ? LoggedUserDetails.shared.user?.companyName : LoggedUserDetails.shared.user?.firstName
+        companyNameTextField.text = myUserDefaults.isIndivisualUser ? LoggedUserDetails.shared.user?.companyName : LoggedUserDetails.shared.user?.firstName
         jobTitleTextField.text = LoggedUserDetails.shared.user?.designation
         self.hideActivity()
     }

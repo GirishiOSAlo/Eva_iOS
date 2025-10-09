@@ -609,7 +609,7 @@ extension CreateEditPostedJobVC {
         
 //        JobSwitch.isHidden = roleType == .add
         
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             self.toggleButton.isHidden = true
             self.circleView.isHidden = true
         }

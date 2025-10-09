@@ -200,7 +200,7 @@ class SignUpLocationDOBVC: BaseForAuthentication {
 //            makeAlert(titleMsg: "Warning", messageData: "Please select date of birth")
 //            return false
 //        }
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             if self.companyNameTextField.text!.elementsEqual("") {
                 makeAlert(titleMsg: "Warning", messageData: "Please select Company Name")
                 return false
@@ -238,7 +238,7 @@ extension SignUpLocationDOBVC {
     
     private func setLayoutStyle() {
         
-        if isIndivisualUser || (myUserDefaults.user == "user") {
+        if myUserDefaults.isIndivisualUser || (myUserDefaults.user == "user") {
             self.dobView.isHidden = false
             self.companyView.isHidden = false
             self.jobTitleView.isHidden = false

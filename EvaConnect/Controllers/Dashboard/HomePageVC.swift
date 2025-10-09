@@ -101,7 +101,7 @@ class HomePageVC: UIViewController {
         self.postTableVwHeight.constant = 0.0
         self.newsTableVwHeight.constant = 0.0
         
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             Constants.saveEnumToUserDefaults(.news)
         } else {
             Constants.saveEnumToUserDefaults(.industryEvents)
@@ -469,7 +469,7 @@ extension HomePageVC {
         let url = "\(EndPoints.getAllHomeJob)?limit=\(2)&offset=\(1)"
         
         var parameters: [String: Any]? = nil
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             parameters = ["filter":"all"] as [String: Any]
         } else {
             parameters = ["filter":"Active"] as [String: Any]

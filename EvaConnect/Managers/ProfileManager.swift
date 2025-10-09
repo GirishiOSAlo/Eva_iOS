@@ -37,7 +37,7 @@ class ProfileManager {
         SVProgressHUD.show()
         NetworkManagerr.request(endPoint, method: .post, parameters: parameters) { [weak self] (result: Result<GenericResponse>) in
             SVProgressHUD.dismiss()
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 self?.handleSwitch(result: result, message: "Connection Added!!", completion: completion)
             } else {
                 self?.handleSwitch(result: result, message: "Follower Added!!", completion: completion)
@@ -54,7 +54,7 @@ class ProfileManager {
         SVProgressHUD.show()
         NetworkManagerr.request(endPoint, method: .post, parameters: parameters) { [weak self] (result: Result<GenericResponse>) in
             SVProgressHUD.dismiss()
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 self?.handleSwitch(result: result, message: "Connection Removed!!", completion: completion)
             } else {
                 self?.handleSwitch(result: result, message: "Follower Removed!!", completion: completion)

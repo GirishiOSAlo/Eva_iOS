@@ -289,7 +289,7 @@ extension SignUpVC_Step1 {
         
         if !firstName.text.isNilOrEmpty //&& !surName.text.isNilOrEmpty
         {
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 if emailValid && email.text != "" {
                     if mobileNoValid {
                         checkIfUserExists(email: email.text!, phoneNo: mobileNoTextField.text!) { reason in
@@ -338,7 +338,7 @@ extension SignUpVC_Step1 {
             }
 
         } else {
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 makeAlert(messageData: "Please Fill Full Name")
             } else {
                 makeAlert(messageData: "Please Fill Company Name")
@@ -355,7 +355,8 @@ extension SignUpVC_Step1 {
         
         switch sender.tag {
         case 1:
-            isIndivisualUser = false
+            //isIndivisualUser = false
+            myUserDefaults.isIndivisualUser = false
             userType = .company
             myUserDefaults.user = "company"
             companyBtn.layer.borderColor = UIColor(hex: "#4D76CD").cgColor
@@ -373,7 +374,8 @@ extension SignUpVC_Step1 {
             
 
         case 2:
-            isIndivisualUser = true
+            //isIndivisualUser = true
+            myUserDefaults.isIndivisualUser = true
             userType = .user
             myUserDefaults.user = "user"
             individualBtn.layer.borderColor = UIColor(hex: "#4D76CD").cgColor
@@ -401,7 +403,7 @@ extension SignUpVC_Step1 {
     private func changeInfo(_ isCompany: Bool) {
         UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) { [weak self] in
             guard let self = self else { return }
-            isIndivisualUser = !isCompany
+            myUserDefaults.isIndivisualUser = !isCompany
 //            self.firstNameLbl.text = isCompany ? "Company Name" : "What is your name?"
 //            self.surNameLbl.text = isCompany ? "Website" : ""
             self.firstName.placeholder = isCompany ? "Company Name" : "Full Name"

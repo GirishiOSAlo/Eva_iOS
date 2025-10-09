@@ -34,6 +34,7 @@ class LoggedUserDetails {
     
     func logoutUser() {
         myUserDefaults.user = ""
+        myUserDefaults.isIndivisualUser = false
         user = nil
         resetDefaults()
     }

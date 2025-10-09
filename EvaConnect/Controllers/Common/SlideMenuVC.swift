@@ -96,7 +96,7 @@ extension SlideMenuVC {
     
     private func setLayout() {
         logoutBtn.layer.cornerRadius = 14.0
-        connectionTextLbl.text = isIndivisualUser ? "Connections" : "Followers"
+        connectionTextLbl.text = myUserDefaults.isIndivisualUser ? "Connections" : "Followers"
         imageBorderView.applyBorderWithRadius(color: AppColors.appBlue, value: 1, radius: imageBorderView.bounds.width / 2)
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         searchBtn.isHidden = true

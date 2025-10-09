@@ -81,7 +81,14 @@ class NavigationManager {
 //            if let user = LoggedUserDetails.shared.user, user.status == Constants.Label.active {
 //                rootVC = TabBar()
             if myUserDefaults.userId > 0 {
-                (myUserDefaults.user == "user") ? (isIndivisualUser = true) : (isIndivisualUser = false)
+                //(myUserDefaults.user == "user") ? (isIndivisualUser = true) : (isIndivisualUser = false)
+                if myUserDefaults.user == "user" {
+                    myUserDefaults.isIndivisualUser = true
+                } else {
+                    myUserDefaults.isIndivisualUser = false
+                }
+                
+                
                 let vc = DashboardTabbarVC.instantiate()
 //                OnlineStatusManager.updateOnlineStatus()
                 rootVC = UINavigationController(rootViewController: vc)

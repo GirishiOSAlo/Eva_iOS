@@ -99,7 +99,7 @@ class SignUpJobSectorVC: BaseForAuthentication {
             return false
         }
         else if self.subSectorTextField.text!.elementsEqual("") {
-            if isIndivisualUser {
+            if myUserDefaults.isIndivisualUser {
                 makeAlert(titleMsg: "Warning", messageData: "Please select Sub Sector.")
                 return false
             } else {
@@ -194,7 +194,7 @@ extension SignUpJobSectorVC {
     private func setLayoutStyle() {
 //        headerTitleLbl.text = signUpDetails?.userType == .user ? "Business Sector / Job Title" : "Company & Job Title"
         
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             self.businessSubSectorView.isHidden = false
         } else {
             self.businessSubSectorView.isHidden = true

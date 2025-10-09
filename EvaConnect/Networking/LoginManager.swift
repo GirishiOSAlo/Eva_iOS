@@ -53,12 +53,14 @@ class LoginManagerr {
 //                    } else {
 //
 //                    }
-                    (user.type == "user") ? (isIndivisualUser = true ): (isIndivisualUser = false)
+                    //(user.type == "user") ? (isIndivisualUser = true ): (isIndivisualUser = false)
                     myUserDefaults.user = user.type ?? ""
                     if user.type == "user" {
-                        isIndivisualUser = true
+                        //isIndivisualUser = true
+                        myUserDefaults.isIndivisualUser = true
                     } else {
-                        isIndivisualUser = false
+                        //isIndivisualUser = false
+                        myUserDefaults.isIndivisualUser = false
                     }
                     
                     

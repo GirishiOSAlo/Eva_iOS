@@ -172,7 +172,7 @@ class DashboardTabbarVC: BaseVC, XIBed {
 //        let vc = UIStoryboard(storyboard: .home).instantiateViewController(withIdentifier:"HomePageVC") as! HomePageVC
 //        navigationController?.pushViewController(vc, animated: true)
                 
-        if isIndivisualUser {
+        if myUserDefaults.isIndivisualUser {
             let vc = UIStoryboard(storyboard: .home).instantiateViewController(withIdentifier:
                                                                                 "AddPostVC") as! AddPostVC
             navigationController?.pushViewController(vc, animated: true)

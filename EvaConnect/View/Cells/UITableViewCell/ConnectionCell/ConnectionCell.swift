@@ -63,7 +63,7 @@ class ConnectionCell: BaseCellClass {
                 userImage.sd_setImage(with: URL(string: connection.userImage!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
             }
             
-            if !isIndivisualUser && !connection.userImageUrl.isNil {
+            if !myUserDefaults.isIndivisualUser && !connection.userImageUrl.isNil {
                 userImage.sd_setImage(with: URL(string: connection.userImageUrl!), placeholderImage: #imageLiteral(resourceName: "noImage"), options: .continueInBackground, completed: .none)
             }
             

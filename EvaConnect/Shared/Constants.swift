@@ -8,7 +8,7 @@
 
 import UIKit
 
-var isIndivisualUser: Bool = true
+//var isIndivisualUser: Bool = true
 //var isIndivisualUser: Bool = false
 enum AppColors {
     

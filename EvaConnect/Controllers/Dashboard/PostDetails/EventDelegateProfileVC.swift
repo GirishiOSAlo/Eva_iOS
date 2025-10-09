@@ -55,7 +55,7 @@ class EventDelegateProfileVC: UIViewController {
 
     
     func setLayout() {
-        self.sheduleMeetingBtn.isHidden = !isIndivisualUser
+        self.sheduleMeetingBtn.isHidden = !myUserDefaults.isIndivisualUser
         self.baseBackView.layer.cornerRadius = 13.0
         self.profileView.layer.cornerRadius = self.profileView.frame.size.height/2
         self.profileView.layer.borderWidth = 1
