@@ -1233,29 +1233,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
                     let height = lblHeight + marginHeight
                     return height
                 }
-//                if homePost.postVideo != "" && homePost.postVideo != nil {
-//                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                    let height = lblHeight + 356.0
-//                    return height
-//                } else if homePost.postDocuments?.count ?? 0 > 0 {
-//                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                    let height = lblHeight + 231.0
-//                    return height
-//                } else if homePost.datumPostImage!.count > 0 {
-//                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                    let height = lblHeight + 420.0
-//                    if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
-//                        return height - 30.0 //-30 is page control view...
-//                    } else {
-//                        return height
-//                    }
-//                } else {
-//                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-//                    let height = lblHeight + 195.0
-//                    return height
-//                }
-            }
-            else {
+            } else {
                 return 0
             }
 
@@ -1378,12 +1356,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             cell.commentButton.tag = indexPath.row
             cell.shareButton.tag = indexPath.row
             cell.openArticleBtn.tag = indexPath.row
-            cell.detailsButton.tag = indexPath.row
+            //cell.detailsButton.tag = indexPath.row
             
             cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
             cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
             cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-            cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
+            //cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
             
             cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
             cell.openVideoBtn.tag = indexPath.row

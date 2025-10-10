@@ -308,11 +308,6 @@
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Mg-Oi-FUT">
-                        <rect key="frame" x="20" y="610" width="391" height="42"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    </button>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPx-rq-iHF" userLabel="Bottom Button Vw">
                         <rect key="frame" x="20" y="652" width="391" height="40"/>
                         <subviews>
@@ -465,7 +460,6 @@
                     <constraint firstItem="agd-o3-mjG" firstAttribute="bottom" secondItem="sPx-rq-iHF" secondAttribute="bottom" constant="5" id="0sz-FT-khc"/>
                     <constraint firstAttribute="trailingMargin" secondItem="ajj-OU-lEu" secondAttribute="trailing" constant="16" id="44P-3s-Vae"/>
                     <constraint firstItem="pzm-cG-kk8" firstAttribute="top" secondItem="90X-85-2w9" secondAttribute="bottom" id="911-Le-vAh"/>
-                    <constraint firstItem="7Mg-Oi-FUT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="9v7-FJ-1sZ"/>
                     <constraint firstAttribute="trailing" secondItem="sPx-rq-iHF" secondAttribute="trailing" constant="20" id="Axd-Ut-cOk"/>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="top" secondItem="90X-85-2w9" secondAttribute="top" id="EAz-s6-uMe"/>
                     <constraint firstItem="pzm-cG-kk8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Hv8-9I-Nbv"/>
@@ -477,14 +471,11 @@
                     <constraint firstItem="cab-Gv-OQo" firstAttribute="top" secondItem="pzm-cG-kk8" secondAttribute="bottom" id="QQ3-FV-wSG"/>
                     <constraint firstItem="7xG-hQ-Wmg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="RD9-zw-eBN"/>
                     <constraint firstItem="90X-85-2w9" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="S48-hq-p1e"/>
-                    <constraint firstItem="sPx-rq-iHF" firstAttribute="top" secondItem="7Mg-Oi-FUT" secondAttribute="bottom" id="Sos-dz-mIN"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="7Mg-Oi-FUT" secondAttribute="trailing" id="ZkT-vF-oqX"/>
                     <constraint firstItem="ajj-OU-lEu" firstAttribute="top" secondItem="cab-Gv-OQo" secondAttribute="bottom" constant="10" id="a32-16-ZIW"/>
                     <constraint firstItem="90X-85-2w9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ePi-AN-R6p"/>
                     <constraint firstItem="pzm-cG-kk8" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="fvR-BQ-Pih"/>
                     <constraint firstAttribute="trailing" secondItem="7xG-hQ-Wmg" secondAttribute="trailing" id="fys-Ve-Oyi"/>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="iD5-Ri-ySL"/>
-                    <constraint firstItem="7Mg-Oi-FUT" firstAttribute="top" secondItem="cab-Gv-OQo" secondAttribute="bottom" id="qfy-l3-uuD"/>
                     <constraint firstItem="cab-Gv-OQo" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="qli-dS-c2z"/>
                     <constraint firstItem="ajj-OU-lEu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="yRe-lN-7R1"/>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="zS6-Se-kBo"/>
@@ -498,7 +489,6 @@
                 <outlet property="commentCountLbl" destination="Oq9-M6-SwN" id="Te4-e2-nhZ"/>
                 <outlet property="connectionNameLbl" destination="2dq-V8-32q" id="pxf-DH-YIZ"/>
                 <outlet property="dateLbl" destination="3PT-Pn-059" id="CKQ-7l-adZ"/>
-                <outlet property="detailsButton" destination="7Mg-Oi-FUT" id="fmf-su-Oid"/>
                 <outlet property="docImgUiView" destination="PZk-em-cYa" id="WgT-1o-NIn"/>
                 <outlet property="docMainVw" destination="cab-Gv-OQo" id="HMB-xi-uwj"/>
                 <outlet property="docVwHeight" destination="xUU-8j-mAn" id="9HF-FQ-SqQ"/>
