@@ -1189,8 +1189,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.sharedBtn.tag = indexPath.row
                 cell.goToProfileBtn.tag = indexPath.row
                 cell.reportBtn.tag = indexPath.row
-                cell.detailsButton.tag = indexPath.row
-                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
+//                cell.detailsButton.tag = indexPath.row
+//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 self.objectId = homePost.id ?? 0
                 self.type = .post
                 cell.delegate = self
@@ -1217,8 +1217,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.openArticleBtn.tag = indexPath.row
                 cell.goToProfileBtn.tag = indexPath.row
                 cell.reportBtn.tag = indexPath.row
-                cell.detailsButton.tag = indexPath.row
-                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
+//                cell.detailsButton.tag = indexPath.row
+//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 self.objectId = homePost.id ?? 0
                 self.type = .post
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
@@ -1239,8 +1239,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.shareButton.tag = indexPath.row
                 cell.goToProfileBtn.tag = indexPath.row
                 cell.reportBtn.tag = indexPath.row
-                cell.detailsButton.tag = indexPath.row
-                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
+//                cell.detailsButton.tag = indexPath.row
+//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 self.objectId = homePost.id ?? 0
                 self.type = .post
                 cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
@@ -1253,8 +1253,8 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
                 cell.detailsView.layer.cornerRadius = 13
                 cell.delegate = self
                 cell.setData(data: homePost)
-                cell.detailsButton.tag = indexPath.row
-                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
+//                cell.detailsButton.tag = indexPath.row
+//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
                 cell.likeBtn.tag = indexPath.row
                 cell.commentBtn.tag = indexPath.row
                 cell.shareBtn.tag = indexPath.row

@@ -187,11 +187,6 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9IZ-c1-g0g">
-                                <rect key="frame" x="0.0" y="180" width="387" height="62"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            </button>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xsd-oz-RQr">
                                 <rect key="frame" x="0.0" y="242" width="387" height="40"/>
                                 <subviews>
@@ -343,21 +338,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Xsd-oz-RQr" firstAttribute="top" secondItem="9IZ-c1-g0g" secondAttribute="bottom" id="1oM-ih-O5f"/>
                             <constraint firstItem="TVV-g1-QlH" firstAttribute="centerY" secondItem="Faq-jX-9WR" secondAttribute="centerY" id="Fr8-wn-mvc"/>
                             <constraint firstAttribute="trailing" secondItem="Xsd-oz-RQr" secondAttribute="trailing" id="JLR-z4-qcZ"/>
                             <constraint firstItem="Xsd-oz-RQr" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" id="K3V-4B-5aS"/>
                             <constraint firstItem="Faq-jX-9WR" firstAttribute="top" secondItem="xgJ-OL-jeO" secondAttribute="top" id="NW1-OJ-1Vo"/>
-                            <constraint firstItem="9IZ-c1-g0g" firstAttribute="top" secondItem="Faq-jX-9WR" secondAttribute="bottom" id="T81-es-9Cl"/>
                             <constraint firstItem="AFq-Vz-ISI" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" constant="20" id="Uy2-uh-IzA"/>
                             <constraint firstItem="Faq-jX-9WR" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" id="al8-yW-kmt"/>
                             <constraint firstItem="AFq-Vz-ISI" firstAttribute="top" secondItem="Faq-jX-9WR" secondAttribute="bottom" constant="20" id="gWV-6E-Cry"/>
                             <constraint firstItem="TVV-g1-QlH" firstAttribute="centerX" secondItem="Faq-jX-9WR" secondAttribute="centerX" id="gxp-IA-ipp"/>
                             <constraint firstItem="Xsd-oz-RQr" firstAttribute="top" secondItem="AFq-Vz-ISI" secondAttribute="bottom" constant="20" id="hkw-vv-WhU"/>
                             <constraint firstAttribute="trailing" secondItem="AFq-Vz-ISI" secondAttribute="trailing" constant="20" id="iHh-3G-V7n"/>
-                            <constraint firstAttribute="trailing" secondItem="9IZ-c1-g0g" secondAttribute="trailing" id="kIC-CD-to8"/>
                             <constraint firstAttribute="trailing" secondItem="Faq-jX-9WR" secondAttribute="trailing" id="ljJ-BN-lE9"/>
-                            <constraint firstItem="9IZ-c1-g0g" firstAttribute="leading" secondItem="xgJ-OL-jeO" secondAttribute="leading" id="uhl-Kf-57X"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -384,7 +375,6 @@
                 <outlet property="commentValueLbl" destination="nUR-JD-OuH" id="DVS-QM-Kbs"/>
                 <outlet property="connectionNameLbl" destination="coW-77-DNc" id="gXe-nc-egc"/>
                 <outlet property="dateLbl" destination="aPm-9q-0fj" id="kP7-l7-s8B"/>
-                <outlet property="detailsButton" destination="9IZ-c1-g0g" id="Slz-6E-DdE"/>
                 <outlet property="followBtn" destination="7ID-PB-qo7" id="NSG-P4-Vxq"/>
                 <outlet property="goToProfileBtn" destination="GNE-Um-02O" id="lCa-Dp-AXa"/>
                 <outlet property="isConnectedBtn" destination="MVb-2i-E20" id="jOX-yq-hzb"/>
