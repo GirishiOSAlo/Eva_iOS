@@ -198,32 +198,56 @@ enum Constants {
         selectionFeedback.selectionChanged()
     }
     
-    public static func truncateContent(_ content: String) -> NSAttributedString {
+    static func truncateContent(_ content: String, isExpanded: Bool = false) -> NSAttributedString {
         let fullText = NSMutableAttributedString()
-
-        if content.count > Constants.maxCharactersToShow {
-            let truncatedText = String(content.prefix(Constants.maxCharactersToShow))
-            let seeMoreText = " ...more"
-
-            let truncatedAttributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.black, // You can set the color you want for truncated text
-            ]
-
-            let seeMoreAttributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: AppColors.appBlue, // Set the color to blue
-//                .underlineStyle: NSUnderlineStyle.single.rawValue, // Optional: Add underline
-            ]
-
-            let truncatedAttributedString = NSAttributedString(string: truncatedText, attributes: truncatedAttributes)
-            let seeMoreAttributedString = NSAttributedString(string: seeMoreText, attributes: seeMoreAttributes)
-
-            fullText.append(truncatedAttributedString)
-            fullText.append(seeMoreAttributedString)
-        } else {
-            fullText.append(NSAttributedString(string: content))
-        }
-
-        return fullText
+                    
+            if content.count > maxCharactersToShow {
+                if isExpanded {
+                    // Show full content + "...less"
+                    let fullAttributes: [NSAttributedString.Key: Any] = [
+                        .foregroundColor: UIColor.black
+                    ]
+                    
+                    let lessText = " ...less"
+                    let lessAttributes: [NSAttributedString.Key: Any] = [
+                        .foregroundColor: AppColors.appBlue
+                    ]
+                    
+                    let fullAttributedString = NSAttributedString(string: content, attributes: fullAttributes)
+                    let lessAttributedString = NSMutableAttributedString(string: lessText, attributes: lessAttributes)
+                    
+                    // Tag this range for action
+                    lessAttributedString.addAttribute(NSAttributedString.Key("SeeLess"), value: true, range: NSMakeRange(0, lessText.count))
+                    
+                    fullText.append(fullAttributedString)
+                    fullText.append(lessAttributedString)
+                } else {
+                    // Show truncated content + "...more"
+                    let truncatedText = String(content.prefix(maxCharactersToShow))
+                    let seeMoreText = " ...more"
+                    
+                    let truncatedAttributes: [NSAttributedString.Key: Any] = [
+                        .foregroundColor: UIColor.black
+                    ]
+                    
+                    let seeMoreAttributes: [NSAttributedString.Key: Any] = [
+                        .foregroundColor: AppColors.appBlue
+                    ]
+                    
+                    let truncatedAttributedString = NSAttributedString(string: truncatedText, attributes: truncatedAttributes)
+                    let seeMoreAttributedString = NSMutableAttributedString(string: seeMoreText, attributes: seeMoreAttributes)
+                    
+                    // Tag this range for action
+                    seeMoreAttributedString.addAttribute(NSAttributedString.Key("SeeMore"), value: true, range: NSMakeRange(0, seeMoreText.count))
+                    
+                    fullText.append(truncatedAttributedString)
+                    fullText.append(seeMoreAttributedString)
+                }
+            } else {
+                fullText.append(NSAttributedString(string: content))
+            }
+            
+            return fullText
     }
     
     public static func configWithMenuStyle() -> FTConfiguration {

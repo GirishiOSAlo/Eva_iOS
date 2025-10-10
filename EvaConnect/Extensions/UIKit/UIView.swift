@@ -257,6 +257,29 @@ extension UIView {
 
         layer.addSublayer(border)
     }
+    
+    func heightForContent(_ content: Any, font: UIFont, width: CGFloat) -> CGFloat {
+            let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+
+            if let attributedText = content as? NSAttributedString {
+                let rect = attributedText.boundingRect(
+                    with: size,
+                    options: [.usesLineFragmentOrigin, .usesFontLeading],
+                    context: nil
+                )
+                return ceil(rect.height)
+            } else if let text = content as? String {
+                let rect = (text as NSString).boundingRect(
+                    with: size,
+                    options: [.usesLineFragmentOrigin, .usesFontLeading],
+                    attributes: [.font: font],
+                    context: nil
+                )
+                return ceil(rect.height)
+            }
+
+            return 0
+        }
 }
 
 @IBDesignable extension UIView {

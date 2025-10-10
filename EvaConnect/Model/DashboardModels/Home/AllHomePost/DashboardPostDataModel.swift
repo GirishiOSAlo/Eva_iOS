@@ -60,6 +60,7 @@ struct DashboardPostData: Codable {
     let newsSource: PostNewsSource?
     let isNewsSave: Int?
     let user: DashboardPostUser?
+    var isExpanded: Bool = false
     
     enum CodingKeys: String, CodingKey {
 //        case id, userID, isURL
