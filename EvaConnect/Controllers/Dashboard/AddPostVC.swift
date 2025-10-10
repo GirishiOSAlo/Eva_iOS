@@ -176,6 +176,19 @@ class AddPostVC: BaseVC {
         self.showVideoPicker()
     }
     
+    @IBAction func docCloseBtn(_ sender: UIButton) {
+        self.documentView.isHidden = true
+        self.documentURL = nil
+    }
+    
+    @IBAction func videoCloseBtn(_ sender: UIButton) {
+        videoUrl = nil
+        videoView.isHidden = true
+        playPauseBtn.isHidden = true
+    }
+    
+    
+    
 }
 extension AddPostVC {
     
