@@ -9,10 +9,15 @@
 import UIKit
 import Kingfisher
 
+protocol PostCellHeightDelegate: NSObject {
+    func postTblHeightManaged(index: Int, isExpand: Bool, tapOther: Bool)
+}
+
 class HomePostTVC: BaseCellClass {
     
     var delegate: PostActionable?
     weak var delegateDidSelect: CollectionViewCellDelegate?
+    weak var postCellHeightDelegate: PostCellHeightDelegate?
     
     @IBOutlet weak var bgVw: UIView!
     @IBOutlet weak var imageMainVw: UIView!
@@ -49,6 +54,7 @@ class HomePostTVC: BaseCellClass {
     var imageArr: [String?] = []
     var isFullTextVisible = false
     var actualString = ""
+    var selectedPost: DashboardItem? 
     
     
     @IBOutlet weak var videoView: VideoClass!
@@ -176,28 +182,109 @@ class HomePostTVC: BaseCellClass {
     
     
     func configure(with content: String) {
-        postMsgLbl.attributedText = Constants.truncateContent(content)
-
-        // Add tap gesture recognizer to the label
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        //postMsgLbl.attributedText = Constants.truncateContent(content, isExpanded: isFullTextVisible)
+        self.updateLabelText()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
         postMsgLbl.isUserInteractionEnabled = true
-        postMsgLbl.addGestureRecognizer(tapGestureRecognizer)
+        postMsgLbl.addGestureRecognizer(tapGesture)
     }
-
-    @objc func labelTapped() {
+        
+//    @objc func labelTapped() {
+//        isFullTextVisible.toggle()
+//        configure(with: actualString)
+//        
+//        // Find the table view and update height
+//        if let tableView = self.superview as? UITableView {
+//            if let indexPath = tableView.indexPath(for: self) {
+//                print("Tapped post cell at row: \(indexPath.row)")
+//                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
+//            }
+//            tableView.beginUpdates()
+//            tableView.endUpdates()
+//        }
+//    }
+//    @objc func labelTapped() {
+//        isFullTextVisible.toggle()
+//        self.selectedPost?.isExpand = isFullTextVisible // update the model
+//
+//        configure(with: self.selectedPost?.content ?? "")
+//
+//        if let tableView = self.superview as? UITableView {
+//            if let indexPath = tableView.indexPath(for: self) {
+//                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
+//            }
+//            tableView.beginUpdates()
+//            tableView.endUpdates()
+//        }
+//    }
+    
+    @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
         isFullTextVisible.toggle()
-        if isFullTextVisible {
-            postMsgLbl.text = actualString
+        guard let text = postMsgLbl.attributedText?.string else { return }
+        
+        let seeMoreRange = (text as NSString).range(of: " ...more")
+        let seeLessRange = (text as NSString).range(of: " ...less")
+        let location = gesture.location(in: postMsgLbl)
+        var isTapOtherPartOnLbl = false
+        
+        if didTapAttributedTextInLabel(label: postMsgLbl, targetRange: seeMoreRange, location: location) {
+            selectedPost?.isExpand = true
+            isTapOtherPartOnLbl = false
+            updateLabelText()
+        } else if didTapAttributedTextInLabel(label: postMsgLbl, targetRange: seeLessRange, location: location) {
+            selectedPost?.isExpand = false
+            isTapOtherPartOnLbl = false
+            updateLabelText()
         } else {
-            postMsgLbl.attributedText = Constants.truncateContent(actualString)
+            isTapOtherPartOnLbl = true
+            print("none")
         }
-
-        // Notify the table view to update the cell's height
-        if let tableView = superview as? UITableView {
+        
+        if let tableView = self.superview as? UITableView {
+            if let indexPath = tableView.indexPath(for: self) {
+                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row, isExpand: selectedPost?.isExpand ?? false, tapOther: isTapOtherPartOnLbl)
+            }
             tableView.beginUpdates()
             tableView.endUpdates()
         }
     }
+    
+    func didTapAttributedTextInLabel(label: UILabel, targetRange: NSRange, location: CGPoint) -> Bool {
+            guard let attributedText = label.attributedText else { return false }
+            
+            let textStorage = NSTextStorage(attributedString: attributedText)
+            let layoutManager = NSLayoutManager()
+            let textContainer = NSTextContainer(size: label.bounds.size)
+            textContainer.lineFragmentPadding = 0
+            textContainer.maximumNumberOfLines = label.numberOfLines
+            textContainer.lineBreakMode = label.lineBreakMode
+            
+            layoutManager.addTextContainer(textContainer)
+            textStorage.addLayoutManager(layoutManager)
+            
+            let index = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+            return NSLocationInRange(index, targetRange)
+        }
+    
+    func updateLabelText() {
+        let content = selectedPost?.content ?? ""
+        let attributedText = NSMutableAttributedString(string: content)
+        if selectedPost?.isExpand == false {
+            let seeMoreRange = (content as NSString).range(of: " ...more")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: seeMoreRange)
+            attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: seeMoreRange)
+            isFullTextVisible = false
+        } else {
+            let seeLessRange = (content as NSString).range(of: " ...less")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: seeLessRange)
+            attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: seeLessRange)
+            isFullTextVisible = true
+        }
+        postMsgLbl.attributedText = Constants.truncateContent(content, isExpanded: isFullTextVisible)
+    }
+
+
     
     @IBAction func like_touchUpInside(_ sender: UIButton) {
         delegate?.actionType(sender: sender, action: .like)

@@ -12,9 +12,6 @@
         <array key="NunitoSans-Bold.ttf">
             <string>NunitoSans-Bold</string>
         </array>
-        <array key="NunitoSans-Regular.ttf">
-            <string>NunitoSans-Regular</string>
-        </array>
         <array key="SF-Pro-Text-Bold.otf">
             <string>SFProText-Bold</string>
         </array>
@@ -137,7 +134,7 @@
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agd-o3-mjG">
-                        <rect key="frame" x="20" y="80" width="391" height="617"/>
+                        <rect key="frame" x="20" y="80" width="391" height="614.33333333333337"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90X-85-2w9">
@@ -301,15 +298,14 @@
                             <constraint firstItem="WCe-iu-P3I" firstAttribute="centerY" secondItem="PZk-em-cYa" secondAttribute="centerY" id="xo7-kg-78N"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajj-OU-lEu">
-                        <rect key="frame" x="36" y="620" width="359" height="22"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6c-fO-8TJ">
+                        <rect key="frame" x="36" y="620" width="359" height="19.333333333333371"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPx-rq-iHF" userLabel="Bottom Button Vw">
-                        <rect key="frame" x="20" y="652" width="391" height="40"/>
+                        <rect key="frame" x="20" y="649.33333333333337" width="391" height="40"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Twa-ml-WnT" userLabel="Like View">
                                 <rect key="frame" x="19.999999999999996" y="0.0" width="44.666666666666657" height="40"/>
@@ -458,26 +454,26 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="bottom" secondItem="sPx-rq-iHF" secondAttribute="bottom" constant="5" id="0sz-FT-khc"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="ajj-OU-lEu" secondAttribute="trailing" constant="16" id="44P-3s-Vae"/>
                     <constraint firstItem="pzm-cG-kk8" firstAttribute="top" secondItem="90X-85-2w9" secondAttribute="bottom" id="911-Le-vAh"/>
                     <constraint firstAttribute="trailing" secondItem="sPx-rq-iHF" secondAttribute="trailing" constant="20" id="Axd-Ut-cOk"/>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="top" secondItem="90X-85-2w9" secondAttribute="top" id="EAz-s6-uMe"/>
                     <constraint firstItem="pzm-cG-kk8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Hv8-9I-Nbv"/>
+                    <constraint firstItem="H6c-fO-8TJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="Iv5-w7-ikQ"/>
                     <constraint firstItem="cab-Gv-OQo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Jsk-3L-T4u"/>
-                    <constraint firstItem="sPx-rq-iHF" firstAttribute="top" secondItem="ajj-OU-lEu" secondAttribute="bottom" constant="10" id="LsY-Be-jAS"/>
                     <constraint firstItem="7xG-hQ-Wmg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="M81-PN-SMR"/>
                     <constraint firstItem="90X-85-2w9" firstAttribute="top" secondItem="7xG-hQ-Wmg" secondAttribute="bottom" constant="20" id="P2t-YQ-fg1"/>
                     <constraint firstItem="sPx-rq-iHF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="PlF-Qy-fHB"/>
                     <constraint firstItem="cab-Gv-OQo" firstAttribute="top" secondItem="pzm-cG-kk8" secondAttribute="bottom" id="QQ3-FV-wSG"/>
                     <constraint firstItem="7xG-hQ-Wmg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="RD9-zw-eBN"/>
+                    <constraint firstItem="H6c-fO-8TJ" firstAttribute="top" secondItem="cab-Gv-OQo" secondAttribute="bottom" constant="10" id="RhR-ai-jYG"/>
                     <constraint firstItem="90X-85-2w9" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="S48-hq-p1e"/>
-                    <constraint firstItem="ajj-OU-lEu" firstAttribute="top" secondItem="cab-Gv-OQo" secondAttribute="bottom" constant="10" id="a32-16-ZIW"/>
                     <constraint firstItem="90X-85-2w9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ePi-AN-R6p"/>
                     <constraint firstItem="pzm-cG-kk8" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="fvR-BQ-Pih"/>
                     <constraint firstAttribute="trailing" secondItem="7xG-hQ-Wmg" secondAttribute="trailing" id="fys-Ve-Oyi"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="H6c-fO-8TJ" secondAttribute="trailing" constant="16" id="gI7-fs-oUj"/>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="iD5-Ri-ySL"/>
                     <constraint firstItem="cab-Gv-OQo" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="qli-dS-c2z"/>
-                    <constraint firstItem="ajj-OU-lEu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="yRe-lN-7R1"/>
+                    <constraint firstItem="sPx-rq-iHF" firstAttribute="top" secondItem="H6c-fO-8TJ" secondAttribute="bottom" constant="10" id="wUS-8h-o7L"/>
                     <constraint firstItem="agd-o3-mjG" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="zS6-Se-kBo"/>
                 </constraints>
             </tableViewCellContentView>
@@ -508,7 +504,7 @@
                 <outlet property="pageControl" destination="m0Q-bs-35z" id="a5J-cd-Dyw"/>
                 <outlet property="pageControlHeight" destination="Hlu-Zx-Ek9" id="YPo-8S-MOz"/>
                 <outlet property="pageNoLbl" destination="u6j-hG-08C" id="j3s-HA-dCc"/>
-                <outlet property="postMsgLbl" destination="ajj-OU-lEu" id="MFT-HV-JZc"/>
+                <outlet property="postMsgLbl" destination="H6c-fO-8TJ" id="P50-qI-61V"/>
                 <outlet property="profileImage" destination="gGk-cv-SAx" id="cwx-KC-qJH"/>
                 <outlet property="reportBtn" destination="02V-yt-WBs" id="8b1-ev-UHS"/>
                 <outlet property="shareButton" destination="ksL-60-4YO" id="KD3-3d-GIt"/>

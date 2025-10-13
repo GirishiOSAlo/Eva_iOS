@@ -233,6 +233,7 @@ struct DashboardItem: Codable {
     let fileDatetime: String?
     let postDocuments: [String]?
     let user: EvaUser?
+    var isExpand: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id, userID, isURL, postVideo, isPostLike, isPostdisLike, createdDate, isConnected
