@@ -37,6 +37,7 @@ class EventMainVC: UIViewController, XIBed {
     var eventTypeArr = ["Event Details", "Conference Agenda", "Networking Events","Delegates", "Meetings", "Exhibitors","Speakers", "Sponsors", "Hotels", "Venue Map"]
     var isSelected = false
     var eventId = 0
+    var eventAttendeesStatus = ""
     var eventDetail: NewEventDetailsData?
     var conferenceAgendaList: [ConferenceAgenda] = []
     var networkingEventList: [EventNetworking] = []
@@ -76,7 +77,7 @@ class EventMainVC: UIViewController, XIBed {
     }()
     
     lazy var networkingEventsVC: NetworkingEventsVC = {
-        let vc = NetworkingEventsVC.instantiate(eventId: self.eventId)
+        let vc = NetworkingEventsVC.instantiate(eventId: self.eventId, eventAttendeesStatus: self.eventAttendeesStatus)
         vc.networkingEventList = self.networkingEventList
         return vc
     }()
@@ -132,6 +133,7 @@ class EventMainVC: UIViewController, XIBed {
         headingLabel.font = UIFont(name: Myfonts.semiBold, size: 16)
         drpDwnNameLable.font = UIFont(name: Myfonts.medium, size: 14)
         
+        self.drpDwnICImgVw.isHidden = true
         eventListTable.isHidden = true
         eventListTable.dataSource = self
         eventListTable.delegate = self
@@ -140,32 +142,20 @@ class EventMainVC: UIViewController, XIBed {
         drpDwnUIView.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"),value: 0.5, radius: 12)
         eventListTable.applyShadow()
         
-        self.drpDwnICImgVw.isHidden = true
-        if self.eventDetail?.isPrivate == 0 { //Public...
-            self.drpDwnICImgVw.isHidden = false
-        } else { //Private...
-            print(self.eventDetail?.eventAttendeesStatus ?? "")
-            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
-                self.drpDwnICImgVw.isHidden = false
-            } else {
-                print("user did not requested for event")
-                self.drpDwnICImgVw.isHidden = true
-            }
-        }
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
-        //self.openDropDown()
-        if self.eventDetail?.isPrivate == 0 { //Public...
-            self.openDropDown()
-        } else { //Private...
-            print(self.eventDetail?.eventAttendeesStatus ?? "")
-            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
-                self.openDropDown()
-            } else {
-                print("user did not requested for event")
-            }
-        }
+        self.openDropDown()
+//        if self.eventDetail?.isPrivate == 0 { //Public...
+//            self.openDropDown()
+//        } else { //Private...
+//            print(self.eventDetail?.eventAttendeesStatus ?? "")
+//            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+//                self.openDropDown()
+//            } else {
+//                print("user did not requested for event")
+//            }
+//        }
     }
     
     func openDropDown() {
@@ -203,6 +193,7 @@ extension EventMainVC  {
                     
                     if !(eventDetail.error ?? false), ((eventDetail.data?.count ?? 0) > 0) {
                         self.eventDetail = eventDetail.data?[0]
+                        self.eventAttendeesStatus = self.eventDetail?.eventAttendeesStatus ?? ""
                         self.conferenceAgendaList = self.eventDetail?.conferenceagenda ?? []
                         self.networkingEventList = self.eventDetail?.eventNetworking ?? []
                         self.delegateMeetingsList = self.eventDetail?.delegatemeetings ?? []
@@ -216,6 +207,19 @@ extension EventMainVC  {
                         self.addModule(self.eventDetailsVC, to: self.eventDetailsView)
                         self.drpDwnNameLable.text = "Event Details"
                         self.headingLabel.text = self.eventDetail?.name ?? ""
+                        
+                        self.drpDwnICImgVw.isHidden = true
+                        if self.eventDetail?.isPrivate == 0 { //Public...
+                            self.drpDwnICImgVw.isHidden = false
+                        } else { //Private...
+                            print(self.eventDetail?.eventAttendeesStatus ?? "")
+                            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+                                self.drpDwnICImgVw.isHidden = false
+                            } else {
+                                print("user did not requested for event")
+                                self.drpDwnICImgVw.isHidden = true
+                            }
+                        }
                     }
                 } catch {
                     print(error)

@@ -25,6 +25,10 @@ class NetworkingEventsCell: UITableViewCell {
     @IBOutlet weak var joinBtn: UIButton!
     @IBOutlet weak var cancelBtn: UIButton!
     
+    @IBOutlet weak var btnStackVw: UIStackView!
+    
+    var eventAttendeesStatus = ""
+    
     var isExpanded: Bool = false {
         didSet {
             let imageName = isExpanded ? "ic_fillDropUp" : "ic_fillDropDown"
@@ -92,6 +96,34 @@ class NetworkingEventsCell: UITableViewCell {
                 self.joinBtn.isHidden = false
             }
         }
+        if eventAttendeesStatus.lowercased() == "approved" {
+            self.btnStackVw.isHidden = false
+            let mappings = obj.evaUserNetworkingMappings ?? []
+            if mappings.isEmpty {
+                // No mapping yet → show "Join"
+                self.joinBtn.isHidden = false
+                self.cancelBtn.isHidden = true
+            } else {
+                // There is at least one mapping
+                let mapping = mappings[0]
+                
+                if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
+                    // User already joined → show "Cancel"
+                    self.cancelBtn.isHidden = false
+                    self.joinBtn.isHidden = true
+                } else {
+                    // Different user or not active → show "Join"
+                    self.joinBtn.isHidden = false
+                    self.cancelBtn.isHidden = true
+                }
+            }
+        } else {
+            // Not approved → show nothing
+            self.btnStackVw.isHidden = true
+            self.joinBtn.isHidden = true
+            self.cancelBtn.isHidden = true
+        }
+
         
     }
 

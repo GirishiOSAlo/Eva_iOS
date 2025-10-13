@@ -111,7 +111,7 @@
                                 <rect key="frame" x="0.0" y="199.33333333333334" width="288" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5V-vs-g5I">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="40"/>
                                         <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="6Gg-19-iKV"/>
@@ -120,7 +120,7 @@
                                         <state key="normal" title="Join"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmc-W2-zH8">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="40"/>
+                                        <rect key="frame" x="0.0" y="6" width="288" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="dPK-Vc-YyZ"/>
@@ -179,6 +179,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btnStackVw" destination="1Ml-yc-3hJ" id="PF5-7m-bzU"/>
                 <outlet property="cancelBtn" destination="xmc-W2-zH8" id="Lg2-Q8-hhy"/>
                 <outlet property="dateLabel" destination="OfT-UE-JUG" id="yTa-xP-WrW"/>
                 <outlet property="drpDwnBtn" destination="SNN-wQ-Xwt" id="1gF-Cq-1Bz"/>

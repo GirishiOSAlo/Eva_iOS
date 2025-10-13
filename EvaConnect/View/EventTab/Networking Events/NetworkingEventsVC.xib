@@ -41,6 +41,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="458" id="ffW-ud-0aN"/>
                                     </constraints>
+                                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLW-th-Fty">
                                     <rect key="frame" x="20" y="510" width="353" height="131"/>

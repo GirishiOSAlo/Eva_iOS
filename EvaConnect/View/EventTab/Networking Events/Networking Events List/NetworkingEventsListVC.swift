@@ -10,9 +10,10 @@ import UIKit
 
 class NetworkingEventsListVC: UIViewController,XIBed {
     
-    static func instantiate(eventId: Int) -> Self {
+    static func instantiate(eventId: Int, eventAttendeesStatus: String) -> Self {
         let vc = Self.instantiate()
         vc.eventId = eventId
+        vc.eventAttendeesStatus = eventAttendeesStatus
         return vc
     }
     
@@ -27,6 +28,7 @@ class NetworkingEventsListVC: UIViewController,XIBed {
     var networkingEventList: [NetworkEventList] = []
     var selectedIndex: Int?
     var eventId = 0
+    var eventAttendeesStatus = ""
     var currentPage = 1
     var lastPage = 1
     
@@ -203,7 +205,7 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         
         let networkEvent = self.networkingEventList[indexPath.row]
         cell.setListData(obj: networkEvent)
-        
+        cell.eventAttendeesStatus = self.eventAttendeesStatus
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnBtn.tag = indexPath.row
         cell.drpDwnBtn.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
@@ -240,7 +242,13 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         totalHeight = totalHeight - 17.0 //-17 is sponsor header hide.....
         
         if indexPath.row == selectedIndex {
-            return totalHeight
+            if self.eventAttendeesStatus.lowercased() == "approved" {
+                let finalHeight = totalHeight
+                return finalHeight
+            } else {
+                let finalHeight = totalHeight - 40.0 //-40.0 is Btn Hidden....
+                return finalHeight
+            }
         } else {
             let sponserheight = sponsorLblHeight + locationLblHeight + 126.0
             let collapseHeight = totalHeight - sponserheight

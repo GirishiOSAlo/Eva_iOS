@@ -10,9 +10,10 @@ import UIKit
 
 class NetworkingEventsVC: UIViewController, XIBed {
     
-    static func instantiate(eventId: Int) -> Self {
+    static func instantiate(eventId: Int, eventAttendeesStatus: String) -> Self {
         let vc = Self.instantiate()
         vc.eventId = eventId
+        vc.eventAttendeesStatus = eventAttendeesStatus
         return vc
     }
     
@@ -27,6 +28,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     var networkingEventList: [EventNetworking] = []
     var selectedIndex: Int?
     var eventId = 0
+    var eventAttendeesStatus = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +115,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     
     @objc func viewAllTapped() {
         print("View All tapped")
-        let vc = NetworkingEventsListVC.instantiate(eventId: self.eventId)
+        let vc = NetworkingEventsListVC.instantiate(eventId: self.eventId, eventAttendeesStatus: self.eventAttendeesStatus)
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -208,7 +210,7 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
         
         let networkEvent = self.networkingEventList[indexPath.row]
         cell.setData(obj: networkEvent)
-        
+        cell.eventAttendeesStatus = self.eventAttendeesStatus
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnBtn.tag = indexPath.row
         cell.drpDwnBtn.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
@@ -258,7 +260,13 @@ extension NetworkingEventsVC: UITableViewDelegate, UITableViewDataSource {
 //        }
         
         if indexPath.row == selectedIndex {
-            return totalHeight
+            if self.eventAttendeesStatus.lowercased() == "approved" {
+                let finalHeight = totalHeight
+                return finalHeight
+            } else {
+                let finalHeight = totalHeight - 40.0 //-40.0 is Btn Hidden....
+                return finalHeight
+            }
         } else {
             return collapseHeight
         }
