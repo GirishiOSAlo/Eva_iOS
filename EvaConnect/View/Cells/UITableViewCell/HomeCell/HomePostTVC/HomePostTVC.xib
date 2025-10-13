@@ -481,6 +481,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="bgVw" destination="agd-o3-mjG" id="RNZ-Yo-keX"/>
+                <outlet property="bottomBtnVw" destination="sPx-rq-iHF" id="X7b-oz-FxA"/>
                 <outlet property="commentButton" destination="OBT-2m-xet" id="S6c-sD-Lng"/>
                 <outlet property="commentCountLbl" destination="Oq9-M6-SwN" id="Te4-e2-nhZ"/>
                 <outlet property="connectionNameLbl" destination="2dq-V8-32q" id="pxf-DH-YIZ"/>
