@@ -55,8 +55,8 @@ class SpeakersDetailsVC: UIViewController, XIBed {
         } else {
             profileImgVw.image = UIImage(named: "profile")
         }
-        nameLbl.text = data?.firstName ?? ""
-        subLbl.text = data?.designation ?? ""
-        descLbl.text = data?.description ?? ""
+        nameLbl.text = (data?.firstName?.isEmpty ?? true) ? "--" : data?.firstName
+        subLbl.text = (data?.designation?.isEmpty ?? true) ? "--" : data?.designation
+        descLbl.text = (data?.description?.isEmpty ?? true) ? "--" : data?.description
     }
 }

@@ -18,6 +18,7 @@ class SpeakersViewController: UIViewController, XIBed {
     }
     
     @IBOutlet weak var listCollectionVw: UICollectionView!
+    @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     var speakersList: [CommonEventMetaData] = []
     var eventId = 0
     var selectedIndex: Int?
@@ -57,6 +58,17 @@ class SpeakersViewController: UIViewController, XIBed {
         label.sizeToFit()
         return label.frame.height
     }
+    
+    func updateCollectionHeigth() {
+        var finalHeight = 0.0
+        for speaker in self.speakersList {
+            let nameLblHeight = self.heightForView(text: speaker.firstName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
+            let subLblHeight = self.heightForView(text: speaker.description ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
+            let totalHeight = nameLblHeight + subLblHeight + 350.0
+            finalHeight = finalHeight + totalHeight
+        }
+        self.collectionVwHeight.constant = finalHeight
+    }
 }
 
 extension SpeakersViewController {
@@ -78,6 +90,7 @@ extension SpeakersViewController {
                         self.speakersList = speakerDetail.data?.data ?? []
                         self.listCollectionVw.reloadData()
                         self.lastPage = speakerDetail.data?.lastPage ?? 1
+                        self.updateCollectionHeigth()
                     } else {
                         self.presentAlert("Error","\(speakerDetail.message ?? "")")
                     }
@@ -121,7 +134,7 @@ extension SpeakersViewController: UICollectionViewDelegate, UICollectionViewData
         let speaker = self.speakersList[indexPath.row]
         let nameLblHeight = self.heightForView(text: speaker.firstName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
         let subLblHeight = self.heightForView(text: speaker.description ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
-        let totalHeight = nameLblHeight + subLblHeight + 340.0
+        let totalHeight = nameLblHeight + subLblHeight + 350.0
         
         return CGSize(width: self.listCollectionVw.frame.size.width, height: totalHeight)
     }

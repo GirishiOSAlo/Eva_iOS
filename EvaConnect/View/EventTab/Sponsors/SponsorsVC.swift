@@ -16,8 +16,8 @@ class SponsorsVC: UIViewController, XIBed {
         return vc
     }
     
-    @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     @IBOutlet weak var listCollectionVw: UICollectionView!
+    @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     var sponsorsList: [CommonEventMetaData] = []
     var eventId = 0
     var selectedIndex: Int?
