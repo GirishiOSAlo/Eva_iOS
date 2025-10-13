@@ -139,6 +139,19 @@ class EventMainVC: UIViewController, XIBed {
         eventListTable.layer.cornerRadius = 12
         drpDwnUIView.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"),value: 0.5, radius: 12)
         eventListTable.applyShadow()
+        
+        self.drpDwnICImgVw.isHidden = true
+        if self.eventDetail?.isPrivate == 0 { //Public...
+            self.drpDwnICImgVw.isHidden = false
+        } else { //Private...
+            print(self.eventDetail?.eventAttendeesStatus ?? "")
+            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+                self.drpDwnICImgVw.isHidden = false
+            } else {
+                print("user did not requested for event")
+                self.drpDwnICImgVw.isHidden = true
+            }
+        }
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
