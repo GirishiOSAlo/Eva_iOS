@@ -60,27 +60,9 @@ struct DashboardPostData: Codable {
     let newsSource: PostNewsSource?
     let isNewsSave: Int?
     let user: DashboardPostUser?
-    var isExpanded: Bool = false
+    var isExpand: Bool = false
     
     enum CodingKeys: String, CodingKey {
-//        case id, userID, isURL
-//        case postVideo = "post_video"
-//        case isPostLike, isPostdisLike
-//        case isNewsLike = "is_news_like"
-//        case isNewsDislike = "is_news_dislike"
-//        case createdDate, isConnected
-//        case connectionID = "connectionId"
-//        case isReceiver, content, title, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status
-//        case documentFileName = "document_file_name"
-//        case documentSize = "document_size"
-//        case postDocument = "post_documents"
-//        case fileDatetime = "file_datetime"
-//        case shareCount, type
-//        case datumPostImage = "post_image"
-//        case image
-//        case newsSource = "news_source"
-//        case isNewsSave, user
-        
         case id, userID, isURL
         case postVideo = "post_video"
         case isPostLike, isPostdisLike

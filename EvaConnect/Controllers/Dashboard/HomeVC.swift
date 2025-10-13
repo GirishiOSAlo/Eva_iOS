@@ -1226,7 +1226,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
         case postListTblVw:
             if selectedTab == .posts {
                 let homePost = posts[indexPath.row]
-//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
                 var lblHeight: CGFloat = 0.0
                 if homePost.isExpand {
                     lblHeight = heightForView(homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
@@ -2642,6 +2641,7 @@ extension HomeVC {
         postListTblVw.dataSource = self
         postListTblVw.delegate = self
         postListTblVw.registerCells(withTypes: [HomeUrl.self, HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self, HomePostTVC.self])
+        
     }
     
 }

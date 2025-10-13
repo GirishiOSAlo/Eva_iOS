@@ -54,7 +54,8 @@ class HomePostTVC: BaseCellClass {
     var imageArr: [String?] = []
     var isFullTextVisible = false
     var actualString = ""
-    var selectedPost: DashboardItem? 
+    var selectedPost: DashboardItem?
+    var selectedDashBoardPost: DashboardPostData?
     
     
     @IBOutlet weak var videoView: VideoClass!
@@ -65,15 +66,15 @@ class HomePostTVC: BaseCellClass {
     @IBOutlet weak var documentSizeLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var openArticleBtn: UIButton!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         initUI()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -98,7 +99,7 @@ class HomePostTVC: BaseCellClass {
         imageCollection.delegate = self
         imageCollection.dataSource = self
         imageCollection.registerNib(cellNib: PostImageCVC.self)
-                
+        
     }
     
     
@@ -157,7 +158,85 @@ class HomePostTVC: BaseCellClass {
         else if type == "image" {
             self.imageArr = dataMaper.datumPostImage ?? []
             imageCollection.reloadData()
-
+            
+            if self.imageArr.count > 1 {
+                pageNoLbl.isHidden = false
+                pageControl.numberOfPages = self.imageArr.count
+                pageControl.currentPage = 0
+                pageNoLbl.text = "  \((pageControl.currentPage) + 1 )/\(pageControl.numberOfPages)  "
+                imageCollection.reloadData()
+            } else {
+                pageNoLbl.isHidden = true
+            }
+            
+            if dataMaper.datumPostImage!.count == 0 || dataMaper.datumPostImage!.count == 1 {
+                self.imageVwHeight.constant = 210.0
+                self.pageControlHeight.constant = 0.0
+            } else {
+                self.imageVwHeight.constant = 240.0
+                self.pageControlHeight.constant = 30.0 //30 is page control view...
+            }
+        } else {
+            print("text cell")
+        }
+    }
+    
+    func uiDashboarData(dataMaper: DashboardPostData, type: String) {
+        let userid = dataMaper.user?.id ?? 0
+        if userid == myUserDefaults.userId {
+            //followBtn.isHidden = true
+            followBtnWidth.constant = 0.0
+            reportBtn.isHidden = true
+        } else {
+            reportBtn.isHidden = false
+            if dataMaper.isConnected == "connected" || dataMaper.isConnected == "active" {
+                //followBtn.isHidden = true
+                followBtnWidth.constant = 0.0
+            } else {
+                //followBtn.isHidden = false
+                followBtnWidth.constant = 97.0
+            }
+        }
+        connectionNameLbl.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
+        dateLbl.text = dataMaper.createdDate
+        if let imageUrl = dataMaper.user?.userImage,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            profileImage.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            profileImage.image = UIImage(named: "profile")
+        }
+        
+        connectionNameLbl.text = dataMaper.user?.firstName ?? dataMaper.user?.companyName ?? ""
+        dateLbl.text = dataMaper.createdDate
+        
+        likeCountLbl.text = "\(dataMaper.likeCount ?? 0)"
+        commentCountLbl.text = "\(dataMaper.commentCount ?? 0)"
+        shareCountLbl.text = "\(dataMaper.shareCount ?? 0)"
+        
+        
+        likeImage.image = dataMaper.isPostLike == 1 ? #imageLiteral(resourceName: "like_selected") : #imageLiteral(resourceName: "Like")
+        
+        self.imageVwHeight.constant = 0.0
+        self.videoVwHeight.constant = 0.0
+        self.docVwHeight.constant = 0.0
+        
+        actualString = dataMaper.content ?? ""
+        configureDahsboard(with: actualString)
+        
+        if type == "video" {
+            self.videoVwHeight.constant = 210.0
+        }
+        else if type == "document" {
+            self.docVwHeight.constant = 80.0
+            documentName.text = dataMaper.documentFileName ?? "No Name"
+            documentSizeLbl.text = dataMaper.documentSize ?? "0 kB"
+        }
+        else if type == "image" {
+            self.imageArr = dataMaper.datumPostImage ?? []
+            imageCollection.reloadData()
+            
             if self.imageArr.count > 1 {
                 pageNoLbl.isHidden = false
                 pageControl.numberOfPages = self.imageArr.count
@@ -189,35 +268,35 @@ class HomePostTVC: BaseCellClass {
         postMsgLbl.isUserInteractionEnabled = true
         postMsgLbl.addGestureRecognizer(tapGesture)
     }
-        
-//    @objc func labelTapped() {
-//        isFullTextVisible.toggle()
-//        configure(with: actualString)
-//        
-//        // Find the table view and update height
-//        if let tableView = self.superview as? UITableView {
-//            if let indexPath = tableView.indexPath(for: self) {
-//                print("Tapped post cell at row: \(indexPath.row)")
-//                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
-//            }
-//            tableView.beginUpdates()
-//            tableView.endUpdates()
-//        }
-//    }
-//    @objc func labelTapped() {
-//        isFullTextVisible.toggle()
-//        self.selectedPost?.isExpand = isFullTextVisible // update the model
-//
-//        configure(with: self.selectedPost?.content ?? "")
-//
-//        if let tableView = self.superview as? UITableView {
-//            if let indexPath = tableView.indexPath(for: self) {
-//                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
-//            }
-//            tableView.beginUpdates()
-//            tableView.endUpdates()
-//        }
-//    }
+    
+    //    @objc func labelTapped() {
+    //        isFullTextVisible.toggle()
+    //        configure(with: actualString)
+    //
+    //        // Find the table view and update height
+    //        if let tableView = self.superview as? UITableView {
+    //            if let indexPath = tableView.indexPath(for: self) {
+    //                print("Tapped post cell at row: \(indexPath.row)")
+    //                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
+    //            }
+    //            tableView.beginUpdates()
+    //            tableView.endUpdates()
+    //        }
+    //    }
+    //    @objc func labelTapped() {
+    //        isFullTextVisible.toggle()
+    //        self.selectedPost?.isExpand = isFullTextVisible // update the model
+    //
+    //        configure(with: self.selectedPost?.content ?? "")
+    //
+    //        if let tableView = self.superview as? UITableView {
+    //            if let indexPath = tableView.indexPath(for: self) {
+    //                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
+    //            }
+    //            tableView.beginUpdates()
+    //            tableView.endUpdates()
+    //        }
+    //    }
     
     @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
         isFullTextVisible.toggle()
@@ -251,21 +330,21 @@ class HomePostTVC: BaseCellClass {
     }
     
     func didTapAttributedTextInLabel(label: UILabel, targetRange: NSRange, location: CGPoint) -> Bool {
-            guard let attributedText = label.attributedText else { return false }
-            
-            let textStorage = NSTextStorage(attributedString: attributedText)
-            let layoutManager = NSLayoutManager()
-            let textContainer = NSTextContainer(size: label.bounds.size)
-            textContainer.lineFragmentPadding = 0
-            textContainer.maximumNumberOfLines = label.numberOfLines
-            textContainer.lineBreakMode = label.lineBreakMode
-            
-            layoutManager.addTextContainer(textContainer)
-            textStorage.addLayoutManager(layoutManager)
-            
-            let index = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-            return NSLocationInRange(index, targetRange)
-        }
+        guard let attributedText = label.attributedText else { return false }
+        
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: label.bounds.size)
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        textContainer.lineBreakMode = label.lineBreakMode
+        
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        let index = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        return NSLocationInRange(index, targetRange)
+    }
     
     func updateLabelText() {
         let content = selectedPost?.content ?? ""
@@ -283,8 +362,64 @@ class HomePostTVC: BaseCellClass {
         }
         postMsgLbl.attributedText = Constants.truncateContent(content, isExpanded: isFullTextVisible)
     }
-
-
+    
+    func configureDahsboard(with content: String) {
+        //postMsgLbl.attributedText = Constants.truncateContent(content, isExpanded: isFullTextVisible)
+        self.updateLabelDashboardText()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dashboardLabelTapped(_:)))
+        postMsgLbl.isUserInteractionEnabled = true
+        postMsgLbl.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dashboardLabelTapped(_ gesture: UITapGestureRecognizer) {
+        isFullTextVisible.toggle()
+        guard let text = postMsgLbl.attributedText?.string else { return }
+        
+        let seeMoreRange = (text as NSString).range(of: " ...more")
+        let seeLessRange = (text as NSString).range(of: " ...less")
+        let location = gesture.location(in: postMsgLbl)
+        var isTapOtherPartOnLbl = false
+        
+        if didTapAttributedTextInLabel(label: postMsgLbl, targetRange: seeMoreRange, location: location) {
+            selectedDashBoardPost?.isExpand = true
+            isTapOtherPartOnLbl = false
+            updateLabelDashboardText()
+        } else if didTapAttributedTextInLabel(label: postMsgLbl, targetRange: seeLessRange, location: location) {
+            selectedDashBoardPost?.isExpand = false
+            isTapOtherPartOnLbl = false
+            updateLabelDashboardText()
+        } else {
+            isTapOtherPartOnLbl = true
+            print("none")
+        }
+        
+        if let tableView = self.superview as? UITableView {
+            if let indexPath = tableView.indexPath(for: self) {
+                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row, isExpand: selectedDashBoardPost?.isExpand ?? false, tapOther: isTapOtherPartOnLbl)
+            }
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
+    
+    func updateLabelDashboardText() {
+        let content = selectedDashBoardPost?.content ?? ""
+        let attributedText = NSMutableAttributedString(string: content)
+        if selectedDashBoardPost?.isExpand == false {
+            let seeMoreRange = (content as NSString).range(of: " ...more")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: seeMoreRange)
+            attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: seeMoreRange)
+            isFullTextVisible = false
+        } else {
+            let seeLessRange = (content as NSString).range(of: " ...less")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: seeLessRange)
+            attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: seeLessRange)
+            isFullTextVisible = true
+        }
+        postMsgLbl.attributedText = Constants.truncateContent(content, isExpanded: isFullTextVisible)
+    }
+    
     
     @IBAction func like_touchUpInside(_ sender: UIButton) {
         delegate?.actionType(sender: sender, action: .like)
@@ -299,8 +434,8 @@ class HomePostTVC: BaseCellClass {
     }
     
     @IBAction func article_touchUpInside(_ sender: UIButton) {
-         delegate?.actionType(sender: sender, action: .article)
-     }
+        delegate?.actionType(sender: sender, action: .article)
+    }
 }
 
 
@@ -322,11 +457,8 @@ extension HomePostTVC : UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostImageCVC.ReuseId, for: indexPath) as! PostImageCVC
-        
-
         cell.imageView.contentMode = .scaleAspectFill
         cell.image = imageArr[indexPath.row]
-        
         return cell
         
     }
@@ -340,9 +472,9 @@ extension HomePostTVC : UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-         let pageWidth = scrollView.frame.size.width
-         let currentPage = Int(scrollView.contentOffset.x / pageWidth)
-         pageControl.currentPage = currentPage
-         pageNoLbl.text = "  \((currentPage) + 1 )/\(pageControl.numberOfPages)  "
-     }
+        let pageWidth = scrollView.frame.size.width
+        let currentPage = Int(scrollView.contentOffset.x / pageWidth)
+        pageControl.currentPage = currentPage
+        pageNoLbl.text = "  \((currentPage) + 1 )/\(pageControl.numberOfPages)  "
+    }
 }

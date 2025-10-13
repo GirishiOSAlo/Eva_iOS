@@ -127,7 +127,7 @@ class HomePageVC: UIViewController {
         eventCollectionVw.delegate = self
         eventCollectionVw.dataSource = self
         
-        postTableVw.registerCells(withTypes: [HomeText.self, HomeImage.self, HomeVideo.self, HomeUrl.self])
+        postTableVw.registerCells(withTypes: [HomeText.self, HomeImage.self, HomeVideo.self, HomeUrl.self,HomePostTVC.self])
         newsTableVw.registerCells(withTypes: [HomeNewz.self])
         
         jobCollectionVw.registerNib(cellNib: HomeJobCVC.self)
@@ -174,15 +174,34 @@ class HomePageVC: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = font
-        label.text = text
-
-        label.sizeToFit()
-        return label.frame.height
+//    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+//        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+//        label.numberOfLines = 0
+//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        label.font = font
+//        label.text = text
+//
+//        label.sizeToFit()
+//        return label.frame.height
+//    }
+    func heightForView(_ text: Any, font: UIFont, width: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        var boundingBox: CGRect
+        
+        if let text = text as? String {
+            boundingBox = text.boundingRect(with: constraintRect,
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                            attributes: [.font: font],
+                                            context: nil)
+        } else if let attributedText = text as? NSAttributedString {
+            boundingBox = attributedText.boundingRect(with: constraintRect,
+                                                      options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                                      context: nil)
+        } else {
+            return 0
+        }
+        
+        return ceil(boundingBox.height)
     }
 }
 
@@ -309,31 +328,60 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
     func setPostTableHeight() {
         var totalHeight = 0.0
         for homePost in self.dashboardPostList {
+            var lblHeight: CGFloat = 0.0
+            if homePost.isExpand {
+                lblHeight = heightForView(homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+            } else {
+                let truncatedText = Constants.truncateContent(homePost.content ?? "", isExpanded: false)
+                lblHeight = heightForView(truncatedText, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+            }
+            
+            let marginHeight = 160.0
+            
             if homePost.postVideo != "" && homePost.postVideo != nil {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 356.0
+                let height = lblHeight + marginHeight + 210.0
                 totalHeight = totalHeight + height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 231.0
+                let height = lblHeight + marginHeight + 80.0
                 totalHeight = totalHeight + height
             } else if homePost.datumPostImage!.count > 0 {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 420.0
-                totalHeight = totalHeight + height
                 if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
-                    totalHeight = totalHeight - 30.0 //-30 is page control view...
+                    let height = lblHeight + marginHeight + 210.0 //-30 is page control view hidden...
+                    totalHeight = totalHeight + height
                 } else {
-                    print(totalHeight)
+                    let height = lblHeight + marginHeight + 240.0
+                    totalHeight = totalHeight + height
                 }
             } else {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 195.0
+                let height = lblHeight + marginHeight
                 totalHeight = totalHeight + height
             }
+//            if homePost.postVideo != "" && homePost.postVideo != nil {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 356.0
+//                totalHeight = totalHeight + height
+//            } else if homePost.postDocuments?.count ?? 0 > 0 {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 231.0
+//                totalHeight = totalHeight + height
+//            } else if homePost.datumPostImage!.count > 0 {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 420.0
+//                totalHeight = totalHeight + height
+//                if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
+//                    totalHeight = totalHeight - 30.0 //-30 is page control view...
+//                } else {
+//                    print(totalHeight)
+//                }
+//            } else {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 195.0
+//                totalHeight = totalHeight + height
+//            }
             
         }
         self.postTableVwHeight.constant = totalHeight
+        self.postTableVw.reloadData()
     }
 }
 
@@ -1161,7 +1209,18 @@ extension HomePageVC {
 }
 
 //MARK: UITableView Delegate....
-extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
+extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeightDelegate {
+    
+    func postTblHeightManaged(index: Int, isExpand: Bool, tapOther: Bool) {
+        if tapOther {
+            self.goToCommentVC(index: index)
+        } else {
+            self.dashboardPostList[index].isExpand = isExpand
+            self.setPostTableHeight()
+            self.postTableVw.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
         case self.postTableVw:
@@ -1178,97 +1237,129 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView {
         case self.postTableVw:
+            let cell: HomePostTVC = tableView.dequeueReusableCell(forIndexPath: indexPath)
             let homePost = self.dashboardPostList[indexPath.row]
-            
+            cell.selectedDashBoardPost = homePost
+            print("\(indexPath.row) ====<> \(homePost.isExpand)")
             if homePost.postVideo != "" && homePost.postVideo != nil {
-                let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.setData(dataMaper: homePost)
-                
-                cell.likeBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.sharedBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-//                cell.detailsButton.tag = indexPath.row
-//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.delegate = self
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+                cell.uiDashboarData(dataMaper: homePost, type: "video")
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
                 cell.openVideoBtn.tag = indexPath.row
                 cell.videoView.backgroundColor = .black
                 cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
                 cell.videoView.stop()
                 cell.videoView.isHidden = false
-                return cell
             }
-            else if homePost.postDocuments?.count ?? 0 > 0 {
-                let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.backgroundColor = UIColor(hex: "#EDF1FA")
-                cell.delegate = self
-                cell.setData(dataMaper: homePost)
-                
-                cell.likeBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.sharedBtn.tag = indexPath.row
-                cell.openArticleBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-//                cell.detailsButton.tag = indexPath.row
-//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                return cell
+            else if (homePost.postDocuments?.count ?? 0) > 0 {
+                cell.uiDashboarData(dataMaper: homePost, type: "document")
             }
             else if homePost.datumPostImage!.count > 0 {
-                let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.backgroundColor = UIColor(hex: "#EDF1FA")
-                cell.delegate = self
-                cell.setData(data: homePost)
+                cell.uiDashboarData(dataMaper: homePost, type: "image")
                 cell.delegateDidSelect = self
-                cell.parentViewController = self
-                
-                cell.likeButton.tag = indexPath.row
-                cell.commentButton.tag = indexPath.row
-                cell.shareButton.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-//                cell.detailsButton.tag = indexPath.row
-//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                return cell
             }
             else {
-                let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.detailsView.layer.cornerRadius = 13
-                cell.delegate = self
-                cell.setData(data: homePost)
-//                cell.detailsButton.tag = indexPath.row
-//                cell.detailsButton.addTarget(self, action: #selector(handlePostDetails(_:)), for: .touchUpInside)
-                cell.likeBtn.tag = indexPath.row
-                cell.commentBtn.tag = indexPath.row
-                cell.shareBtn.tag = indexPath.row
-                cell.goToProfileBtn.tag = indexPath.row
-                cell.reportBtn.tag = indexPath.row
-                
-                self.objectId = homePost.id ?? 0
-                self.type = .post
-                
-                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
-                cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                return cell
+                cell.uiDashboarData(dataMaper: homePost, type: "text")
             }
+            
+            cell.delegate = self
+            cell.postCellHeightDelegate = self
+            self.objectId = homePost.id ?? 0
+            self.type = .post
+            cell.goToProfileBtn.tag = indexPath.row
+            cell.reportBtn.tag = indexPath.row
+            cell.likeButton.tag = indexPath.row
+            cell.commentButton.tag = indexPath.row
+            cell.shareButton.tag = indexPath.row
+            cell.openArticleBtn.tag = indexPath.row
+            
+            cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+            cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+            cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+            
+            return cell
+//            let homePost = self.dashboardPostList[indexPath.row]
+//            
+//            if homePost.postVideo != "" && homePost.postVideo != nil {
+//                let cell: HomeVideo = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.setData(dataMaper: homePost)
+//                
+//                cell.likeBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                self.objectId = homePost.id ?? 0
+//                self.type = .post
+//                cell.delegate = self
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+//                cell.openVideoBtn.tag = indexPath.row
+//                cell.videoView.backgroundColor = .black
+//                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
+//                cell.videoView.stop()
+//                cell.videoView.isHidden = false
+//                return cell
+//            }
+//            else if homePost.postDocuments?.count ?? 0 > 0 {
+//                let cell: HomeUrl = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.backgroundColor = UIColor(hex: "#EDF1FA")
+//                cell.delegate = self
+//                cell.setData(dataMaper: homePost)
+//                
+//                cell.likeBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.sharedBtn.tag = indexPath.row
+//                cell.openArticleBtn.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                self.objectId = homePost.id ?? 0
+//                self.type = .post
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                return cell
+//            }
+//            else if homePost.datumPostImage!.count > 0 {
+//                let cell: HomeImage = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.backgroundColor = UIColor(hex: "#EDF1FA")
+//                cell.delegate = self
+//                cell.setData(data: homePost)
+//                cell.delegateDidSelect = self
+//                cell.parentViewController = self
+//                
+//                cell.likeButton.tag = indexPath.row
+//                cell.commentButton.tag = indexPath.row
+//                cell.shareButton.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                self.objectId = homePost.id ?? 0
+//                self.type = .post
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                return cell
+//            }
+//            else {
+//                let cell: HomeText = tableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.detailsView.layer.cornerRadius = 13
+//                cell.delegate = self
+//                cell.setData(data: homePost)
+//                cell.likeBtn.tag = indexPath.row
+//                cell.commentBtn.tag = indexPath.row
+//                cell.shareBtn.tag = indexPath.row
+//                cell.goToProfileBtn.tag = indexPath.row
+//                cell.reportBtn.tag = indexPath.row
+//                
+//                self.objectId = homePost.id ?? 0
+//                self.type = .post
+//                
+//                cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+//                cell.shareBtn.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                return cell
+//            }
             
         case self.newsTableVw:
             let cell: HomeNewz = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -1294,7 +1385,6 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
         default:
             return UITableViewCell()
         }
-        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -1369,27 +1459,54 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate {
         switch tableView {
         case self.postTableVw:
             let homePost = self.dashboardPostList[indexPath.row]
-            if homePost.postVideo != "" {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 356.0
+            var lblHeight: CGFloat = 0.0
+            if homePost.isExpand {
+                lblHeight = heightForView(homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+            } else {
+                let truncatedText = Constants.truncateContent(homePost.content ?? "", isExpanded: false)
+                lblHeight = heightForView(truncatedText, font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+            }
+            let marginHeight = 160.0
+            
+            if homePost.postVideo != "" && homePost.postVideo != nil {
+                let height = lblHeight + marginHeight + 210.0
                 return height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 231.0
+                let height = lblHeight + marginHeight + 80.0
                 return height
             } else if homePost.datumPostImage!.count > 0 {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 420.0
                 if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
-                    return height - 30.0 //-30 is page control view...
+                    let height = lblHeight + marginHeight + 210.0 //-30 is page control view hidden...
+                    return height
                 } else {
+                    let height = lblHeight + marginHeight + 240.0
                     return height
                 }
             } else {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 195.0
+                let height = lblHeight + marginHeight
                 return height
             }
+//            if homePost.postVideo != "" {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 356.0
+//                return height
+//            } else if homePost.postDocuments?.count ?? 0 > 0 {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 231.0
+//                return height
+//            } else if homePost.datumPostImage!.count > 0 {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 420.0
+//                if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
+//                    return height - 30.0 //-30 is page control view...
+//                } else {
+//                    return height
+//                }
+//            } else {
+//                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+//                let height = lblHeight + 195.0
+//                return height
+//            }
         case self.newsTableVw:
             return 430
             
