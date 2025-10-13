@@ -64,7 +64,7 @@ class EventMainVC: UIViewController, XIBed {
     }()
     
     lazy var delegatesVC: DelegatesVC = {
-        let vc = DelegatesVC.instantiate(eventId: self.eventId)
+        let vc = DelegatesVC.instantiate(eventId: self.eventId, eventAttendeesStatus: self.eventAttendeesStatus)
         vc.eventDetail = self.eventDetail
 //        vc.delegateData = delegatelists
         return vc
@@ -145,17 +145,17 @@ class EventMainVC: UIViewController, XIBed {
     }
     
     @IBAction func drpDwnBtnTapped(_ sender: UIButton) {
-        self.openDropDown()
-//        if self.eventDetail?.isPrivate == 0 { //Public...
-//            self.openDropDown()
-//        } else { //Private...
-//            print(self.eventDetail?.eventAttendeesStatus ?? "")
-//            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
-//                self.openDropDown()
-//            } else {
-//                print("user did not requested for event")
-//            }
-//        }
+//        self.openDropDown()
+        if self.eventDetail?.isPrivate == 0 { //Public...
+            self.openDropDown()
+        } else { //Private...
+            print(self.eventDetail?.eventAttendeesStatus ?? "")
+            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+                self.openDropDown()
+            } else {
+                print("user did not requested for event")
+            }
+        }
     }
     
     func openDropDown() {

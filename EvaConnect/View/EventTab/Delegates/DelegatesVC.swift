@@ -10,9 +10,10 @@ import UIKit
 
 class DelegatesVC: UIViewController, XIBed {
     
-    static func instantiate(eventId: Int) -> Self {
+    static func instantiate(eventId: Int, eventAttendeesStatus: String) -> Self {
         let vc = Self.instantiate()
         vc.eventId = eventId
+        vc.eventAttendeesStatus = eventAttendeesStatus
         return vc
     }
 
@@ -25,6 +26,7 @@ class DelegatesVC: UIViewController, XIBed {
     var delegateData: [CommonEventMetaData] = []
     var eventDetail: NewEventDetailsData?
     var eventId = 0
+    var eventAttendeesStatus = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +93,7 @@ extension DelegatesVC {
         let vc = StoryboardRouter.othersProfileVC()
         vc.profileID = obj.id ?? 0
         vc.eventID = self.eventId
+        vc.eventAttendeesStatus = self.eventAttendeesStatus
         vc.eventDetail = self.eventDetail
         vc.isComeFromDelegate = true
         self.navigationController?.pushViewController(vc, animated: true)

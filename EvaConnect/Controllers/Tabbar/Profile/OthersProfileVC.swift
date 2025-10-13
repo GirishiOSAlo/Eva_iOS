@@ -86,6 +86,7 @@ class OthersProfileVC: UIViewController {
     var status = ""
     var isChatEnable = true
     var eventID = 0
+    var eventAttendeesStatus = ""
     var userDetails: UserDetailsData?
     var isComeFromDelegate = false
     var otherUserID = 0
@@ -345,23 +346,27 @@ class OthersProfileVC: UIViewController {
             print("Own User Profile")
         }
         else {
-            if self.isComeFromDelegate {
+            if self.isComeFromDelegate && eventAttendeesStatus.lowercased() == "approved" {
                 self.scheduleMeetingBtnWidth.constant = 110.0 //schedule meeting button show...
             } else {
                 self.scheduleMeetingBtnWidth.constant = 0 //schedule meeting button hide...
             }
             
             let connectionStatus = user.connectionStatus ?? ""
+            print("==> \(connectionStatus)")
             let isPublic = user.isPublic ?? 0
-            self.updateConnectionUI(status: connectionStatus, isPublic: isPublic)
+            if connectionStatus.lowercased() == "blocked" {
+                self.updateConnectionUI(status: connectionStatus, isPublic: isPublic, isBlocked: true)
+            } else {
+                self.updateConnectionUI(status: connectionStatus, isPublic: isPublic, isBlocked: false)
+            }
         }
     }
     
-    func updateConnectionUI(status: String, isPublic: Int) {
-        // Normalize the connection status
+    func updateConnectionUI(status: String, isPublic: Int, isBlocked: Bool) {
         let rawStatus = status.lowercased()
-        
         var connection: String
+        
         switch rawStatus {
         case "connected", "active":
             connection = "Connected"
@@ -377,33 +382,45 @@ class OthersProfileVC: UIViewController {
             connection = "NotConnected"
         }
         
-        // Hide all button views first
+        // Hide all button views initially
         self.unfollowBtnView.isHidden = true
         self.sentRequestBtnView.isHidden = true
         self.aacceptDeclineBtnView.isHidden = true
         self.unblockBtnView.isHidden = true
         self.sendRequestBtnView.isHidden = true
         self.followBtnView.isHidden = true
+        self.chatBtn.isHidden = true
         
-        // Apply UI changes based on connection
+        // 🔒 Blocked user logic
+        if isBlocked || connection == "Block" {
+            self.unblockBtnView.isHidden = false
+            self.scheduleMeetingBtnWidth.constant = 0
+            return
+        }
+        
+        // ✅ Connected (Friends)
         if connection == "Connected" {
             self.unfollowBtnView.isHidden = false
+            self.chatBtn.isHidden = false
             self.scheduleMeetingBtnWidth.constant = 110.0
         }
+        // 📨 Request Sent
         else if connection == "Request Sent" {
             self.sentRequestBtnView.isHidden = false
+            self.chatBtn.isHidden = false
         }
+        // 📨 Request Received
         else if connection == "Received Request" {
             self.aacceptDeclineBtnView.isHidden = false
+            self.chatBtn.isHidden = false
         }
-        else if connection == "Block" {
-            self.unblockBtnView.isHidden = false
-        }
+        // 🚫 Not Connected
         else {
-            if isPublic == 0 {
-                self.sendRequestBtnView.isHidden = false
-            } else {
+            self.chatBtn.isHidden = false
+            if isPublic == 1 {
                 self.followBtnView.isHidden = false
+            } else {
+                self.sendRequestBtnView.isHidden = false
             }
         }
     }
