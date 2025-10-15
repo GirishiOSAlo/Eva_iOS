@@ -10,6 +10,7 @@ import UIKit
 
 class HotelsVC: UIViewController, XIBed {
 
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     @IBOutlet weak var listCollectionVw: UICollectionView!
     var hotelsData: [EventHotel] = []
@@ -19,9 +20,22 @@ class HotelsVC: UIViewController, XIBed {
         self.navigationController?.isNavigationBarHidden = true
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if self.hotelsData.count == 0 {
+            self.noDataLbl.isHidden = false
+        } else {
+            self.noDataLbl.isHidden = true
+        }
+        self.updateCollectionHeigth()
+    }
+    
     func setupUI() {
         self.registerCell()
-        updateCollectionHeigth()
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
     }
     
     func registerCell() {

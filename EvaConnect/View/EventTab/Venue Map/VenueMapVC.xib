@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="collectionVwHeight" destination="UEq-v8-DTP" id="VKd-qa-CXV"/>
                 <outlet property="listCollectionVw" destination="GZJ-Vl-CLc" id="exC-f1-GYI"/>
+                <outlet property="noDataLbl" destination="gFX-Ev-ekm" id="J35-IQ-7oo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -33,11 +34,19 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFX-Ev-ekm">
+                    <rect key="frame" x="115.00000000000001" y="159" width="163.33333333333337" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="gFX-Ev-ekm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="74j-dz-eqY"/>
                 <constraint firstItem="GZJ-Vl-CLc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="78R-AP-0Ea"/>
+                <constraint firstItem="gFX-Ev-ekm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="Aym-Sh-nTa"/>
                 <constraint firstItem="GZJ-Vl-CLc" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="UgR-AD-ZjS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="GZJ-Vl-CLc" secondAttribute="bottom" id="hYd-9D-50x"/>
                 <constraint firstItem="GZJ-Vl-CLc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kjo-px-qt8"/>

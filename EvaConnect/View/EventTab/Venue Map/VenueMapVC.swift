@@ -9,7 +9,8 @@
 import UIKit
 
 class VenueMapVC: UIViewController, XIBed {
-
+    
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     @IBOutlet weak var listCollectionVw: UICollectionView!
     var venueList: [EventVenu] = []
@@ -20,13 +21,22 @@ class VenueMapVC: UIViewController, XIBed {
         setupUI()
     }
     
-    func setupUI() {
-        self.registerCell()
-        if venueList.count > 0 {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.venueList.count == 0 {
+            self.noDataLbl.isHidden = false
+            self.forPlanImages = []
+        } else {
+            self.noDataLbl.isHidden = true
             self.forPlanImages = venueList[0].floorplanImage ?? []
         }
-        
-        updateCollectionHeigth()
+        self.updateCollectionHeigth()
+    }
+    
+    func setupUI() {
+        self.registerCell()
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
     }
     
     func registerCell() {

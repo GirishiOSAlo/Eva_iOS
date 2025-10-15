@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="collectionVwHeight" destination="gJc-85-YqH" id="THo-il-jbP"/>
                 <outlet property="listCollectionVw" destination="4w3-qr-rSV" id="8dl-gZ-phV"/>
+                <outlet property="noDataLbl" destination="9gv-76-E6U" id="Ob6-1g-tOd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -33,14 +34,22 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gv-76-E6U">
+                    <rect key="frame" x="115.00000000000001" y="159" width="163.33333333333337" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4w3-qr-rSV" secondAttribute="bottom" id="0tv-Qe-iUH"/>
+                <constraint firstItem="9gv-76-E6U" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="DCY-yG-V90"/>
                 <constraint firstItem="4w3-qr-rSV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TN3-W0-bQm"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4w3-qr-rSV" secondAttribute="trailing" id="cGZ-LI-K1M"/>
                 <constraint firstItem="4w3-qr-rSV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="izG-PL-7sB"/>
+                <constraint firstItem="9gv-76-E6U" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="slw-HW-iAY"/>
             </constraints>
             <point key="canvasLocation" x="84.732824427480907" y="-1.4084507042253522"/>
         </view>
