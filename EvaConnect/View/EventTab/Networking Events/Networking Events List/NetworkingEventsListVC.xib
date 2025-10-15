@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="EventListTitleLabel" destination="CWd-IL-GY3" id="aZY-9j-RYB"/>
                 <outlet property="backBtn" destination="nqb-zV-wee" id="6P1-fH-Qb2"/>
+                <outlet property="networkinEventTableHeight" destination="77z-Xe-vtb" id="z0M-b2-3WY"/>
                 <outlet property="networkingEventListTable" destination="EiK-WG-c2h" id="Oaw-Wh-Kga"/>
                 <outlet property="noDataLbl" destination="NjU-jk-T9i" id="J8i-yC-RxW"/>
                 <outlet property="pageTitleLabel" destination="hoJ-8e-tHL" id="Y3y-Lf-IbJ"/>
