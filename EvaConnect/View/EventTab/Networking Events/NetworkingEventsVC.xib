@@ -14,6 +14,7 @@
                 <outlet property="infoUiView" destination="3Fr-Qc-kA4" id="75W-hb-9zd"/>
                 <outlet property="networkinEventListTable" destination="9ja-Hg-Lhp" id="0VH-6A-WyE"/>
                 <outlet property="networkinEventTableHeight" destination="ffW-ud-0aN" id="OXT-QY-Tee"/>
+                <outlet property="noDataLbl" destination="BAJ-7h-R8u" id="asf-FE-3uF"/>
                 <outlet property="scrollView" destination="iAG-WB-OE1" id="lWj-T9-S0i"/>
                 <outlet property="tableBgVw" destination="dbA-dc-E3x" id="8aa-cf-XR1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -43,6 +44,12 @@
                                     </constraints>
                                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </tableView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAJ-7h-R8u">
+                                    <rect key="frame" x="114" y="414" width="163.33333333333337" height="24"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLW-th-Fty">
                                     <rect key="frame" x="20" y="510" width="353" height="131"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -101,12 +108,14 @@
                                 <constraint firstItem="9ja-Hg-Lhp" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="32" id="Idl-q1-FA4"/>
                                 <constraint firstItem="dbA-dc-E3x" firstAttribute="bottom" secondItem="9ja-Hg-Lhp" secondAttribute="bottom" constant="10" id="J5t-6d-WYC"/>
                                 <constraint firstAttribute="trailing" secondItem="VLW-th-Fty" secondAttribute="trailing" constant="20" id="N08-6h-P3v"/>
+                                <constraint firstItem="BAJ-7h-R8u" firstAttribute="centerX" secondItem="9ja-Hg-Lhp" secondAttribute="centerX" id="OlU-7t-VNe"/>
                                 <constraint firstItem="3Fr-Qc-kA4" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="Oo5-Qy-D1T"/>
                                 <constraint firstAttribute="trailing" secondItem="wJC-ED-xkA" secondAttribute="trailing" constant="20" id="QIw-C0-Fk0"/>
                                 <constraint firstItem="3Fr-Qc-kA4" firstAttribute="top" secondItem="wJC-ED-xkA" secondAttribute="bottom" constant="20" id="Zvw-b5-Tn1"/>
                                 <constraint firstItem="dbA-dc-E3x" firstAttribute="leading" secondItem="9ja-Hg-Lhp" secondAttribute="leading" constant="-10" id="aGr-dk-HkR"/>
                                 <constraint firstItem="VLW-th-Fty" firstAttribute="top" secondItem="9ja-Hg-Lhp" secondAttribute="bottom" constant="40" id="dyt-xP-gAh"/>
                                 <constraint firstAttribute="trailing" secondItem="3Fr-Qc-kA4" secondAttribute="trailing" constant="20" id="nyS-HP-vTE"/>
+                                <constraint firstItem="BAJ-7h-R8u" firstAttribute="centerY" secondItem="9ja-Hg-Lhp" secondAttribute="centerY" id="odh-Jd-6Qr"/>
                                 <constraint firstAttribute="trailing" secondItem="9ja-Hg-Lhp" secondAttribute="trailing" constant="32" id="oxM-wd-WbW"/>
                                 <constraint firstItem="dbA-dc-E3x" firstAttribute="top" secondItem="9ja-Hg-Lhp" secondAttribute="top" constant="-10" id="pIL-BU-ECg"/>
                                 <constraint firstItem="VLW-th-Fty" firstAttribute="leading" secondItem="9cc-OD-avS" secondAttribute="leading" constant="20" id="sYZ-Ib-KiB"/>

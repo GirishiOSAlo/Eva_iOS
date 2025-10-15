@@ -18,28 +18,25 @@ struct NetworkEventListDataModel: Codable {
 
 // MARK: - DataClass
 struct NetworkEventListData: Codable {
+    let eventName: String?
+    let attendeesstatus: String?
     let networkingList: NetworkingList?
-    let eventName: EventName?
-}
-
-// MARK: - EventName
-struct EventName: Codable {
-    let name: String?
 }
 
 // MARK: - NetworkingList
-struct NetworkingList: Codable {
+struct NetworkingList: Codable {    
     let currentPage: Int?
     let data: [NetworkEventList]?
     let firstPageURL: String?
-    let from, lastPage: Int?
+    let from: Int?
+    let lastPage: Int?
     let lastPageURL: String?
-    let links: [Link]?
+    let links: [NetworkingListLink]?
     let nextPageURL: String?
     let path: String?
     let perPage: Int?
-    let prevPageURL: String?
-    let to, total: Int?
+    let prevPageURL, to: String?
+    let total: Int?
 
     enum CodingKeys: String, CodingKey {
         case currentPage = "current_page"
@@ -80,6 +77,13 @@ struct NetworkEventList: Codable {
         case eventID = "event_id"
         case evaUserNetworkingMappings = "eva_user_networking_mappings"
     }
+}
+
+// MARK: - Link
+struct NetworkingListLink: Codable {
+    let url: String?
+    let label: String?
+    let active: Bool?
 }
 
 //// MARK: - EvaUserNetworkingMapping

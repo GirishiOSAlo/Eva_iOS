@@ -38,7 +38,7 @@ class ConferenceDetailsVC: UIViewController, XIBed {
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         headingLabel.font = UIFont(name: Myfonts.semiBold, size: 16)
-        noDataLbl.font = UIFont(name: Myfonts.semiBold, size: 16)
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
         noDataLbl.isHidden = true
     }
     
@@ -81,12 +81,13 @@ extension ConferenceDetailsVC {
                         self.noDataLbl.isHidden = true
                         if let data = agendaRoot.data {
                             self.eventAgendaData = data
-                            self.agendaTblVw.reloadData()
                         }
                     } else {
-                        self.noDataLbl.isHidden = false
                         print("Agenda List is Empty...")
+                        self.eventAgendaData = []
+                        self.noDataLbl.isHidden = false
                     }
+                    self.agendaTblVw.reloadData()
                 } else {
                     print("Error :: \(agendaRoot.message ?? "")")
                 }

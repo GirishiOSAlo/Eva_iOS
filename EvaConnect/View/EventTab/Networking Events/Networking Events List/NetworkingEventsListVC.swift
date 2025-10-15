@@ -24,6 +24,7 @@ class NetworkingEventsListVC: UIViewController,XIBed {
     @IBOutlet weak var networkinEventTableHeight: NSLayoutConstraint!
     @IBOutlet weak var EventListTitleLabel: UILabel!
     @IBOutlet weak var tableBgVw: UIView!
+    @IBOutlet weak var noDataLbl: UILabel!
     
     var networkingEventList: [NetworkEventList] = []
     var selectedIndex: Int?
@@ -40,6 +41,8 @@ class NetworkingEventsListVC: UIViewController,XIBed {
     func setupUI(){
         self.navigationController?.isNavigationBarHidden = true
         tableBgVw.layer.cornerRadius = 20.0
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
         registerCell()
         pageTitleLabel.font = UIFont(name: Myfonts.medium, size: 14)
         EventListTitleLabel.font = UIFont(name: Myfonts.medium, size: 14)
@@ -139,30 +142,39 @@ class NetworkingEventsListVC: UIViewController,XIBed {
 extension NetworkingEventsListVC {
     func fetchNetworkEventListData(page: Int) {
         let url = EndPoints.eventNetworkList
-        let parameters = [
+        let parameters: [String: Any] = [
             "eventid": self.eventId,
-            "page": page ] as [String: Any]
+            "page": page
+        ]
         
         showActivity()
-        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+        
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { response in
             self.hideActivity()
             do {
-                let jsonDecoder = JSONDecoder()
-                let networkEventRoot = try jsonDecoder.decode(NetworkEventListDataModel.self, from: response.data!)
+                let decoder = JSONDecoder()
+                let networkEventRoot = try decoder.decode(NetworkEventListDataModel.self, from: response.data!)
                 
-                if !(networkEventRoot.error!) {
+                if networkEventRoot.error == false {
                     let list = networkEventRoot.data?.networkingList?.data ?? []
-                    if list.count > 0 {
+                    self.lastPage = networkEventRoot.data?.networkingList?.lastPage ?? 1
+                    
+                    if !list.isEmpty {
                         self.networkingEventList = list
-                        self.networkingEventListTable.reloadData()
-                        self.lastPage = networkEventRoot.data?.networkingList?.lastPage ?? 1
+                        self.noDataLbl.isHidden = true
                         self.updateTableHeigth()
+                    } else {
+                        print("No networking events found.")
+                        self.networkingEventList = []
+                        self.noDataLbl.isHidden = false
+                        self.networkinEventTableHeight.constant = 0.0
                     }
+                    self.networkingEventListTable.reloadData()
                 } else {
-                    print("Error :: \(networkEventRoot.message ?? "")")
+                    print("Error: \(networkEventRoot.message ?? "Unknown error")")
                 }
             } catch {
-                print("Error:: ", error)
+                print("Decoding error:", error)
             }
         }
     }

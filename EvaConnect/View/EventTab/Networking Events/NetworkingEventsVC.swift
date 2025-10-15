@@ -24,6 +24,7 @@ class NetworkingEventsVC: UIViewController, XIBed {
     @IBOutlet weak var infoUiView: UIView!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var tableBgVw: UIView!
+    @IBOutlet weak var noDataLbl: UILabel!
     
     var networkingEventList: [EventNetworking] = []
     var selectedIndex: Int?
@@ -38,6 +39,8 @@ class NetworkingEventsVC: UIViewController, XIBed {
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         tableBgVw.layer.cornerRadius = 20.0
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
         
         let text = "View all"
         let attributes: [NSAttributedString.Key: Any] = [
@@ -53,7 +56,15 @@ class NetworkingEventsVC: UIViewController, XIBed {
         viewAllLabel.addGestureRecognizer(tapGesture)
         
         self.registerCell()
-        self.updateTableHeigth()
+        if self.networkingEventList.count == 0 {
+            self.tableBgVw.isHidden = true
+            self.noDataLbl.isHidden = false
+            self.networkinEventTableHeight.constant = 50.0
+        } else {
+            self.tableBgVw.isHidden = false
+            self.noDataLbl.isHidden = true
+            self.updateTableHeigth()
+        }
     }
     
     func registerCell() {
@@ -165,6 +176,16 @@ extension NetworkingEventsVC {
                         let eventDetail = eventDetail.data?[0]
                         self.networkingEventList = eventDetail?.eventNetworking ?? []
                         self.networkinEventListTable.reloadData()
+                        
+                        if self.networkingEventList.count == 0 {
+                            self.tableBgVw.isHidden = true
+                            self.noDataLbl.isHidden = false
+                            self.networkinEventTableHeight.constant = 50.0
+                        } else {
+                            self.tableBgVw.isHidden = false
+                            self.noDataLbl.isHidden = true
+                            self.updateTableHeigth()
+                        }
                     }
                 } catch {
                     print(error)
