@@ -36,6 +36,7 @@ class DelegatesVC: UIViewController, XIBed {
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         self.noRecordLbl.isHidden = true
+        noRecordLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
         searchUiView.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
         delegateListTable.delegate = self
         delegateListTable.dataSource = self

@@ -15,7 +15,8 @@ class ExhibitorsVC: UIViewController, XIBed {
         vc.eventId = eventId
         return vc
     }
-    
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var baseVW: UIView!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var exhibitorsTableView: UITableView!
     var exhibitorsList: [CommonEventMetaData] = []
@@ -32,6 +33,8 @@ class ExhibitorsVC: UIViewController, XIBed {
     
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
         exhibitorsTableView.dataSource = self
         exhibitorsTableView.delegate = self
         exhibitorsTableView.registerCell(withType: ExhibitorsCell.self)
@@ -81,7 +84,15 @@ extension ExhibitorsVC {
                         self.exhibitorsList = exhibitorsDetail.data?.data ?? []
                         self.exhibitorsTableView.reloadData()
                         self.lastPage = exhibitorsDetail.data?.lastPage ?? 1
-                        self.updateTableHeigth()
+                        
+                        if self.exhibitorsList.count == 0 {
+                            self.noDataLbl.isHidden = false
+                            self.viewHeight.constant = 0.0
+                        } else {
+                            self.noDataLbl.isHidden = true
+                            self.updateTableHeigth()
+                        }
+                        
                     } else {
                         self.presentAlert("Error","\(exhibitorsDetail.message ?? "")")
                     }
