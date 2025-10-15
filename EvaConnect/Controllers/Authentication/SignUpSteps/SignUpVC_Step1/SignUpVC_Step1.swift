@@ -162,6 +162,7 @@ extension SignUpVC_Step1 {
     func setLayOut() {
         
         //==> By Default User Tab Selected.....
+        myUserDefaults.isIndivisualUser = true
         userType = .user
         myUserDefaults.user = "user"
         individualBtn.layer.borderColor = UIColor(hex: "#4D76CD").cgColor
