@@ -19,6 +19,7 @@ class ConferenceDetailsVC: UIViewController, XIBed {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var headingLabel: UILabel!
+    @IBOutlet weak var noDataLbl: UILabel!
     
     @IBOutlet weak var agendaTblVw: UITableView!
     
@@ -37,6 +38,8 @@ class ConferenceDetailsVC: UIViewController, XIBed {
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         headingLabel.font = UIFont(name: Myfonts.semiBold, size: 16)
+        noDataLbl.font = UIFont(name: Myfonts.semiBold, size: 16)
+        noDataLbl.isHidden = true
     }
     
     func registerCell() {
@@ -75,11 +78,13 @@ extension ConferenceDetailsVC {
                 
                 if !(agendaRoot.error!) {
                     if (agendaRoot.data?.count ?? 0) > 0 {
+                        self.noDataLbl.isHidden = true
                         if let data = agendaRoot.data {
                             self.eventAgendaData = data
                             self.agendaTblVw.reloadData()
                         }
                     } else {
+                        self.noDataLbl.isHidden = false
                         print("Agenda List is Empty...")
                     }
                 } else {

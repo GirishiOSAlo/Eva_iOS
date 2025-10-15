@@ -19,6 +19,7 @@
                 <outlet property="agendaTblVw" destination="vxm-7y-mPc" id="WmE-Nk-HHf"/>
                 <outlet property="backBtn" destination="jmL-Di-HSK" id="Jsf-T8-Ios"/>
                 <outlet property="headingLabel" destination="ylN-Jc-cjk" id="JJn-Fa-lpb"/>
+                <outlet property="noDataLbl" destination="byU-ZT-6gN" id="ogS-vH-VhY"/>
                 <outlet property="topView" destination="mgy-52-ylQ" id="wok-qE-iNA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -64,6 +65,12 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="separatorInset" minX="12" minY="0.0" maxX="12" maxY="0.0"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byU-ZT-6gN">
+                    <rect key="frame" x="115.00000000000001" y="229" width="163.33333333333337" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
@@ -73,8 +80,10 @@
                 <constraint firstItem="mgy-52-ylQ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="AiD-4J-Lxf"/>
                 <constraint firstItem="vxm-7y-mPc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="NsH-vk-4rI"/>
                 <constraint firstItem="vxm-7y-mPc" firstAttribute="top" secondItem="mgy-52-ylQ" secondAttribute="bottom" id="PBj-Pm-GjR"/>
+                <constraint firstItem="byU-ZT-6gN" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="TSt-BB-UDL"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vxm-7y-mPc" secondAttribute="bottom" id="Zg2-82-yfh"/>
                 <constraint firstItem="mgy-52-ylQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cQ7-F7-jrH"/>
+                <constraint firstItem="byU-ZT-6gN" firstAttribute="top" secondItem="mgy-52-ylQ" secondAttribute="bottom" constant="100" id="tcI-DM-cYE"/>
                 <constraint firstItem="mgy-52-ylQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xqE-BY-kVC"/>
             </constraints>
             <point key="canvasLocation" x="46.564885496183201" y="19.718309859154932"/>

@@ -19,7 +19,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var agendaListTable: UITableView!
     @IBOutlet weak var tableBgVw: UIView!
-    
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var agendaTableHeight: NSLayoutConstraint!
     @IBOutlet weak var viewAllLabel: UILabel!
     @IBOutlet weak var infoUiView: UIView!
@@ -39,6 +39,8 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         self.navigationController?.isNavigationBarHidden = true
         tableBgVw.layer.cornerRadius = 20.0
         infoUiView.layer.cornerRadius = 20.0
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
         
         let text = "View all"
         let attributes: [NSAttributedString.Key: Any] = [
@@ -54,7 +56,16 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         viewAllLabel.addGestureRecognizer(tapGesture)
         
         self.registerCell()
-        self.updateTableHeigth()
+        
+        if self.conferenceAgendaList.count == 0 {
+            self.tableBgVw.isHidden = true
+            self.noDataLbl.isHidden = false
+            self.agendaTableHeight.constant = 50.0
+        } else {
+            self.tableBgVw.isHidden = false
+            self.noDataLbl.isHidden = true
+            self.updateTableHeigth()
+        }
     }
     
     func registerCell() {

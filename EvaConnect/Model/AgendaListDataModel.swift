@@ -8,11 +8,31 @@
 
 import Foundation
 
+struct AnyDecodable: Decodable {}
+
 // MARK: - Welcome
 struct EventAgendaListDataModel: Codable {
     let error: Bool?
     let message: String?
     let data: [EventAgendaData]?
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        error = try? container.decode(Bool.self, forKey: .error)
+        message = try? container.decode(String.self, forKey: .message)
+        
+        // Try to decode `data` as an array
+        if let dataArray = try? container.decode([EventAgendaData].self, forKey: .data) {
+            data = dataArray
+        }
+        // If it's a dictionary (like {}) → treat as empty array
+        else if let _ = try? container.decode([String: AnyDecodable].self, forKey: .data) {
+            data = []
+        }
+        else {
+            data = nil
+        }
+    }
 }
 
 // MARK: - Datum
