@@ -33,6 +33,11 @@ class DelegatesVC: UIViewController, XIBed {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchDelegateList()
+    }
+    
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         self.noRecordLbl.isHidden = true
@@ -41,7 +46,6 @@ class DelegatesVC: UIViewController, XIBed {
         delegateListTable.delegate = self
         delegateListTable.dataSource = self
         delegateListTable.registerCell(withType: DelegatesTableCell.self)
-        fetchDelegateList()
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{

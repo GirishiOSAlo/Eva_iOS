@@ -9,8 +9,6 @@
 import UIKit
 
 class SpeakersViewController: UIViewController, XIBed {
-    
-    
     static func instantiate(eventId: Int) -> Self {
         let vc = Self.instantiate()
         vc.eventId = eventId
@@ -19,6 +17,7 @@ class SpeakersViewController: UIViewController, XIBed {
     
     @IBOutlet weak var listCollectionVw: UICollectionView!
     @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
+    @IBOutlet weak var noDataLbl: UILabel!
     var speakersList: [CommonEventMetaData] = []
     var eventId = 0
     var selectedIndex: Int?
@@ -33,12 +32,13 @@ class SpeakersViewController: UIViewController, XIBed {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewWillAppear")
+        self.fetchSpeakersList(page: currentPage)
     }
     
     func setupUI() {
         self.registerCell()
-        fetchSpeakersList(page: currentPage)
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
     }
     
     func registerCell() {
@@ -90,7 +90,15 @@ extension SpeakersViewController {
                         self.speakersList = speakerDetail.data?.data ?? []
                         self.listCollectionVw.reloadData()
                         self.lastPage = speakerDetail.data?.lastPage ?? 1
-                        self.updateCollectionHeigth()
+                        
+                        if self.speakersList.count == 0 {
+                            self.noDataLbl.isHidden = false
+                            self.collectionVwHeight.constant = 0.0
+                        } else {
+                            self.noDataLbl.isHidden = true
+                            self.updateCollectionHeigth()
+                        }
+                        
                     } else {
                         self.presentAlert("Error","\(speakerDetail.message ?? "")")
                     }

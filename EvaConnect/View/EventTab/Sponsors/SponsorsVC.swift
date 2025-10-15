@@ -15,7 +15,7 @@ class SponsorsVC: UIViewController, XIBed {
         vc.eventId = eventId
         return vc
     }
-    
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var listCollectionVw: UICollectionView!
     @IBOutlet weak var collectionVwHeight: NSLayoutConstraint!
     var sponsorsList: [CommonEventMetaData] = []
@@ -29,10 +29,17 @@ class SponsorsVC: UIViewController, XIBed {
         self.navigationController?.isNavigationBarHidden = true
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchSponsorsList(page: currentPage)
+    }
+    
     func setupUI() {
         self.registerCell()
-        updateCollectionHeigth()
-        fetchSponsorsList(page: currentPage)
+        noDataLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
+        noDataLbl.isHidden = true
+        //updateCollectionHeigth()
     }
     
     func registerCell() {
@@ -83,7 +90,15 @@ extension SponsorsVC {
                         self.sponsorsList = sponsorsDetail.data?.data ?? []
                         self.listCollectionVw.reloadData()
                         self.lastPage = sponsorsDetail.data?.lastPage ?? 1
-                        self.updateCollectionHeigth()
+                        
+                        if self.sponsorsList.count == 0 {
+                            self.noDataLbl.isHidden = false
+                            self.collectionVwHeight.constant = 0.0
+                        } else {
+                            self.noDataLbl.isHidden = true
+                            self.updateCollectionHeigth()
+                        }
+                        
                     } else {
                         self.presentAlert("Error","\(sponsorsDetail.message ?? "")")
                     }

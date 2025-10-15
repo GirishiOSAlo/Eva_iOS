@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="collectionVwHeight" destination="9U3-ht-5SM" id="JYn-2g-jzx"/>
                 <outlet property="listCollectionVw" destination="hSK-94-JOE" id="m4q-KI-18r"/>
+                <outlet property="noDataLbl" destination="p4H-D0-bhh" id="9MM-SJ-O7T"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -33,11 +34,19 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found..!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4H-D0-bhh">
+                    <rect key="frame" x="115.00000000000001" y="159" width="163.33333333333337" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="hSK-94-JOE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="26p-7y-YWg"/>
+                <constraint firstItem="p4H-D0-bhh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AQ2-mZ-AB8"/>
+                <constraint firstItem="p4H-D0-bhh" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="I78-ju-jyx"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hSK-94-JOE" secondAttribute="trailing" id="IQU-3L-CtM"/>
                 <constraint firstItem="hSK-94-JOE" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Ily-PK-9mz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hSK-94-JOE" secondAttribute="bottom" id="Xxv-hA-Qe8"/>

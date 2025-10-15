@@ -27,8 +27,12 @@ class ExhibitorsVC: UIViewController, XIBed {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchExhibitorsList(page: currentPage)
     }
     
     func setupUI() {
@@ -39,7 +43,6 @@ class ExhibitorsVC: UIViewController, XIBed {
         exhibitorsTableView.delegate = self
         exhibitorsTableView.registerCell(withType: ExhibitorsCell.self)
         exhibitorsTableView.layer.cornerRadius = 20
-        fetchExhibitorsList(page: currentPage)
     }
     
     @objc func drpDwnBtnTapped(sender: UIButton) {
