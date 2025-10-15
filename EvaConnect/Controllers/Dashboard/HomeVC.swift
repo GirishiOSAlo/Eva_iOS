@@ -1356,7 +1356,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             let cell: HomePostTVC = tableView.dequeueReusableCell(forIndexPath: indexPath)
             let homePost = posts[indexPath.row]
             cell.selectedPost = homePost
-            print("\(indexPath.row) ====<> \(homePost.isExpand)")
             if homePost.postVideo != "" && homePost.postVideo != nil {
                 cell.uiData(dataMaper: homePost, type: "video")
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)

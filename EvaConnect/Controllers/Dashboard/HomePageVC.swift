@@ -1240,7 +1240,6 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeight
             let cell: HomePostTVC = tableView.dequeueReusableCell(forIndexPath: indexPath)
             let homePost = self.dashboardPostList[indexPath.row]
             cell.selectedDashBoardPost = homePost
-            print("\(indexPath.row) ====<> \(homePost.isExpand)")
             if homePost.postVideo != "" && homePost.postVideo != nil {
                 cell.uiDashboarData(dataMaper: homePost, type: "video")
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
