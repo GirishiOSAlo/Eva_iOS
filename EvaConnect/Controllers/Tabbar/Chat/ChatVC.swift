@@ -257,11 +257,12 @@ class ChatVC: BaseVC {
             let loggedInUserId = myUserDefaults.userId
             let otherUserID = userId
             let chatId = makeChatId(user1Id: loggedInUserId, user2Id: otherUserID)
-            print("Notification Chat Id : \(chatId)")
+            print("Chat List Id : \(chatId)")
             fetchUserForChat(chatId: chatId, loggedInUserId: loggedInUserId) { user in
                 if let user = user {
                     print("Other user name: \(user.name ?? "N/A")")
-                    self.chatMemberImage.kf.setImage(with: URL(string: user.avatar ?? ""), placeholder: UIImage(named: "profile"))
+                    let imgURL = EndPoints.shareBaseURL + (user.avatar ?? "")
+                    self.chatMemberImage.kf.setImage(with: URL(string: imgURL), placeholder: UIImage(named: "profile"))
                     self.chatMemberName.text = user.name
                     //self.lstOnlineLbl.text = user.status
                     

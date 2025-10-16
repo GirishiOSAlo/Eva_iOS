@@ -352,6 +352,7 @@ extension ChatListVC {
                     }
 
                     let notification = FirebaseNotification(
+                        avatar: dict["avatar"] as? String,
                         body: dict["body"] as? String ?? "",
                         created_at: dict["created_at"] as? String ?? "",
                         expire_at: dict["expire_at"] as? String ?? "",

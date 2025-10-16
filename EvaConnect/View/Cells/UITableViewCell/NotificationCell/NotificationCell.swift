@@ -80,7 +80,10 @@ class NotificationCell: UITableViewCell {
     
     
     func configure(item: FirebaseNotification) {
-        userAvatar.image = UIImage(named: "profile")
+        let url = EndPoints.shareBaseURL + (item.avatar ?? "")
+        userAvatar.kf.setImage(with: URL(string: url), placeholder: UIImage(named: "profile"))
+        print(url)
+        //userAvatar.image = UIImage(named: "profile")
         content.text = "\(item.title ?? "")\n\(item.body ?? "")"
         dateTime.text = item.created_at?.formattedCreatedAt()
         unreadView.backgroundColor = item.read == false ? UIColor(hex: "#4D76CD") : .clear
