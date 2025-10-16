@@ -80,7 +80,7 @@ class NotificationCell: UITableViewCell {
     
     
     func configure(item: FirebaseNotification) {
-        let url = EndPoints.shareBaseURL + (item.avatar ?? "")
+        let url = EndPoints.shareBaseURL + (item.image ?? "")
         userAvatar.kf.setImage(with: URL(string: url), placeholder: UIImage(named: "profile"))
         print(url)
         //userAvatar.image = UIImage(named: "profile")

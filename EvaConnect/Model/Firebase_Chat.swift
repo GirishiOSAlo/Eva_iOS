@@ -67,7 +67,7 @@ struct ChatMessage {
 //timestamp:1755783633
 
 struct FirebaseNotification {
-    var avatar: String?
+    var image: String?
     let body: String?
     let created_at: String?
     let expire_at: String?

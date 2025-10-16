@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import PDFKit
 
 protocol PostCellHeightDelegate: NSObject {
     func postTblHeightManaged(index: Int, isExpand: Bool, tapOther: Bool)
@@ -58,6 +59,9 @@ class HomePostTVC: BaseCellClass {
     var selectedDashBoardPost: DashboardPostData?
     
     
+    @IBOutlet weak var docVw: PDFView!
+    @IBOutlet weak var shadowView: UIView!
+    private var gradientLayer: CAGradientLayer?
     @IBOutlet weak var bottomBtnVw: UIView!
     @IBOutlet weak var videoView: VideoClass!
     @IBOutlet weak var openVideoBtn: UIButton!
@@ -71,17 +75,52 @@ class HomePostTVC: BaseCellClass {
     override func awakeFromNib() {
         super.awakeFromNib()
         initUI()
+        
+        // Force layout pass before gradient setup
+        DispatchQueue.main.async {
+            self.shadowView.layoutIfNeeded()
+            self.setupGradient()
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
+    }
+    
+    private func setupGradient() {
+        if gradientLayer == nil {
+            let gradient = CAGradientLayer()
+            
+            // Very subtle shadow effect (light-to-transparent)
+            gradient.colors = [
+                UIColor.black.withAlphaComponent(0.08).cgColor, // soft dark shadow
+                UIColor.clear.cgColor
+            ]
+            
+            gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+            gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
+            gradient.frame = shadowView.bounds
+            
+            shadowView.layer.insertSublayer(gradient, at: 0)
+            gradientLayer = gradient
+        }
+    }
+    
+    private func updateGradientFrame() {
+        gradientLayer?.frame = shadowView.bounds
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateGradientFrame()
     }
     
     func initUI() {
         self.bgVw.layer.cornerRadius = 20.0
         self.bottomBtnVw.layer.cornerRadius = 20.0
+        self.docMainVw.layer.cornerRadius = 20.0
+        
         connectionNameLbl.font = UIFont(name: Myfonts.bold, size: 14.0)
         dateLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
         followBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 16.0)
@@ -153,9 +192,19 @@ class HomePostTVC: BaseCellClass {
             self.videoVwHeight.constant = 210.0
         }
         else if type == "document" {
-            self.docVwHeight.constant = 80.0
-            documentName.text = dataMaper.documentFileName ?? "No Name"
+            self.docVwHeight.constant = 200.0//80.0
+            documentName.text = dataMaper.documentOriginalFileName ?? "No Name"
             documentSizeLbl.text = dataMaper.documentSize ?? "0 kB"
+            
+            // Configure display mode and direction
+            self.setupPDFVw()
+            // Load PDF
+            let url =  dataMaper.postDocument ?? ""
+            if let url = URL(string: url) {
+                if let document = PDFDocument(url: url) {
+                    docVw.document = document
+                }
+            }
         }
         else if type == "image" {
             self.imageArr = dataMaper.datumPostImage ?? []
@@ -231,9 +280,19 @@ class HomePostTVC: BaseCellClass {
             self.videoVwHeight.constant = 210.0
         }
         else if type == "document" {
-            self.docVwHeight.constant = 80.0
-            documentName.text = dataMaper.documentFileName ?? "No Name"
+            self.docVwHeight.constant = 200.0//80.0
+            documentName.text = dataMaper.documentOriginalFileName ?? "No Name"
             documentSizeLbl.text = dataMaper.documentSize ?? "0 kB"
+            
+            // Configure display mode and direction
+            self.setupPDFVw()
+            // Load PDF
+            let url =  dataMaper.postDocument ?? ""
+            if let url = URL(string: url) {
+                if let document = PDFDocument(url: url) {
+                    docVw.document = document
+                }
+            }
         }
         else if type == "image" {
             self.imageArr = dataMaper.datumPostImage ?? []
@@ -270,35 +329,13 @@ class HomePostTVC: BaseCellClass {
         postMsgLbl.isUserInteractionEnabled = true
         postMsgLbl.addGestureRecognizer(tapGesture)
     }
-    
-    //    @objc func labelTapped() {
-    //        isFullTextVisible.toggle()
-    //        configure(with: actualString)
-    //
-    //        // Find the table view and update height
-    //        if let tableView = self.superview as? UITableView {
-    //            if let indexPath = tableView.indexPath(for: self) {
-    //                print("Tapped post cell at row: \(indexPath.row)")
-    //                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
-    //            }
-    //            tableView.beginUpdates()
-    //            tableView.endUpdates()
-    //        }
-    //    }
-    //    @objc func labelTapped() {
-    //        isFullTextVisible.toggle()
-    //        self.selectedPost?.isExpand = isFullTextVisible // update the model
-    //
-    //        configure(with: self.selectedPost?.content ?? "")
-    //
-    //        if let tableView = self.superview as? UITableView {
-    //            if let indexPath = tableView.indexPath(for: self) {
-    //                postCellHeightDelegate?.postTblHeightManaged(index: indexPath.row)
-    //            }
-    //            tableView.beginUpdates()
-    //            tableView.endUpdates()
-    //        }
-    //    }
+
+    func setupPDFVw() {
+        docVw.displayMode = .singlePageContinuous
+        docVw.displaysAsBook = false
+        docVw.autoScales = true
+        docVw.displayDirection = .vertical   // 👈 Enables vertical scroll
+    }
     
     @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
         isFullTextVisible.toggle()

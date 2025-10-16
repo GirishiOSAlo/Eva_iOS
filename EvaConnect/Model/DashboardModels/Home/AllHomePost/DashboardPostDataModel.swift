@@ -39,6 +39,7 @@ struct DashboardPostData: Codable {
 //    let isNewsSave: Int?
 //    let user: DashboardPostUser?
         
+    var isExpand: Bool = false
     let id, userID: Int?
     let isURL: Bool?
     let postVideo: String?
@@ -46,12 +47,16 @@ struct DashboardPostData: Codable {
     let newsImage, createdDate, isConnected: String?
     let connectionID: Int?
     let isReceiver: ReceiverID?
-    let content, title: String?
+    let content: String?
+    let title: String?
     var postImage, commentCount, likeCount, createdByID: Int?
     let createdDatetime: String?
     let modifiedByID: Int?
-    let modifiedDatetime, os, status, documentFileName: String?
-    let documentSize, postDocument, fileDatetime: String?
+    let modifiedDatetime, os, status: String?
+    let documentFileName: String?
+    let documentOriginalFileName, documentSize: String?
+    let postDocument: String?
+    let fileDatetime: String?
     let shareCount: Int?
     let type: String?
     let datumPostImage: [String]?
@@ -60,7 +65,6 @@ struct DashboardPostData: Codable {
     let newsSource: PostNewsSource?
     let isNewsSave: Int?
     let user: DashboardPostUser?
-    var isExpand: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id, userID, isURL
@@ -73,8 +77,9 @@ struct DashboardPostData: Codable {
         case connectionID = "connectionId"
         case isReceiver, content, title, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status
         case documentFileName = "document_file_name"
+        case documentOriginalFileName = "document_original_file_name"
         case documentSize = "document_size"
-        case postDocument = "post_document"
+        case postDocument
         case fileDatetime = "file_datetime"
         case shareCount, type
         case datumPostImage = "post_image"

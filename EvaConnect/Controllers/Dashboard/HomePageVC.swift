@@ -342,7 +342,7 @@ extension HomePageVC: CollectionViewCellDelegate, PostActionable {
                 let height = lblHeight + marginHeight + 210.0
                 totalHeight = totalHeight + height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
-                let height = lblHeight + marginHeight + 80.0
+                let height = lblHeight + marginHeight + 200.0//80.0
                 totalHeight = totalHeight + height
             } else if homePost.datumPostImage!.count > 0 {
                 if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
@@ -1471,7 +1471,7 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeight
                 let height = lblHeight + marginHeight + 210.0
                 return height
             } else if homePost.postDocuments?.count ?? 0 > 0 {
-                let height = lblHeight + marginHeight + 80.0
+                let height = lblHeight + marginHeight + 200.0//80.0
                 return height
             } else if homePost.datumPostImage!.count > 0 {
                 if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {

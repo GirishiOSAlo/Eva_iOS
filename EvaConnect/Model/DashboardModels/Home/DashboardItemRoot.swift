@@ -209,12 +209,36 @@ struct DashboardItem: Codable {
 //        case isNewsSave, user
 //    }
     
+//    let id, userID: Int?
+//    let isURL: Bool?
+//    let postVideo: String?
+//    var isPostLike, isPostdisLike: Int?
+//    let createdDate: String?
+//    let isConnected: String?
+//    let connectionID: Int?
+//    let isReceiver: ReceiverID?
+//    let content: String?
+//    var postImage, commentCount, likeCount, createdByID: Int?
+//    let createdDatetime: String?
+//    let modifiedByID: Int?
+//    let modifiedDatetime: String?
+//    let os: String?
+//    let status: String?
+//    let postDocument: String?
+//    let shareCount: Int?
+//    let type: TypePostEnum?
+//    let datumPostImage: [String]?
+//    let documentFileName: String?
+//    let documentSize: String?
+//    let fileDatetime: String?
+//    let postDocuments: [String]?
+//    let user: EvaUser?
+    
     let id, userID: Int?
     let isURL: Bool?
     let postVideo: String?
     var isPostLike, isPostdisLike: Int?
-    let createdDate: String?
-    let isConnected: String?
+    let createdDate, isConnected: String?
     let connectionID: Int?
     let isReceiver: ReceiverID?
     let content: String?
@@ -229,8 +253,7 @@ struct DashboardItem: Codable {
     let type: TypePostEnum?
     let datumPostImage: [String]?
     let documentFileName: String?
-    let documentSize: String?
-    let fileDatetime: String?
+    let documentOriginalFileName, documentSize, fileDatetime: String?
     let postDocuments: [String]?
     let user: EvaUser?
     var isExpand: Bool = false
@@ -241,6 +264,7 @@ struct DashboardItem: Codable {
         case isReceiver, content, postImage, commentCount, likeCount, createdByID, createdDatetime, modifiedByID, modifiedDatetime, os, status, postDocument, shareCount, type
         case datumPostImage = "post_image"
         case documentFileName = "document_file_name"
+        case documentOriginalFileName = "document_original_file_name"
         case documentSize = "document_size"
         case fileDatetime = "file_datetime"
         case postDocuments = "post_documents"
