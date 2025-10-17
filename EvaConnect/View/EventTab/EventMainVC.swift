@@ -414,6 +414,7 @@ extension EventMainVC {
             vc.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             vc.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
         ])
+        containerView.layoutIfNeeded()
         vc.didMove(toParent: self)
         print("Added child: \(vc)")
     }

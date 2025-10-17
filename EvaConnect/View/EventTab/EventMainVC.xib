@@ -184,6 +184,7 @@
             <constraints>
                 <constraint firstItem="02c-sH-MZS" firstAttribute="top" secondItem="yAw-yp-ryr" secondAttribute="bottom" constant="17" id="8z6-1j-S7x"/>
                 <constraint firstItem="7CG-ZW-zif" firstAttribute="trailing" secondItem="HTn-5z-z6E" secondAttribute="trailing" id="B25-iQ-fdc"/>
+                <constraint firstItem="HTn-5z-z6E" firstAttribute="height" secondItem="7CG-ZW-zif" secondAttribute="height" multiplier="0.811594" id="Nyh-kg-4tH"/>
                 <constraint firstItem="7CG-ZW-zif" firstAttribute="top" secondItem="a7e-09-AOD" secondAttribute="top" constant="-20" id="OHl-qP-mhS"/>
                 <constraint firstItem="7CG-ZW-zif" firstAttribute="trailing" secondItem="nCg-6C-hgd" secondAttribute="trailing" constant="20" id="bcF-GC-Qgy"/>
                 <constraint firstAttribute="trailing" secondItem="yAw-yp-ryr" secondAttribute="trailing" id="gfh-Jm-2hi"/>
