@@ -34,8 +34,8 @@ class HomePageVC: UIViewController {
     @IBOutlet weak var newsTableVwHeight: NSLayoutConstraint!
     
     @IBOutlet weak var jobBaseVw: UIView!
-    @IBOutlet weak var jobCollectionVw: UICollectionView!
-    @IBOutlet weak var jobCollectionVwHeight: NSLayoutConstraint!
+    @IBOutlet weak var jobListTblVw: UITableView!
+    @IBOutlet weak var jobListTblVwHeight: NSLayoutConstraint!
     
     var dashboardBannerList: [DashboardBannerData] = [] {
         didSet {
@@ -59,7 +59,7 @@ class HomePageVC: UIViewController {
     }
     var jobList: [DashboardJob] = [] {
         didSet {
-            self.jobCollectionVw.reloadData()
+            self.jobListTblVw.reloadData()
         }
     }
     let likeManager = LikeManager()
@@ -96,7 +96,7 @@ class HomePageVC: UIViewController {
 
         self.registerCell()
         self.bannerBaseVwHeight.constant = 0.0
-        self.jobCollectionVwHeight.constant = 0.0
+        self.jobListTblVwHeight.constant = 0.0
         self.eventCollectionVwHeight.constant = 0.0
         self.postTableVwHeight.constant = 0.0
         self.newsTableVwHeight.constant = 0.0
@@ -130,9 +130,9 @@ class HomePageVC: UIViewController {
         postTableVw.registerCells(withTypes: [HomeText.self, HomeImage.self, HomeVideo.self, HomeUrl.self,HomePostTVC.self])
         newsTableVw.registerCells(withTypes: [HomeNewz.self])
         
-        jobCollectionVw.registerNib(cellNib: HomeJobCVC.self)
-        jobCollectionVw.delegate = self
-        jobCollectionVw.dataSource = self
+        jobListTblVw.dataSource = self
+        jobListTblVw.delegate = self
+        jobListTblVw.registerCell(withType: UserJobCell.self)
     }
     
     func convertTo12HourFormat(from time24: String) -> String? {
@@ -531,7 +531,17 @@ extension HomePageVC {
                 let jobRoot = try jsonDecoder.decode(DashboardJobDataModel.self, from: response.data!)
                 if !(jobRoot.error ?? false) {
                     self.jobList = jobRoot.data?.jobs ?? []
-                    self.jobCollectionVwHeight.constant = CGFloat(self.jobList.count * 290)
+                    
+                    var finalHeight = 0.0
+                    for job in self.jobList {
+                        if job.isApplied == 0 {
+                            finalHeight = finalHeight + 284.0
+                        } else {
+                            finalHeight = finalHeight + 234.0
+                        }
+                    }
+                    self.jobListTblVwHeight.constant = finalHeight
+                    //self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * 290)
                 } else {
                     print("Error :: \(jobRoot.message ?? "")")
                 }
@@ -659,7 +669,7 @@ extension HomePageVC {
                 print("Job saved!!")
                 self.fetchDashboardJob()
                 let indexPath = IndexPath(item: at, section: 0)
-                UIView.performWithoutAnimation { self.jobCollectionVw.reloadItems(at: [indexPath]) }
+                UIView.performWithoutAnimation { self.jobListTblVw.reloadRows(at: [indexPath], with: .none) }
                 self.view.isUserInteractionEnabled = true
             }
             else {
@@ -826,9 +836,6 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         case self.eventCollectionVw:
             return self.eventList.count
             
-        case self.jobCollectionVw:
-            return self.jobList.count
-            
         default:
             return 0
         }
@@ -951,25 +958,6 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             
             return cell
             
-        case self.jobCollectionVw:
-            let cell = self.jobCollectionVw.dequeueReusableCell(withReuseIdentifier: HomeJobCVC.ReuseId, for: indexPath) as! HomeJobCVC
-            
-            let job = self.jobList[indexPath.row]
-            cell.setData(job: job)
-            
-            cell.saveBtn.tag = indexPath.row
-            cell.saveBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
-            cell.applyNowBtn.tag = indexPath.row
-            cell.applyNowBtn.addTarget(self, action: #selector(applyJobTapped(sender:)), for: .touchUpInside)
-            cell.viewDetailBtn.tag = indexPath.row
-            cell.viewDetailBtn.addTarget(self, action: #selector(detailJobTapped(sender:)), for: .touchUpInside)
-            cell.editBtn.tag = indexPath.row
-            cell.editBtn.addTarget(self, action: #selector(tapEditJob(sender:)), for: .touchUpInside)
-            cell.applicantBtn.tag = indexPath.row
-            cell.applicantBtn.addTarget(self, action:  #selector(tapApplicantsList(sender:)), for: .touchUpInside)
-            
-            return cell
-            
         default:
             return UICollectionViewCell()
         }
@@ -989,11 +977,6 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             vc.tabType = 3
             self.navigationController?.pushViewController(vc, animated: true)
             
-        case self.jobCollectionVw:
-            Constants.saveEnumToUserDefaults(.jobs)
-            let vc = DashboardTabbarVC.instantiate()
-            vc.tabType = 3
-            self.navigationController?.pushViewController(vc, animated: true)
         default:
             let vc = DashboardTabbarVC.instantiate()
             vc.tabType = 3
@@ -1008,9 +991,6 @@ extension HomePageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             
         case self.eventCollectionVw:
             return CGSize(width: collectionView.frame.width, height: 440.0)
-            
-        case self.jobCollectionVw:
-            return CGSize(width: collectionView.frame.width, height: 290.0)
             
         default:
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
@@ -1229,6 +1209,9 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeight
         case self.newsTableVw:
             return self.newsList.count
             
+        case jobListTblVw:
+            return self.jobList.count
+            
         default:
             return 0
         }
@@ -1381,6 +1364,44 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeight
             cell.saveNewsBtn.addTarget(self, action:#selector(saveNewsTapped(sender:)), for: .touchUpInside)
             return cell
             
+        case self.jobListTblVw:
+            let cell: UserJobCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.baseMainView.layer.cornerRadius = 12
+            cell.indivisualViewStack.isHidden = false
+            cell.indivisualVw.isHidden = true
+            cell.industryView.isHidden = true
+            cell.saveJobBtn.isHidden = false
+
+            let job = self.jobList[indexPath.row]
+            cell.setData(data: job)
+            cell.viewDetailsBtn.tag = indexPath.row
+            cell.saveJobBtn.tag = indexPath.row
+            cell.editBtn.tag = indexPath.row
+            cell.applicantBtn.tag = indexPath.row
+            cell.applyNowBtn.tag = indexPath.row
+            //cell.goToAd = { [weak self] in self?.navigateToJobListing(job: $0) }
+            
+            if myUserDefaults.isIndivisualUser {
+                cell.indivisualVw.isHidden = false
+                cell.saveJobBtn.isHidden = false
+//                if selectedHomeFilter == .applied {
+                if job.isApplied == 0 {
+                    cell.applyNowBtnHeight.constant = 50
+                } else {
+                    cell.applyNowBtnHeight.constant = 0.0
+                }
+            } else {
+                cell.industryView.isHidden = false
+                cell.saveJobBtn.isHidden = true
+            }
+            
+            cell.viewDetailsBtn.addTarget(self, action: #selector(detailJobTapped(sender:)), for: .touchUpInside)
+            cell.applyNowBtn.addTarget(self, action: #selector(applyJobTapped(sender:)), for: .touchUpInside)
+            cell.saveJobBtn.addTarget(self, action: #selector(saveJobTapped(sender:)), for: .touchUpInside)
+            cell.editBtn.addTarget(self, action:  #selector(tapEditJob(sender:)), for: .touchUpInside)
+            cell.applicantBtn.addTarget(self, action:  #selector(tapApplicantsList(sender:)), for: .touchUpInside)
+            return cell
+            
         default:
             return UITableViewCell()
         }
@@ -1449,6 +1470,13 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeight
             let vc = DashboardTabbarVC.instantiate()
             vc.tabType = 3
             self.navigationController?.pushViewController(vc, animated: true)
+            
+        case self.jobListTblVw:
+            Constants.saveEnumToUserDefaults(.jobs)
+            let vc = DashboardTabbarVC.instantiate()
+            vc.tabType = 3
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         default:
             break
         }
@@ -1508,6 +1536,18 @@ extension HomePageVC: UITableViewDataSource, UITableViewDelegate, PostCellHeight
 //            }
         case self.newsTableVw:
             return 430
+            
+        case jobListTblVw:
+            if myUserDefaults.isIndivisualUser {
+                let job = self.jobList[indexPath.row]
+                if job.isApplied == 0 {
+                    return 284
+                } else {
+                    return 234
+                }
+            } else {
+                return 284
+            }
             
         default:
             return UITableView.automaticDimension

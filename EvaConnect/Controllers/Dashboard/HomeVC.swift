@@ -878,8 +878,18 @@ class HomeVC: BaseVC {
                     }
                     
                     // Table view height
-                    let rowHeight = self.selectedHomeFilter == .applied ? 234 : 284
-                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * rowHeight)
+//                    let rowHeight = self.selectedHomeFilter == .applied ? 234 : 284
+//                    self.jobListTblVwHeight.constant = CGFloat(self.jobList.count * rowHeight)
+                    
+                    var finalHeight = 0.0
+                    for job in self.jobList {
+                        if job.isApplied == 0 {
+                            finalHeight = finalHeight + 284.0
+                        } else {
+                            finalHeight = finalHeight + 234.0
+                        }
+                    }
+                    self.jobListTblVwHeight.constant = finalHeight
                     
                     self.jobListTblVw.reloadData()
                     
@@ -1211,10 +1221,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             
         case jobListTblVw:
             if myUserDefaults.isIndivisualUser {
-                if selectedHomeFilter == .applied {
-                    return 234
-                } else {
+                let job = self.jobList[indexPath.row]
+                if job.isApplied == 0 {
+//                if selectedHomeFilter == .applied {
                     return 284
+                } else {
+                    return 234
                 }
             } else {
                 return 284
@@ -1327,10 +1339,11 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             if myUserDefaults.isIndivisualUser {
                 cell.indivisualVw.isHidden = false
                 cell.saveJobBtn.isHidden = false
-                if selectedHomeFilter == .applied {
-                    cell.applyNowBtnHeight.constant = 0
+//                if selectedHomeFilter == .applied {
+                if job.isApplied == 0 {
+                    cell.applyNowBtnHeight.constant = 50
                 } else {
-                    cell.applyNowBtnHeight.constant = 50.0
+                    cell.applyNowBtnHeight.constant = 0.0
                 }
             } else {
                 cell.industryView.isHidden = false

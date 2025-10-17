@@ -760,7 +760,7 @@
                                                                 <rect key="frame" x="0.0" y="4136.333333333333" width="375" height="903.66666666666697"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D70-8C-ofr" customClass="HeadingLabel" customModule="AviationConnect" customModuleProvider="target">
-                                                                        <rect key="frame" x="20" y="20" width="335" height="63"/>
+                                                                        <rect key="frame" x="20" y="20" width="335" height="443"/>
                                                                         <string key="text">Find Your Dream Job in
 Aviation</string>
                                                                         <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="20"/>
@@ -768,35 +768,20 @@ Aviation</string>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore the latest aviation job openings and take your career to new heights." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymI-xn-61x">
-                                                                        <rect key="frame" x="20" y="95" width="335" height="33.666666666666657"/>
+                                                                        <rect key="frame" x="20" y="475" width="335" height="33.666666666666686"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                                                         <color key="textColor" red="0.29411764709999999" green="0.29411764709999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xdE-jO-bTx">
-                                                                        <rect key="frame" x="20" y="148.66666666666697" width="335" height="580"/>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="476" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gUY-qX-F8n">
+                                                                        <rect key="frame" x="0.0" y="528.66666666666697" width="375" height="200"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="580" id="0o0-IC-HH5"/>
+                                                                            <constraint firstAttribute="height" constant="200" id="FW2-Dg-FLA"/>
                                                                         </constraints>
-                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="cFJ-HE-aNT">
-                                                                            <size key="itemSize" width="128" height="128"/>
-                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                                        </collectionViewFlowLayout>
-                                                                        <cells>
-                                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="VX9-T9-f7A">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gYY-Ny-Kpr">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                                                    <autoresizingMask key="autoresizingMask"/>
-                                                                                </collectionViewCellContentView>
-                                                                            </collectionViewCell>
-                                                                        </cells>
-                                                                    </collectionView>
+                                                                        <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
+                                                                    </tableView>
                                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a4k-Qj-IXO">
                                                                         <rect key="frame" x="0.0" y="733.66666666666697" width="375" height="50"/>
                                                                         <subviews>
@@ -830,17 +815,17 @@ Aviation</string>
                                                                 <constraints>
                                                                     <constraint firstItem="ymI-xn-61x" firstAttribute="top" secondItem="D70-8C-ofr" secondAttribute="bottom" constant="12" id="Cke-Ug-dt3"/>
                                                                     <constraint firstItem="D70-8C-ofr" firstAttribute="top" secondItem="u9L-oK-n8w" secondAttribute="top" constant="20" id="IOb-BD-yP6"/>
-                                                                    <constraint firstItem="a4k-Qj-IXO" firstAttribute="top" secondItem="xdE-jO-bTx" secondAttribute="bottom" constant="5" id="Iut-TT-ddW"/>
                                                                     <constraint firstItem="ymI-xn-61x" firstAttribute="leading" secondItem="u9L-oK-n8w" secondAttribute="leading" constant="20" id="JqK-0I-dPh"/>
                                                                     <constraint firstItem="a4k-Qj-IXO" firstAttribute="leading" secondItem="u9L-oK-n8w" secondAttribute="leading" id="QXZ-Xl-LxW"/>
+                                                                    <constraint firstItem="a4k-Qj-IXO" firstAttribute="top" secondItem="gUY-qX-F8n" secondAttribute="bottom" constant="5" id="RWR-tq-IK2"/>
                                                                     <constraint firstAttribute="trailing" secondItem="a4k-Qj-IXO" secondAttribute="trailing" id="Uf5-lk-fj1"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="gUY-qX-F8n" secondAttribute="trailing" id="Vw0-uS-aXb"/>
                                                                     <constraint firstAttribute="trailing" secondItem="ymI-xn-61x" secondAttribute="trailing" constant="20" id="dKZ-2y-Qqq"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="xdE-jO-bTx" secondAttribute="trailing" constant="20" id="e71-aC-QjJ"/>
                                                                     <constraint firstAttribute="trailing" secondItem="D70-8C-ofr" secondAttribute="trailing" constant="20" id="fwW-wD-yV1"/>
-                                                                    <constraint firstItem="xdE-jO-bTx" firstAttribute="top" secondItem="ymI-xn-61x" secondAttribute="bottom" constant="20" id="gWl-S7-aVf"/>
-                                                                    <constraint firstItem="xdE-jO-bTx" firstAttribute="leading" secondItem="u9L-oK-n8w" secondAttribute="leading" constant="20" id="pMY-Eu-0Zs"/>
+                                                                    <constraint firstItem="gUY-qX-F8n" firstAttribute="top" secondItem="ymI-xn-61x" secondAttribute="bottom" constant="20" id="hBe-oZ-OdE"/>
                                                                     <constraint firstItem="D70-8C-ofr" firstAttribute="leading" secondItem="u9L-oK-n8w" secondAttribute="leading" constant="20" id="qSh-vQ-B7Z"/>
                                                                     <constraint firstAttribute="bottom" secondItem="a4k-Qj-IXO" secondAttribute="bottom" constant="120" id="rgD-7H-nrW"/>
+                                                                    <constraint firstItem="gUY-qX-F8n" firstAttribute="leading" secondItem="u9L-oK-n8w" secondAttribute="leading" id="ryn-pZ-gY1"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
@@ -893,8 +878,8 @@ Aviation</string>
                         <outlet property="eventCollectionVw" destination="byj-rk-1Ri" id="Dvx-uU-BxJ"/>
                         <outlet property="eventCollectionVwHeight" destination="gOG-YO-hIl" id="aKP-XB-hTt"/>
                         <outlet property="jobBaseVw" destination="u9L-oK-n8w" id="wDF-eC-lWm"/>
-                        <outlet property="jobCollectionVw" destination="xdE-jO-bTx" id="cZq-AD-Eo9"/>
-                        <outlet property="jobCollectionVwHeight" destination="0o0-IC-HH5" id="CMS-Wx-wDh"/>
+                        <outlet property="jobListTblVw" destination="gUY-qX-F8n" id="zNC-IF-tbP"/>
+                        <outlet property="jobListTblVwHeight" destination="FW2-Dg-FLA" id="0Xp-sD-sxu"/>
                         <outlet property="newsBaseVw" destination="91d-oy-TXJ" id="viN-8b-ORw"/>
                         <outlet property="newsTableVw" destination="5vy-Oo-eWh" id="F0g-cw-tqA"/>
                         <outlet property="newsTableVwHeight" destination="2Gx-Ct-ubI" id="hl5-Tu-iJG"/>
