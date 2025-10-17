@@ -150,7 +150,7 @@ class EventMainVC: UIViewController, XIBed {
             self.openDropDown()
         } else { //Private...
             print(self.eventDetail?.eventAttendeesStatus ?? "")
-            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+            if self.eventDetail?.eventAttendeesStatus?.lowercased() == "accepted" || self.eventDetail?.eventAttendeesStatus?.lowercased() == "approved" {
                 self.openDropDown()
             } else {
                 print("user did not requested for event")
@@ -213,7 +213,7 @@ extension EventMainVC  {
                             self.drpDwnICImgVw.isHidden = false
                         } else { //Private...
                             print(self.eventDetail?.eventAttendeesStatus ?? "")
-                            if self.eventDetail?.eventAttendeesStatus == "Accepted" || self.eventDetail?.eventAttendeesStatus == "Approved" {
+                            if self.eventDetail?.eventAttendeesStatus?.lowercased() == "accepted" || self.eventDetail?.eventAttendeesStatus?.lowercased() == "approved" {
                                 self.drpDwnICImgVw.isHidden = false
                             } else {
                                 print("user did not requested for event")

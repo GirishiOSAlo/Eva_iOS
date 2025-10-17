@@ -11,7 +11,11 @@ import Alamofire
 import AVKit
 import IQKeyboardManagerSwift
 
-class OthersProfileVC: UIViewController {
+class OthersProfileVC: UIViewController, RefreshUpdateable {
+    func refresh(homeStatus: Bool) {
+        self.fetchUserDetailsData()
+    }
+    
 
     @IBOutlet weak var profileLoadingView: UIView!
 //    @IBOutlet weak var tableViewTopConst: NSLayoutConstraint!
@@ -200,7 +204,7 @@ class OthersProfileVC: UIViewController {
 //        self.onlineStatusLbl.textColor = UIColor(hex: "#30BF04")
 
 //        self.postTableView.registerCells(withTypes: [ReactionTableViewCell.self])
-        self.postTableView.registerCells(withTypes: [HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self, ReactionTableViewCell.self, HomeUrl.self])
+        self.postTableView.registerCells(withTypes: [HomeText.self, HomeImage.self, HomeVideo.self, HomeNewz.self, ReactionTableViewCell.self, HomeUrl.self, HomePostTVC.self])
     }
     
     
@@ -1157,6 +1161,17 @@ extension OthersProfileVC {
             }
         })
     }
+    
+    @objc func handlePostFollow(_ sender: UIButton) {
+        let post = self.posts[sender.tag]
+        let receiverID = post.userID ?? 0
+//        if post.isConnected == "connected" || homePost.isConnected == "active" {
+//            //unfollow Call...
+//        } else {
+//            //Follow Call...
+//        }
+        self.connectionFollowUnfollow(receiverID: receiverID, status: 2) //2= follow & 6= Unfollow
+    }
 }
 
 extension OthersProfileVC: CollectionViewCellDelegate {
@@ -1171,9 +1186,53 @@ extension OthersProfileVC: CollectionViewCellDelegate {
             self.navigationController?.present(vc, animated: true)
         }
     }
+    
+    private func goToCommentVC(index: Int) {
+        IQKeyboardManager.shared.isEnabled = false
+        let homePost = posts[index]
+        if homePost.postVideo != "" && homePost.postVideo != nil {//Video
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .video
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else if homePost.postDocuments?.count ?? 0 > 0 {//Document
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .article
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else if homePost.datumPostImage!.count > 0 {//Image
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .image
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        } else {//Text
+            let vc = StoryboardRouter.textPostDetailVC()
+            vc.postType = .simpleText
+            vc.postId = homePost.id
+            vc.dashboardItem = homePost
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
-extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
+extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate, PostCellHeightDelegate {
+    func postTblHeightManaged(index: Int, isExpand: Bool, tapOther: Bool) {
+        if tapOther {
+            self.goToCommentVC(index: index)
+        } else {
+            self.posts[index].isExpand = isExpand
+            self.setPostTableHeight()
+            self.postTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
@@ -1184,113 +1243,155 @@ extension OthersProfileVC: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
         else {
+            let cell: HomePostTVC = tableView.dequeueReusableCell(forIndexPath: indexPath)
             let homePost = posts[indexPath.row]
-            let Row = indexPath.row
-
-            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
-                let cell: HomeVideo = postTableView.dequeueReusableCell(forIndexPath: indexPath)
-                
-                cell.uiData(dataMaper: homePost)
-                
-                //for other user profile...
-                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
-                    cell.followBtn.isHidden = true
-                } else {
-                    cell.followBtn.isHidden = false
-                }
-                
-                cell.likeBtn.tag = Row
-                cell.commentBtn.tag = Row
-                cell.sharedBtn.tag = Row
-                cell.openVideoBtn.tag = Row
-                cell.reportBtn.tag = Row
-                cell.videoView.backgroundColor = .black
-                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resize)
-                cell.videoView.stop()
-                
+            cell.selectedPost = homePost
+            if homePost.postVideo != "" && homePost.postVideo != nil {
+                cell.uiData(dataMaper: homePost, type: "video")
                 cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
-                cell.likeBtn.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                return cell
+                cell.openVideoBtn.tag = indexPath.row
+                cell.videoView.backgroundColor = .black
+                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resizeAspectFill)
+                cell.videoView.stop()
+                cell.videoView.isHidden = false
             }
-            else if homePost.postDocuments?.count ?? 0 > 0 {//Document
-                let cell: HomeUrl = postTableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.backgroundColor = UIColor(hex: "#F8F6F8")
-                //            cell.delegate = self
-                cell.uiData(homePost: homePost)
-                
-                //for other user profile...
-                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
-                    cell.followBtn.isHidden = true
-                } else {
-                    cell.followBtn.isHidden = false
-                }
-                
-                cell.likeBtn.tag = Row
-                cell.commentBtn.tag = Row
-                cell.sharedBtn.tag = Row
-                cell.openArticleBtn.tag = Row
-                cell.reportBtn.tag = Row
-
-                cell.likeBtn.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
-                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
-                cell.openArticleBtn.addTarget(self, action: #selector(openDoc(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                return cell
+            else if (homePost.postDocuments?.count ?? 0) > 0 {
+                cell.uiData(dataMaper: homePost, type: "document")
             }
-            else if homePost.datumPostImage!.count > 0 {//Image
-                let cell: HomeImage = postTableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.backgroundColor = UIColor(hex: "#F8F6F8")
-                //cell.delegate = self
+            else if homePost.datumPostImage!.count > 0 {
+                cell.uiData(dataMaper: homePost, type: "image")
                 cell.delegateDidSelect = self
-                cell.uiData(dataMaper: homePost)
-
-                //for other user profile...
-                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
-                    cell.followBtn.isHidden = true
-                } else {
-                    cell.followBtn.isHidden = false
-                }
-                
-                cell.likeButton.tag = indexPath.row
-                cell.commentButton.tag = indexPath.row
-                cell.shareButton.tag = indexPath.row
-                cell.reportBtn.tag = Row
-
-                cell.likeButton.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
-                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.commentButton.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                return cell
             }
-            else {//Text
-                let cell: HomeText = postTableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.detailsView.layer.cornerRadius = 13
-                //            cell.delegate = self
-                cell.uiData(dataMaper: homePost)
-                
-                //for other user profile...
-                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
-                    cell.followBtn.isHidden = true
-                } else {
-                    cell.followBtn.isHidden = false
-                }
-                
-                cell.likeBtn.tag = Row
-                cell.commentBtn.tag = Row
-                cell.shareBtn.tag = Row
-                cell.reportBtn.tag = Row
-                
-                cell.likeBtn.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
-                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
-                cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
-                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
-                
-                return cell
+            else {
+                cell.uiData(dataMaper: homePost, type: "text")
             }
+            
+            cell.postCellHeightDelegate = self
+//            self.objectId = homePost.id ?? 0
+//            self.type = .post
+//            cell.goToProfileBtn.tag = indexPath.row
+            cell.reportBtn.tag = indexPath.row
+            cell.likeButton.tag = indexPath.row
+            cell.commentButton.tag = indexPath.row
+            cell.shareButton.tag = indexPath.row
+            cell.openArticleBtn.tag = indexPath.row
+            cell.followBtn.tag = indexPath.row
+            
+            //cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
+            cell.commentButton.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
+            cell.likeButton.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
+            cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+            cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+            cell.followBtn.addTarget(self, action: #selector(handlePostFollow(_:)), for: .touchUpInside)
+            
+            return cell
+//            let homePost = posts[indexPath.row]
+//            let Row = indexPath.row
+//
+//            if homePost.postVideo != "" && homePost.postVideo != nil {//Video
+//                let cell: HomeVideo = postTableView.dequeueReusableCell(forIndexPath: indexPath)
+//                
+//                cell.uiData(dataMaper: homePost)
+//                
+//                //for other user profile...
+//                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+//                    cell.followBtn.isHidden = true
+//                } else {
+//                    cell.followBtn.isHidden = false
+//                }
+//                
+//                cell.likeBtn.tag = Row
+//                cell.commentBtn.tag = Row
+//                cell.sharedBtn.tag = Row
+//                cell.openVideoBtn.tag = Row
+//                cell.reportBtn.tag = Row
+//                cell.videoView.backgroundColor = .black
+//                cell.videoView.configure(url: homePost.postVideo ?? "",ratio: .resize)
+//                cell.videoView.stop()
+//                
+//                cell.openVideoBtn.addTarget(self, action:#selector(showVideoView(sender:)), for: .touchUpInside)
+//                cell.likeBtn.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                return cell
+//            }
+//            else if homePost.postDocuments?.count ?? 0 > 0 {//Document
+//                let cell: HomeUrl = postTableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.backgroundColor = UIColor(hex: "#F8F6F8")
+//                //            cell.delegate = self
+//                cell.uiData(homePost: homePost)
+//                
+//                //for other user profile...
+//                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+//                    cell.followBtn.isHidden = true
+//                } else {
+//                    cell.followBtn.isHidden = false
+//                }
+//                
+//                cell.likeBtn.tag = Row
+//                cell.commentBtn.tag = Row
+//                cell.sharedBtn.tag = Row
+//                cell.openArticleBtn.tag = Row
+//                cell.reportBtn.tag = Row
+//
+//                cell.likeBtn.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
+//                cell.sharedBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
+//                cell.openArticleBtn.addTarget(self, action: #selector(openDoc(_:)), for: .touchUpInside)
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                return cell
+//            }
+//            else if homePost.datumPostImage!.count > 0 {//Image
+//                let cell: HomeImage = postTableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.backgroundColor = UIColor(hex: "#F8F6F8")
+//                //cell.delegate = self
+//                cell.delegateDidSelect = self
+//                cell.uiData(dataMaper: homePost)
+//
+//                //for other user profile...
+//                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+//                    cell.followBtn.isHidden = true
+//                } else {
+//                    cell.followBtn.isHidden = false
+//                }
+//                
+//                cell.likeButton.tag = indexPath.row
+//                cell.commentButton.tag = indexPath.row
+//                cell.shareButton.tag = indexPath.row
+//                cell.reportBtn.tag = Row
+//
+//                cell.likeButton.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
+//                cell.shareButton.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.commentButton.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                return cell
+//            }
+//            else {//Text
+//                let cell: HomeText = postTableView.dequeueReusableCell(forIndexPath: indexPath)
+//                cell.detailsView.layer.cornerRadius = 13
+//                //            cell.delegate = self
+//                cell.uiData(dataMaper: homePost)
+//                
+//                //for other user profile...
+//                if homePost.isConnected == "connected" || homePost.isConnected == "active" {
+//                    cell.followBtn.isHidden = true
+//                } else {
+//                    cell.followBtn.isHidden = false
+//                }
+//                
+//                cell.likeBtn.tag = Row
+//                cell.commentBtn.tag = Row
+//                cell.shareBtn.tag = Row
+//                cell.reportBtn.tag = Row
+//                
+//                cell.likeBtn.addTarget(self, action: #selector(handleLike(_:)), for: .touchUpInside)
+//                cell.shareBtn.addTarget(self, action: #selector(handleShare(_:)), for: .touchUpInside)
+//                cell.commentBtn.addTarget(self, action: #selector(addCommentOnPost(_:)), for: .touchUpInside)
+//                cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
+//                
+//                return cell
+//            }
 
             
 //            if  homePost.postImage == [] && homePost.postVideo == "" && homePost.postDocument == "" {

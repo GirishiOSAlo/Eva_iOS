@@ -57,6 +57,6 @@ class SpeakersDetailsVC: UIViewController, XIBed {
         }
         nameLbl.text = (data?.firstName?.isEmpty ?? true) ? "--" : data?.firstName
         subLbl.text = (data?.designation?.isEmpty ?? true) ? "--" : data?.designation
-        descLbl.text = (data?.description?.isEmpty ?? true) ? "--" : data?.description
+        descLbl.text = (data?.description?.isEmpty ?? true) ? "--" : data?.bioData
     }
 }

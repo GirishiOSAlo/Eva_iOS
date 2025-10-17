@@ -27,7 +27,7 @@ struct UserDetailsData: Codable {
     let bioData, uniqueCode, dateOfBirth, status: String?
     let loginStatus: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?
@@ -139,5 +139,32 @@ struct Resume: Codable {
         case resumeFile = "resume_file"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+    }
+}
+
+// MARK: - StringOrInt
+struct StringOrInt: Codable {
+    let value: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let intValue = try? container.decode(Int.self) {
+            value = String(intValue)
+        } else if let stringValue = try? container.decode(String.self) {
+            value = stringValue
+        } else {
+            value = nil
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        if let value = value {
+            if let intValue = Int(value) {
+                try container.encode(intValue)
+            } else {
+                try container.encode(value)
+            }
+        }
     }
 }
