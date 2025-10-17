@@ -79,7 +79,9 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
         
         timer?.invalidate()
         timer = nil
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countdown), userInfo: nil, repeats: true)
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.countdown), userInfo: nil, repeats: true)
+        }
     }
     
     func stopTimer() {
