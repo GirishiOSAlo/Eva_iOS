@@ -24,7 +24,7 @@ struct SignupData: Codable {
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: String?

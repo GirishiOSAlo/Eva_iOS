@@ -31,7 +31,7 @@ struct EvaUser: Codable {
     let verificationPin: Int?
     let userImage: String?
     let os, type: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let status: String?
     let isLinkedin: Int?
     let linkedinImageURL, address, facebookImageURL: String?
@@ -134,7 +134,7 @@ struct OtherUserData: Codable {
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook, connectionCount: Int?

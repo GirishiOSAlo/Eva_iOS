@@ -217,7 +217,8 @@ struct Post: Codable {
     let status: Int?
     let os: String?
     let createdDate: String?
-    let createdByID, modifiedByID, postID, commentID: Int?
+    let createdByID: StringOrInt?
+    let modifiedByID, postID, commentID: Int?
     let userdetails: Userdetails?
     let action, content: String?
 
@@ -257,7 +258,7 @@ struct ReactionUser: Codable {
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?

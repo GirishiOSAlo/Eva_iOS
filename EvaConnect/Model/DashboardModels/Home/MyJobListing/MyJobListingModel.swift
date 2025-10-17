@@ -29,7 +29,7 @@ struct JobListModel: Codable {
     let jobImage: String?
     var isJobLike : Int?
     let commentCount, applicantCount, isApplied, likeCount: Int
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let createdDatetime: String?
     let modifiedByID: Int?
     let modifiedDatetime: String?

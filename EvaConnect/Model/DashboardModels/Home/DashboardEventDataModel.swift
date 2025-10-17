@@ -105,7 +105,7 @@ struct DashboardEvent: Codable {
     let dateOfBirth: String?
     let status: Status?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?

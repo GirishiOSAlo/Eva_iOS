@@ -35,7 +35,7 @@ struct InvitedPeople: Codable {
     let dateJoined: String?
     let modifiedDatetime, sort: String?
     let status, verificationPin: Int?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let modifiedByID: Int?
     let bioData: String?
     let companyName: String?

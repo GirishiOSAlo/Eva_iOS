@@ -63,7 +63,7 @@ struct UserNotification: Codable {
     let userImage: String
     let os: String?
     let type: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let status: String?
 
     enum CodingKeys: String, CodingKey {

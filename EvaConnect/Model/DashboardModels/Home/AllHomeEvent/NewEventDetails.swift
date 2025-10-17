@@ -22,7 +22,8 @@ struct NewEventDetailsData: Codable {
     let eventEndDatetime, eventStartDatetime: String?
     let agenda, status: Int?
     let os, createdDate: String?
-    let createdByID, modifiedByID, userID, isPrivate: Int?
+    let createdByID: StringOrInt?
+    let modifiedByID, userID, isPrivate: Int?
     let tempImage: String?
     let comments: [String]?
     let isNewsSave, isEventLike: Int?
@@ -91,7 +92,7 @@ struct NewEventDetailsUser: Codable {
     let connectionID, bioData, uniqueCode: String?
     let dateOfBirth, status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?
@@ -352,7 +353,7 @@ struct NewEventDetailsInterestedUser: Codable {
     let connectionID, bioData, uniqueCode: String?
     let dateOfBirth, status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?
@@ -449,7 +450,8 @@ struct EvaEventsAttendeeUser: Codable {
     let lastLogin, dateJoined: String?
     let modifiedDatetime, sort: String?
     let status, verificationPin: Int?
-    let createdByID, modifiedByID: Int?
+    let createdByID: StringOrInt?
+    let modifiedByID: Int?
     let bioData, companyName: String?
     let categoryID: Int?
     let logo, companyURL: String?
@@ -550,7 +552,8 @@ struct EvaEvent: Codable {
     let address2: String?
     let timeZone, timeZoneValue, endDate, startTime: String?
     let endTime: String?
-    let createdByID, modifiedByID, userID: Int?
+    let createdByID: StringOrInt?
+    let modifiedByID, userID: Int?
     let name, eventLogo, featuredImage, startDate: String?
     let isPrivate: Int?
     let isBanner: Bool?

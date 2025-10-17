@@ -42,7 +42,7 @@ struct ApplicationList: Codable {
     let username, designation: String?
     let userImage: String?
     let companyName, onlineStatus, createdDate: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let resume: String?
     
     enum CodingKeys: String, CodingKey {

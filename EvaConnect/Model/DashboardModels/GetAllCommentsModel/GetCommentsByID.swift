@@ -20,7 +20,7 @@ struct Comments: Codable {
     let isCommentLike, likeCount : Int?
     let postID: Int? //modifiedByID
     let createdDate, content: String?
-    let createdByID: Int
+    let createdByID: StringOrInt
     let user: CommentUserData
     let createdDatetime, status: String
 //    let modifiedDatetime: String?

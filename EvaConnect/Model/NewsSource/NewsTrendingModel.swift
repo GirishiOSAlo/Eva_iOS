@@ -69,7 +69,8 @@ struct TrendingEvaNewsCategory: Codable {
     let status: Int?
     let os: String?
     let name: String?
-    let createdByID, modifiedByID: Int?
+    let createdByID: StringOrInt?
+    let modifiedByID: Int?
     let image, imageURL: String?
     
     enum CodingKeys: String, CodingKey {
@@ -100,7 +101,7 @@ struct TrendingNewsUser: Codable {
     let connectionID: Int?
     let bioData, uniqueCode, dateOfBirth, status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?

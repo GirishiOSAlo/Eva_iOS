@@ -20,7 +20,7 @@ struct LikeModelData: Codable {
    let objectID: Int
      let objectType: ObjectType?
      let createdDatetime: String
-     let createdByID: Int
+     let createdByID: StringOrInt
      let user: [UserLike]?
      let details: String?
      let isLike: Int
@@ -60,7 +60,7 @@ struct UserLike: Codable {
     let userImage: String?
     //let os: OSLike
     let type: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let status: String?
 
     enum CodingKeys: String, CodingKey {

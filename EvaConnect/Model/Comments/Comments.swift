@@ -19,7 +19,7 @@ struct CommentsModel: Codable {
 struct Comment: Codable {
     let id, rssNewsID: Int?
     let content, status, createdDate, createdDatetime: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let commentID: Int?
     let isCommentLike, isCommentDisLike, likeCount, dislikeCount: Int?
     let user: CommentUser?
@@ -41,7 +41,7 @@ struct Comment: Codable {
 struct RepliesComment: Codable {
     let id, rssNewsID: Int?
     let content, status, createdDate, createdDatetime: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let commentID: Int?
     let isCommentLike, isCommentDisLike, likeCount, dislikeCount: Int?
     let user: CommentUser?

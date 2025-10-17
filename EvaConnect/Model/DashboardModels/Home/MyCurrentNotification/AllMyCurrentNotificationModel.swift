@@ -51,7 +51,7 @@ struct CurrentNotificationUser1: Codable {
     let verificationPin: Int?
     let userImage: String?
     let os, type: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let status: String?
 
     enum CodingKeys: String, CodingKey {

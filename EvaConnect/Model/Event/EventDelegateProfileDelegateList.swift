@@ -34,7 +34,7 @@ class EventDelegateProfileDelegateList: Codable {
     let dateJoined: String?
     let modifiedDatetime, sort: String?
     let status, verificationPin: Int?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let modifiedByID: Int?
     let bioData, companyName: String?
     let companyURL: String?

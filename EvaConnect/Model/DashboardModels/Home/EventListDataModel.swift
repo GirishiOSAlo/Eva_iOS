@@ -100,7 +100,7 @@ struct EventUser: Codable {
     let dateOfBirth: String?
     let status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Int?

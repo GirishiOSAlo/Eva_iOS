@@ -36,7 +36,7 @@ struct SuggestedConnection: Codable {
     let modifiedDatetime, sort: String?
     let status: Int?
     let verificationPin: Int?
-    let createdByID: String? //modified_by_id
+    let createdByID: StringOrInt? //modified_by_id
     let bioData, companyName: String?
     let companyURL: String?
     let designation: String?

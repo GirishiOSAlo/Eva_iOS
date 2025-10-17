@@ -20,7 +20,7 @@ struct EventCommentModel: Codable {
     let id, eventID: Int?
     let user: EventCommentUser?
     let createdDate, content: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let createdDatetime: String?
     let modifiedByID:Int?
     let modifiedDatetime: String?
@@ -51,7 +51,7 @@ struct EventCommentUser: Codable {
     let verificationPin: Int?
     let userImage: String?
     let os, type: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let status: String?
 
     enum CodingKeys: String, CodingKey {

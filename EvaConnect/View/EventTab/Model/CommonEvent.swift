@@ -66,7 +66,7 @@ struct CommonEventMetaData: Codable {
     let dateJoined: String?
     let modifiedDatetime, sort: String?
     let status, verificationPin: Int?
-    let createdByID, modifiedByID: Int?
+    let createdByID, modifiedByID: StringOrInt?
     let bioData, companyName: String?
     let companyID, categoryID: Int?
     let logo, companyURL: String?

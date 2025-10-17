@@ -22,7 +22,7 @@ struct JobApplicant: Codable {
     let userID: Int?
     let content: String?
     let applicationAttachment: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let createdDatetime, os, status: String?
     let isHidden : Int?
     enum CodingKeys: String, CodingKey {
@@ -50,7 +50,7 @@ struct applicantUser: Codable {
     let verificationPin: Int?
     let userImage: String?
     let os, type: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let status: String?
 
     enum CodingKeys: String, CodingKey {

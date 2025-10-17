@@ -17,7 +17,7 @@ struct NewsComment: Codable {
     let id, modifiedByID, rssNewsID, isCommentLike, likeCount: Int?
     let user: CommentUserData?
     let createdDate, content: String?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let createdDatetime: String
     let modifiedDatetime: String?
     let os, status: String?

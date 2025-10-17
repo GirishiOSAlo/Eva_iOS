@@ -50,7 +50,7 @@ struct Receiver: Codable {
     let companyURL, connectionCount: String?
     let connectionID: Int?
     let country: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let dateOfBirth, designation: String?
     let email: String?
     let facebookImageURL, field, isConnected: String?

@@ -134,7 +134,8 @@ struct SearchNews: Codable {
 struct SearchPost: Codable {
     let id, userID, isURL: String?
         let postVideo: String?
-        let createdByID, modifiedByID, content, postImage: String?
+    let cretedByID: StringOrInt?
+        let modifiedByID, content, postImage: String?
         let createdDatetime: String?
         let userName: String?
         let userImage, postImageURL: String?

@@ -347,7 +347,7 @@ struct EvaNewsCategory: Codable {
     let status: Int?
     let os: String?
     let name: String?
-    let createdByID, modifiedByID: Int?
+    let createdByID, modifiedByID: StringOrInt?
     let image, imageURL: String?
 
     enum CodingKeys: String, CodingKey {
@@ -383,7 +383,7 @@ struct InterestedUser: Codable {
     let modifiedDatetime, sort: String?
     let status: Int?
     let verificationPin: Int?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let modifiedByID: Int?
     let bioData: BioData?
     let companyName: String?
@@ -527,7 +527,7 @@ struct EditJobDetailsUser: Codable {
     let connectionID, bioData, uniqueCode, dateOfBirth: String?
     let status: String?
     let userImage: String?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let isLinkedin: Int?
     let facebookImageURL: String?
     let isFacebook: Bool?

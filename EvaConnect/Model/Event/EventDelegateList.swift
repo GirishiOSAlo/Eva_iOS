@@ -35,7 +35,7 @@ struct EventDelegateList: Codable {
     let modifiedDatetime, sort: String?
     let status: Int?
     let verificationPin: Int?
-    let createdByID: String?
+    let createdByID: StringOrInt?
     let modifiedByID: Int?
     let bioData: String?
     let companyName: String?

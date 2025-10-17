@@ -22,7 +22,7 @@ struct NewsDetail: Codable {
     let image: String?
     let content: String?
     let commentCount, isNewsLike, likeCount: Int?
-    let createdByID: Int?
+    let createdByID: StringOrInt?
     let createdDatetime: String?
     let modifiedByID: Int?
     let modifiedDatetime: String?
