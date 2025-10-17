@@ -249,24 +249,26 @@ class HomeVC: BaseVC {
             self.currentEventLblHeight.constant = 0.0
             self.allEventLblHeight.constant = 0.0
             self.currentEventListHeight.constant = 0
-            if self.selectedHomeFilter == .new {
-                self.currentEventLblHeight.constant = 70.0
-                self.allEventLblHeight.constant = 70.0
-                self.fetchCurrentEventData()
-                self.allEventLbl.text = "All Event"
-                self.fetchAllEventData()
-            } else if self.selectedHomeFilter == .going {
-                self.currentEventLblHeight.constant = 70.0
-                self.allEventLblHeight.constant = 70.0
-                self.fetchCurrentEventData()
-                self.allEventLbl.text = "Upcoming Event"
-                self.fetchUpcomingEventData()
-            } else if self.selectedHomeFilter == .requested {
-                self.fetchRequestedEventData()
-            } else if self.selectedHomeFilter == .saved {
-                self.fetchSavedEventData()
-            } else if self.selectedHomeFilter == .passed {
-                self.fetchPassedEventData()
+            DispatchQueue.main.async {
+                if self.selectedHomeFilter == .new {
+                    self.currentEventLblHeight.constant = 70.0
+                    self.allEventLblHeight.constant = 70.0
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "All Event"
+                    self.fetchAllEventData()
+                } else if self.selectedHomeFilter == .going {
+                    self.currentEventLblHeight.constant = 70.0
+                    self.allEventLblHeight.constant = 70.0
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "Upcoming Event"
+                    self.fetchUpcomingEventData()
+                } else if self.selectedHomeFilter == .requested {
+                    self.fetchRequestedEventData()
+                } else if self.selectedHomeFilter == .saved {
+                    self.fetchSavedEventData()
+                } else if self.selectedHomeFilter == .passed {
+                    self.fetchPassedEventData()
+                }
             }
             
         } else if selectedTab == .posts {
@@ -2795,24 +2797,26 @@ extension HomeVC {
             self.currentEventLblHeight.constant = 0.0
             self.allEventLblHeight.constant = 0.0
             self.currentEventListHeight.constant = 0
-            if self.selectedHomeFilter == .new {
-                self.currentEventLblHeight.constant = 70.0
-                self.allEventLblHeight.constant = 70.0
-                self.fetchCurrentEventData()
-                self.allEventLbl.text = "All Event"
-                self.fetchAllEventData()
-            } else if self.selectedHomeFilter == .going {
-                self.currentEventLblHeight.constant = 70.0
-                self.allEventLblHeight.constant = 70.0
-                self.fetchCurrentEventData()
-                self.allEventLbl.text = "Upcoming Event"
-                self.fetchUpcomingEventData()
-            } else if self.selectedHomeFilter == .requested {
-                self.fetchRequestedEventData()
-            } else if self.selectedHomeFilter == .saved {
-                self.fetchSavedEventData()
-            } else if self.selectedHomeFilter == .passed {
-                self.fetchPassedEventData()
+            DispatchQueue.main.async {
+                if self.selectedHomeFilter == .new {
+                    self.currentEventLblHeight.constant = 70.0
+                    self.allEventLblHeight.constant = 70.0
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "All Event"
+                    self.fetchAllEventData()
+                } else if self.selectedHomeFilter == .going {
+                    self.currentEventLblHeight.constant = 70.0
+                    self.allEventLblHeight.constant = 70.0
+                    self.fetchCurrentEventData()
+                    self.allEventLbl.text = "Upcoming Event"
+                    self.fetchUpcomingEventData()
+                } else if self.selectedHomeFilter == .requested {
+                    self.fetchRequestedEventData()
+                } else if self.selectedHomeFilter == .saved {
+                    self.fetchSavedEventData()
+                } else if self.selectedHomeFilter == .passed {
+                    self.fetchPassedEventData()
+                }
             }
             
         } else if selectedTab == .posts {
@@ -2981,10 +2985,12 @@ extension HomeVC {
             self.currentEventLblHeight.constant = 70.0
             self.allEventLblHeight.constant = 70.0
             
-            self.selectedHomeFilter = .new
-            self.fetchCurrentEventData()
-            self.allEventLbl.text = "All Event"
-            self.fetchAllEventData()
+            DispatchQueue.main.async {
+                self.selectedHomeFilter = .new
+                self.fetchCurrentEventData()
+                self.allEventLbl.text = "All Event"
+                self.fetchAllEventData()
+            }
 //            } else {
 //                selectedTab = .industryJobs
 //                Constants.saveEnumToUserDefaults(.industryJobs)

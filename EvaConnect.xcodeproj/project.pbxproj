@@ -588,9 +588,7 @@
 		A6B7ADAF2E090EE5009172CD /* DashboardBannerDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADAE2E090EE5009172CD /* DashboardBannerDataModel.swift */; };
 		A6B7ADB12E096377009172CD /* AgendaListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */; };
 		A6C3C6012DC8822D00A2E229 /* HomeEventCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6C3C5FE2DC8822D00A2E229 /* HomeEventCVC.xib */; };
-		A6C3C6022DC8822D00A2E229 /* HomeJobCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6C3C6002DC8822D00A2E229 /* HomeJobCVC.xib */; };
 		A6C3C6032DC8822D00A2E229 /* HomeEventCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C3C5FD2DC8822D00A2E229 /* HomeEventCVC.swift */; };
-		A6C3C6042DC8822D00A2E229 /* HomeJobCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C3C5FF2DC8822D00A2E229 /* HomeJobCVC.swift */; };
 		A6C5E0642E291AF400CEE383 /* SendRequestDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5E0632E291AF400CEE383 /* SendRequestDataModel.swift */; };
 		A6C5E0662E29210000CEE383 /* CreateEventMeetingDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5E0652E29210000CEE383 /* CreateEventMeetingDetailsDataModel.swift */; };
 		A6C5F57A2B30154B0077B6BD /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C5F5792B30154B0077B6BD /* InviteVC.swift */; };
@@ -1223,8 +1221,6 @@
 		A6B7ADB02E096377009172CD /* AgendaListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaListDataModel.swift; sourceTree = "<group>"; };
 		A6C3C5FD2DC8822D00A2E229 /* HomeEventCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCVC.swift; sourceTree = "<group>"; };
 		A6C3C5FE2DC8822D00A2E229 /* HomeEventCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeEventCVC.xib; sourceTree = "<group>"; };
-		A6C3C5FF2DC8822D00A2E229 /* HomeJobCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeJobCVC.swift; sourceTree = "<group>"; };
-		A6C3C6002DC8822D00A2E229 /* HomeJobCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeJobCVC.xib; sourceTree = "<group>"; };
 		A6C5E0632E291AF400CEE383 /* SendRequestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestDataModel.swift; sourceTree = "<group>"; };
 		A6C5E0652E29210000CEE383 /* CreateEventMeetingDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventMeetingDetailsDataModel.swift; sourceTree = "<group>"; };
 		A6C5F5792B30154B0077B6BD /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
@@ -3529,8 +3525,6 @@
 			children = (
 				A6C3C5FD2DC8822D00A2E229 /* HomeEventCVC.swift */,
 				A6C3C5FE2DC8822D00A2E229 /* HomeEventCVC.xib */,
-				A6C3C5FF2DC8822D00A2E229 /* HomeJobCVC.swift */,
-				A6C3C6002DC8822D00A2E229 /* HomeJobCVC.xib */,
 				A66F13F82DBF9185009D5A13 /* HomeBannerCVC.swift */,
 				A66F13F92DBF9185009D5A13 /* HomeBannerCVC.xib */,
 			);
@@ -3941,7 +3935,6 @@
 				48BC642C2DCB7901002BA644 /* SIL Open Font License.txt in Resources */,
 				48BC642D2DCB7901002BA644 /* NunitoSans-ExtraLight.ttf in Resources */,
 				A6782F5C2DDC4A2C0029443B /* MeetingDetailsCategoryCVC.xib in Resources */,
-				A6C3C6022DC8822D00A2E229 /* HomeJobCVC.xib in Resources */,
 				182AC6F5246152D000264529 /* ShareCell.xib in Resources */,
 				4898957B2DDF028200D2E54E /* VenueMapVC.xib in Resources */,
 				50102F2D2475107200E81860 /* SideMenu.xib in Resources */,
@@ -4236,7 +4229,6 @@
 				70A6421027E07D5200770B6D /* PushNotificationSettings.swift in Sources */,
 				50B929AF244A1A8100299CC0 /* UICollectionView.swift in Sources */,
 				A6C3C6032DC8822D00A2E229 /* HomeEventCVC.swift in Sources */,
-				A6C3C6042DC8822D00A2E229 /* HomeJobCVC.swift in Sources */,
 				485FC1A02DD75EE700AA05A4 /* ExhibitorsVC.swift in Sources */,
 				A68C083A2E81456C002CE235 /* SurveyNotificationTVC.swift in Sources */,
 				25D40B3E27C3A30200EEF2AA /* Wrapper.swift in Sources */,
@@ -4708,7 +4700,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10.3;
+				CURRENT_PROJECT_VERSION = 10.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
@@ -4770,7 +4762,7 @@
 				CODE_SIGN_ENTITLEMENTS = EvaConnect/EvaConnect.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10.3;
+				CURRENT_PROJECT_VERSION = 10.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BW48K3X97H;
 				ENABLE_BITCODE = NO;
