@@ -38,6 +38,7 @@ class UserJobListingVC: BaseVC {
         super.viewDidLoad()
         isSeparatorHidden = true
         backBaseView.layer.cornerRadius = 12
+        jobImageView.layer.cornerRadius = self.jobImageView.frame.size.height/2
         shareButton.layer.cornerRadius = self.shareButton.frame.size.height/2
         applyBtn.layer.cornerRadius = 14
 //        initUI()
