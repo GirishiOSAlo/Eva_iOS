@@ -173,28 +173,34 @@ class EventDetailsVC: UIViewController, XIBed {
         let attendees = self.eventDetail?.evaEventsAttendees ?? []
         let attendeesCount = eventDetail.attendeesCount ?? 0
         noOfJoinedPeopleLabel.text = "\(attendeesCount)+ Joined"
+        
+        self.per1imgView.isHidden = true
+        self.per2imgView.isHidden = true
+        self.per3imgView.isHidden = true
             
         if attendeesCount == 1 {
             let imgURL = URL(string: attendees[0].evaEventsAttendeeUser?.userImage ?? "")
+            self.per1imgView.isHidden = false
             self.per1imgView.kf.setImage(with: imgURL, placeholder: UIImage(named: "profile"))
         }
         else if attendeesCount == 2 {
+            self.per1imgView.isHidden = false
             let imgURL = URL(string: attendees[0].evaEventsAttendeeUser?.userImage ?? "")
             self.per1imgView.kf.setImage(with: imgURL, placeholder: UIImage(named: "profile"))
+            self.per2imgView.isHidden = false
             let imgURL1 = URL(string: attendees[1].evaEventsAttendeeUser?.userImage ?? "")
             self.per2imgView.kf.setImage(with: imgURL1, placeholder: UIImage(named: "profile"))
         }
         else if attendeesCount >= 3 {
+            self.per1imgView.isHidden = false
             let imgURL = URL(string: attendees[0].evaEventsAttendeeUser?.userImage ?? "")
             self.per1imgView.kf.setImage(with: imgURL, placeholder: UIImage(named: "profile"))
+            self.per2imgView.isHidden = false
             let imgURL1 = URL(string: attendees[1].evaEventsAttendeeUser?.userImage ?? "")
             self.per2imgView.kf.setImage(with: imgURL1, placeholder: UIImage(named: "profile"))
+            self.per3imgView.isHidden = false
             let imgURL2 = URL(string: attendees[2].evaEventsAttendeeUser?.userImage ?? "")
             self.per3imgView.kf.setImage(with: imgURL2, placeholder: UIImage(named: "profile"))
-        } else {
-            self.per1imgView.image = UIImage(named: "profile")
-            self.per2imgView.image = UIImage(named: "profile")
-            self.per3imgView.image = UIImage(named: "profile")
         }
             
         

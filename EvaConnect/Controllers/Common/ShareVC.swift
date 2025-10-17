@@ -119,7 +119,7 @@ class ShareVC: UIViewController {
 //            return
 //        }
         
-        let urlStr = String(format: "fb-messenger://share/?link=%@", sharedLinks)
+        let urlStr = String(format: "fb://facewebmodal/f?href=", sharedLinks)
         let url  = NSURL(string: urlStr)
 
         if UIApplication.shared.canOpenURL(url! as URL) {
