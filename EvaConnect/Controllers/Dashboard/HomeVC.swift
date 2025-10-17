@@ -1401,10 +1401,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
             cell.commentButton.tag = indexPath.row
             cell.shareButton.tag = indexPath.row
             cell.openArticleBtn.tag = indexPath.row
+            cell.followBtn.tag = indexPath.row
             
             cell.goToProfileBtn.addTarget(self, action: #selector(goToProfileTapped(_:)), for: .touchUpInside)
             cell.reportBtn.addTarget(self, action: #selector(reportBtnTapped(_:)), for: .touchUpInside)
             cell.shareButton.addTarget(self, action: #selector(handlePostShare(_:)), for: .touchUpInside)
+            cell.followBtn.addTarget(self, action: #selector(handlePostFollow(_:)), for: .touchUpInside)
             
             return cell
             
@@ -3440,6 +3442,43 @@ extension HomeVC : BottomContentPickerDelegate {
             self.showToast(message: "Successfully Shared with desired Connection")
         }
         self.present(vc, animated: true)
+    }
+    
+    @objc func handlePostFollow(_ sender: UIButton) {
+        let post = self.posts[sender.tag]
+        let receiverID = post.userID ?? 0
+        
+//        if post.isConnected == "connected" || homePost.isConnected == "active" {
+//            //unfollow Call...
+//        } else {
+//            //Follow Call...
+//        }
+        self.connectionFollowUnfollow(receiverID: receiverID, status: 2) //2= follow & 6= Unfollow
+    }
+    
+    func connectionFollowUnfollow(receiverID: Int, status: Int) {
+        let url = EndPoints.connectionFollowUnfollow
+        let parameters = [
+            "receiverId": receiverID,
+            "status": status] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(DataStringResponse.self, from: response.data!)
+                if !(networkEventRoot.error ?? false) {
+                    self.presentAlert(networkEventRoot.message ?? "",networkEventRoot.data ?? "")
+                    self.reloadData(inserted: false)
+                } else {
+                    self.presentAlert(networkEventRoot.message ?? "",networkEventRoot.data ?? "")
+                    print("Error :: \(networkEventRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
     }
 }
 
