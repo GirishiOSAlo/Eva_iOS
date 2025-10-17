@@ -111,7 +111,7 @@ struct UserConnection: Codable , Equatable {
     let userImageUrl: String?
     let os: OS?
     let type: TypeEnum?
-    let createdByID: StringOrInt?
+    let createdByID: Int?
     let status: IsConnected?
     let isLinkedin: Int?
     let linkedinImageURL, address, companyName, company_Name, field: String?

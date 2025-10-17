@@ -121,7 +121,7 @@ extension EventDelegateProfileVC {
         
         let url = "\(EndPoints.userDetail)/\(userId)"
         NetworkManagerr.request(url, encoding: JSONEncoding.default) { (response) in
-            self.hideActivity(isUserInteractionEnabled: true)
+            self.hideActivity()
             
             if response.result.isSuccess {
                 do {

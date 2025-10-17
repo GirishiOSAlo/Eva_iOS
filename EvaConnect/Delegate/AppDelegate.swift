@@ -16,6 +16,7 @@ import IQKeyboardManagerSwift
 import IQKeyboardToolbarManager
 import FirebaseMessaging
 import FirebaseCore
+import SVProgressHUD
 //import netfox
 //import GooglePlaces
 
@@ -47,6 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
 //        }
 //
 //        _ = AppearanceProxyManager.shared.applyDefaultControllsApperance()
+        
+        SVProgressHUD.setDefaultMaskType(.clear) // Blocks touches
+        
         FirebaseApp.configure()
     
         self.window = UIWindow(frame: UIScreen.main.bounds)

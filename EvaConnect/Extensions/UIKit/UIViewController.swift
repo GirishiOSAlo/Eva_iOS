@@ -12,17 +12,17 @@ import SVProgressHUD
 
 extension UIViewController {
 
-    func showActivity(isUserInteractionEnabled: Bool = true) {
+    func showActivity() {
         SVProgressHUD.show()
         DispatchQueue.main.async {
-            self.view.isUserInteractionEnabled = isUserInteractionEnabled
+            self.view.isUserInteractionEnabled = false
         }
     }
     
-    func hideActivity(isUserInteractionEnabled: Bool = true) {
+    func hideActivity() {
         SVProgressHUD.dismiss()
         DispatchQueue.main.async {
-            self.view.isUserInteractionEnabled = isUserInteractionEnabled
+            self.view.isUserInteractionEnabled = true
         }
     }
     

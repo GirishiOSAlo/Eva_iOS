@@ -505,9 +505,9 @@ extension ChatListVC {
     }
     
     func getMessages(completion: @escaping () -> Void) {
-        showActivity(isUserInteractionEnabled: false)
+        showActivity()
         NetworkManagerr.request(EndPoints.messageList) { (response) in
-            self.hideActivity(isUserInteractionEnabled: true)
+            self.hideActivity()
             
             if response.result.isSuccess {
                 let jsonDecoder = JSONDecoder()
@@ -535,9 +535,9 @@ extension ChatListVC {
             url = EndPoints.userActivity
         }
         
-        showActivity(isUserInteractionEnabled: false)
+        showActivity()
         NetworkManagerr.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default) { (response) in
-            self.hideActivity(isUserInteractionEnabled: true)
+            self.hideActivity()
             
             if response.result.isSuccess {
                 
