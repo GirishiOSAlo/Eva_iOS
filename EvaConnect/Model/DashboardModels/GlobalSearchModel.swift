@@ -100,7 +100,7 @@ struct SearchEvent: Codable {
     let createdDate: String?
     let image, bannerImage: String?
     let source: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case name, id, city, address
         case startDate = "start_date"
@@ -120,7 +120,7 @@ struct SearchNews: Codable {
     let published: String?
     let image: String?
     let source, relativeTime: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, title
         case newsSource = "news_source"
@@ -134,8 +134,7 @@ struct SearchNews: Codable {
 struct SearchPost: Codable {
     let id, userID, isURL: String?
         let postVideo: String?
-    let cretedByID: StringOrInt?
-        let modifiedByID, content, postImage: String?
+    let createdByID, modifiedByID, content, postImage: String?
         let createdDatetime: String?
         let userName: String?
         let userImage, postImageURL: String?
@@ -196,7 +195,7 @@ struct SearchJob: Codable {
     let image: String?
     let source, applicationCount: String?
     let isApplied: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, content, position
         case jobTitle = "job_title"
@@ -212,7 +211,7 @@ struct SearchJob: Codable {
 // MARK: - Count
 struct Count: Codable {
     let likeCount, commentCount, shareCount: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case likeCount = "like_count"
         case commentCount = "comment_count"
