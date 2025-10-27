@@ -20,7 +20,7 @@ class SpeakersDetailsVC: UIViewController, XIBed {
     @IBOutlet weak var descTitleLbl: UILabel!
     @IBOutlet weak var descLbl: UILabel!
     
-    var speakerData: CommonEventMetaData?
+    var speakerID = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +43,10 @@ class SpeakersDetailsVC: UIViewController, XIBed {
         profileImgBaseVw.applyBorderWithRadius(color: UIColor(hex: "#5894DD"), value: 2.0, radius: profileImgBaseVw.frame.size.width/2)
         profileImgVw.cornerRadius = profileImgVw.frame.size.width/2
         
-        setData(data: speakerData)
+        self.fetchSpekerDetails(id: self.speakerID)
     }
     
-    func setData(data: CommonEventMetaData?) {
+    func setData(data: SpeakerDetails?) {
         if let imageUrl = data?.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
@@ -57,6 +57,42 @@ class SpeakersDetailsVC: UIViewController, XIBed {
         }
         nameLbl.text = (data?.firstName?.isEmpty ?? true) ? "--" : data?.firstName
         subLbl.text = (data?.designation?.isEmpty ?? true) ? "--" : data?.designation
-        descLbl.text = (data?.description?.isEmpty ?? true) ? "--" : data?.bioData
+        descLbl.text = (data?.description?.isEmpty ?? true) ? "--" : data?.description
+    }
+    
+    func fetchSpekerDetails(id: Int) {
+        showActivity()
+        let url = EndPoints.speakerDetails + "?id=\(id)"
+        let params: [String: Any] = [ "id": id ]
+    
+        var urlComponents = URLComponents(string: url)!
+        urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
+        let finalURL = urlComponents.url!.absoluteString
+
+        NetworkManagerr.request(url, method: .get) { (response) in
+            self.hideActivity()
+            print(response)
+            guard response.result.isSuccess else {
+                print("Error ::", response.error?.localizedDescription ?? "Default Error")
+                return
+            }
+
+            guard let data = response.data else {
+                print("Error :: No data received.")
+                return
+            }
+
+            do {
+                let decodedResponse = try JSONDecoder().decode(SpeakerDetailsDataModel.self, from: data)
+                if let data = decodedResponse.data {
+                    let speakerDetails = data[0]
+                    self.setData(data: speakerDetails)
+                } else {
+                    print("Error ::", decodedResponse.message ?? "No message")
+                }
+            } catch {
+                print("Error ::", error)
+            }
+        }
     }
 }

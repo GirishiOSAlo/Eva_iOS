@@ -149,7 +149,7 @@ extension SpeakersViewController: UICollectionViewDelegate, UICollectionViewData
     
     @objc func openViewProfile(sender: UIButton) {
         let vc = SpeakersDetailsVC.instantiate()
-        vc.speakerData = speakersList[sender.tag]
+        vc.speakerID = speakersList[sender.tag].id ?? 0
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

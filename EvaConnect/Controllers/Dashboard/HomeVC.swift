@@ -1952,41 +1952,45 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //MARK: Scroll View Delegate...
 extension HomeVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-        if bottomEdge >= scrollView.contentSize.height {
-            print("👉 Last ScrollView is visible")
-            if selectedTab == .jobs || selectedTab == .industryJobs {
-                if currentPage < lastPage {
-                    currentPage += 1
-                    let filter = self.selectedHomeFilter.rawValue.lowercased()
-                    self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-                } else {
-                    print("Page completed. No Api call")
-                }
-            } else if selectedTab == .posts {
-                if paginatedPosts.count > 9 {
+        if scrollView == filterCollectionView {
+            print("Category Collection Scroll....")
+        } else {
+            let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
+            if bottomEdge >= scrollView.contentSize.height {
+                print("👉 Last ScrollView is visible")
+                if selectedTab == .jobs || selectedTab == .industryJobs {
+                    if currentPage < lastPage {
+                        currentPage += 1
+                        let filter = self.selectedHomeFilter.rawValue.lowercased()
+                        self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+                    } else {
+                        print("Page completed. No Api call")
+                    }
+                } else if selectedTab == .posts {
+                    if paginatedPosts.count > 9 {
+                        offsetCount += 1
+                        getPosts(offSet: offsetCount, inserted: true)
+                    }
+                } else if selectedTab == .news {
+                    guard !isLoading else { return }
+                    guard offsetCount < lastPage else { return } // ✅ stop at last page
+                    
                     offsetCount += 1
-                    getPosts(offSet: offsetCount, inserted: true)
+                    fetchNewsListData(offSet: offsetCount)
                 }
-            } else if selectedTab == .news {
-                guard !isLoading else { return }
-                guard offsetCount < lastPage else { return } // ✅ stop at last page
-                
-                offsetCount += 1
-                fetchNewsListData(offSet: offsetCount)
-            }
-            else if selectedTab == .events || selectedTab == .industryEvents {
-                offsetCount += 1
-                if self.selectedHomeFilter == .new {
-                    self.fetchAllEventData()
-                } else if self.selectedHomeFilter == .going {
-                    self.fetchUpcomingEventData()
-                } else if self.selectedHomeFilter == .requested {
-                    self.fetchRequestedEventData()
-                } else if self.selectedHomeFilter == .saved {
-                    self.fetchSavedEventData()
-                } else if self.selectedHomeFilter == .passed {
-                    self.fetchPassedEventData()
+                else if selectedTab == .events || selectedTab == .industryEvents {
+                    offsetCount += 1
+                    if self.selectedHomeFilter == .new {
+                        self.fetchAllEventData()
+                    } else if self.selectedHomeFilter == .going {
+                        self.fetchUpcomingEventData()
+                    } else if self.selectedHomeFilter == .requested {
+                        self.fetchRequestedEventData()
+                    } else if self.selectedHomeFilter == .saved {
+                        self.fetchSavedEventData()
+                    } else if self.selectedHomeFilter == .passed {
+                        self.fetchPassedEventData()
+                    }
                 }
             }
         }

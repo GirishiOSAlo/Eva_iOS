@@ -490,6 +490,7 @@
 		A62AB11D2DD4A9CE006C7A21 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */; };
 		A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */; };
 		A62F49FF2E6FFABC00D14062 /* CurrenciesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */; };
+		A636DA242EAF342300378E92 /* SpeakerDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A636DA232EAF342300378E92 /* SpeakerDetailsDataModel.swift */; };
 		A63714412E20C44E00C6B3E8 /* NetworkEventListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */; };
 		A63714442E20E02F00C6B3E8 /* EventMeetingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */; };
 		A63714452E20E02F00C6B3E8 /* EventMeetingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */; };
@@ -1124,6 +1125,7 @@
 		A62AB11B2DD4A9CE006C7A21 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A62AB11C2DD4A9CE006C7A21 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		A62F49FE2E6FFABC00D14062 /* CurrenciesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesDataModel.swift; sourceTree = "<group>"; };
+		A636DA232EAF342300378E92 /* SpeakerDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsDataModel.swift; sourceTree = "<group>"; };
 		A63714402E20C44E00C6B3E8 /* NetworkEventListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEventListDataModel.swift; sourceTree = "<group>"; };
 		A63714422E20E02F00C6B3E8 /* EventMeetingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMeetingCVC.swift; sourceTree = "<group>"; };
 		A63714432E20E02F00C6B3E8 /* EventMeetingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventMeetingCVC.xib; sourceTree = "<group>"; };
@@ -1783,6 +1785,7 @@
 				A68C99292E7BBDAD003B9B13 /* CompanyListDataModel.swift */,
 				A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */,
 				A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */,
+				A636DA232EAF342300378E92 /* SpeakerDetailsDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4530,6 +4533,7 @@
 				50F80CF1249CD43F002ED7BF /* NavigationManager.swift in Sources */,
 				50C5F38924A62E6B00905C90 /* PostManager.swift in Sources */,
 				5086BDBF246CA96E006DA502 /* Deprecated.swift in Sources */,
+				A636DA242EAF342300378E92 /* SpeakerDetailsDataModel.swift in Sources */,
 				189C3D6A24360B6900835F9F /* AllCalendarModelByMonth.swift in Sources */,
 				18D02BC92418B7F300FD2069 /* JobApplyVC.swift in Sources */,
 				A66145382B4416CD009221B5 /* EventDelegateProfileDelegateList.swift in Sources */,
