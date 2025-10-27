@@ -63,15 +63,8 @@ class SpeakersDetailsVC: UIViewController, XIBed {
     func fetchSpekerDetails(id: Int) {
         showActivity()
         let url = EndPoints.speakerDetails + "?id=\(id)"
-        let params: [String: Any] = [ "id": id ]
-    
-        var urlComponents = URLComponents(string: url)!
-        urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
-        let finalURL = urlComponents.url!.absoluteString
-
         NetworkManagerr.request(url, method: .get) { (response) in
             self.hideActivity()
-            print(response)
             guard response.result.isSuccess else {
                 print("Error ::", response.error?.localizedDescription ?? "Default Error")
                 return

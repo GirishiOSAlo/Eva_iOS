@@ -47,6 +47,8 @@ struct CommonEventClass: Codable {
 // MARK: - Datum
 struct CommonEventMetaData: Codable {
     let id: Int?
+    let firebaseID: String?
+    let fcmToken: String?
     let firstName: String?
     let lastName, username: String?
     let email: String?
@@ -72,6 +74,7 @@ struct CommonEventMetaData: Codable {
     let logo, companyURL: String?
     let designation, field: String?
     let sectorID: Int?
+    let speakerID: Int?
     let otherSector: String?
     let workAviation: Int?
     let city: String?
@@ -91,6 +94,8 @@ struct CommonEventMetaData: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id
+        case firebaseID = "firebase_id"
+        case fcmToken = "fcm_token"
         case firstName = "first_name"
         case lastName = "last_name"
         case username, email
@@ -126,6 +131,7 @@ struct CommonEventMetaData: Codable {
         case companyName = "company_name"
         case companyID = "company_id"
         case categoryID = "category_id"
+        case speakerID = "speaker_id"
         case logo
         case companyURL = "company_url"
         case designation, field
