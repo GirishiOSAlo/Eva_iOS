@@ -53,7 +53,7 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
     var isCancelTapeed = false
     var isGmail = false
     var meetingId = 0
-    var eventID = 0
+    var eventID: Int?
     var webView: WKWebView!
     var selectedMeetingLocationId = 0
     var otherUserID = 0
@@ -274,8 +274,10 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
 extension CreateMeetingVC {
     func fetchCreateMeetingDetails() {
         let url = EndPoints.createEventMeetingDetails
+        let eventValue: Any = (self.eventID ?? 0) == 0 ? "" : (self.eventID ?? 0)
+        
         let parameters = [
-            "event_id": self.eventID,
+            "event_id": eventValue,
             "user_id": myUserDefaults.userId] as [String: Any]
         
         showActivity()
