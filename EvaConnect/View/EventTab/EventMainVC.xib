@@ -118,43 +118,43 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tV6-mA-h40">
                             <rect key="frame" x="0.0" y="10" width="393" height="648"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gux-2y-jlY">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gux-2y-jlY" userLabel="Event Details View">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="108"/>
                                     <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pHG-AG-2y1">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pHG-AG-2y1" userLabel="Conference Agenda Vw">
                                     <rect key="frame" x="0.0" y="118" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQK-XW-dKD">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQK-XW-dKD" userLabel="Networking Event View">
                                     <rect key="frame" x="0.0" y="178" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Sw-l2-YzK">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Sw-l2-YzK" userLabel="Delegates View">
                                     <rect key="frame" x="0.0" y="238" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBd-g8-SIf">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBd-g8-SIf" userLabel="Meetings View">
                                     <rect key="frame" x="0.0" y="298" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbb-48-CKd">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbb-48-CKd" userLabel="Exhibitors View">
                                     <rect key="frame" x="0.0" y="358" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOK-xQ-fyI">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOK-xQ-fyI" userLabel="Speakers View">
                                     <rect key="frame" x="0.0" y="418" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WYp-dX-p8v">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WYp-dX-p8v" userLabel="Sponsors View">
                                     <rect key="frame" x="0.0" y="478" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvm-c7-4QV">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvm-c7-4QV" userLabel="Hotels View">
                                     <rect key="frame" x="0.0" y="538" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btx-TU-ixK">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btx-TU-ixK" userLabel="Venue Map View">
                                     <rect key="frame" x="0.0" y="598" width="393" height="50"/>
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
@@ -162,14 +162,12 @@
                         </stackView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="tV6-mA-h40" firstAttribute="bottom" secondItem="ijE-k1-7bL" secondAttribute="bottom" id="MA7-nH-weo"/>
-                        <constraint firstItem="tV6-mA-h40" firstAttribute="trailing" secondItem="ijE-k1-7bL" secondAttribute="trailing" id="aGK-s9-Bcj"/>
-                        <constraint firstItem="tV6-mA-h40" firstAttribute="leading" secondItem="ijE-k1-7bL" secondAttribute="leading" id="fth-Nv-mc5"/>
-                        <constraint firstItem="tV6-mA-h40" firstAttribute="top" secondItem="ijE-k1-7bL" secondAttribute="top" constant="10" id="p5A-fG-hPh"/>
-                        <constraint firstItem="tV6-mA-h40" firstAttribute="width" secondItem="7TN-6t-Upo" secondAttribute="width" id="xno-Vr-spe"/>
+                        <constraint firstItem="tV6-mA-h40" firstAttribute="bottom" secondItem="HTn-5z-z6E" secondAttribute="bottom" id="MA7-nH-weo"/>
+                        <constraint firstItem="tV6-mA-h40" firstAttribute="trailing" secondItem="HTn-5z-z6E" secondAttribute="trailing" id="aGK-s9-Bcj"/>
+                        <constraint firstItem="tV6-mA-h40" firstAttribute="leading" secondItem="HTn-5z-z6E" secondAttribute="leading" id="fth-Nv-mc5"/>
+                        <constraint firstItem="tV6-mA-h40" firstAttribute="top" secondItem="HTn-5z-z6E" secondAttribute="top" constant="10" id="p5A-fG-hPh"/>
+                        <constraint firstItem="tV6-mA-h40" firstAttribute="width" secondItem="HTn-5z-z6E" secondAttribute="width" id="xno-Vr-spe"/>
                     </constraints>
-                    <viewLayoutGuide key="contentLayoutGuide" id="ijE-k1-7bL"/>
-                    <viewLayoutGuide key="frameLayoutGuide" id="7TN-6t-Upo"/>
                 </scrollView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nCg-6C-hgd">
                     <rect key="frame" x="20" y="196" width="353" height="400"/>
@@ -184,10 +182,10 @@
             <constraints>
                 <constraint firstItem="02c-sH-MZS" firstAttribute="top" secondItem="yAw-yp-ryr" secondAttribute="bottom" constant="17" id="8z6-1j-S7x"/>
                 <constraint firstItem="7CG-ZW-zif" firstAttribute="trailing" secondItem="HTn-5z-z6E" secondAttribute="trailing" id="B25-iQ-fdc"/>
-                <constraint firstItem="HTn-5z-z6E" firstAttribute="height" secondItem="7CG-ZW-zif" secondAttribute="height" multiplier="0.811594" id="Nyh-kg-4tH"/>
                 <constraint firstItem="7CG-ZW-zif" firstAttribute="top" secondItem="a7e-09-AOD" secondAttribute="top" constant="-20" id="OHl-qP-mhS"/>
                 <constraint firstItem="7CG-ZW-zif" firstAttribute="trailing" secondItem="nCg-6C-hgd" secondAttribute="trailing" constant="20" id="bcF-GC-Qgy"/>
                 <constraint firstAttribute="trailing" secondItem="yAw-yp-ryr" secondAttribute="trailing" id="gfh-Jm-2hi"/>
+                <constraint firstItem="HTn-5z-z6E" firstAttribute="height" secondItem="Ek2-sE-J31" secondAttribute="height" multiplier="0.723005" id="hVv-R9-KQV"/>
                 <constraint firstItem="yAw-yp-ryr" firstAttribute="top" secondItem="Ek2-sE-J31" secondAttribute="top" id="juj-OT-Qxp"/>
                 <constraint firstItem="nCg-6C-hgd" firstAttribute="top" secondItem="02c-sH-MZS" secondAttribute="bottom" constant="10" id="mGg-kG-7Gz"/>
                 <constraint firstItem="HTn-5z-z6E" firstAttribute="top" secondItem="02c-sH-MZS" secondAttribute="bottom" constant="16" id="mxR-ft-p4S"/>
@@ -205,7 +203,7 @@
         <image name="baseline_arrow_back_black_24pt" width="24" height="24"/>
         <image name="ic_arrow_down" width="14.5" height="8"/>
         <systemColor name="secondarySystemFillColor">
-            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
