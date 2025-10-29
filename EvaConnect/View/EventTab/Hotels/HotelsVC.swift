@@ -60,14 +60,16 @@ class HotelsVC: UIViewController, XIBed {
         for (i,hotel) in self.hotelsData.enumerated() {
             let nameLblHeight = self.heightForView(text: hotel.hotelname ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
             
-            var descLblHeight = 0.0
-            let desc = hotel.description ?? ""
-            if let attributed = desc.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-                let labelWidth = self.view.frame.width - 96.0
-                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: self.view.frame.width - 96.0)
-            } else {
-                descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-            }
+            var subdetails = "\(hotel.address ?? "--"), \(hotel.city ?? "--")"
+            var descLblHeight = self.heightForView(text: subdetails, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//            var descLblHeight = 0.0
+//            let desc = hotel.description ?? ""
+//            if let attributed = desc.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+//                let labelWidth = self.view.frame.width - 96.0
+//                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: self.view.frame.width - 96.0)
+//            } else {
+//                descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//            }
             finalHeight = nameLblHeight + descLblHeight + 256.0
         }
         self.collectionVwHeight.constant = finalHeight
@@ -119,13 +121,15 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let hotel = self.hotelsData[indexPath.row]
         let nameLblHeight = self.heightForView(text: hotel.hotelname ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
         
-        var descLblHeight = 0.0
-        let desc = hotel.description ?? ""
-        if let attributed = desc.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: self.view.frame.width - 96.0)
-        } else {
-            descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
-        }
+        var subdetails = "\(hotel.address ?? "--"), \(hotel.city ?? "--")"
+        var descLblHeight = self.heightForView(text: subdetails, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//        var descLblHeight = 0.0
+//        let desc = hotel.description ?? ""
+//        if let attributed = desc.htmlToAttributedString(withFont: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
+//            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: self.view.frame.width - 96.0)
+//        } else {
+//            descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 96.0)
+//        }
         let totalHeight = nameLblHeight + descLblHeight + 256.0
         return CGSize(width: self.listCollectionVw.frame.size.width, height: totalHeight)
     }
