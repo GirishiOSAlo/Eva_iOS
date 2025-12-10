@@ -27,6 +27,7 @@ class EventMainVC: UIViewController, XIBed {
     @IBOutlet weak var conferenceAgendaView: UIView!
     @IBOutlet weak var networkingEventView: UIView!
     @IBOutlet weak var delegatesView: UIView!
+    @IBOutlet weak var companiesView: UIView!
     @IBOutlet weak var meetingsView: UIView!
     @IBOutlet weak var exhibitorsView: UIView!
     @IBOutlet weak var speakersView: UIView!
@@ -34,7 +35,7 @@ class EventMainVC: UIViewController, XIBed {
     @IBOutlet weak var hotelsView: UIView!
     @IBOutlet weak var venueMapView: UIView!
     
-    var eventTypeArr = ["Event Details", "Conference Agenda", "Networking Events","Delegates", "Meetings", "Exhibitors","Speakers", "Sponsors", "Hotels", "Venue Map"]
+    var eventTypeArr = ["Event Details","Conference Agenda","Networking Events","Delegates","Companies" ,"Meetings","Exhibitors","Speakers","Sponsors","Hotels","Venue Map"]
     var isSelected = false
     var eventId = 0
     var eventAttendeesStatus = ""
@@ -79,6 +80,11 @@ class EventMainVC: UIViewController, XIBed {
     lazy var networkingEventsVC: NetworkingEventsVC = {
         let vc = NetworkingEventsVC.instantiate(eventId: self.eventId, eventAttendeesStatus: self.eventAttendeesStatus)
         vc.networkingEventList = self.networkingEventList
+        return vc
+    }()
+    
+    lazy var companiesListVC: CompaniesListVC = {
+        let vc = CompaniesListVC.instantiate(eventId: self.eventId)
         return vc
     }()
     
@@ -258,6 +264,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
@@ -270,6 +277,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = false
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
@@ -283,6 +291,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = false
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
@@ -296,12 +305,29 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = false
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
             sponsorsView.isHidden = true
             hotelsView.isHidden = true
             venueMapView.isHidden = true
+            
+        case "Companies":
+            print("Companies tapped")
+            addModule(companiesListVC, to: companiesView)
+            eventDetailsView.isHidden = true
+            conferenceAgendaView.isHidden = true
+            networkingEventView.isHidden = true
+            delegatesView.isHidden = true
+            companiesView.isHidden = false
+            meetingsView.isHidden = true
+            exhibitorsView.isHidden = true
+            speakersView.isHidden = true
+            sponsorsView.isHidden = true
+            hotelsView.isHidden = true
+            venueMapView.isHidden = true
+            
         case "Meetings":
             print("Meetings tapped")
             addModule(meetingListVC, to: meetingsView)
@@ -309,6 +335,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = false
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
@@ -322,6 +349,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = false
             speakersView.isHidden = true
@@ -335,6 +363,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = false
@@ -348,6 +377,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
@@ -361,6 +391,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true
@@ -374,6 +405,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
             conferenceAgendaView.isHidden = true
             networkingEventView.isHidden = true
             delegatesView.isHidden = true
+            companiesView.isHidden = true
             meetingsView.isHidden = true
             exhibitorsView.isHidden = true
             speakersView.isHidden = true

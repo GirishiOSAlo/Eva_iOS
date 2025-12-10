@@ -550,6 +550,12 @@
 		A67BD99F2DC9F415005283DF /* TrendingNewsDetailsCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A67BD99D2DC9F415005283DF /* TrendingNewsDetailsCVC.xib */; };
 		A67E943D2DE8341000838FC9 /* ReschedulePopupVw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E943B2DE8341000838FC9 /* ReschedulePopupVw.swift */; };
 		A67E943E2DE8341000838FC9 /* ReschedulePopupVw.xib in Resources */ = {isa = PBXBuildFile; fileRef = A67E943C2DE8341000838FC9 /* ReschedulePopupVw.xib */; };
+		A68484652EE9426C00371A3D /* CompaniesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68484632EE9426C00371A3D /* CompaniesListVC.swift */; };
+		A68484662EE9426C00371A3D /* CompaniesListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68484642EE9426C00371A3D /* CompaniesListVC.xib */; };
+		A68484692EE94DC100371A3D /* CompaniesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68484672EE94DC100371A3D /* CompaniesListTableViewCell.swift */; };
+		A684846A2EE94DC100371A3D /* CompaniesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68484682EE94DC100371A3D /* CompaniesListTableViewCell.xib */; };
+		A684846E2EE9784600371A3D /* CompaniesEmployeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A684846C2EE9784600371A3D /* CompaniesEmployeeVC.swift */; };
+		A684846F2EE9784600371A3D /* CompaniesEmployeeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A684846D2EE9784600371A3D /* CompaniesEmployeeVC.xib */; };
 		A68950972DD7090100ACC16F /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950962DD7090100ACC16F /* DatePicker.swift */; };
 		A689509B2DD7499300ACC16F /* MeetingListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A689509A2DD7499300ACC16F /* MeetingListVC.xib */; };
 		A689509C2DD7499300ACC16F /* MeetingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950992DD7499300ACC16F /* MeetingListVC.swift */; };
@@ -1185,6 +1191,12 @@
 		A67BD99D2DC9F415005283DF /* TrendingNewsDetailsCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrendingNewsDetailsCVC.xib; sourceTree = "<group>"; };
 		A67E943B2DE8341000838FC9 /* ReschedulePopupVw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReschedulePopupVw.swift; sourceTree = "<group>"; };
 		A67E943C2DE8341000838FC9 /* ReschedulePopupVw.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReschedulePopupVw.xib; sourceTree = "<group>"; };
+		A68484632EE9426C00371A3D /* CompaniesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesListVC.swift; sourceTree = "<group>"; };
+		A68484642EE9426C00371A3D /* CompaniesListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompaniesListVC.xib; sourceTree = "<group>"; };
+		A68484672EE94DC100371A3D /* CompaniesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesListTableViewCell.swift; sourceTree = "<group>"; };
+		A68484682EE94DC100371A3D /* CompaniesListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompaniesListTableViewCell.xib; sourceTree = "<group>"; };
+		A684846C2EE9784600371A3D /* CompaniesEmployeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesEmployeeVC.swift; sourceTree = "<group>"; };
+		A684846D2EE9784600371A3D /* CompaniesEmployeeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompaniesEmployeeVC.xib; sourceTree = "<group>"; };
 		A68950962DD7090100ACC16F /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
 		A68950992DD7499300ACC16F /* MeetingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListVC.swift; sourceTree = "<group>"; };
 		A689509A2DD7499300ACC16F /* MeetingListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListVC.xib; sourceTree = "<group>"; };
@@ -2406,6 +2418,7 @@
 				485FC18D2DD4A9AF00AA05A4 /* Conferrence Agenda */,
 				485FC1A82DDDB30300AA05A4 /* Networking Events */,
 				485FC17C2DD378D100AA05A4 /* Delegates */,
+				A68484622EE9422100371A3D /* Companies */,
 				A68950982DD7497900ACC16F /* Meeting List */,
 				485FC19C2DD75EC600AA05A4 /* Exhibitors */,
 				A6782F622DDC88990029443B /* Speakers */,
@@ -2792,6 +2805,7 @@
 		500A5449247404F200095324 /* UITableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				A684846B2EE9509500371A3D /* CompanyListTableViewCell */,
 				485FC1AD2DDDBF3900AA05A4 /* NetworkingEventsCell */,
 				485FC1922DD4CE3C00AA05A4 /* ConferrenceCell */,
 				485FC1812DD37C2400AA05A4 /* DelegatesCell */,
@@ -3574,6 +3588,26 @@
 			path = "Reschedule Popup Vw";
 			sourceTree = "<group>";
 		};
+		A68484622EE9422100371A3D /* Companies */ = {
+			isa = PBXGroup;
+			children = (
+				A68484632EE9426C00371A3D /* CompaniesListVC.swift */,
+				A68484642EE9426C00371A3D /* CompaniesListVC.xib */,
+				A684846C2EE9784600371A3D /* CompaniesEmployeeVC.swift */,
+				A684846D2EE9784600371A3D /* CompaniesEmployeeVC.xib */,
+			);
+			path = Companies;
+			sourceTree = "<group>";
+		};
+		A684846B2EE9509500371A3D /* CompanyListTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				A68484672EE94DC100371A3D /* CompaniesListTableViewCell.swift */,
+				A68484682EE94DC100371A3D /* CompaniesListTableViewCell.xib */,
+			);
+			path = CompanyListTableViewCell;
+			sourceTree = "<group>";
+		};
 		A68950982DD7497900ACC16F /* Meeting List */ = {
 			isa = PBXGroup;
 			children = (
@@ -3945,6 +3979,7 @@
 				1822975223C5B5D30077769D /* AuthenticationVC.storyboard in Resources */,
 				A68C08392E81456C002CE235 /* SurveyNotificationTVC.xib in Resources */,
 				48E0C0D12B3C34EE006EBEF0 /* AttachmentPopupVC.xib in Resources */,
+				A684846F2EE9784600371A3D /* CompaniesEmployeeVC.xib in Resources */,
 				5042EF2A244E0AE400616F7E /* ReceiverCell.xib in Resources */,
 				180F5E932536C8320044832B /* Share.storyboard in Resources */,
 				48A421202AA8AF4800A8D37C /* PopupTableCell.xib in Resources */,
@@ -3983,6 +4018,7 @@
 				483014692C0DCD2500DBB540 /* otherReasonPopupVC.xib in Resources */,
 				182BDB4F24964CEA00A50277 /* CommentCell.xib in Resources */,
 				25AE0C192782F53F00BDFFCE /* Post.storyboard in Resources */,
+				A68484662EE9426C00371A3D /* CompaniesListVC.xib in Resources */,
 				485FC19B2DD5CDD200AA05A4 /* ConferenceDetailsVC.xib in Resources */,
 				485FC1912DD4A9CF00AA05A4 /* ConferrenceAgendaVC.xib in Resources */,
 				A6ADF59B2AB0908A00423428 /* EventDelegateSearchPopupVC.xib in Resources */,
@@ -4021,6 +4057,7 @@
 				18416132248D3B76005D5429 /* ApplicantCell.xib in Resources */,
 				185486B825274ABC004A7620 /* EditDeleteView.xib in Resources */,
 				A661E0D32DCE1E01000D2119 /* FAQsCVC.xib in Resources */,
+				A684846A2EE94DC100371A3D /* CompaniesListTableViewCell.xib in Resources */,
 				485FC19F2DD75EE700AA05A4 /* ExhibitorsVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4209,6 +4246,7 @@
 				1811E2BD2402B7D000DA64AD /* NotificationRoot.swift in Sources */,
 				25C4C5B927844E4F00DC30EC /* BottomContentPicker.swift in Sources */,
 				70CA418627F7591B004AC7E8 /* ConnectionStatus.swift in Sources */,
+				A684846E2EE9784600371A3D /* CompaniesEmployeeVC.swift in Sources */,
 				A6E754352DD2FF560057B781 /* CommentCVC.swift in Sources */,
 				187AB70023C5FE0400E793C0 /* EvaUser.swift in Sources */,
 				A6A125922DDDB01600979389 /* SponsorsVC.swift in Sources */,
@@ -4304,6 +4342,7 @@
 				502E998424AF19CD00105FBF /* NewMessageMediaDataSource.swift in Sources */,
 				502E998624AF1CEA00105FBF /* NSNotificationName.swift in Sources */,
 				188A223C24347C2100F99A90 /* CalendarNoteCell.swift in Sources */,
+				A68484692EE94DC100371A3D /* CompaniesListTableViewCell.swift in Sources */,
 				A6A125972DDDB0B800979389 /* SponsorsCVC.swift in Sources */,
 				485FC17F2DD3793C00AA05A4 /* DelegatesVC.swift in Sources */,
 				502569662496C85B00D66137 /* MediaCVCell.swift in Sources */,
@@ -4327,6 +4366,7 @@
 				485FC1AC2DDDB33D00AA05A4 /* NetworkingEventsVC.swift in Sources */,
 				A64C49802E1BD24000F9D3F9 /* HelpDataModel.swift in Sources */,
 				5025695D24927C6200D66137 /* UIImageView.swift in Sources */,
+				A68484652EE9426C00371A3D /* CompaniesListVC.swift in Sources */,
 				5042EF32244E0EDD00616F7E /* ChatVC.swift in Sources */,
 				50FD7CC1244FE4B500EB22B8 /* Optional.swift in Sources */,
 				186DFB222411029E00F610FE /* PostedJobDetailVC.swift in Sources */,
