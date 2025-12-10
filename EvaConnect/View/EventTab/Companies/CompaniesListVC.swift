@@ -20,6 +20,7 @@ class CompaniesListVC: UIViewController ,XIBed {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var CompanyListTable: UITableView!
+    let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +35,23 @@ class CompaniesListVC: UIViewController ,XIBed {
         searchUiView.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
         self.searchTextField.delegate = self
         self.searchTextField.addTarget(self, action: #selector(self.searchTextFieldDidChange(_:)), for: .editingChanged)
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        CompanyListTable.refreshControl = refreshControl
     }
     
     func registerCell() {
         CompanyListTable.delegate = self
         CompanyListTable.dataSource = self
         CompanyListTable.registerCell(withType: CompaniesListTableViewCell.self)
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
+            //Reload here....
+        }
     }
 }
 

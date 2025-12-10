@@ -130,11 +130,12 @@ class EventMainVC: UIViewController, XIBed {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        fetchEventDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchEventDetail()
+        //fetchEventDetail()
     }
     
     func setupUI() {
