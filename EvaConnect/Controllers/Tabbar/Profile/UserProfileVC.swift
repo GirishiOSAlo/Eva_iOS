@@ -51,6 +51,10 @@ class UserProfileVC: BaseVC {
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var reactionButton: UIButton!
     
+    @IBOutlet weak var postHeaderLbl: UILabel!
+    @IBOutlet weak var postHeaderLblHeight: NSLayoutConstraint!
+    
+    
     @IBOutlet weak var reactionTblVw: UITableView!
     @IBOutlet weak var reactionTblViewHeight: NSLayoutConstraint!
     @IBOutlet weak var viewAllButton: UIButton!
@@ -120,7 +124,16 @@ class UserProfileVC: BaseVC {
 //        getSettings()
 //        fetchUserInfo()
         fetchUserDetailsData()
-        getPosts(offSet: 1)
+        self.bioViewHeight.constant = 0.0
+        //Managed For Event New Flow...
+        if myUserDefaults.isEventFlow {
+            self.postHeaderLblHeight.constant = 0.0
+            self.reactionTblViewHeight.constant = 0.0
+            self.noRecordLbl.isHidden = true
+        } else {
+            self.postHeaderLblHeight.constant = 25.0
+            getPosts(offSet: 1)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,7 +143,11 @@ class UserProfileVC: BaseVC {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if(keyPath == "contentSize"){
-            self.reactionTblViewHeight.constant = self.reactionTblVw.contentSize.height == 0 ? 120 : self.reactionTblVw.contentSize.height
+            if myUserDefaults.isEventFlow {
+                print("Event Flow")
+            } else {
+                self.reactionTblViewHeight.constant = self.reactionTblVw.contentSize.height == 0 ? 120 : self.reactionTblVw.contentSize.height
+            }
         }
     }
     
@@ -140,28 +157,32 @@ class UserProfileVC: BaseVC {
     
     func setPostTableHeight() {
         var totalHeight = 0.0
-        for homePost in self.posts {
-            if homePost.postVideo != "" && homePost.postVideo != nil {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 356.0
-                totalHeight = totalHeight + height
-            } else if homePost.postDocuments?.count ?? 0 > 0 {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 231.0
-                totalHeight = totalHeight + height
-            } else if homePost.datumPostImage!.count > 0 {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 420.0
-                totalHeight = totalHeight + height
-                if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
-                    totalHeight = totalHeight - 30.0 //-30 is page control view...
+        if myUserDefaults.isEventFlow {
+            print("Event Flow")
+        } else {
+            for homePost in self.posts {
+                if homePost.postVideo != "" && homePost.postVideo != nil {
+                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                    let height = lblHeight + 356.0
+                    totalHeight = totalHeight + height
+                } else if homePost.postDocuments?.count ?? 0 > 0 {
+                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                    let height = lblHeight + 231.0
+                    totalHeight = totalHeight + height
+                } else if homePost.datumPostImage!.count > 0 {
+                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                    let height = lblHeight + 420.0
+                    totalHeight = totalHeight + height
+                    if homePost.datumPostImage!.count == 0 || homePost.datumPostImage!.count == 1 {
+                        totalHeight = totalHeight - 30.0 //-30 is page control view...
+                    } else {
+                        print(totalHeight)
+                    }
                 } else {
-                    print(totalHeight)
+                    let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
+                    let height = lblHeight + 195.0
+                    totalHeight = totalHeight + height
                 }
-            } else {
-                let lblHeight = self.heightForView(text: homePost.content ?? "", font: UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 80.0)
-                let height = lblHeight + 195.0
-                totalHeight = totalHeight + height
             }
         }
         self.reactionTblViewHeight.constant = totalHeight

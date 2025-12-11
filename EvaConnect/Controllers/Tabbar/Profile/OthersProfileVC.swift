@@ -70,6 +70,8 @@ class OthersProfileVC: UIViewController, RefreshUpdateable {
     @IBOutlet weak var bioMainView: UIView!
 //    @IBOutlet weak var bioViewHeight: NSLayoutConstraint!
     @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var postHeaderLbl: UILabel!
+    @IBOutlet weak var postHeaderLblHeight: NSLayoutConstraint!
     
 //    @IBOutlet weak var onlineStatusDotView: UIView!
 //    @IBOutlet weak var onlineStatusLbl: UILabel!
@@ -106,6 +108,17 @@ class OthersProfileVC: UIViewController, RefreshUpdateable {
         super.viewDidLoad()
         setupUI()
         
+        //Managed For Event New Flow...
+        if myUserDefaults.isEventFlow {
+            self.postHeaderLblHeight.constant = 0.0
+            self.postTableView.isHidden = true
+            self.privateAccView.isHidden = true
+            self.noDataLbl.isHidden = true
+        } else {
+            self.postHeaderLblHeight.constant = 30.0
+            self.postTableView.isHidden = false
+            self.privateAccView.isHidden = false
+        }
 
 //        getPosts(offSet: 1)
 //        fetchUserDetail(userId: profileID) { (user, error) in
@@ -707,7 +720,14 @@ extension OthersProfileVC {
                             self.privateAccView.isHidden = true
                         }
                     }
-                    self.getPosts(offSet: 1)
+                    
+                    //Managed For Event New Flow...
+                    if myUserDefaults.isEventFlow {
+                        print("Event Flow")
+                    } else {
+                        self.getPosts(offSet: 1)
+                    }
+                    
                 } else {
                     self.presentAlert("Error", nil, response.message as? Error)
                 }

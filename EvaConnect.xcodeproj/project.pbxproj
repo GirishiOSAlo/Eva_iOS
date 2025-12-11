@@ -556,6 +556,8 @@
 		A684846A2EE94DC100371A3D /* CompaniesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68484682EE94DC100371A3D /* CompaniesListTableViewCell.xib */; };
 		A684846E2EE9784600371A3D /* CompaniesEmployeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A684846C2EE9784600371A3D /* CompaniesEmployeeVC.swift */; };
 		A684846F2EE9784600371A3D /* CompaniesEmployeeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A684846D2EE9784600371A3D /* CompaniesEmployeeVC.xib */; };
+		A68484742EE98C5D00371A3D /* EventTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68484722EE98C5D00371A3D /* EventTabbarVC.swift */; };
+		A68484752EE98C5D00371A3D /* EventTabbarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68484732EE98C5D00371A3D /* EventTabbarVC.xib */; };
 		A68950972DD7090100ACC16F /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950962DD7090100ACC16F /* DatePicker.swift */; };
 		A689509B2DD7499300ACC16F /* MeetingListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A689509A2DD7499300ACC16F /* MeetingListVC.xib */; };
 		A689509C2DD7499300ACC16F /* MeetingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950992DD7499300ACC16F /* MeetingListVC.swift */; };
@@ -1197,6 +1199,8 @@
 		A68484682EE94DC100371A3D /* CompaniesListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompaniesListTableViewCell.xib; sourceTree = "<group>"; };
 		A684846C2EE9784600371A3D /* CompaniesEmployeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesEmployeeVC.swift; sourceTree = "<group>"; };
 		A684846D2EE9784600371A3D /* CompaniesEmployeeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompaniesEmployeeVC.xib; sourceTree = "<group>"; };
+		A68484722EE98C5D00371A3D /* EventTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTabbarVC.swift; sourceTree = "<group>"; };
+		A68484732EE98C5D00371A3D /* EventTabbarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTabbarVC.xib; sourceTree = "<group>"; };
 		A68950962DD7090100ACC16F /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
 		A68950992DD7499300ACC16F /* MeetingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListVC.swift; sourceTree = "<group>"; };
 		A689509A2DD7499300ACC16F /* MeetingListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListVC.xib; sourceTree = "<group>"; };
@@ -2496,6 +2500,8 @@
 				48A4215C2AAB51D000A8D37C /* DashboardTabbarVC.xib */,
 				48A421602AAB53DA00A8D37C /* CustomTabView.swift */,
 				48A4215F2AAB53DA00A8D37C /* CustomTabView.xib */,
+				A68484722EE98C5D00371A3D /* EventTabbarVC.swift */,
+				A68484732EE98C5D00371A3D /* EventTabbarVC.xib */,
 			);
 			path = "Custom Tabbar ";
 			sourceTree = "<group>";
@@ -4009,6 +4015,7 @@
 				48D9FDA62B7B78590095FC18 /* RecvrTextTVCell.xib in Resources */,
 				5073A827247746CE008F2E7D /* Meetings.storyboard in Resources */,
 				A661E0CE2DCE10B0000D2119 /* FAQsVC.xib in Resources */,
+				A68484752EE98C5D00371A3D /* EventTabbarVC.xib in Resources */,
 				1874512B248AA21B003C7DE1 /* CompanyJobCell.xib in Resources */,
 				5073A8592481453D008F2E7D /* HomeText.xib in Resources */,
 				485FC1B02DDDBF5000AA05A4 /* NetworkingEventsCell.xib in Resources */,
@@ -4155,6 +4162,7 @@
 				489CB3CB2DCBA59100A0C77B /* PreviousCVCell.swift in Sources */,
 				50B929BB244A784300299CC0 /* UIColor.swift in Sources */,
 				A6D4F56A2E589B9B00F9230E /* CountryListVC.swift in Sources */,
+				A68484742EE98C5D00371A3D /* EventTabbarVC.swift in Sources */,
 				259495F727884A6500C5579B /* UserJobCell.swift in Sources */,
 				A62AB11E2DD4A9CE006C7A21 /* EditProfileViewController.swift in Sources */,
 				187A4384241A137E00176922 /* AllShowJobDetail.swift in Sources */,

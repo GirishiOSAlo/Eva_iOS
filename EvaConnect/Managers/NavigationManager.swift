@@ -88,10 +88,14 @@ class NavigationManager {
                     myUserDefaults.isIndivisualUser = false
                 }
                 
-                
-                let vc = DashboardTabbarVC.instantiate()
-//                OnlineStatusManager.updateOnlineStatus()
-                rootVC = UINavigationController(rootViewController: vc)
+                if myUserDefaults.isEventFlow {
+                    let vc = EventTabbarVC.instantiate()
+                    rootVC = UINavigationController(rootViewController: vc)
+                } else {
+                    let vc = DashboardTabbarVC.instantiate()
+                    //                OnlineStatusManager.updateOnlineStatus()
+                    rootVC = UINavigationController(rootViewController: vc)
+                }
             } else {
 //                LoggedUserDetails.shared.logoutUser()
                 let loginVC = StoryboardRouter.login()

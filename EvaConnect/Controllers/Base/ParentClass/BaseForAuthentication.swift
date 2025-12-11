@@ -127,5 +127,11 @@ extension BaseForAuthentication {
 //        present(tabbar, animated: false, completion: nil)
     }
     
+    //EventDtailsScreen
+    func gotoEventDetails() {
+        let vc = EventTabbarVC.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func goToRootViewController() { navigationController?.popToRootViewController(animated: true) }
 }

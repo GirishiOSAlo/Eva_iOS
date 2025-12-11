@@ -16,6 +16,14 @@ struct UserDefaultKeys {
 
 class myUserDefaults {
     
+    public static var isEventFlow: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "isEventFlow")
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "isEventFlow")
+        }
+    }
+    
     public static var isIndivisualUser: Bool {
         get {
             UserDefaults.standard.bool(forKey: "isIndivisualUser")

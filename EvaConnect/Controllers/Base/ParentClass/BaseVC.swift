@@ -49,9 +49,13 @@ class BaseVC: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
        // inittUI()
         
-        addBaseView()
-        setSlideMenuVC()
-        customNavigation(isSeparatorHidden: isSeparatorHidden)
+        if myUserDefaults.isEventFlow {
+            print("Event Flow")
+        } else {
+            addBaseView()
+            setSlideMenuVC()
+            customNavigation(isSeparatorHidden: isSeparatorHidden)
+        }
         
         self.view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.backgroundColor = UIColor.white

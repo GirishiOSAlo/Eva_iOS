@@ -285,9 +285,15 @@ extension LoginVC {
                     
                     //Send Token in Backend...
                     self.saveFCMToken(token: myUserDefaults.deviceToken)
-                    
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
-                    self.gotoDashboard()
+                    
+                    //self.gotoDashboard()
+                    myUserDefaults.isEventFlow = true
+                    if myUserDefaults.isEventFlow {
+                        self.gotoEventDetails()
+                    } else {
+                        self.gotoDashboard()
+                    }
                 }
 
                 if let errorMessage = errorMessage {

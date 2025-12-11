@@ -129,7 +129,13 @@ class ChatListVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+        
+        if myUserDefaults.isEventFlow {
+            self.navigationController?.isNavigationBarHidden = true
+        } else {
+            self.navigationController?.isNavigationBarHidden = false
+        }
+        
 //        getSettings()
         if self.dataType == .chatList {
             print("Tapped Messages.")

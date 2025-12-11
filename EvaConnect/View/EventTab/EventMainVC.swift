@@ -12,6 +12,7 @@ class EventMainVC: UIViewController, XIBed {
 
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var headingLabel: UILabel!
     
     @IBOutlet weak var drpDwnUIView: UIView!
@@ -140,6 +141,12 @@ class EventMainVC: UIViewController, XIBed {
     
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
+        
+        if myUserDefaults.isEventFlow {
+            self.backBtnWidth.constant = 0.0
+        } else {
+            self.backBtnWidth.constant = 40.0
+        }
         
         headingLabel.font = UIFont(name: Myfonts.semiBold, size: 16)
         drpDwnNameLable.font = UIFont(name: Myfonts.medium, size: 14)
