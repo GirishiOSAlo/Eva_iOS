@@ -288,11 +288,15 @@ extension LoginVC {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
                     
                     //self.gotoDashboard()
-                    myUserDefaults.isEventFlow = true
-                    if myUserDefaults.isEventFlow {
-                        self.gotoEventDetails()
-                    } else {
+                    
+                    //0 = social flow & 1 = event flow
+                    let value = 0
+                    if value == 0 {
+                        myUserDefaults.isEventFlow = false
                         self.gotoDashboard()
+                    } else {
+                        myUserDefaults.isEventFlow = true
+                        self.gotoEventDetails()
                     }
                 }
 

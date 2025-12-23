@@ -22,6 +22,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CompaniesEmployeeVC" customModule="AviationConnect" customModuleProvider="target">
             <connections>
+                <outlet property="delegateHeaderLbl" destination="dZR-Tu-HFI" id="5zx-HO-J9C"/>
+                <outlet property="employeeListTblVw" destination="Nrn-ha-lkO" id="iZI-Cz-2aa"/>
                 <outlet property="noRecordLbl" destination="yjx-vW-g3C" id="uWd-y0-2UU"/>
                 <outlet property="searchICImgView" destination="W5a-1q-NCo" id="A2l-Rx-z0o"/>
                 <outlet property="searchTextField" destination="5gk-tH-eMa" id="hKl-wc-fxu"/>
@@ -50,7 +52,7 @@
                                 <action selector="backBtnTapped:" destination="-1" eventType="touchUpInside" id="4qO-CA-68E"/>
                             </connections>
                         </button>
-                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdE-jn-Q0P">
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdE-jn-Q0P">
                             <rect key="frame" x="58" y="85.333333333333329" width="319" height="19.333333333333329"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="16"/>
@@ -114,18 +116,38 @@
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delegates Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZR-Tu-HFI">
+                    <rect key="frame" x="16" y="196.66666666666666" width="361" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="4Cu-WB-seI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Nrn-ha-lkO">
+                    <rect key="frame" x="20" y="241.66666666666669" width="353" height="576.33333333333326"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.96470588235294119" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="yjx-vW-g3C" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0uX-ZP-tXt"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Nrn-ha-lkO" secondAttribute="trailing" constant="20" id="1G0-52-aTO"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Nrn-ha-lkO" secondAttribute="bottom" id="6LA-zi-6gc"/>
                 <constraint firstItem="yjx-vW-g3C" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="8rY-Ty-kav"/>
+                <constraint firstItem="dZR-Tu-HFI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Bnk-hy-ZEq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dZR-Tu-HFI" secondAttribute="trailing" constant="16" id="Nbe-XQ-0gE"/>
+                <constraint firstItem="Nrn-ha-lkO" firstAttribute="top" secondItem="dZR-Tu-HFI" secondAttribute="bottom" constant="20" id="Re4-Iq-AhB"/>
                 <constraint firstItem="dDS-xL-lNh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Ry2-7i-KuP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JFu-Mo-9wa" secondAttribute="trailing" constant="16" id="bOP-Fy-EwH"/>
+                <constraint firstItem="Nrn-ha-lkO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="bWl-01-jqm"/>
                 <constraint firstItem="mrh-b8-sld" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="gfP-nK-Cta"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dDS-xL-lNh" secondAttribute="trailing" id="o0J-DJ-tzc"/>
                 <constraint firstItem="JFu-Mo-9wa" firstAttribute="top" secondItem="dDS-xL-lNh" secondAttribute="bottom" constant="20" id="pmO-5b-Alm"/>
                 <constraint firstItem="JFu-Mo-9wa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="pmd-WX-6Dh"/>
+                <constraint firstItem="dZR-Tu-HFI" firstAttribute="top" secondItem="JFu-Mo-9wa" secondAttribute="bottom" constant="16" id="sqU-gd-a0X"/>
                 <constraint firstItem="dDS-xL-lNh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="yEw-VG-TyU"/>
             </constraints>
             <point key="canvasLocation" x="43.511450381679388" y="-1.4084507042253522"/>

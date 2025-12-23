@@ -21,6 +21,8 @@ class CompaniesListVC: UIViewController ,XIBed {
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var CompanyListTable: UITableView!
     let refreshControl = UIRefreshControl()
+    
+    var companyListArr = ["Company 1","Company 2","Company 3"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,17 @@ class CompaniesListVC: UIViewController ,XIBed {
             //Reload here....
         }
     }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+
+        label.sizeToFit()
+        return label.frame.height
+    }
 }
 
 extension CompaniesListVC: UITextFieldDelegate {
@@ -64,21 +77,27 @@ extension CompaniesListVC: UITextFieldDelegate {
 
 extension CompaniesListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.companyListArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CompanyListTable.dequeueReusableCell(withIdentifier: CompaniesListTableViewCell.id(), for: indexPath) as! CompaniesListTableViewCell
-        
+        cell.nameLbl.text = self.companyListArr[indexPath.row]
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        //return 60
+        let obj = self.companyListArr[indexPath.row]
+        let width = self.view.frame.width - 90.0
+        let nameLblHeight = self.heightForView(text: obj, font: UIFont(name: Myfonts.medium, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: width)
+        let totalHeight = nameLblHeight + 50.0
+        return totalHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = CompaniesEmployeeVC.instantiate()
+        vc.companyName = self.companyListArr[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

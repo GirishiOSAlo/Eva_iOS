@@ -12,7 +12,9 @@ class EventTabbarVC: BaseVC, XIBed {
     
     lazy var eventDetailsPage: EventMainVC = {
         let vc = EventMainVC.instantiate()
-        vc.eventId = 2
+        if myUserDefaults.isEventFlow {
+            vc.eventId = myUserDefaults.isEventFlowEventID
+        }
         return vc
     }()
     

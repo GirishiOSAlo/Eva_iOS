@@ -32,8 +32,8 @@
                                     <constraint firstAttribute="height" constant="16" id="z0l-mD-QEG"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euA-sm-FGt">
-                                <rect key="frame" x="12" y="25" width="306" height="17"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euA-sm-FGt">
+                                <rect key="frame" x="12" y="25" width="300" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="14"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -43,7 +43,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="euA-sm-FGt" firstAttribute="centerY" secondItem="J8x-gP-kb0" secondAttribute="centerY" id="8cz-Po-rMU"/>
-                            <constraint firstItem="Sev-Kt-t6f" firstAttribute="leading" secondItem="euA-sm-FGt" secondAttribute="trailing" constant="10" id="JzR-CY-M8H"/>
+                            <constraint firstItem="Sev-Kt-t6f" firstAttribute="leading" secondItem="euA-sm-FGt" secondAttribute="trailing" constant="16" id="JzR-CY-M8H"/>
                             <constraint firstAttribute="trailing" secondItem="Sev-Kt-t6f" secondAttribute="trailing" constant="12" id="mLa-SB-DzL"/>
                             <constraint firstItem="euA-sm-FGt" firstAttribute="leading" secondItem="J8x-gP-kb0" secondAttribute="leading" constant="12" id="tsr-hQ-mkQ"/>
                             <constraint firstItem="Sev-Kt-t6f" firstAttribute="centerY" secondItem="J8x-gP-kb0" secondAttribute="centerY" id="x9h-2a-7G5"/>
