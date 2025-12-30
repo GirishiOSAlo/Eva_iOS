@@ -290,4 +290,7 @@ enum EndPoints {
     static let termsconditions = "https://aviationconnect.com/terms-conditions"
     static let cookiesPolicy = "https://aviationconnect.com/cookies-policy"
     static let privacyPolicy = "https://aviationconnect.com/privacy-policy"
+    
+    //MARK: Company List & Delegate
+    static let eventCompanyList = baseURL + "getDelegateCompanies"
 }

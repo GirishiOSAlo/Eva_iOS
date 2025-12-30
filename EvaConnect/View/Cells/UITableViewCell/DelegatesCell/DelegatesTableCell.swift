@@ -53,6 +53,22 @@ class DelegatesTableCell: UITableViewCell {
         }
     }
     
+    //Set Company Delegate.....
+    func setDelegateData(obj: CompanyDelegate) {
+        self.nameLabel.text = obj.firstName ?? ""
+        self.companyLabel.text = obj.companyName ?? ""
+        self.designationLabel.text = obj.designation ?? ""
+        
+        if let imageUrl = obj.userImageURL,
+           !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
+           let url = URL(string: imageUrl),
+           UIApplication.shared.canOpenURL(url) {
+            self.profileImgView.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
+        } else {
+            self.profileImgView.image = UIImage(named: "profile")
+        }
+    }
+    
 }
 
 extension DelegatesTableCell: Dequeueable {

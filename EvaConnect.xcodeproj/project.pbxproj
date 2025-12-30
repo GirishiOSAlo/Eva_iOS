@@ -563,6 +563,7 @@
 		A689509C2DD7499300ACC16F /* MeetingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68950992DD7499300ACC16F /* MeetingListVC.swift */; };
 		A68950A02DD758F400ACC16F /* MeetingListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A689509F2DD758F400ACC16F /* MeetingListCVC.xib */; };
 		A68950A12DD758F400ACC16F /* MeetingListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A689509E2DD758F400ACC16F /* MeetingListCVC.swift */; };
+		A68A119E2F03CF0400DEFFCF /* CompanyDelegateListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68A119D2F03CF0400DEFFCF /* CompanyDelegateListDataModel.swift */; };
 		A68C08292E812F8C002CE235 /* SurveySectionListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */; };
 		A68C08392E81456C002CE235 /* SurveyNotificationTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68C08382E81456C002CE235 /* SurveyNotificationTVC.xib */; };
 		A68C083A2E81456C002CE235 /* SurveyNotificationTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68C08372E81456C002CE235 /* SurveyNotificationTVC.swift */; };
@@ -1206,6 +1207,7 @@
 		A689509A2DD7499300ACC16F /* MeetingListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListVC.xib; sourceTree = "<group>"; };
 		A689509E2DD758F400ACC16F /* MeetingListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListCVC.swift; sourceTree = "<group>"; };
 		A689509F2DD758F400ACC16F /* MeetingListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingListCVC.xib; sourceTree = "<group>"; };
+		A68A119D2F03CF0400DEFFCF /* CompanyDelegateListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDelegateListDataModel.swift; sourceTree = "<group>"; };
 		A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySectionListDataModel.swift; sourceTree = "<group>"; };
 		A68C08372E81456C002CE235 /* SurveyNotificationTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyNotificationTVC.swift; sourceTree = "<group>"; };
 		A68C08382E81456C002CE235 /* SurveyNotificationTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SurveyNotificationTVC.xib; sourceTree = "<group>"; };
@@ -1802,6 +1804,7 @@
 				A68C992B2E7C14B1003B9B13 /* NotificationListDataModel.swift */,
 				A68C08282E812F8C002CE235 /* SurveySectionListDataModel.swift */,
 				A636DA232EAF342300378E92 /* SpeakerDetailsDataModel.swift */,
+				A68A119D2F03CF0400DEFFCF /* CompanyDelegateListDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4293,6 +4296,7 @@
 				483EDA032B5809F0003257C7 /* UINavigationController.swift in Sources */,
 				48B285712AB319660086CA61 /* SenderImgTVCell.swift in Sources */,
 				501AD125249AFC0F00FE39BE /* PostNotificationsRoot.swift in Sources */,
+				A68A119E2F03CF0400DEFFCF /* CompanyDelegateListDataModel.swift in Sources */,
 				48A4211A2AA8AB7E00A8D37C /* CommonPopupVC.swift in Sources */,
 				50EBFEE724CDB3AB009B374B /* NotificationCountManager.swift in Sources */,
 				A6CDBDE52DD1E1D2009B65CD /* HelpPageVC.swift in Sources */,
