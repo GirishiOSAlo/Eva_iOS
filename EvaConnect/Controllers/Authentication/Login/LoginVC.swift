@@ -290,7 +290,8 @@ extension LoginVC {
                     //self.gotoDashboard()
                     
                     //0 = social flow & 1 = event flow
-                    let value = 0
+                    let value = user.loginType ?? 0
+                    myUserDefaults.isEventFlowEventID = user.eventID ?? 0
                     if value == 0 {
                         myUserDefaults.isEventFlow = false
                         self.gotoDashboard()

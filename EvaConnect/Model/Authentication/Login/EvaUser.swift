@@ -48,6 +48,8 @@ struct EvaUser: Codable {
     let isPublic: Int?
     let employeesCount: Int?
     // let companyUrl: String
+    let loginType: Int?
+    let eventID: Int?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -87,6 +89,8 @@ struct EvaUser: Codable {
         case employeesCount = "employees_count"
         case companyID = "company_id"
         case pendingConnection = "pending_connection"
+        case loginType
+        case eventID = "event_id"
     }
     
     var fullName: String {
