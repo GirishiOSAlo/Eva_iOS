@@ -113,8 +113,16 @@ extension CompaniesListVC {
                 let decodedResponse = try JSONDecoder().decode(CompanyDelegateListDataModel.self, from: data)
                 if let data = decodedResponse.data {
                     self.companyListArr = data.companies ?? []
-                    self.CompanyListTable.reloadData()
-                    self.noRecordLbl.isHidden = !self.companyListArr.isEmpty
+                    if (self.companyListArr.count) > 0 {
+                        self.noRecordLbl.isHidden = true
+                        self.CompanyListTable.isHidden = false
+                        DispatchQueue.main.async {
+                            self.CompanyListTable.reloadData()
+                        }
+                    } else {
+                        self.noRecordLbl.isHidden = false
+                        self.CompanyListTable.isHidden = true
+                    }
                 } else {
                     print("Error ::", decodedResponse.message ?? "No message")
                 }
@@ -129,9 +137,9 @@ extension CompaniesListVC {
 extension CompaniesListVC: UITextFieldDelegate {
     @objc func searchTextFieldDidChange(_ textField: UITextField) {
         let searchStr = self.searchTextField.text ?? ""
-        print("Search Text :: \(searchStr)")
-        self.companyListArr = []
         DispatchQueue.main.async {
+            self.companyListArr = []
+            self.CompanyListTable.reloadData()
             self.getCompanyList(eventID: self.eventId, userID: myUserDefaults.userId, searchTxt: searchStr)
         }
     }
