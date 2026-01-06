@@ -353,7 +353,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqC-0I-CMv">
-                                    <rect key="frame" x="0.0" y="934.33333333333337" width="440" height="70"/>
+                                    <rect key="frame" x="0.0" y="924.33333333333337" width="440" height="70"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Tks-3W-AnG">
                                             <rect key="frame" x="20" y="10.666666666666629" width="400" height="49"/>
@@ -473,7 +473,7 @@
                                 <constraint firstItem="7ag-mj-IpB" firstAttribute="top" secondItem="PXw-l1-js6" secondAttribute="bottom" constant="20" id="3kw-no-8pL"/>
                                 <constraint firstItem="myn-Rh-DmY" firstAttribute="top" secondItem="zvP-DR-dPJ" secondAttribute="bottom" constant="20" id="3uE-BE-EHe"/>
                                 <constraint firstItem="Uwi-Qd-X8Y" firstAttribute="leading" secondItem="dld-tc-kX2" secondAttribute="leading" constant="20" id="77J-jo-gUV"/>
-                                <constraint firstAttribute="bottom" secondItem="cqC-0I-CMv" secondAttribute="bottom" constant="20" id="BVY-4g-LZs"/>
+                                <constraint firstAttribute="bottom" secondItem="cqC-0I-CMv" secondAttribute="bottom" constant="30" id="BVY-4g-LZs"/>
                                 <constraint firstAttribute="trailing" secondItem="D8z-vr-sxs" secondAttribute="trailing" constant="20" id="Bt9-Of-fzR"/>
                                 <constraint firstItem="myn-Rh-DmY" firstAttribute="leading" secondItem="dld-tc-kX2" secondAttribute="leading" constant="20" id="DOS-3B-chA"/>
                                 <constraint firstItem="7ag-mj-IpB" firstAttribute="leading" secondItem="dld-tc-kX2" secondAttribute="leading" constant="20" id="JT7-Uf-Aeq"/>

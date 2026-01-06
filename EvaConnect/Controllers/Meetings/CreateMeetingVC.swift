@@ -92,16 +92,19 @@ class CreateMeetingVC: BaseVC, WKNavigationDelegate {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         
         collectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+        
+        if myUserDefaults.isEventFlow {
+            self.eventID = myUserDefaults.isEventFlowEventID
+        } else {
+           print("Social FLow")
+        }
+        
+        
         if self.eventID == 0 {
             self.isComeFromSideMenu = true
             self.fetchCurrentEventData()
         } else {
             self.fetchCreateMeetingDetails()
-            if self.isComeFromDelegate {
-                self.selectEvent.text = self.eventDetail?.name ?? ""
-            } else {
-                self.selectEvent.text = self.eventDetails[0].name ?? ""
-            }
         }
         
         for lbl in titleLblCollection {
@@ -291,6 +294,13 @@ extension CreateMeetingVC {
                     if self.eventDetails.count > 0 {
                         self.eventLocations = self.eventDetails[0].eventLocations ?? []
                         self.attendeesList = self.eventDetails[0].attendeesList ?? []
+                        
+                        if self.isComeFromDelegate {
+                            self.selectEvent.text = self.eventDetail?.name ?? ""
+                        } else {
+                            self.selectEvent.text = self.eventDetails[0].name ?? ""
+                        }
+                        
                     } else { print("Event Details Not Found.") }
                     
                 } else {
@@ -350,7 +360,7 @@ extension CreateMeetingVC {
         
         let url = EndPoints.createEventMeetings
         let parameters = [
-            "event_id": "\(eventID)",
+            "event_id": eventID ?? 0,
             "title": name.text ?? "",
             "date": backendSendStartDate,
             "start_time": startTime.text ?? "",

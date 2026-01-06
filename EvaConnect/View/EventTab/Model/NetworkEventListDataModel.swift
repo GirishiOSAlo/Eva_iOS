@@ -35,8 +35,8 @@ struct NetworkingList: Codable {
     let nextPageURL: String?
     let path: String?
     let perPage: Int?
-    let prevPageURL, to: String?
-    let total: Int?
+    let prevPageURL: String?
+    let to, total: Int?
 
     enum CodingKeys: String, CodingKey {
         case currentPage = "current_page"
