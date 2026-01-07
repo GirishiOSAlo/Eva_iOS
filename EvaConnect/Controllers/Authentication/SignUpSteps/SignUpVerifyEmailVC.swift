@@ -34,7 +34,7 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("OTP ==> \(self.otp ?? "")")
-        
+        self.otpView.text = ""
         if isFromForgotVC {
             headingLbl.text = "Forgot Password"
         } else {
@@ -47,6 +47,8 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
     
     @IBAction func backBtnTapped(_ sender: Any) {
         self.stopTimer()
+        self.otpView.text = ""
+        self.otpView.resignFirstResponder()
         goBack()
     }
     
@@ -55,10 +57,14 @@ class SignUpVerifyEmailVC: BaseForAuthentication {
     }
     
     @IBAction func resendOtpTapped(_ sender: UIButton) {
+        self.otpView.text = ""
+        self.otpView.resignFirstResponder()
         resendVerificationCode()
     }
     
     @IBAction func editEmailTapped(_ sender: UIButton) {
+        self.otpView.text = ""
+        self.otpView.resignFirstResponder()
         self.stopTimer()
         let vc = StoryboardRouter.forgotPasswordVC()
         vc.isfromEditEmail = true
