@@ -2470,7 +2470,7 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nrX-zv-eRH" userLabel="Profile Main View">
                                                 <rect key="frame" x="20" y="30" width="374" height="250"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onH-T6-McH">
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onH-T6-McH">
                                                         <rect key="frame" x="16" y="20" width="87" height="87"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="NXs-Lj-4EN">
@@ -2484,12 +2484,12 @@
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" secondItem="onH-T6-McH" secondAttribute="height" multiplier="1:1" id="2HG-jb-wga"/>
                                                             <constraint firstItem="NXs-Lj-4EN" firstAttribute="leading" secondItem="onH-T6-McH" secondAttribute="leading" constant="8" id="80u-BE-RS2"/>
                                                             <constraint firstAttribute="trailing" secondItem="NXs-Lj-4EN" secondAttribute="trailing" constant="8" id="BUs-M8-t7g"/>
                                                             <constraint firstItem="NXs-Lj-4EN" firstAttribute="top" secondItem="onH-T6-McH" secondAttribute="top" constant="8" id="Eej-Pb-zZ1"/>
                                                             <constraint firstAttribute="bottom" secondItem="NXs-Lj-4EN" secondAttribute="bottom" constant="8" id="MKp-9z-gJ8"/>
                                                             <constraint firstAttribute="width" constant="87" id="ego-SA-cFW"/>
-                                                            <constraint firstAttribute="height" constant="87" id="gPe-Wr-aKC"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
