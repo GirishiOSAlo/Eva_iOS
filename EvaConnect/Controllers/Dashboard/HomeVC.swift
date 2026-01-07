@@ -1980,16 +1980,20 @@ extension HomeVC: UIScrollViewDelegate {
                 }
                 else if selectedTab == .events || selectedTab == .industryEvents {
                     offsetCount += 1
-                    if self.selectedHomeFilter == .new {
-                        self.fetchAllEventData()
-                    } else if self.selectedHomeFilter == .going {
-                        self.fetchUpcomingEventData()
-                    } else if self.selectedHomeFilter == .requested {
-                        self.fetchRequestedEventData()
-                    } else if self.selectedHomeFilter == .saved {
-                        self.fetchSavedEventData()
-                    } else if self.selectedHomeFilter == .passed {
-                        self.fetchPassedEventData()
+                    print(offsetCount)
+                    showActivity()
+                    DispatchQueue.main.async {
+                        if self.selectedHomeFilter == .new {
+                            self.fetchAllEventData()
+                        } else if self.selectedHomeFilter == .going {
+                            self.fetchUpcomingEventData()
+                        } else if self.selectedHomeFilter == .requested {
+                            self.fetchRequestedEventData()
+                        } else if self.selectedHomeFilter == .saved {
+                            self.fetchSavedEventData()
+                        } else if self.selectedHomeFilter == .passed {
+                            self.fetchPassedEventData()
+                        }
                     }
                 }
             }
