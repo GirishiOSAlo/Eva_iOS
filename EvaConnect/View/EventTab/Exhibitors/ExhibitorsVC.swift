@@ -27,6 +27,9 @@ class ExhibitorsVC: UIViewController, XIBed {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if myUserDefaults.isEventFlow {
+            self.eventId = myUserDefaults.isEventFlowEventID
+        } else { print("Social FLow") }
         setupUI()
     }
     

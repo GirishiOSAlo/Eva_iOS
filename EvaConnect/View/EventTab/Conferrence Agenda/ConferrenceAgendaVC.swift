@@ -33,6 +33,11 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         super.viewDidLoad()
 
         setupUI()
+        if myUserDefaults.isEventFlow {
+            self.eventId = myUserDefaults.isEventFlowEventID
+        } else {
+           print("Social FLow")
+        }
     }
     
     func setupUI() {

@@ -29,6 +29,9 @@ class MeetingListVC: UIViewController, XIBed, EventMeetingListCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
+        if myUserDefaults.isEventFlow {
+            self.eventId = myUserDefaults.isEventFlowEventID
+        } else { print("Social FLow") }
         setupUI()
     }
 
