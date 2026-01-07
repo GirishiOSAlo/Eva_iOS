@@ -261,66 +261,132 @@ extension LoginVC {
     
     @IBAction func login(_ sender: Any) {
 //        self.gotoDashboard()
-        if emailTxt.text!.isValidEmail {
+        if emailTxt.text.isNilOrEmpty {
+            self.makeAlert(titleMsg: "Empty Fields", messageData: "Please enter valid email address.")
+        }
+        else if passwordTxt.text.isNilOrEmpty {
+            self.makeAlert(titleMsg: "Empty Fields", messageData: "Please enter password.")
+        }
+        else if !emailTxt.text!.isValidEmail {
+            self.makeAlert(titleMsg: "Invaild Email", messageData: "Please enter valid email address.")
+        }
+        else {
+            self.login()
+        }
+        
+        
+//        if emailTxt.text!.isValidEmail {
+//
+//            LoginManagerr.login(email: emailTxt.text!, password: passwordTxt.text!, socialMedia: nil) { (loginUser, errorMessage) in
+//
+//                if let user = loginUser {
+//                    KeychainService.saveRememberMe(rememberMe: self.rememberMe)
+//                    KeychainService.saveEmail(email: self.emailTxt.text!)
+//                    KeychainService.savePassword(password: self.passwordTxt.text!)
+//                    myUserDefaults.userId = user.id ?? 0
+//                    myUserDefaults.fullName = user.firstName ?? ""
+//                    myUserDefaults.companyName = user.companyName ?? ""
+//                    myUserDefaults.userImage = user.userImage ?? ""
+//                    myUserDefaults.token = user.token ?? ""
+//                    myUserDefaults.firebaseID = user.firebaseID ?? ""
+//                    myUserDefaults.password = self.passwordTxt.text ?? ""
+//                    
+//                    if user.isPublic == 0 {
+//                        myUserDefaults.isPrivate = true
+//                    } else {
+//                        myUserDefaults.isPrivate = false
+//                    }
+//                    
+//                    //Send Token in Backend...
+//                    self.saveFCMToken(token: myUserDefaults.deviceToken)
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
+//                    
+//                    //self.gotoDashboard()
+//                    
+//                    //0 = social flow & 1 = event flow
+//                    let value = user.loginType ?? 0
+//                    myUserDefaults.isEventFlowEventID = user.eventID ?? 0
+//                    if value == 0 {
+//                        myUserDefaults.isEventFlow = false
+//                        self.gotoDashboard()
+//                    } else {
+//                        myUserDefaults.isEventFlow = true
+//                        self.gotoEventDetails()
+//                    }
+//                }
+//
+//                if let errorMessage = errorMessage {
+//                    if errorMessage == "pending" {
+//                        self.presentAlertWithAction(title: "Warning", message: "Please verify yourself", positiveTitle: "Verify", negativeTitle: "Cancel") {
+//                            self.sendPendingVerification(email: self.emailTxt.text!)
+//                        }
+//                    } else {
+//                        self.makeAlert(messageData: errorMessage)
+//                    }
+//                }
+//            }
+//        } else if !emailTxt.text!.isValidEmail {
+//            if passwordTxt.text.isNilOrEmpty || emailTxt.text.isNilOrEmpty {
+//                self.makeAlert(titleMsg: "Empty Fields", messageData: "Please Provide Input to Proceed ")
+//            } else {
+//                self.makeAlert(titleMsg: "Invaild Password", messageData: "Please Provide correct Input to Proceed ")
+//            }
+//        } else {
+//            self.makeAlert(titleMsg: "Invaild Email", messageData: "Please Provide correct Input to Proceed ")
+//        }
+    }
+    
+    func login() {
+        LoginManagerr.login(email: emailTxt.text!, password: passwordTxt.text!, socialMedia: nil) { (loginUser, errorMessage) in
 
-            LoginManagerr.login(email: emailTxt.text!, password: passwordTxt.text!, socialMedia: nil) { (loginUser, errorMessage) in
-
-                if let user = loginUser {
-                    KeychainService.saveRememberMe(rememberMe: self.rememberMe)
-                    KeychainService.saveEmail(email: self.emailTxt.text!)
-                    KeychainService.savePassword(password: self.passwordTxt.text!)
-                    myUserDefaults.userId = user.id ?? 0
-                    myUserDefaults.fullName = user.firstName ?? ""
-                    myUserDefaults.companyName = user.companyName ?? ""
-                    myUserDefaults.userImage = user.userImage ?? ""
-                    myUserDefaults.token = user.token ?? ""
-                    myUserDefaults.firebaseID = user.firebaseID ?? ""
-                    myUserDefaults.password = self.passwordTxt.text ?? ""
-                    
-                    if user.isPublic == 0 {
-                        myUserDefaults.isPrivate = true
-                    } else {
-                        myUserDefaults.isPrivate = false
-                    }
-                    
-                    //Send Token in Backend...
-                    self.saveFCMToken(token: myUserDefaults.deviceToken)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
-                    
-                    //self.gotoDashboard()
-                    
-                    //0 = social flow & 1 = event flow
-                    let value = user.loginType ?? 0
-                    myUserDefaults.isEventFlowEventID = user.eventID ?? 0
-                    if value == 0 {
-                        myUserDefaults.isEventFlow = false
-                        self.gotoDashboard()
-                    } else {
-                        myUserDefaults.isEventFlow = true
-                        self.gotoEventDetails()
-                    }
+            if let user = loginUser {
+                KeychainService.saveRememberMe(rememberMe: self.rememberMe)
+                KeychainService.saveEmail(email: self.emailTxt.text!)
+                KeychainService.savePassword(password: self.passwordTxt.text!)
+                myUserDefaults.userId = user.id ?? 0
+                myUserDefaults.fullName = user.firstName ?? ""
+                myUserDefaults.companyName = user.companyName ?? ""
+                myUserDefaults.userImage = user.userImage ?? ""
+                myUserDefaults.token = user.token ?? ""
+                myUserDefaults.firebaseID = user.firebaseID ?? ""
+                myUserDefaults.password = self.passwordTxt.text ?? ""
+                
+                if user.isPublic == 0 {
+                    myUserDefaults.isPrivate = true
+                } else {
+                    myUserDefaults.isPrivate = false
                 }
-
-                if let errorMessage = errorMessage {
-                    if errorMessage == "pending" {
-                        self.presentAlertWithAction(title: "Warning", message: "Please verify yourself", positiveTitle: "Verify", negativeTitle: "Cancel") {
-                            self.sendPendingVerification(email: self.emailTxt.text!)
-                        }
-                    } else {
-                        self.makeAlert(messageData: errorMessage)
-                    }
+                
+                //Send Token in Backend...
+                self.saveFCMToken(token: myUserDefaults.deviceToken)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FCMToken"), object: nil)
+                
+                //self.gotoDashboard()
+                
+                //0 = social flow & 1 = event flow
+                let value = user.loginType ?? 0
+                myUserDefaults.isEventFlowEventID = user.eventID ?? 0
+                if value == 0 {
+                    myUserDefaults.isEventFlow = false
+                    self.gotoDashboard()
+                } else {
+                    myUserDefaults.isEventFlow = true
+                    self.gotoEventDetails()
                 }
             }
-        } else if !emailTxt.text!.isValidEmail {
-            if passwordTxt.text.isNilOrEmpty || emailTxt.text.isNilOrEmpty {
-                self.makeAlert(titleMsg: "Empty Fields", messageData: "Please Provide Input to Proceed ")
-            } else {
-                self.makeAlert(titleMsg: "Invaild Password", messageData: "Please Provide correct Input to Proceed ")
+
+            if let errorMessage = errorMessage {
+                if errorMessage == "pending" {
+                    self.presentAlertWithAction(title: "Warning", message: "Please verify yourself", positiveTitle: "Verify", negativeTitle: "Cancel") {
+                        self.sendPendingVerification(email: self.emailTxt.text!)
+                    }
+                } else {
+                    self.makeAlert(messageData: errorMessage)
+                }
             }
-        } else {
-            self.makeAlert(titleMsg: "Invaild Email", messageData: "Please Provide correct Input to Proceed ")
         }
     }
+    
     
     @IBAction func logInByLinkedin(_ sender: Any) {
         let vc = StoryboardRouter.loginByLinkedin()
