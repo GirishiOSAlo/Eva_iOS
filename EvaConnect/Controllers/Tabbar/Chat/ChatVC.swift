@@ -1156,6 +1156,33 @@ extension ChatVC {
         }
     }
     
+    func getRemoteFileSize(from url: URL?, completion: @escaping (String) -> Void) {
+        guard let url = url else {
+            completion("N/A")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+
+        URLSession.shared.dataTask(with: request) { _, response, _ in
+            guard
+                let httpResponse = response as? HTTPURLResponse,
+                let length = httpResponse.value(forHTTPHeaderField: "Content-Length"),
+                let size = Int64(length)
+            else {
+                DispatchQueue.main.async { completion("N/A") }
+                return
+            }
+
+            let formatter = ByteCountFormatter()
+            formatter.countStyle = .file
+
+            DispatchQueue.main.async {
+                completion(formatter.string(fromByteCount: size))
+            }
+        }.resume()
+    }
 }
 
 // MARK: IB Actions
@@ -1512,7 +1539,16 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                     cell.audioMainView.isHidden = true
                     cell.documentStackVw.isHidden = false
                     cell.docNameLbl.text = msg.document
-                    cell.docSizeLbl.text = "0 KB"
+                    
+                    //cell.docSizeLbl.text = "0 KB"
+                    let fileURL = URL(string: msg.document_url ?? "")
+                    getRemoteFileSize(from: fileURL!) { size in
+                        // Avoid wrong size due to cell reuse
+                        if tableView.indexPath(for: cell) == indexPath {
+                            cell.docSizeLbl.text = size
+                        }
+                    }
+                    
                     cell.timeLabel.text = DateUtils.formatTo24Hour(timestamp: msg.timestamp ?? 0.0)
                     cell.imgVw.image = UIImage(named: "document")
                     cell.dowmloadBtn.tag = indexPath.row
@@ -1543,7 +1579,16 @@ extension ChatVC: UITableViewDataSource, UITableViewDelegate {
                     cell.audioMainView.isHidden = false
                     cell.documentStackVw.isHidden = true
                     cell.docNameLbl.text = msg.audio_file
-                    cell.docSizeLbl.text = "0 KB"
+                    
+                    //cell.docSizeLbl.text = "0 KB"
+                    let fileURL = URL(string: msg.document_url ?? "")
+                    getRemoteFileSize(from: fileURL!) { size in
+                        // Avoid wrong size due to cell reuse
+                        if tableView.indexPath(for: cell) == indexPath {
+                            cell.docSizeLbl.text = size
+                        }
+                    }
+                    
                     cell.timeLabel.text = DateUtils.formatTo24Hour(timestamp: msg.timestamp ?? 0.0)
                     cell.imgVw.image = UIImage(named: "ic_chatAudio")
                     cell.dowmloadBtn.tag = indexPath.row
