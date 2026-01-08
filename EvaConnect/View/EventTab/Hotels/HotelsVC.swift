@@ -81,6 +81,31 @@ class HotelsVC: UIViewController, XIBed {
         let boundingRect = attributedText.boundingRect(with: size, options: options, context: nil)
         return ceil(boundingRect.height)
     }
+    
+    
+    func openURL(_ urlString: String?) {
+        guard
+            let urlString = urlString?.trimmingCharacters(in: .whitespacesAndNewlines),
+            !urlString.isEmpty,
+            let url = URL(string: urlString),
+            UIApplication.shared.canOpenURL(url)
+        else {
+            showInvalidURLAlert()
+            return
+        }
+        
+        UIApplication.shared.open(url)
+    }
+    
+    func showInvalidURLAlert() {
+        let alert = UIAlertController(
+            title: "Invalid Link",
+            message: "The link is not available right now.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 //MARK: UICollection Delegate & DataSource....
@@ -132,5 +157,10 @@ extension HotelsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 //        }
         let totalHeight = nameLblHeight + descLblHeight + 256.0
         return CGSize(width: self.listCollectionVw.frame.size.width, height: totalHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let websiteStr = self.hotelsData[indexPath.row].website ?? ""
+        self.openURL(websiteStr)
     }
 }
