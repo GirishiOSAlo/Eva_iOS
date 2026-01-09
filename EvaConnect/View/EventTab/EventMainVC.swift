@@ -53,6 +53,7 @@ class EventMainVC: UIViewController, XIBed {
     
     var dashboardEvent: DashboardEventData?
     var isComeFromDashboard = false
+    var isComeFromHomeButton = false
     
     
     lazy var eventDetailsVC: EventDetailsVC = {
@@ -136,7 +137,13 @@ class EventMainVC: UIViewController, XIBed {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //fetchEventDetail()
+        print("isComeFromHomeButton", isComeFromHomeButton)
+        if isComeFromHomeButton {
+            self.fetchEventDetail()
+            self.eventDetailsView.isHidden = false
+        } else {
+            print("Other Page")
+        }
     }
     
     func setupUI() {
