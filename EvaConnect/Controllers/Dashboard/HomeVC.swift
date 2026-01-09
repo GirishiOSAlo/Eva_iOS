@@ -123,6 +123,7 @@ class HomeVC: BaseVC {
     var objectId = 0
     var type : TypePostEnum = .news
     var offsetCount = 1
+    var hasMoreData = true
     var height: CGFloat = 0
     var searchHeight: CGFloat = 0
     
@@ -369,325 +370,401 @@ class HomeVC: BaseVC {
     }
     
     func fetchCurrentEventData() {
-        let parameters = [ "filter": "current" ] as [String: Any]
-        
+
+        let parameters: [String: Any] = [
+            "filter": "current",
+            "offset": offsetCount
+        ]
+
         showActivity()
-            NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
-                self.hideActivity()
-                self.refreshControl.endRefreshing()
-                self.indicatorView.stopAnimating()
-                guard let responseData = response.data else {
-                    print("No response data received.")
-                    // Optionally show an alert here
-                    self.noCurrentEventLblHeight.constant = 50.0
-                    return
-                }
 
-                do {
-                    let jsonDecoder = JSONDecoder()
-                    let currentEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
-                    self.filterCollectionView.isUserInteractionEnabled = true
+        NetworkManagerr.request(
+            EndPoints.homeFilterEvents,
+            method: .post,
+            parameters: parameters
+        ) { response in
 
-                    if currentEventRoot.error == true {
-                        print("Current Event Failure :: \(currentEventRoot.message ?? "Error")")
-                        self.currentEventList = []
-                        self.currentEventListHeight.constant = 0
-                        self.noCurrentEventLblHeight.constant = 50.0
-                        // Optionally show an alert here
-                        // self.presentAlert("Info", currentEventRoot.message, nil)
-                        return
-                    }
-
-                    if let events = currentEventRoot.data, !events.isEmpty {
-                        self.currentEventList = events
-                        self.currentEventListHeight.constant = CGFloat(events.count * 440)
-                        self.noCurrentEventLblHeight.constant = 0.0
-                    } else {
-                        print("No current events found.")
-                        self.currentEventList = []
-                        self.currentEventListHeight.constant = 0
-                        self.noCurrentEventLblHeight.constant = 50.0
-                    }
-
-                } catch {
-                    self.offsetCount -= 1
-                    print("Current Decoding error: \(error.localizedDescription)")
-                    // Optionally show an alert here
-                }
-            }
-    }
-        
-    func fetchAllEventData() {
-        let parameters: [String: Any] = ["filter": "all_posts"]
-        
-        showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
             self.hideActivity()
             self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
+            self.isLoading = false   // ✅ reset loading
+
             guard let responseData = response.data else {
-                print("No response data received.")
-                // Optionally show an alert here
+                self.hasMoreData = false
+                self.noCurrentEventLblHeight.constant = 50.0
+                return
+            }
+
+            do {
+                let currentEventRoot = try JSONDecoder()
+                    .decode(EventListDataModel.self, from: responseData)
+
+                self.filterCollectionView.isUserInteractionEnabled = true
+
+                guard currentEventRoot.error == false,
+                      let events = currentEventRoot.data else {
+                    self.hasMoreData = false
+                    return
+                }
+
+                // ⛔ Stop pagination if no data
+                if events.isEmpty {
+                    self.hasMoreData = false
+                    if self.currentEventList.isEmpty {
+                        self.noCurrentEventLblHeight.constant = 50.0
+                    }
+                    return
+                }
+
+                // ✅ Increase offset ONLY when data exists
+                self.offsetCount += 1
+
+                // ✅ Append data (NOT replace)
+                self.currentEventList.append(contentsOf: events)
+
+                self.noCurrentEventLblHeight.constant = 0.0
+                self.currentEventListHeight.constant =
+                    CGFloat(self.currentEventList.count * 440)
+
+            } catch {
+                self.hasMoreData = false
+                print("Current Event decoding error:", error.localizedDescription)
+            }
+        }
+    }
+
+        
+    func fetchAllEventData() {
+
+        let parameters: [String: Any] = [
+            "filter": "all_posts",
+            "offset": offsetCount
+        ]
+
+        showActivity()
+
+        NetworkManagerr.request(
+            EndPoints.homeFilterEvents,
+            method: .post,
+            parameters: parameters
+        ) { response in
+
+            self.hideActivity()
+            self.refreshControl.endRefreshing()
+            self.indicatorView.stopAnimating()
+            self.isLoading = false   // ✅ reset loading
+
+            guard let responseData = response.data else {
+                self.hasMoreData = false
                 self.noOtherEventLbl.text = "No All Event Found."
                 self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
             do {
-                let jsonDecoder = JSONDecoder()
-                let allEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+                let allEventRoot = try JSONDecoder()
+                    .decode(EventListDataModel.self, from: responseData)
+
                 self.filterCollectionView.isUserInteractionEnabled = true
 
-                if allEventRoot.error == true {
-                    print("All Event Failure :: \(allEventRoot.message ?? "Error")")
-                    self.allEventList = []
-                    self.showEventList = self.allEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No All Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
-                    // Optionally show an alert here
-                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                guard allEventRoot.error == false,
+                      let events = allEventRoot.data else {
+                    self.hasMoreData = false
                     return
                 }
 
-                if let events = allEventRoot.data, !events.isEmpty {
-                    self.allEventList = events
-                    self.showEventList = self.allEventList
-                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
-                    self.noOtherEventLblHeight.constant = 0.0
-                } else {
-                    print("No current events found.")
-                    self.allEventList = []
-                    self.showEventList = self.allEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No All Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
+                // ⛔ Stop pagination if no data
+                if events.isEmpty {
+                    self.hasMoreData = false
+                    if self.allEventList.isEmpty {
+                        self.noOtherEventLbl.text = "No All Event Found."
+                        self.noOtherEventLblHeight.constant = 50.0
+                    }
+                    return
                 }
 
+                // ✅ Increase offset ONLY when data exists
+                self.offsetCount += 1
+
+                // ✅ Append data (NOT replace)
+                self.allEventList.append(contentsOf: events)
+                self.showEventList = self.allEventList
+
+                self.noOtherEventLblHeight.constant = 0.0
+                self.tableViewHeightConst.constant =
+                    CGFloat(self.showEventList.count * 440)
+
             } catch {
-                self.offsetCount -= 1
-                print("All Decoding error: \(error.localizedDescription)")
-                // Optionally show an alert here
+                self.hasMoreData = false
+                print("All Event decoding error:", error.localizedDescription)
             }
         }
     }
 
+
     
     func fetchUpcomingEventData() {
-        let parameters = [ "filter": "upcoming" ] as [String: Any]
-        
+
+        let parameters: [String: Any] = [
+            "filter": "upcoming",
+            "offset": offsetCount
+        ]
+
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+
+        NetworkManagerr.request(
+            EndPoints.homeFilterEvents,
+            method: .post,
+            parameters: parameters
+        ) { response in
+
             self.hideActivity()
             self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
+            self.isLoading = false   // ✅ reset loading
+
             guard let responseData = response.data else {
-                print("No response data received.")
-                // Optionally show an alert here
+                self.hasMoreData = false
                 self.noOtherEventLbl.text = "No Upcoming Event Found."
                 self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
             do {
-                let jsonDecoder = JSONDecoder()
-                let upcomingEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+                let upcomingEventRoot = try JSONDecoder()
+                    .decode(EventListDataModel.self, from: responseData)
 
-                if upcomingEventRoot.error == true {
-                    print("Upcoming Event Failure :: \(upcomingEventRoot.message ?? "Error")")
-                    self.upcomingEventList = upcomingEventRoot.data ?? []
-                    self.showEventList = self.upcomingEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Upcoming Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
-                    // Optionally show an alert here
-                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                guard upcomingEventRoot.error == false,
+                      let events = upcomingEventRoot.data else {
+                    self.hasMoreData = false
                     return
                 }
 
-                if let events = upcomingEventRoot.data, !events.isEmpty {
-                    self.upcomingEventList = events
-                    self.showEventList = self.upcomingEventList
-                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
-                    self.noOtherEventLblHeight.constant = 0.0
-                } else {
-                    print("No Requested events found.")
-                    self.upcomingEventList = []
-                    self.showEventList = self.upcomingEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Upcoming Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
+                // ⛔ Stop pagination if no data
+                if events.isEmpty {
+                    self.hasMoreData = false
+                    if self.upcomingEventList.isEmpty {
+                        self.noOtherEventLbl.text = "No Upcoming Event Found."
+                        self.noOtherEventLblHeight.constant = 50.0
+                    }
+                    return
                 }
 
+                // ✅ Increase offset ONLY when data exists
+                self.offsetCount += 1
+
+                // ✅ Append data
+                self.upcomingEventList.append(contentsOf: events)
+                self.showEventList = self.upcomingEventList
+
+                self.noOtherEventLblHeight.constant = 0.0
+                self.tableViewHeightConst.constant =
+                    CGFloat(self.showEventList.count * 440)
+
             } catch {
-                self.offsetCount -= 1
-                print("Upcoming Decoding error: \(error.localizedDescription)")
-                // Optionally show an alert here
+                self.hasMoreData = false
+                print("Upcoming Event decoding error:", error.localizedDescription)
             }
         }
     }
     
     func fetchRequestedEventData() {
-        let parameters: [String: Any] = ["filter": "requested"]
-        
+
+        let parameters: [String: Any] = [
+            "filter": "requested",
+            "offset": offsetCount
+        ]
+
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+
+        NetworkManagerr.request(
+            EndPoints.homeFilterEvents,
+            method: .post,
+            parameters: parameters
+        ) { response in
+
             self.hideActivity()
             self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
+            self.isLoading = false   // ✅ reset loading
+
             guard let responseData = response.data else {
-                print("No response data received.")
-                // Optionally show an alert here
+                self.hasMoreData = false
                 self.noOtherEventLbl.text = "No Requested Event Found."
                 self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
             do {
-                let jsonDecoder = JSONDecoder()
-                let requestedEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+                let requestedEventRoot = try JSONDecoder()
+                    .decode(EventListDataModel.self, from: responseData)
 
-                if requestedEventRoot.error == true {
-                    print("Requested Event Failure :: \(requestedEventRoot.message ?? "Error")")
-                    self.requestedEventList = requestedEventRoot.data ?? []
-                    self.showEventList = self.requestedEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Requested Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
-                    // Optionally show an alert here
-                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                guard requestedEventRoot.error == false,
+                      let events = requestedEventRoot.data else {
+                    self.hasMoreData = false
                     return
                 }
 
-                if let events = requestedEventRoot.data, !events.isEmpty {
-                    self.requestedEventList = events
-                    self.showEventList = self.requestedEventList
-                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
-                    self.noOtherEventLblHeight.constant = 0.0
-                } else {
-                    print("No Requested events found.")
-                    self.requestedEventList = []
-                    self.showEventList = self.requestedEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Requested Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
+                // ⛔ Stop pagination if no data
+                if events.isEmpty {
+                    self.hasMoreData = false
+                    if self.requestedEventList.isEmpty {
+                        self.noOtherEventLbl.text = "No Requested Event Found."
+                        self.noOtherEventLblHeight.constant = 50.0
+                    }
+                    return
                 }
 
+                // ✅ Increase offset ONLY when data exists
+                self.offsetCount += 1
+
+                // ✅ Append data
+                self.requestedEventList.append(contentsOf: events)
+                self.showEventList = self.requestedEventList
+
+                self.noOtherEventLblHeight.constant = 0.0
+                self.tableViewHeightConst.constant =
+                    CGFloat(self.showEventList.count * 440)
+
             } catch {
-                self.offsetCount -= 1
-                print("Requested Decoding error: \(error.localizedDescription)")
-                // Optionally show an alert here
+                self.hasMoreData = false
+                print("Requested Event decoding error:", error.localizedDescription)
             }
         }
     }
+
     
     func fetchSavedEventData() {
-        let parameters = [ "filter": "saved" ] as [String: Any]
-        
+
+        let parameters: [String: Any] = [
+            "filter": "saved",
+            "offset": offsetCount
+        ]
+
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+
+        NetworkManagerr.request(
+            EndPoints.homeFilterEvents,
+            method: .post,
+            parameters: parameters
+        ) { response in
+
             self.hideActivity()
             self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
+            self.isLoading = false   // ✅ reset loading
+
             guard let responseData = response.data else {
-                print("No response data received.")
-                // Optionally show an alert here
+                self.hasMoreData = false
                 self.noOtherEventLbl.text = "No Saved Event Found."
                 self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
             do {
-                let jsonDecoder = JSONDecoder()
-                let savedEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+                let savedEventRoot = try JSONDecoder()
+                    .decode(EventListDataModel.self, from: responseData)
 
-                if savedEventRoot.error == true {
-                    print("Saved Event Failure :: \(savedEventRoot.message ?? "Error")")
-                    self.savedEventList = savedEventRoot.data ?? []
-                    self.showEventList = self.savedEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Saved Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
-                    // Optionally show an alert here
-                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                guard savedEventRoot.error == false,
+                      let events = savedEventRoot.data else {
+                    self.hasMoreData = false
                     return
                 }
 
-                if let events = savedEventRoot.data, !events.isEmpty {
-                    self.savedEventList = events
-                    self.showEventList = self.savedEventList
-                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
-                    self.noOtherEventLblHeight.constant = 0.0
-                } else {
-                    print("No saved events found.")
-                    self.savedEventList = []
-                    self.showEventList = self.savedEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Saved Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
+                // ⛔ Stop pagination if no data
+                if events.isEmpty {
+                    self.hasMoreData = false
+                    if self.savedEventList.isEmpty {
+                        self.noOtherEventLbl.text = "No Saved Event Found."
+                        self.noOtherEventLblHeight.constant = 50.0
+                    }
+                    return
                 }
 
+                // ✅ Increase offset ONLY when data exists
+                self.offsetCount += 1
+
+                // ✅ Append data
+                self.savedEventList.append(contentsOf: events)
+                self.showEventList = self.savedEventList
+
+                self.noOtherEventLblHeight.constant = 0.0
+                self.tableViewHeightConst.constant =
+                    CGFloat(self.showEventList.count * 440)
+
             } catch {
-                self.offsetCount -= 1
-                print("Saved Decoding error: \(error.localizedDescription)")
-                // Optionally show an alert here
+                self.hasMoreData = false
+                print("Saved Event decoding error:", error.localizedDescription)
             }
         }
-
     }
+
     
     func fetchPassedEventData() {
-        let parameters = [ "filter": "passed" ] as [String: Any]
+
+        let parameters: [String: Any] = [
+            "filter": "passed",
+            "offset": offsetCount
+        ]
+
         showActivity()
-        NetworkManagerr.request(EndPoints.homeFilterEvents, method: .post, parameters: parameters) { (response) in
+
+        NetworkManagerr.request(
+            EndPoints.homeFilterEvents,
+            method: .post,
+            parameters: parameters
+        ) { response in
+
             self.hideActivity()
             self.refreshControl.endRefreshing()
             self.indicatorView.stopAnimating()
+            self.isLoading = false   // ✅ reset loading
+
             guard let responseData = response.data else {
-                print("No response data received.")
-                // Optionally show an alert here
+                self.hasMoreData = false
                 self.noOtherEventLbl.text = "No Passed Event Found."
                 self.noOtherEventLblHeight.constant = 50.0
                 return
             }
 
             do {
-                let jsonDecoder = JSONDecoder()
-                let passedEventRoot = try jsonDecoder.decode(EventListDataModel.self, from: responseData)
+                let passedEventRoot = try JSONDecoder()
+                    .decode(EventListDataModel.self, from: responseData)
 
-                if passedEventRoot.error == true {
-                    print("Passed Event Failure :: \(passedEventRoot.message ?? "Error")")
-                    self.passedEventList = passedEventRoot.data ?? []
-                    self.showEventList = self.passedEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Passed Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
-                    // Optionally show an alert here
-                    // self.presentAlert("Info", currentEventRoot.message, nil)
+                guard passedEventRoot.error == false,
+                      let events = passedEventRoot.data else {
+                    self.hasMoreData = false
                     return
                 }
 
-                if let events = passedEventRoot.data, !events.isEmpty {
-                    self.passedEventList = events
-                    self.showEventList = self.passedEventList
-                    self.tableViewHeightConst.constant = CGFloat(self.showEventList.count * 440)
-                    self.noOtherEventLblHeight.constant = 0.0
-                } else {
-                    print("No passed events found.")
-                    self.passedEventList = []
-                    self.showEventList = self.passedEventList
-                    self.tableViewHeightConst.constant = 0
-                    self.noOtherEventLbl.text = "No Passed Event Found."
-                    self.noOtherEventLblHeight.constant = 50.0
+                // ⛔ Stop pagination if no data
+                if events.isEmpty {
+                    self.hasMoreData = false
+                    if self.passedEventList.isEmpty {
+                        self.noOtherEventLbl.text = "No Passed Event Found."
+                        self.noOtherEventLblHeight.constant = 50.0
+                    }
+                    return
                 }
 
+                // ✅ Increase offset ONLY when data exists
+                self.offsetCount += 1
+
+                // ✅ Append data
+                self.passedEventList.append(contentsOf: events)
+                self.showEventList = self.passedEventList
+
+                self.noOtherEventLblHeight.constant = 0.0
+                self.tableViewHeightConst.constant =
+                    CGFloat(self.showEventList.count * 440)
+
             } catch {
-                self.offsetCount -= 1
-                print("Passed Decoding error: \(error.localizedDescription)")
-                // Optionally show an alert here
+                self.hasMoreData = false
+                print("Passed Event decoding error:", error.localizedDescription)
             }
         }
     }
+
     
 //    func fetchNewsListData(offSet: Int) {
 //        let url = "\(selectedTab.getPostEndPoint)?limit=\(pageSize)&offset=\(offSet)"
@@ -1952,53 +2029,120 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate, CollectionViewCell
 //MARK: Scroll View Delegate...
 extension HomeVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == filterCollectionView {
+
+        guard scrollView != filterCollectionView else {
             print("Category Collection Scroll....")
-        } else {
-            let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-            if bottomEdge >= scrollView.contentSize.height {
-                print("👉 Last ScrollView is visible")
-                if selectedTab == .jobs || selectedTab == .industryJobs {
-                    if currentPage < lastPage {
-                        currentPage += 1
-                        let filter = self.selectedHomeFilter.rawValue.lowercased()
-                        self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
-                    } else {
-                        print("Page completed. No Api call")
-                    }
-                } else if selectedTab == .posts {
-                    if paginatedPosts.count > 9 {
-                        offsetCount += 1
-                        getPosts(offSet: offsetCount, inserted: true)
-                    }
-                } else if selectedTab == .news {
-                    guard !isLoading else { return }
-                    guard offsetCount < lastPage else { return } // ✅ stop at last page
-                    
-                    offsetCount += 1
-                    fetchNewsListData(offSet: offsetCount)
-                }
-                else if selectedTab == .events || selectedTab == .industryEvents {
-                    offsetCount += 1
-                    print(offsetCount)
-                    showActivity()
-                    DispatchQueue.main.async {
-                        if self.selectedHomeFilter == .new {
-                            self.fetchAllEventData()
-                        } else if self.selectedHomeFilter == .going {
-                            self.fetchUpcomingEventData()
-                        } else if self.selectedHomeFilter == .requested {
-                            self.fetchRequestedEventData()
-                        } else if self.selectedHomeFilter == .saved {
-                            self.fetchSavedEventData()
-                        } else if self.selectedHomeFilter == .passed {
-                            self.fetchPassedEventData()
-                        }
-                    }
-                }
+            return
+        }
+
+        guard !isLoading, hasMoreData else { return }
+
+        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.height
+        if bottomEdge < scrollView.contentSize.height - 80 { return }
+
+        print("👉 Last ScrollView is visible")
+        isLoading = true
+
+        switch selectedTab {
+
+        case .jobs, .industryJobs:
+            guard currentPage < lastPage else {
+                isLoading = false
+                return
             }
+            currentPage += 1
+            let filter = selectedHomeFilter.rawValue.lowercased()
+            fetchJobListData(
+                filter: filter,
+                currentPage: currentPage,
+                searchStr: searchTxtField.text ?? ""
+            )
+
+        case .posts:
+            guard paginatedPosts.count > 9 else {
+                isLoading = false
+                return
+            }
+            offsetCount += 1
+            getPosts(offSet: offsetCount, inserted: true)
+
+        case .news:
+            guard offsetCount < lastPage else {
+                isLoading = false
+                return
+            }
+            offsetCount += 1
+            fetchNewsListData(offSet: offsetCount)
+
+        case .events, .industryEvents:
+            offsetCount += 1
+            print("offsetCount ::", offsetCount)
+
+            if selectedHomeFilter == .new {
+                fetchAllEventData()
+            } else if selectedHomeFilter == .going {
+                fetchUpcomingEventData()
+            } else if selectedHomeFilter == .requested {
+                fetchRequestedEventData()
+            } else if selectedHomeFilter == .saved {
+                fetchSavedEventData()
+            } else if selectedHomeFilter == .passed {
+                fetchPassedEventData()
+            }
+
+        default:
+            isLoading = false
         }
     }
+
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView == filterCollectionView {
+//            print("Category Collection Scroll....")
+//        } else {
+//            let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
+//            if bottomEdge >= scrollView.contentSize.height {
+//                print("👉 Last ScrollView is visible")
+//                if selectedTab == .jobs || selectedTab == .industryJobs {
+//                    if currentPage < lastPage {
+//                        currentPage += 1
+//                        let filter = self.selectedHomeFilter.rawValue.lowercased()
+//                        self.fetchJobListData(filter: filter, currentPage: self.currentPage, searchStr: self.searchTxtField.text ?? "")
+//                    } else {
+//                        print("Page completed. No Api call")
+//                    }
+//                } else if selectedTab == .posts {
+//                    if paginatedPosts.count > 9 {
+//                        offsetCount += 1
+//                        getPosts(offSet: offsetCount, inserted: true)
+//                    }
+//                } else if selectedTab == .news {
+//                    guard !isLoading else { return }
+//                    guard offsetCount < lastPage else { return } // ✅ stop at last page
+//                    
+//                    offsetCount += 1
+//                    fetchNewsListData(offSet: offsetCount)
+//                }
+//                else if selectedTab == .events || selectedTab == .industryEvents {
+//                    offsetCount += 1
+//                    print("offsetCount ::", offsetCount)
+//                    showActivity()
+//                    DispatchQueue.main.async {
+//                        if self.selectedHomeFilter == .new {
+//                            self.fetchAllEventData()
+//                        } else if self.selectedHomeFilter == .going {
+//                            self.fetchUpcomingEventData()
+//                        } else if self.selectedHomeFilter == .requested {
+//                            self.fetchRequestedEventData()
+//                        } else if self.selectedHomeFilter == .saved {
+//                            self.fetchSavedEventData()
+//                        } else if self.selectedHomeFilter == .passed {
+//                            self.fetchPassedEventData()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 // MARK: Network Calls

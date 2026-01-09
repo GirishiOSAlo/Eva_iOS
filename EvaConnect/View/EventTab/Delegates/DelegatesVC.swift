@@ -24,6 +24,7 @@ class DelegatesVC: UIViewController, XIBed {
     @IBOutlet weak var noRecordLbl: UILabel!
     
     var delegateData: [CommonEventMetaData] = []
+    var filteredDelegates: [CommonEventMetaData] = []
     var eventDetail: NewEventDetailsData?
     var eventId = 0
     var eventAttendeesStatus = ""
@@ -43,9 +44,13 @@ class DelegatesVC: UIViewController, XIBed {
         self.noRecordLbl.isHidden = true
         noRecordLbl.font = UIFont(name: Myfonts.regular, size: 12.0)
         searchUiView.applyBorderWithRadius(color: UIColor(hex: "#837A88"), value: 0.5, radius: 8)
+        self.searchTextField.delegate = self
+        self.searchTextField.addTarget(self, action: #selector(self.searchTextFieldDidChange(_:)), for: .editingChanged)
+        
         delegateListTable.delegate = self
         delegateListTable.dataSource = self
         delegateListTable.registerCell(withType: DelegatesTableCell.self)
+        
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
@@ -57,6 +62,30 @@ class DelegatesVC: UIViewController, XIBed {
 
         label.sizeToFit()
         return label.frame.height
+    }
+}
+
+extension DelegatesVC: UITextFieldDelegate {
+    @objc func searchTextFieldDidChange(_ textField: UITextField) {
+        let searchStr = self.searchTextField.text ?? ""
+        print("Search Text :: \(searchStr)")
+        
+        self.searchDelegates(searchText: searchStr)
+        self.noRecordLbl.isHidden = !self.filteredDelegates.isEmpty
+        self.delegateListTable.reloadData()
+    }
+    
+    func searchDelegates(searchText: String) {
+        guard !searchText.isEmpty else {
+            filteredDelegates = delegateData
+            return
+        }
+
+        filteredDelegates = delegateData.filter {
+            ($0.firstName ?? "")
+                .lowercased()
+                .contains(searchText.lowercased())
+        }
     }
 }
 
@@ -77,6 +106,7 @@ extension DelegatesVC {
                     
                     if !(DelegateDetail.error ?? false) {
                         self.delegateData = DelegateDetail.data?.data ?? []
+                        self.filteredDelegates = self.delegateData
                         self.delegateListTable.reloadData()
                         if self.delegateData.count > 0 {
                             self.noRecordLbl.isHidden = true
@@ -94,7 +124,7 @@ extension DelegatesVC {
     }
     
     @objc func viewProfileTapped(sender: UIButton) {
-        let obj = delegateData[sender.tag]
+        let obj = filteredDelegates[sender.tag]
         let vc = StoryboardRouter.othersProfileVC()
         vc.profileID = obj.id ?? 0
         vc.eventID = self.eventId
@@ -107,12 +137,12 @@ extension DelegatesVC {
 
 extension DelegatesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegateData.count
+        return filteredDelegates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = delegateListTable.dequeueReusableCell(withIdentifier: DelegatesTableCell.id(), for: indexPath) as! DelegatesTableCell
-        let delegate = delegateData[indexPath.row]
+        let delegate = filteredDelegates[indexPath.row]
         cell.setData(obj: delegate)
         
         cell.viewProfileBtn.tag = indexPath.row
@@ -123,7 +153,7 @@ extension DelegatesVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //return 120
-        let obj = self.delegateData[indexPath.row]
+        let obj = self.filteredDelegates[indexPath.row]
         let width = self.view.frame.width - 252.0
         let nameLblHeight = self.heightForView(text: obj.firstName ?? "", font: UIFont(name: Myfonts.bold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: width)
         let designationLblHeight = self.heightForView(text: obj.designation ?? "", font: UIFont(name: Myfonts.regular, size: 12.0) ?? UIFont.systemFont(ofSize: 12.0), width: width)

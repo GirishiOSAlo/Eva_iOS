@@ -63,7 +63,7 @@ class CompaniesEmployeeVC: UIViewController, XIBed {
     }
     
     @objc func viewProfileTapped(sender: UIButton) {
-        let obj = self.companyDelegates[sender.tag]
+        let obj = self.filteredDelegates[sender.tag]
         let vc = StoryboardRouter.othersProfileVC()
         vc.profileID = obj.id ?? 0
         self.navigationController?.pushViewController(vc, animated: true)
@@ -76,6 +76,7 @@ extension CompaniesEmployeeVC: UITextFieldDelegate {
         print("Search Text :: \(searchStr)")
         
         self.searchDelegates(searchText: searchStr)
+        self.noRecordLbl.isHidden = !self.filteredDelegates.isEmpty
         self.employeeListTblVw.reloadData()
     }
     
@@ -90,6 +91,7 @@ extension CompaniesEmployeeVC: UITextFieldDelegate {
                 .lowercased()
                 .contains(searchText.lowercased())
         }
+        
     }
 }
 

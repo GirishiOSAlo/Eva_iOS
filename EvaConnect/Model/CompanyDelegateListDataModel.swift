@@ -77,8 +77,8 @@ struct CompanyDelegate: Codable {
     let dateJoined: String?
     let modifiedDatetime, sort: String?
     let status: Int?
-    let verificationPin: Int?
-    let createdByID, modifiedByID: String?
+    let verificationPin, createdByID: Int?
+    let modifiedByID: String?
     let bioData: String?
     let companyName: String?
     let companyID, categoryID: Int?
