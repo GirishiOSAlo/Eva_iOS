@@ -14,7 +14,6 @@ class EventTabbarVC: BaseVC, XIBed {
         let vc = EventMainVC.instantiate()
         if myUserDefaults.isEventFlow {
             vc.eventId = myUserDefaults.isEventFlowEventID
-            vc.isComeFromHomeButton = true
         }
         return vc
     }()
@@ -117,7 +116,7 @@ class EventTabbarVC: BaseVC, XIBed {
         notifView.state = .unselected
         messageView.state = .unselected
         profileView.state = .unselected
-        
+        myUserDefaults.isEventFlowHomeBtnTap = true
         showOnContainer(vc: eventDetailsPage)
     }
     

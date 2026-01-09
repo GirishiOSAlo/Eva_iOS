@@ -23,11 +23,19 @@ class myUserDefaults {
             UserDefaults.standard.set(newValue, forKey: "isEventFlow")
         }
     }
+    
     public static var isEventFlowEventID: Int {
         get {
             UserDefaults.standard.integer(forKey: "isEventFlowEventID")
         } set {
             UserDefaults.standard.set(newValue, forKey: "isEventFlowEventID")
+        }
+    }
+    public static var isEventFlowHomeBtnTap: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "isEventFlowHomeBtnTap")
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "isEventFlowHomeBtnTap")
         }
     }
         

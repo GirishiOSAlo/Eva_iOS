@@ -53,7 +53,6 @@ class EventMainVC: UIViewController, XIBed {
     
     var dashboardEvent: DashboardEventData?
     var isComeFromDashboard = false
-    var isComeFromHomeButton = false
     
     
     lazy var eventDetailsVC: EventDetailsVC = {
@@ -137,15 +136,12 @@ class EventMainVC: UIViewController, XIBed {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("isComeFromHomeButton", isComeFromHomeButton)
-        if isComeFromHomeButton {
+        if myUserDefaults.isEventFlowHomeBtnTap {
             self.fetchEventDetail()
             self.eventDetailsView.isHidden = false
-        } else {
-            print("Other Page")
         }
     }
-    
+
     func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
         
@@ -198,6 +194,7 @@ class EventMainVC: UIViewController, XIBed {
         
     }
     @IBAction func backBtnTapped(_ sender: UIButton) {
+        myUserDefaults.isEventFlowHomeBtnTap = false
         self.navigationController?.popViewController(animated: false)
     }
 }
@@ -270,6 +267,7 @@ extension EventMainVC : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        myUserDefaults.isEventFlowHomeBtnTap = false
         let selected = eventTypeArr[indexPath.row]
         switch selected {
         case "Event Details":
