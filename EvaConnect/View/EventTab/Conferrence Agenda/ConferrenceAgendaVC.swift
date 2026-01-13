@@ -83,11 +83,25 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         var finalHeight = 0.0
         
         for (i,agenda) in self.conferenceAgendaList.enumerated() {
+            
+            let content = "--"
+            let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
+            let color = UIColor(hex: "#848397")
+            let labelWidth = self.view.frame.width - 96.0
+            
+            var descLblHeight = 0.0
+            if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+                descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+            } else {
+                descLblHeight = heightForView(text: content, font: font, width: labelWidth)
+            }
+            
             let sessionLblHeight = self.heightForView(text: agenda.name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
             let sponsersNameHeight = self.heightForView(text: agenda.sponsorname ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+            let speakersNameHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
             
-            let totalHeight = sessionLblHeight + sponsersNameHeight + 115.0 //Full Cell Height...
-            let collapseHeight = totalHeight - sponsersNameHeight - 35.0 //Collapse Cell Height...
+            let totalHeight = descLblHeight + sessionLblHeight + sponsersNameHeight + speakersNameHeight + 214.0 //Full Cell Height...
+            let collapseHeight = descLblHeight + sessionLblHeight + 92.0 //Collapse Cell Height...
             
             if i == selectedIndex {
                 finalHeight = finalHeight + totalHeight
@@ -114,6 +128,13 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         return label.frame.height
     }
     
+    func calculateAttributedLblHeight(attributedText: NSAttributedString, width: CGFloat) -> CGFloat {
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let boundingRect = attributedText.boundingRect(with: size, options: options, context: nil)
+        return ceil(boundingRect.height)
+    }
+    
     @objc func viewAllTapped() {
         print("View All tapped")
         let vc = ConferenceDetailsVC.instantiate(eventId: self.eventId)
@@ -128,6 +149,18 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         }
         agendaListTable.reloadData()
         self.updateTableHeigth()
+    }
+    
+    @objc func joinBtnTapped(sender: UIButton) {
+        print("Join Btn Tapped.")
+//        let networkId = self.networkingEventList[sender.tag].id ?? 0
+//        self.networkJoinApiCall(networkingID: networkId, status: "join")
+    }
+    
+    @objc func cancelBtnTapped(sender: UIButton) {
+        print("Cancel Btn Tapped.")
+//        let networkId = self.networkingEventList[sender.tag].id ?? 0
+//        self.networkJoinApiCall(networkingID: networkId, status: "cancel")
     }
 }
 
@@ -145,6 +178,10 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnButton.tag = indexPath.row
         cell.drpDwnButton.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
+        cell.joinBtn.tag = indexPath.row
+        cell.joinBtn.addTarget(self, action: #selector(self.joinBtnTapped(sender:)), for: .touchUpInside)
+        cell.cancelBtn.tag = indexPath.row
+        cell.cancelBtn.addTarget(self, action: #selector(self.cancelBtnTapped(sender:)), for: .touchUpInside)
         cell.selectionStyle = .none
         
         return cell
@@ -153,20 +190,33 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let agenda = self.conferenceAgendaList[indexPath.row]
+        
+        let content = "--"
+        let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let color = UIColor(hex: "#848397")
+        let labelWidth = self.view.frame.width - 96.0
+        
+        var descLblHeight = 0.0
+        if let attributed = content.htmlToAttributedString(withFont: font, color: color) {
+            descLblHeight = calculateAttributedLblHeight(attributedText: attributed, width: labelWidth)
+        } else {
+            descLblHeight = heightForView(text: content, font: font, width: labelWidth)
+        }
+        
         let sessionName = ((agenda.name?.isEmpty ?? true) ? "--" : agenda.name) ?? ""
         let sponsorName = ((agenda.sponsorname?.isEmpty ?? true) ? "--" : agenda.sponsorname) ?? ""
+        let speakerName = "--"
         
         let sessionLblHeight = self.heightForView(text: sessionName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
         let sponsersNameHeight = self.heightForView(text: sponsorName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+        let speakersNameHeight = self.heightForView(text: speakerName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
         
-        let totalHeight = sessionLblHeight + sponsersNameHeight + 115.0
+        let totalHeight = descLblHeight + sessionLblHeight + sponsersNameHeight + speakersNameHeight + 214.0
+        let collapseHeight = descLblHeight + sessionLblHeight + 92.0
         
         if indexPath.row == selectedIndex {
-            return totalHeight //157
+            return totalHeight
         } else {
-            //return 101
-            let sponserheight = sponsersNameHeight + 35.0
-            let collapseHeight = totalHeight - sponserheight
             return collapseHeight
         }
     }
