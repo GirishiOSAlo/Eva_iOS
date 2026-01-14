@@ -242,7 +242,14 @@ extension ConferenceDetailsVC: UITableViewDelegate, UITableViewDataSource {
         
         let sessionName = ((programs?.name?.isEmpty ?? true) ? "--" : programs?.name) ?? ""
         let sponsorName = ((programs?.sponsorname?.isEmpty ?? true) ? "--" : programs?.sponsorname) ?? ""
-        let speakerName = "--"
+        
+        var speakerList = ""
+        let speakers = programs?.speakers ?? []
+        for obj in speakers {
+            let name = obj.name ?? ""
+            speakerList.append(name)
+        }
+        let speakerName = ((speakerList.isEmpty) ? "--" : speakerList)
         
         let sessionLblHeight = self.heightForView(text: sessionName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 68.0)
         let sponsersNameHeight = self.heightForView(text: sponsorName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 68.0)

@@ -389,15 +389,37 @@ struct NewEventDetailsInterestedUser: Codable {
 struct ConferenceAgenda: Codable {
     let id: Int?
     let name, date, timeFrom, timeTo: String?
-    let sponsorname: String?
-
+    let sponsorname, description: String?
+    let speakers: [EventAgendaSpeakerList]?
+    let speakerNames: String?
+    
     enum CodingKeys: String, CodingKey {
         case id, name, date
         case timeFrom = "time_from"
         case timeTo = "time_to"
-        case sponsorname
+        case sponsorname, description, speakers
+        case speakerNames = "speaker_names"
     }
 }
+
+// MARK: - Speaker
+struct EventAgendaSpeakerList: Codable {
+    let id: Int?
+    let firstName: String?
+    let lastName: String?
+    let designation: String?
+    let company: String?
+    let profile: String?
+    let description: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case designation, company, profile, description
+    }
+}
+
 
 // MARK: - EvaEventsAttendee
 struct EvaEventsAttendee: Codable {

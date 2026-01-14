@@ -61,7 +61,7 @@ class ConferrenceAgendaCell: UITableViewCell {
         self.DateLabel.text = data.date ?? "--"
         self.timeLabel.text = "\(data.timeFrom ?? "--" ) - \(data.timeTo ?? "--" )"
         
-        let content = "--"
+        let content = data.description ?? "--"
         if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
             self.descriptionLbl.attributedText = attributed
         } else { self.descriptionLbl.text = content }
@@ -70,8 +70,8 @@ class ConferrenceAgendaCell: UITableViewCell {
         self.sessionNameLabel.text = sessionName
         let sponsorName = (data.sponsorname?.isEmpty ?? true) ? "--" : data.sponsorname
         self.sponsersNameLabel.text = sponsorName
-        self.speakersNameLabel.text = "--"
-        
+        let speakerName = ((data.speakerNames?.isEmpty ?? true) ? "--" : data.speakerNames) ?? ""
+        self.speakersNameLabel.text = speakerName
         
         self.joinBtn.isHidden = false
         self.cancelBtn.isHidden = true
@@ -90,7 +90,15 @@ class ConferrenceAgendaCell: UITableViewCell {
         self.sessionNameLabel.text = sessionName
         let sponsorName = (data?.sponsorname?.isEmpty ?? true) ? "--" : data?.sponsorname
         self.sponsersNameLabel.text = sponsorName
-        self.speakersNameLabel.text = "--"
+        
+        var speakerList = ""
+        let speakers = data?.speakers ?? []
+        for obj in speakers {
+            let name = obj.name ?? ""
+            speakerList.append(name)
+        }
+        let speakerName = ((speakerList.isEmpty) ? "--" : speakerList)
+        self.speakersNameLabel.text = speakerName
         
         self.joinBtn.isHidden = false
         self.cancelBtn.isHidden = true

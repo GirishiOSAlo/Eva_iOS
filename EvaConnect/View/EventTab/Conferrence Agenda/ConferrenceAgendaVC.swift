@@ -84,7 +84,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         
         for (i,agenda) in self.conferenceAgendaList.enumerated() {
             
-            let content = "--"
+            let content = agenda.description ?? ""
             let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
             let color = UIColor(hex: "#848397")
             let labelWidth = self.view.frame.width - 96.0
@@ -96,9 +96,13 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
                 descLblHeight = heightForView(text: content, font: font, width: labelWidth)
             }
             
-            let sessionLblHeight = self.heightForView(text: agenda.name ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
-            let sponsersNameHeight = self.heightForView(text: agenda.sponsorname ?? "", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
-            let speakersNameHeight = self.heightForView(text: "--", font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+            let sessionName = ((agenda.name?.isEmpty ?? true) ? "--" : agenda.name) ?? ""
+            let sponsorName = ((agenda.sponsorname?.isEmpty ?? true) ? "--" : agenda.sponsorname) ?? ""
+            let speakerName = ((agenda.speakerNames?.isEmpty ?? true) ? "--" : agenda.speakerNames) ?? ""
+            
+            let sessionLblHeight = self.heightForView(text: sessionName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+            let sponsersNameHeight = self.heightForView(text: sponsorName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
+            let speakersNameHeight = self.heightForView(text: speakerName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
             
             let totalHeight = descLblHeight + sessionLblHeight + sponsersNameHeight + speakersNameHeight + 214.0 //Full Cell Height...
             let collapseHeight = descLblHeight + sessionLblHeight + 92.0 //Collapse Cell Height...
@@ -191,7 +195,7 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
         
         let agenda = self.conferenceAgendaList[indexPath.row]
         
-        let content = "--"
+        let content = agenda.description ?? "--"
         let font = UIFont(name: Myfonts.regular, size: 14) ?? UIFont.systemFont(ofSize: 14)
         let color = UIColor(hex: "#848397")
         let labelWidth = self.view.frame.width - 96.0
@@ -205,7 +209,7 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
         
         let sessionName = ((agenda.name?.isEmpty ?? true) ? "--" : agenda.name) ?? ""
         let sponsorName = ((agenda.sponsorname?.isEmpty ?? true) ? "--" : agenda.sponsorname) ?? ""
-        let speakerName = "--"
+        let speakerName = ((agenda.speakerNames?.isEmpty ?? true) ? "--" : agenda.speakerNames) ?? ""
         
         let sessionLblHeight = self.heightForView(text: sessionName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
         let sponsersNameHeight = self.heightForView(text: sponsorName, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 92.0)
