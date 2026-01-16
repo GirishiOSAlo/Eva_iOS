@@ -391,7 +391,8 @@ struct ConferenceAgenda: Codable {
     let name, date, timeFrom, timeTo: String?
     let sponsorname, description: String?
     let speakers: [EventAgendaSpeakerList]?
-    let speakerNames: String?
+    let speakerNames, attendeesstatus: String?
+    let evaUserNetworkingMappings: [EvaUserNetworkingMapping]?
     
     enum CodingKeys: String, CodingKey {
         case id, name, date
@@ -399,6 +400,8 @@ struct ConferenceAgenda: Codable {
         case timeTo = "time_to"
         case sponsorname, description, speakers
         case speakerNames = "speaker_names"
+        case attendeesstatus
+        case evaUserNetworkingMappings = "eva_user_networking_mappings"
     }
 }
 

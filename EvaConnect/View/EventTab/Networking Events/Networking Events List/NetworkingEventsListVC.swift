@@ -216,8 +216,8 @@ extension NetworkingEventsListVC: UITableViewDataSource, UITableViewDelegate {
         let cell = networkingEventListTable.dequeueReusableCell(withIdentifier: NetworkingEventsCell.id(), for: indexPath) as! NetworkingEventsCell
         
         let networkEvent = self.networkingEventList[indexPath.row]
-        cell.setListData(obj: networkEvent)
         cell.eventAttendeesStatus = self.eventAttendeesStatus
+        cell.setListData(obj: networkEvent)
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnBtn.tag = indexPath.row
         cell.drpDwnBtn.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)

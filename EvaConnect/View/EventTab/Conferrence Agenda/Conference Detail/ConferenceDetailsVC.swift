@@ -10,9 +10,10 @@ import UIKit
 
 class ConferenceDetailsVC: UIViewController, XIBed {
 
-    static func instantiate(eventId: Int) -> Self {
+    static func instantiate(eventId: Int, eventAttendeesStatus: String) -> Self {
         let vc = Self.instantiate()
         vc.eventId = eventId
+        vc.eventAttendeesStatus = eventAttendeesStatus
         return vc
     }
     
@@ -20,9 +21,8 @@ class ConferenceDetailsVC: UIViewController, XIBed {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var headingLabel: UILabel!
     @IBOutlet weak var noDataLbl: UILabel!
-    
     @IBOutlet weak var agendaTblVw: UITableView!
-    
+    var eventAttendeesStatus = ""
     var eventId = 0
     var eventAgendaData: [EventAgendaData] = []
     var expandedIndexPath: IndexPath?
@@ -136,8 +136,8 @@ extension ConferenceDetailsVC: UITableViewDelegate, UITableViewDataSource {
                                                    for: indexPath) as! ConferrenceAgendaCell
         
         let agenda = eventAgendaData[indexPath.section].conferencePrograms?[indexPath.row]
+        cell.eventAttendeesStatus = agenda?.attendeesstatus ?? ""
         cell.setDetailsData(data: agenda)
-        
         // Expansion logic
         cell.isExpanded = (expandedIndexPath == indexPath)
         

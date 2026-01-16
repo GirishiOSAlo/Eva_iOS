@@ -73,7 +73,7 @@ class EventMainVC: UIViewController, XIBed {
     }()
     
     lazy var conferrenceAgendaVC: ConferrenceAgendaVC = {
-        let vc = ConferrenceAgendaVC.instantiate(eventId: self.eventId)
+        let vc = ConferrenceAgendaVC.instantiate(eventId: self.eventId, eventAttendeesStatus: self.eventAttendeesStatus)
         vc.conferenceAgendaList = self.conferenceAgendaList
         return vc
     }()

@@ -29,7 +29,7 @@ class ConferrenceAgendaCell: UITableViewCell {
     @IBOutlet weak var joinBtn: UIButton!
     @IBOutlet weak var cancelBtn: UIButton!
     
-    
+    var eventAttendeesStatus = ""
     var isExpanded: Bool = false {
         didSet {
             let imageName = isExpanded ? "ic_fillDropUp" : "ic_fillDropDown"
@@ -71,10 +71,48 @@ class ConferrenceAgendaCell: UITableViewCell {
         let sponsorName = (data.sponsorname?.isEmpty ?? true) ? "--" : data.sponsorname
         self.sponsersNameLabel.text = sponsorName
         let speakerName = ((data.speakerNames?.isEmpty ?? true) ? "--" : data.speakerNames) ?? ""
-        self.speakersNameLabel.text = speakerName
+        self.speakersNameLabel.text = speakerName        
         
         self.joinBtn.isHidden = false
         self.cancelBtn.isHidden = true
+        
+        let mapping = data.evaUserNetworkingMappings ?? []
+        if mapping.count == 0 {
+            self.joinBtn.isHidden = false
+        } else {
+            if mapping[0].status == 1 {
+                self.cancelBtn.isHidden = false
+            } else {
+                self.joinBtn.isHidden = false
+            }
+        }
+        if eventAttendeesStatus.lowercased() == "approved" {
+            self.btnStackVw.isHidden = false
+            let mappings = data.evaUserNetworkingMappings ?? []
+            if mappings.isEmpty {
+                // No mapping yet → show "Join"
+                self.joinBtn.isHidden = false
+                self.cancelBtn.isHidden = true
+            } else {
+                // There is at least one mapping
+                let mapping = mappings[0]
+                
+                if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
+                    // User already joined → show "Cancel"
+                    self.cancelBtn.isHidden = false
+                    self.joinBtn.isHidden = true
+                } else {
+                    // Different user or not active → show "Join"
+                    self.joinBtn.isHidden = false
+                    self.cancelBtn.isHidden = true
+                }
+            }
+        } else {
+            // Not approved → show nothing
+            self.btnStackVw.isHidden = true
+            self.joinBtn.isHidden = true
+            self.cancelBtn.isHidden = true
+        }
     }
     
     func setDetailsData(data: ConferenceProgram?) {
@@ -100,8 +138,46 @@ class ConferrenceAgendaCell: UITableViewCell {
         let speakerName = ((speakerList.isEmpty) ? "--" : speakerList)
         self.speakersNameLabel.text = speakerName
         
-        self.joinBtn.isHidden = false
+        self.joinBtn.isHidden = true
         self.cancelBtn.isHidden = true
+        
+        let mapping = data?.evaUserNetworkingMappings ?? []
+        if mapping.count == 0 {
+            self.joinBtn.isHidden = false
+        } else {
+            if mapping[0].status == 1 {
+                self.cancelBtn.isHidden = false
+            } else {
+                self.joinBtn.isHidden = false
+            }
+        }
+        if eventAttendeesStatus.lowercased() == "approved" {
+            self.btnStackVw.isHidden = false
+            let mappings = data?.evaUserNetworkingMappings ?? []
+            if mappings.isEmpty {
+                // No mapping yet → show "Join"
+                self.joinBtn.isHidden = false
+                self.cancelBtn.isHidden = true
+            } else {
+                // There is at least one mapping
+                let mapping = mappings[0]
+                
+                if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
+                    // User already joined → show "Cancel"
+                    self.cancelBtn.isHidden = false
+                    self.joinBtn.isHidden = true
+                } else {
+                    // Different user or not active → show "Join"
+                    self.joinBtn.isHidden = false
+                    self.cancelBtn.isHidden = true
+                }
+            }
+        } else {
+            // Not approved → show nothing
+            self.btnStackVw.isHidden = true
+            self.joinBtn.isHidden = true
+            self.cancelBtn.isHidden = true
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

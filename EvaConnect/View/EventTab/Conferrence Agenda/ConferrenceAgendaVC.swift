@@ -10,9 +10,10 @@ import UIKit
 
 class ConferrenceAgendaVC: UIViewController, XIBed {
     
-    static func instantiate(eventId: Int) -> Self {
+    static func instantiate(eventId: Int, eventAttendeesStatus: String) -> Self {
         let vc = Self.instantiate()
         vc.eventId = eventId
+        vc.eventAttendeesStatus = eventAttendeesStatus
         return vc
     }
     
@@ -28,6 +29,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     var conferenceAgendaList: [ConferenceAgenda] = []
     var selectedIndex: Int?
     var eventId = 0
+    var eventAttendeesStatus = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,7 +143,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     
     @objc func viewAllTapped() {
         print("View All tapped")
-        let vc = ConferenceDetailsVC.instantiate(eventId: self.eventId)
+        let vc = ConferenceDetailsVC.instantiate(eventId: self.eventId, eventAttendeesStatus: self.eventAttendeesStatus)
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -178,7 +180,7 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
         
         let agenda = self.conferenceAgendaList[indexPath.row]
         cell.setUpData(data: agenda)
-        
+        cell.eventAttendeesStatus = self.eventAttendeesStatus
         cell.isExpanded = (indexPath.row == selectedIndex)
         cell.drpDwnButton.tag = indexPath.row
         cell.drpDwnButton.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)

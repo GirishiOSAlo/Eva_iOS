@@ -60,6 +60,8 @@ struct ConferenceProgram: Codable {
     let sponsorlists: [AgendaSponsorlist]?
     let sponsorname: String?
     let speakers: [AgendaSpeakerList]?
+    let attendeesstatus: String?
+    let evaUserNetworkingMappings: [EvaUserNetworkingMapping]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, description
@@ -74,7 +76,8 @@ struct ConferenceProgram: Codable {
         case updatedAt = "updated_at"
         case deletedAt = "deleted_at"
         case sponsorlists
-        case sponsorname, speakers
+        case sponsorname, speakers, attendeesstatus
+        case evaUserNetworkingMappings = "eva_user_networking_mappings"
     }
 }
 
