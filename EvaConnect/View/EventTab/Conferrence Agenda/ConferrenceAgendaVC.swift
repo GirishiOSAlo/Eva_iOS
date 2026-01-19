@@ -182,6 +182,21 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
         cell.setUpData(data: agenda)
         cell.eventAttendeesStatus = self.eventAttendeesStatus
         cell.isExpanded = (indexPath.row == selectedIndex)
+        
+        let speakers = agenda.speakers ?? []        
+        cell.configure(text: agenda.speakerNames ?? "")
+        if speakers.count > 0 {
+            cell.onSpeakerTapped = { [weak self] name, index in
+                guard let self = self else { return }
+                print("Tapped Speaker:\(name), Index: \(index), Row:\(indexPath.row)")
+                // 🔥 Go Speaker Profile...
+                let speaker = speakers[index]
+                let vc = StoryboardRouter.othersProfileVC()
+                vc.profileID = speaker.id ?? 0
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
         cell.drpDwnButton.tag = indexPath.row
         cell.drpDwnButton.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
         cell.joinBtn.tag = indexPath.row
@@ -237,3 +252,4 @@ extension ConferrenceAgendaVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+

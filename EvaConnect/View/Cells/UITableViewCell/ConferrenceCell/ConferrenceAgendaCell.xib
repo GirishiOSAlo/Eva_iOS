@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -104,11 +105,18 @@
                         <color key="textColor" red="0.01176470588" green="0.0078431372550000003" blue="0.16078431369999999" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMG-Yx-KkH">
+                        <rect key="frame" x="16" y="201" width="307" height="17"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" systemColor="labelColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="128" translatesAutoresizingMaskIntoConstraints="NO" id="8Zf-Xz-fTf">
                         <rect key="frame" x="16" y="230" width="307" height="40"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kdb-Wl-Nth">
-                                <rect key="frame" x="0.0" y="0.0" width="307" height="34"/>
+                                <rect key="frame" x="0.0" y="0.0" width="307" height="40"/>
                                 <color key="backgroundColor" red="0.30196078430000001" green="0.46274509800000002" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Dm9-Ec-rfb"/>
@@ -117,7 +125,7 @@
                                 <state key="normal" title="Join"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6j-eU-GEF">
-                                <rect key="frame" x="0.0" y="0.0" width="307" height="40"/>
+                                <rect key="frame" x="0.0" y="6" width="307" height="34"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="IBe-Hj-Hrh"/>
@@ -141,15 +149,19 @@
                     <constraint firstItem="KvH-08-MuI" firstAttribute="top" secondItem="h4x-I4-vYM" secondAttribute="bottom" constant="12" id="G4B-Wg-eSF"/>
                     <constraint firstItem="8Zf-Xz-fTf" firstAttribute="top" secondItem="cpp-od-3ah" secondAttribute="bottom" constant="12" id="HnG-JY-N5y"/>
                     <constraint firstItem="j2F-Wh-Nsz" firstAttribute="top" secondItem="lyj-8w-1Ue" secondAttribute="bottom" constant="12" id="JL4-T1-dN4"/>
+                    <constraint firstItem="VMG-Yx-KkH" firstAttribute="bottom" secondItem="cpp-od-3ah" secondAttribute="bottom" id="LeG-e1-vSq"/>
+                    <constraint firstItem="VMG-Yx-KkH" firstAttribute="top" secondItem="cpp-od-3ah" secondAttribute="top" id="M60-xN-NIZ"/>
                     <constraint firstItem="lyj-8w-1Ue" firstAttribute="top" secondItem="bBO-Pn-YpX" secondAttribute="bottom" constant="6" id="Ofi-AW-UHP"/>
                     <constraint firstItem="cpp-od-3ah" firstAttribute="leading" secondItem="KvH-08-MuI" secondAttribute="leading" id="PJT-qU-TkB"/>
                     <constraint firstItem="h4x-I4-vYM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Qlm-q1-Xde"/>
                     <constraint firstAttribute="trailing" secondItem="QzB-qI-PjD" secondAttribute="trailing" id="Vq2-ot-w8j"/>
                     <constraint firstItem="QzB-qI-PjD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VsN-2R-XAo"/>
+                    <constraint firstItem="VMG-Yx-KkH" firstAttribute="leading" secondItem="cpp-od-3ah" secondAttribute="leading" id="Wgi-Vo-pOs"/>
                     <constraint firstItem="bBO-Pn-YpX" firstAttribute="leading" secondItem="KvH-08-MuI" secondAttribute="leading" id="Xyd-Xh-etg"/>
                     <constraint firstItem="bBO-Pn-YpX" firstAttribute="top" secondItem="sBU-dE-H7U" secondAttribute="bottom" constant="12" id="a1T-Jz-HaA"/>
                     <constraint firstAttribute="trailing" secondItem="lyj-8w-1Ue" secondAttribute="trailing" constant="12" id="aXd-Bg-45w"/>
                     <constraint firstItem="KvH-08-MuI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="brU-ms-QRk"/>
+                    <constraint firstItem="VMG-Yx-KkH" firstAttribute="trailing" secondItem="cpp-od-3ah" secondAttribute="trailing" id="cdq-cw-PFS"/>
                     <constraint firstAttribute="trailing" secondItem="h4x-I4-vYM" secondAttribute="trailing" constant="12" id="clW-DI-zPe"/>
                     <constraint firstItem="8Zf-Xz-fTf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="dD4-6O-KBV"/>
                     <constraint firstAttribute="trailing" secondItem="cpp-od-3ah" secondAttribute="trailing" constant="12" id="ei2-IG-80V"/>
@@ -172,6 +184,7 @@
                 <outlet property="sessionNameLabel" destination="sBU-dE-H7U" id="uT2-5o-VdG"/>
                 <outlet property="speakersLabel" destination="j2F-Wh-Nsz" id="C2C-iq-Ty2"/>
                 <outlet property="speakersNameLabel" destination="cpp-od-3ah" id="r7O-vF-rVq"/>
+                <outlet property="speakersNameTxtVw" destination="VMG-Yx-KkH" id="NaA-2p-FD6"/>
                 <outlet property="sponsersLabel" destination="bBO-Pn-YpX" id="naJ-Mk-ycd"/>
                 <outlet property="sponsersNameLabel" destination="lyj-8w-1Ue" id="qSP-Qp-Rez"/>
                 <outlet property="timeLabel" destination="YoW-Uf-Y4V" id="jVO-za-dSM"/>
@@ -181,5 +194,8 @@
     </objects>
     <resources>
         <image name="ic_drpdwn_dwn_fill" width="24" height="24"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

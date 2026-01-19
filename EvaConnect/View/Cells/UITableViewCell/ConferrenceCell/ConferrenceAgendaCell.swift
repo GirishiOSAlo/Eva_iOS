@@ -9,6 +9,9 @@
 import UIKit
 
 class ConferrenceAgendaCell: UITableViewCell {
+    
+    private var speakers: [String] = []
+    var onSpeakerTapped: ((_ name: String, _ index: Int) -> Void)?
 
     @IBOutlet weak var DateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -22,6 +25,7 @@ class ConferrenceAgendaCell: UITableViewCell {
     
     @IBOutlet weak var speakersLabel: UILabel!
     @IBOutlet weak var speakersNameLabel: UILabel!
+    @IBOutlet weak var speakersNameTxtVw: UITextView!
     
     @IBOutlet weak var drpDwnButton: UIButton!
     
@@ -40,6 +44,46 @@ class ConferrenceAgendaCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
+        setupTextView()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        onSpeakerTapped = nil
+        speakers.removeAll()
+        speakersNameTxtVw.attributedText = nil
+    }
+    
+    private func setupTextView() {
+        speakersNameTxtVw.isEditable = false
+        speakersNameTxtVw.isScrollEnabled = false
+        speakersNameTxtVw.delegate = self
+        speakersNameTxtVw.backgroundColor = .clear
+        speakersNameTxtVw.textContainerInset = .zero
+        speakersNameTxtVw.textContainer.lineFragmentPadding = 0
+        speakersNameTxtVw.dataDetectorTypes = []
+    }
+    
+    /// Configure with SINGLE STRING
+    func configure(text: String) {
+        speakers = text.components(separatedBy: ", ")
+        
+        let attributed = NSMutableAttributedString(string: text)
+        var startIndex = 0
+        
+        for (index, name) in speakers.enumerated() {
+            let range = NSRange(location: startIndex, length: name.count)
+            
+            attributed.addAttributes([
+                .link: URL(string: "speaker://\(index)")!,
+                .foregroundColor: UIColor.systemBlue,
+                .font: UIFont.systemFont(ofSize: 14)
+            ], range: range)
+            
+            startIndex += name.count + 2 // ", "
+        }
+        
+        speakersNameTxtVw.attributedText = attributed
     }
     
     func setupUI() {
@@ -52,6 +96,7 @@ class ConferrenceAgendaCell: UITableViewCell {
         sponsersNameLabel.font = UIFont(name: Myfonts.medium, size: 14)
         speakersLabel.font = UIFont(name: Myfonts.semiBold, size: 14)
         speakersNameLabel.font = UIFont(name: Myfonts.medium, size: 14)
+        speakersNameTxtVw.font = UIFont(name: Myfonts.medium, size: 14)
         
         joinBtn.layer.cornerRadius = 10
         cancelBtn.applyBorderWithRadius(color: UIColor(hex: "#4D76CD"), value: 1, radius: 10)
@@ -71,7 +116,13 @@ class ConferrenceAgendaCell: UITableViewCell {
         let sponsorName = (data.sponsorname?.isEmpty ?? true) ? "--" : data.sponsorname
         self.sponsersNameLabel.text = sponsorName
         let speakerName = ((data.speakerNames?.isEmpty ?? true) ? "--" : data.speakerNames) ?? ""
-        self.speakersNameLabel.text = speakerName        
+        self.speakersNameLabel.text = speakerName
+        self.speakersNameTxtVw.text = speakerName
+        if speakerName == "--" {
+            self.speakersNameLabel.isHidden = false
+        } else {
+            self.speakersNameLabel.isHidden = true
+        }
         
         self.joinBtn.isHidden = false
         self.cancelBtn.isHidden = true
@@ -136,7 +187,14 @@ class ConferrenceAgendaCell: UITableViewCell {
             speakerList.append(name)
         }
         let speakerName = ((speakerList.isEmpty) ? "--" : speakerList)
+        print("Speaker Name", speakerName)
         self.speakersNameLabel.text = speakerName
+        self.speakersNameTxtVw.text = speakerName
+        if speakerName == "--" {
+            self.speakersNameLabel.isHidden = false
+        } else {
+            self.speakersNameLabel.isHidden = true
+        }
         
         self.joinBtn.isHidden = true
         self.cancelBtn.isHidden = true
@@ -187,6 +245,23 @@ class ConferrenceAgendaCell: UITableViewCell {
     }
     
 }
+
+// MARK: - UITextViewDelegate
+extension ConferrenceAgendaCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        
+        if URL.scheme == "speaker",
+           let index = Int(URL.host ?? ""),
+           index < speakers.count {
+            
+            let name = speakers[index]
+            onSpeakerTapped?(name, index)
+        }
+        return false // prevent default behavior
+    }
+    
+}
+
 extension ConferrenceAgendaCell: Dequeueable {
     static func id() -> String {
         return String(describing: self)

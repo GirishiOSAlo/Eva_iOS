@@ -141,6 +141,25 @@ extension ConferenceDetailsVC: UITableViewDelegate, UITableViewDataSource {
         // Expansion logic
         cell.isExpanded = (expandedIndexPath == indexPath)
         
+        var speakerList = ""
+        let speakers = agenda?.speakers ?? []
+        for obj in speakers {
+            let name = obj.name ?? ""
+            speakerList.append(name)
+        }
+        cell.configure(text: speakerList)
+        if speakers.count > 0 {
+            cell.onSpeakerTapped = { [weak self] name, index in
+                guard let self = self else { return }
+                print("Tapped Speaker:\(name), Index: \(index), Row:\(indexPath.row)")
+                // 🔥 Go Speaker Profile...
+                let speaker = speakers[index]
+                let vc = StoryboardRouter.othersProfileVC()
+                vc.profileID = speaker.id ?? 0
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
         // Button setup
         cell.drpDwnButton.tag = indexPath.row
         cell.drpDwnButton.accessibilityIdentifier = "\(indexPath.section)"
