@@ -26,6 +26,7 @@ class MeetingDetailsCVC: UICollectionViewCell {
     @IBOutlet weak var meetingWithLbl: UILabel!
     @IBOutlet weak var colleaguesLbl: UILabel!
     @IBOutlet weak var locationLbl: UILabel!
+    @IBOutlet weak var descLbl: UILabel!
     @IBOutlet weak var messageBtn: UIButton!
     @IBOutlet weak var rescheduleBtn: UIButton!
     @IBOutlet weak var joinMeetingBtn: UIButton!
@@ -65,6 +66,7 @@ class MeetingDetailsCVC: UICollectionViewCell {
         meetingWithLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         colleaguesLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         locationLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
+        descLbl.font = UIFont(name: Myfonts.medium, size: 14.0)
         messageBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 14.0)
         rescheduleBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 14.0)
         joinMeetingBtn.titleLabel?.font = UIFont(name: Myfonts.medium, size: 14.0)
@@ -83,5 +85,6 @@ class MeetingDetailsCVC: UICollectionViewCell {
         self.meetingWithLbl.text = ((obj.meetingWith?.isEmpty ?? true) ? "--" : obj.meetingWith) ?? ""
         self.colleaguesLbl.text = ((obj.withColleagues?.isEmpty ?? true) ? "--" : obj.withColleagues) ?? ""
         self.locationLbl.text = ((obj.locationName?.isEmpty ?? true) ? "--" : obj.locationName) ?? ""
+        self.descLbl.text = ((obj.meetingDetails?.isEmpty ?? true) ? "--" : obj.meetingDetails) ?? ""
     }
 }

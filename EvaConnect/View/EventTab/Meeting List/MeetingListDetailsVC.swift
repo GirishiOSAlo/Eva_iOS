@@ -431,13 +431,15 @@ extension MeetingListDetailsVC: UICollectionViewDelegate, UICollectionViewDataSo
             let meetingWith = ((obj.meetingWith?.isEmpty ?? true) ? "--" : obj.meetingWith) ?? ""
             let colleagues = ((obj.withColleagues?.isEmpty ?? true) ? "--" : obj.withColleagues) ?? ""
             let location = ((obj.locationName?.isEmpty ?? true) ? "--" : obj.locationName) ?? ""
+            let desc = ((obj.meetingDetails?.isEmpty ?? true) ? "--" : obj.meetingDetails) ?? ""
             
             let meetingDetailsLblHeight = self.heightForView(text: meetingDetails, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 89.0)
             let meetingWithLblHeight = self.heightForView(text: meetingWith, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
             let colleaguesLblHeight = self.heightForView(text: colleagues, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
             let locationLblHeight = self.heightForView(text: location, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
+            let descLblHeight = self.heightForView(text: desc, font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 32.0)
             
-            let totalHeight = meetingDetailsLblHeight + meetingWithLblHeight + colleaguesLblHeight + locationLblHeight + 283.0
+            let totalHeight = meetingDetailsLblHeight + meetingWithLblHeight + colleaguesLblHeight + locationLblHeight + descLblHeight + 318.0
             
             if indexPath == expandedIndexPath {  //--> Expanded height...
                 var cellHeight = 0.0
