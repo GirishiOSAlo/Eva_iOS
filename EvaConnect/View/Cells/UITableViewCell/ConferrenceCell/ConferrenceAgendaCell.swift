@@ -55,9 +55,11 @@ class ConferrenceAgendaCell: UITableViewCell {
     }
     
     private func setupTextView() {
+        speakersNameTxtVw.delegate = self
         speakersNameTxtVw.isEditable = false
         speakersNameTxtVw.isScrollEnabled = false
-        speakersNameTxtVw.delegate = self
+        speakersNameTxtVw.isSelectable = true   // 🔥 REQUIRED
+        speakersNameTxtVw.isUserInteractionEnabled = true
         speakersNameTxtVw.backgroundColor = .clear
         speakersNameTxtVw.textContainerInset = .zero
         speakersNameTxtVw.textContainer.lineFragmentPadding = 0
@@ -77,7 +79,7 @@ class ConferrenceAgendaCell: UITableViewCell {
             attributed.addAttributes([
                 .link: URL(string: "speaker://\(index)")!,
                 .foregroundColor: UIColor.systemBlue,
-                .font: UIFont.systemFont(ofSize: 14)
+                .font: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14)
             ], range: range)
             
             startIndex += name.count + 2 // ", "
@@ -187,7 +189,6 @@ class ConferrenceAgendaCell: UITableViewCell {
             speakerList.append(name)
         }
         let speakerName = ((speakerList.isEmpty) ? "--" : speakerList)
-        print("Speaker Name", speakerName)
         self.speakersNameLabel.text = speakerName
         self.speakersNameTxtVw.text = speakerName
         if speakerName == "--" {
@@ -248,7 +249,10 @@ class ConferrenceAgendaCell: UITableViewCell {
 
 // MARK: - UITextViewDelegate
 extension ConferrenceAgendaCell: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView,
+                  shouldInteractWith URL: URL,
+                  in characterRange: NSRange,
+                  interaction: UITextItemInteraction) -> Bool {
         
         if URL.scheme == "speaker",
            let index = Int(URL.host ?? ""),
@@ -256,10 +260,10 @@ extension ConferrenceAgendaCell: UITextViewDelegate {
             
             let name = speakers[index]
             onSpeakerTapped?(name, index)
+            return false // prevent system action
         }
-        return false // prevent default behavior
+        return true
     }
-    
 }
 
 extension ConferrenceAgendaCell: Dequeueable {

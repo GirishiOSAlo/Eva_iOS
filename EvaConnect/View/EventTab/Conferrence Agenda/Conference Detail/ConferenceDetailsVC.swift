@@ -151,8 +151,8 @@ extension ConferenceDetailsVC: UITableViewDelegate, UITableViewDataSource {
         if speakers.count > 0 {
             cell.onSpeakerTapped = { [weak self] name, index in
                 guard let self = self else { return }
-                print("Tapped Speaker:\(name), Index: \(index), Row:\(indexPath.row)")
-                // 🔥 Go Speaker Profile...
+                print("Tapped Speaker: \(name), Index: \(index), Row: \(indexPath.row)")
+                guard index < speakers.count else { return }
                 let speaker = speakers[index]
                 let vc = StoryboardRouter.othersProfileVC()
                 vc.profileID = speaker.id ?? 0
