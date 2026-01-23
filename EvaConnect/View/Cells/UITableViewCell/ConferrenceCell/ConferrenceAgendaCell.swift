@@ -126,45 +126,32 @@ class ConferrenceAgendaCell: UITableViewCell {
             self.speakersNameLabel.isHidden = true
         }
         
-        self.joinBtn.isHidden = false
-        self.cancelBtn.isHidden = true
-        
-        let mapping = data.evaUserNetworkingMappings ?? []
-        if mapping.count == 0 {
-            self.joinBtn.isHidden = false
-        } else {
-            if mapping[0].status == 1 {
-                self.cancelBtn.isHidden = false
-            } else {
-                self.joinBtn.isHidden = false
-            }
+        let mappings = data.evaUserNetworkingMappings ?? []
+
+        // Default state (hide all)
+        btnStackVw.isHidden = true
+        joinBtn.isHidden = true
+        cancelBtn.isHidden = true
+
+        // Only proceed if approved
+        guard eventAttendeesStatus.lowercased() == "approved" else {
+            return
         }
-        if eventAttendeesStatus.lowercased() == "approved" {
-            self.btnStackVw.isHidden = false
-            let mappings = data.evaUserNetworkingMappings ?? []
-            if mappings.isEmpty {
-                // No mapping yet → show "Join"
-                self.joinBtn.isHidden = false
-                self.cancelBtn.isHidden = true
-            } else {
-                // There is at least one mapping
-                let mapping = mappings[0]
-                
-                if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
-                    // User already joined → show "Cancel"
-                    self.cancelBtn.isHidden = false
-                    self.joinBtn.isHidden = true
-                } else {
-                    // Different user or not active → show "Join"
-                    self.joinBtn.isHidden = false
-                    self.cancelBtn.isHidden = true
-                }
-            }
+        btnStackVw.isHidden = false
+
+        // No mapping → show Join
+        guard let mapping = mappings.first else {
+            joinBtn.isHidden = false
+            return
+        }
+
+        // Mapping exists
+        if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
+            // User already joined
+            cancelBtn.isHidden = false
         } else {
-            // Not approved → show nothing
-            self.btnStackVw.isHidden = true
-            self.joinBtn.isHidden = true
-            self.cancelBtn.isHidden = true
+            // Not joined / different user
+            joinBtn.isHidden = false
         }
     }
     
@@ -197,45 +184,32 @@ class ConferrenceAgendaCell: UITableViewCell {
             self.speakersNameLabel.isHidden = true
         }
         
-        self.joinBtn.isHidden = true
-        self.cancelBtn.isHidden = true
-        
-        let mapping = data?.evaUserNetworkingMappings ?? []
-        if mapping.count == 0 {
-            self.joinBtn.isHidden = false
-        } else {
-            if mapping[0].status == 1 {
-                self.cancelBtn.isHidden = false
-            } else {
-                self.joinBtn.isHidden = false
-            }
+        let mappings = data?.evaUserNetworkingMappings ?? []
+
+        // Default state (hide all)
+        btnStackVw.isHidden = true
+        joinBtn.isHidden = true
+        cancelBtn.isHidden = true
+
+        // Only proceed if approved
+        guard eventAttendeesStatus.lowercased() == "approved" else {
+            return
         }
-        if eventAttendeesStatus.lowercased() == "approved" {
-            self.btnStackVw.isHidden = false
-            let mappings = data?.evaUserNetworkingMappings ?? []
-            if mappings.isEmpty {
-                // No mapping yet → show "Join"
-                self.joinBtn.isHidden = false
-                self.cancelBtn.isHidden = true
-            } else {
-                // There is at least one mapping
-                let mapping = mappings[0]
-                
-                if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
-                    // User already joined → show "Cancel"
-                    self.cancelBtn.isHidden = false
-                    self.joinBtn.isHidden = true
-                } else {
-                    // Different user or not active → show "Join"
-                    self.joinBtn.isHidden = false
-                    self.cancelBtn.isHidden = true
-                }
-            }
+        btnStackVw.isHidden = false
+
+        // No mapping → show Join
+        guard let mapping = mappings.first else {
+            joinBtn.isHidden = false
+            return
+        }
+
+        // Mapping exists
+        if mapping.status == 1 && mapping.userID == myUserDefaults.userId {
+            // User already joined
+            cancelBtn.isHidden = false
         } else {
-            // Not approved → show nothing
-            self.btnStackVw.isHidden = true
-            self.joinBtn.isHidden = true
-            self.cancelBtn.isHidden = true
+            // Not joined / different user
+            joinBtn.isHidden = false
         }
     }
     
