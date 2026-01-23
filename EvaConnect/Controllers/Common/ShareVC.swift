@@ -119,20 +119,36 @@ class ShareVC: UIViewController {
 //            return
 //        }
         
-        let urlStr = String(format: "fb://facewebmodal/f?href=", sharedLinks)
-        let url  = NSURL(string: urlStr)
-
-        if UIApplication.shared.canOpenURL(url! as URL) {
-            UIApplication.shared.open(url! as URL, options: [:]) { (success) in
-                if success {
-                    print("Messenger accessed successfully")
-                } else {
-                    print("Error accessing Messenger")
-                }
-            }
+//        let urlStr = String(format: "fb://facewebmodal/f?href=", sharedLinks)
+//        let url  = NSURL(string: urlStr)
+//
+//        if UIApplication.shared.canOpenURL(url! as URL) {
+//            UIApplication.shared.open(url! as URL, options: [:]) { (success) in
+//                if success {
+//                    print("Messenger accessed successfully")
+//                } else {
+//                    print("Error accessing Messenger")
+//                }
+//            }
+//        } else {
+//            let webURL = URL(string: "https://facebook.com")!
+//            application.open(webURL)
+//        }
+//        
+        guard let encodedLink = sharedLinks.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let fbURL = URL(string: "fb://publish/profile?text=\(encodedLink)"),
+              let webURL = URL(string: "https://www.facebook.com/sharer/sharer.php?u=\(encodedLink)") else {
+            return
+        }
+        
+        let application = UIApplication.shared
+        
+        // Try Facebook app first
+        if application.canOpenURL(fbURL) {
+            application.open(fbURL, options: [:], completionHandler: nil)
         } else {
-            let webURL = URL(string: "https://facebook.com")!
-            application.open(webURL)
+            // Fallback to browser
+            application.open(webURL, options: [:], completionHandler: nil)
         }
     }
     

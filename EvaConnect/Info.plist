@@ -60,7 +60,7 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>fbapi</string>
+        <string>fb</string>
 		<string>fb-messenger-share-api</string>
 		<string>whatsapp</string>
 		<string>googlemeet</string>
