@@ -17,6 +17,8 @@ class EventDetailsVC: UIViewController, XIBed {
         return vc
     }
     
+    var onEventMainDataUpdated: (() -> Void)?
+    
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var mainContainerView: UIView!
@@ -323,6 +325,7 @@ extension EventDetailsVC {
             if error == 0 {
                 print("Success!!")
                 self.fetchEventDetail()
+                self.onEventMainDataUpdated?()
                 self.view.isUserInteractionEnabled = true
 
             }

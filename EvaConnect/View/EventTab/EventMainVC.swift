@@ -226,6 +226,13 @@ extension EventMainVC  {
                         self.VenueList = self.eventDetail?.eventVenu ?? []
                         self.delegatelists = self.eventDetail?.delegatelists ?? []
                         
+                        self.eventDetailsVC.onEventMainDataUpdated = { [weak self] in
+                            guard let self = self else { return }
+                            // read or recalculate tag here
+                            self.eventDetailsView.tag = self.eventDetailsVC.view.tag
+                            print("Tag updated From Event Details VC")
+                            fetchEventDetail()
+                        }
                         self.addModule(self.eventDetailsVC, to: self.eventDetailsView)
                         self.drpDwnNameLable.text = "Event Details"
                         self.headingLabel.text = self.eventDetail?.name ?? ""

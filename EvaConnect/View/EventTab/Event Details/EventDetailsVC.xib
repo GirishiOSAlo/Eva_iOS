@@ -59,7 +59,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="998-xU-2HU">
-                    <rect key="frame" x="0.0" y="0.0" width="440" height="922"/>
+                    <rect key="frame" x="0.0" y="0.0" width="440" height="921.99999999999977"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dld-tc-kX2" userLabel="Container View">
                             <rect key="frame" x="0.0" y="0.0" width="440" height="1024.3333333333333"/>
