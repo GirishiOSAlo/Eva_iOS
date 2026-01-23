@@ -74,15 +74,33 @@ class ConferenceDetailsVC: UIViewController, XIBed {
     }
     
     @objc func joinBtnTapped(sender: UIButton) {
-        print("Join Btn Tapped.")
-//        let networkId = self.networkingEventList[sender.tag].id ?? 0
-//        self.networkJoinApiCall(networkingID: networkId, status: "join")
+        guard
+            let cell = sender.superview(of: ConferrenceAgendaCell.self),
+            let indexPath = agendaTblVw.indexPath(for: cell)
+        else { return }
+
+        let agenda = eventAgendaData[indexPath.section].conferencePrograms?[indexPath.row]
+        let agendaId = agenda?.id ?? 0
+        print("Join tapped at section \(indexPath.section), row \(indexPath.row)")
+        
+        self.joinCancelApiCall(conferenceID: agendaId, status: "join")
     }
-    
+
     @objc func cancelBtnTapped(sender: UIButton) {
-        print("Cancel Btn Tapped.")
-//        let networkId = self.networkingEventList[sender.tag].id ?? 0
-//        self.networkJoinApiCall(networkingID: networkId, status: "cancel")
+        guard
+            let cell = sender.superview(of: ConferrenceAgendaCell.self),
+            let indexPath = agendaTblVw.indexPath(for: cell)
+        else { return }
+
+        let agenda = eventAgendaData[indexPath.section].conferencePrograms?[indexPath.row]
+        let agendaId = agenda?.id ?? 0
+        print("Cancel tapped at section \(indexPath.section), row \(indexPath.row)")
+        self.joinCancelApiCall(conferenceID: agendaId, status: "cancel")
+    }
+}
+extension UIView {
+    func superview<T: UIView>(of type: T.Type) -> T? {
+        return self.superview as? T ?? self.superview?.superview(of: type)
     }
 }
 
@@ -112,6 +130,32 @@ extension ConferenceDetailsVC {
                     self.agendaTblVw.reloadData()
                 } else {
                     print("Error :: \(agendaRoot.message ?? "")")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func joinCancelApiCall(conferenceID: Int, status: String) {
+        let url = EndPoints.eventConferenceStatus
+        let parameters = [
+            "event_id": self.eventId,
+            "conference_id": conferenceID,
+            "status": status,
+            "user_id": myUserDefaults.userId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(networkEventRoot.error) {
+                    print("Success")
+                    self.fetchEventConferanceAgenda()
+                } else {
+                    print("Error :: \(networkEventRoot.message)")
                 }
             } catch {
                 print("Error:: ", error)
@@ -164,10 +208,12 @@ extension ConferenceDetailsVC: UITableViewDelegate, UITableViewDataSource {
         cell.drpDwnButton.tag = indexPath.row
         cell.drpDwnButton.accessibilityIdentifier = "\(indexPath.section)"
         cell.drpDwnButton.addTarget(self, action: #selector(self.drpDwnBtnTapped(sender:)), for: .touchUpInside)
-        cell.joinBtn.tag = indexPath.row
-        cell.joinBtn.addTarget(self, action: #selector(self.joinBtnTapped(sender:)), for: .touchUpInside)
-        cell.cancelBtn.tag = indexPath.row
-        cell.cancelBtn.addTarget(self, action: #selector(self.cancelBtnTapped(sender:)), for: .touchUpInside)
+//        cell.joinBtn.tag = indexPath.row
+//        cell.joinBtn.addTarget(self, action: #selector(self.joinBtnTapped(sender:)), for: .touchUpInside)
+//        cell.cancelBtn.tag = indexPath.row
+//        cell.cancelBtn.addTarget(self, action: #selector(self.cancelBtnTapped(sender:)), for: .touchUpInside)
+        cell.joinBtn.addTarget(self, action: #selector(joinBtnTapped(sender:)), for: .touchUpInside)
+        cell.cancelBtn.addTarget(self, action: #selector(cancelBtnTapped(sender:)), for: .touchUpInside)
         cell.selectionStyle = .none
         return cell
     }

@@ -33,12 +33,12 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupUI()
         if myUserDefaults.isEventFlow {
             self.eventId = myUserDefaults.isEventFlowEventID
         } else {
-           print("Social FLow")
+            print("Social FLow")
         }
     }
     
@@ -129,7 +129,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = font
         label.text = text
-
+        
         label.sizeToFit()
         return label.frame.height
     }
@@ -159,14 +159,76 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     
     @objc func joinBtnTapped(sender: UIButton) {
         print("Join Btn Tapped.")
-//        let networkId = self.networkingEventList[sender.tag].id ?? 0
-//        self.networkJoinApiCall(networkingID: networkId, status: "join")
+        let agendaId = self.conferenceAgendaList[sender.tag].id ?? 0
+        self.joinCancelApiCall(conferenceID: agendaId, status: "join")
     }
     
     @objc func cancelBtnTapped(sender: UIButton) {
         print("Cancel Btn Tapped.")
-//        let networkId = self.networkingEventList[sender.tag].id ?? 0
-//        self.networkJoinApiCall(networkingID: networkId, status: "cancel")
+        let agendaId = self.conferenceAgendaList[sender.tag].id ?? 0
+        self.joinCancelApiCall(conferenceID: agendaId, status: "join")
+    }
+    
+}
+
+extension ConferrenceAgendaVC {
+    
+    func joinCancelApiCall(conferenceID: Int, status: String) {
+        let url = EndPoints.eventConferenceStatus
+        let parameters = [
+            "event_id": self.eventId,
+            "conference_id": conferenceID,
+            "status": status,
+            "user_id": myUserDefaults.userId] as [String: Any]
+        
+        showActivity()
+        NetworkManagerr.request(url, method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            do {
+                let jsonDecoder = JSONDecoder()
+                let networkEventRoot = try jsonDecoder.decode(GenericResponse.self, from: response.data!)
+                if !(networkEventRoot.error) {
+                    print("Success")
+                    self.fetchEventDetail()
+                } else {
+                    print("Error :: \(networkEventRoot.message)")
+                }
+            } catch {
+                print("Error:: ", error)
+            }
+        }
+    }
+    
+    func fetchEventDetail() {
+        let parameters: AFParameters = [ "id": eventId]
+        showActivity()
+        NetworkManagerr.request(EndPoints.eventDetail , method: .post, parameters: parameters) { (response) in
+            self.hideActivity()
+            if response.result.isSuccess {
+                do {
+                    let decoder = JSONDecoder()
+                    let eventDetail = try decoder.decode(NewEventDetailsModel.self, from: response.data!)
+                    
+                    if !(eventDetail.error ?? false), ((eventDetail.data?.count ?? 0) > 0) {
+                        let eventDetail = eventDetail.data?[0]
+                        self.conferenceAgendaList = eventDetail?.conferenceagenda ?? []
+                        self.agendaListTable.reloadData()
+                        
+                        if self.conferenceAgendaList.count == 0 {
+                            self.tableBgVw.isHidden = true
+                            self.noDataLbl.isHidden = false
+                            self.agendaTableHeight.constant = 50.0
+                        } else {
+                            self.tableBgVw.isHidden = false
+                            self.noDataLbl.isHidden = true
+                            self.updateTableHeigth()
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
 }
 
