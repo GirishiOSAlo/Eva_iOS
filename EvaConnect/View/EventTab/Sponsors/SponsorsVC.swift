@@ -146,4 +146,11 @@ extension SponsorsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         
         return CGSize(width: self.listCollectionVw.frame.size.width, height: totalHeight)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let sponsor = self.sponsorsList[indexPath.row]
+        let vc = StoryboardRouter.othersProfileVC()
+        vc.profileID = sponsor.id ?? 0
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
