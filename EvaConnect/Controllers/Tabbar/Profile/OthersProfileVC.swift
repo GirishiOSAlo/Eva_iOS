@@ -724,6 +724,9 @@ extension OthersProfileVC {
                     //Managed For Event New Flow...
                     if myUserDefaults.isEventFlow {
                         print("Event Flow")
+                        self.noDataLbl.isHidden = true
+                        self.postTableView.isHidden = true
+                        self.privateAccView.isHidden = true
                     } else {
                         self.getPosts(offSet: 1)
                     }
