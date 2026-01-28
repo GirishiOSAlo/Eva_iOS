@@ -166,7 +166,7 @@ class ConferrenceAgendaVC: UIViewController, XIBed {
     @objc func cancelBtnTapped(sender: UIButton) {
         print("Cancel Btn Tapped.")
         let agendaId = self.conferenceAgendaList[sender.tag].id ?? 0
-        self.joinCancelApiCall(conferenceID: agendaId, status: "join")
+        self.joinCancelApiCall(conferenceID: agendaId, status: "cancel")
     }
     
 }
