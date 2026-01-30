@@ -110,11 +110,13 @@ class ConferrenceAgendaCell: UITableViewCell {
         
         let content = data.description ?? "--"
         if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-            self.descriptionLbl.attributedText = attributed
-        } else { self.descriptionLbl.text = content }
+            self.sessionNameLabel.attributedText = attributed
+        } else { self.sessionNameLabel.text = content }
         
         let sessionName = (data.name?.isEmpty ?? true) ? "--" : data.name
-        self.sessionNameLabel.text = sessionName
+        self.descriptionLbl.text = sessionName
+        
+        
         let sponsorName = (data.sponsorname?.isEmpty ?? true) ? "--" : data.sponsorname
         self.sponsersNameLabel.text = sponsorName
         let speakerName = ((data.speakerNames?.isEmpty ?? true) ? "--" : data.speakerNames) ?? ""
@@ -161,11 +163,13 @@ class ConferrenceAgendaCell: UITableViewCell {
         
         let content = ((data?.description?.isEmpty ?? true) ? "--" : data?.description) ?? ""
         if let attributed = content.htmlToAttributedString(withFont: UIFont(name: Myfonts.medium, size: 14) ?? UIFont.systemFont(ofSize: 14.0), color: UIColor(hex: "#848397")) {
-            self.descriptionLbl.attributedText = attributed
-        } else { self.descriptionLbl.text = content }
+            self.sessionNameLabel.attributedText = attributed
+        } else { self.sessionNameLabel.text = content }
         
         let sessionName = (data?.name?.isEmpty ?? true) ? "--" : data?.name
-        self.sessionNameLabel.text = sessionName
+        self.descriptionLbl.text = sessionName
+        
+        
         let sponsorName = (data?.sponsorname?.isEmpty ?? true) ? "--" : data?.sponsorname
         self.sponsersNameLabel.text = sponsorName
         
