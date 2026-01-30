@@ -65,8 +65,10 @@ class SponsorsVC: UIViewController, XIBed {
     func updateCollectionHeigth() {
         var finalHeight = 0.0
         for sponsor in self.sponsorsList {
-            let nameLblHeight = self.heightForView(text: sponsor.firstName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
-            let subLblHeight = self.heightForView(text: sponsor.companyName ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
+            let sponsorName = (sponsor.firstName?.isEmpty ?? true) ? "--" : sponsor.firstName
+            let nameLblHeight = self.heightForView(text: sponsorName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
+            let subName = (sponsor.companyName?.isEmpty ?? true) ? "--" : sponsor.companyName
+            let subLblHeight = self.heightForView(text: subName ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
             let cellHeight = nameLblHeight + subLblHeight + 216.0
             finalHeight = finalHeight + cellHeight
         }
@@ -124,8 +126,9 @@ extension SponsorsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         
         let sponsor = self.sponsorsList[indexPath.row]
         cell.profileImgHeight.constant = 120.0
-        cell.nameLbl.text = sponsor.firstName ?? ""
-        cell.subLbl.text = sponsor.companyName ?? ""
+        
+        cell.nameLbl.text = (sponsor.firstName?.isEmpty ?? true) ? "--" : sponsor.firstName
+        cell.subLbl.text = (sponsor.companyName?.isEmpty ?? true) ? "--" : sponsor.companyName
         if let imageUrl = sponsor.userImage,
            !imageUrl.trimmingCharacters(in: .whitespaces).isEmpty,
            let url = URL(string: imageUrl),
@@ -140,8 +143,10 @@ extension SponsorsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let sponsor = self.sponsorsList[indexPath.row]
-        let nameLblHeight = self.heightForView(text: sponsor.firstName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
-        let subLblHeight = self.heightForView(text: sponsor.companyName ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
+        let sponsorName = (sponsor.firstName?.isEmpty ?? true) ? "--" : sponsor.firstName
+        let nameLblHeight = self.heightForView(text: sponsorName ?? "", font: UIFont(name: Myfonts.semiBold, size: 16.0) ?? UIFont.systemFont(ofSize: 16.0), width: self.view.frame.width - 104.0)
+        let subName = (sponsor.companyName?.isEmpty ?? true) ? "--" : sponsor.companyName
+        let subLblHeight = self.heightForView(text: subName ?? "", font: UIFont(name: Myfonts.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0), width: self.view.frame.width - 104.0)
         let totalHeight = nameLblHeight + subLblHeight + 216.0
         
         return CGSize(width: self.listCollectionVw.frame.size.width, height: totalHeight)
