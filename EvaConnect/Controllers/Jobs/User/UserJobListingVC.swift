@@ -129,8 +129,7 @@ extension UserJobListingVC {
         self.positionNameLbl.text = data?.position ?? "--"
         self.locationLbl.text = data?.location ?? "--"
         self.jobImageView.sd_setImage(with: URL(string: data?.jobImage ?? ""), placeholderImage: UIImage(named: "profile")!)
-        
-        self.salaryLbl.text = "£\(data?.salary ?? 0)"
+        self.salaryLbl.text = "\(data?.currencySymbol ?? "") \(data?.salary ?? 0)"
         self.jobPeriodLbl.text = data?.jobtype ?? "--"
         self.jobContent.text = data?.content ?? "--"
         
